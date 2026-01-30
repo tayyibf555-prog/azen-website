@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* === SharpenAI-style animated border === */
+@keyframes borderMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.btn-animated-border {
+  position: relative;
+  display: inline-block;
+  padding: 2px;
+  border-radius: 0.75rem;
+  background: linear-gradient(90deg, #22d3ee, #34d399, #22d3ee);
+  background-size: 200% 200%;
+  animation: borderMove 3s linear infinite;
+  overflow: hidden;
+}
+.btn-animated-inner {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.62rem;
+  background: #07173A;
+  color: white;
+  font-weight: 600;
+  position: relative;
+  z-index: 1;
+}
+.btn-animated-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 2px;
+  background: inherit;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+}

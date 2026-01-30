@@ -1,0 +1,41 @@
+<svg width="400" height="80" viewBox="0 0 400 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Icon: Aperture/Flower shape -->
+  <g transform="translate(10, 15)">
+    <!-- Petals/Segments -->
+    <!-- Top Left (Navy) -->
+    <path d="M25 25 C25 10 10 10 10 25 C10 40 25 40 25 25 Z" fill="#2C3E50" transform="translate(0, -12) rotate(-45 25 25)"/>
+    <!-- Top Right (Red/Mauve) -->
+    <path d="M25 25 C40 25 40 10 25 10 C10 10 10 25 25 25 Z" fill="#A5696F" transform="translate(12, 0) rotate(45 25 25)"/>
+    <!-- Bottom Right (Navy) -->
+    <path d="M25 25 C25 40 40 40 40 25 C40 10 25 10 25 25 Z" fill="#2C3E50" transform="translate(0, 12) rotate(135 25 25)"/>
+    <!-- Bottom Left (Red/Mauve) -->
+    <path d="M25 25 C10 25 10 40 25 40 C40 40 40 25 25 25 Z" fill="#A5696F" transform="translate(-12, 0) rotate(225 25 25)"/>
+    
+    <!-- Simplified Aperture Construction for better look -->
+    <circle cx="25" cy="25" r="20" fill="none"/>
+    <path d="M25 25 L25 5 A20 20 0 0 1 45 25 Z" fill="#A5696F"/>
+    <path d="M25 25 L45 25 A20 20 0 0 1 25 45 Z" fill="#2C3E50"/>
+    <path d="M25 25 L25 45 A20 20 0 0 1 5 25 Z" fill="#A5696F"/>
+    <path d="M25 25 L5 25 A20 20 0 0 1 25 5 Z" fill="#2C3E50"/>
+    <!-- White center hole to make it an aperture -->
+    <circle cx="25" cy="25" r="8" fill="none"/> 
+  </g>
+  
+  <!-- Re-doing the icon with a cleaner geometric approach based on the image -->
+  <g transform="translate(15, 15)">
+      <!-- Top Left: Navy -->
+      <path d="M25 25 L25 5 A20 20 0 0 0 5 25 Z" fill="#2C3E50"/>
+      <!-- Top Right: Red -->
+      <path d="M25 25 L45 25 A20 20 0 0 0 25 5 Z" fill="#A5696F"/>
+      <!-- Bottom Right: Navy -->
+      <path d="M25 25 L25 45 A20 20 0 0 0 45 25 Z" fill="#2C3E50"/>
+      <!-- Bottom Left: Red -->
+      <path d="M25 25 L5 25 A20 20 0 0 0 25 45 Z" fill="#A5696F"/>
+      
+      <!-- White swirl cuts to separate segments -->
+      <path d="M25 5 Q25 25 45 25" stroke="none" fill="none"/>
+  </g>
+
+  <!-- Text -->
+  <text x="75" y="48" font-family="Arial, sans-serif" font-size="24" font-weight="600" fill="#2C3E50" letter-spacing="1">SUPERIOR ACCOUNTING</text>
+</svg>

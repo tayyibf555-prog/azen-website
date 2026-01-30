@@ -1,0 +1,17 @@
+<svg width="400" height="120" viewBox="0 0 400 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Icon: Stylized Box with Leaf -->
+  <g transform="translate(20, 10)">
+    <!-- Box sides (Navy Blue #1B365D) -->
+    <path d="M40 10 L90 30 L90 90 L40 70 Z" fill="#1B365D"/> <!-- Left face -->
+    <path d="M90 30 L140 10 L140 70 L90 90 Z" fill="#E8E0D5"/> <!-- Front face (Cream/Light) -->
+    <path d="M40 10 L90 30 L140 10 L90 -10 Z" fill="#1B365D"/> <!-- Top face -->
+    
+    <!-- Leaf on front face (Green #4A7A68) -->
+    <path d="M105 45 Q115 35 125 45 Q130 55 115 65 Q110 60 105 45 Z" fill="#4A7A68"/>
+    <path d="M105 45 Q95 35 85 45 Q80 55 95 65 Q100 60 105 45 Z" fill="#4A7A68"/>
+    <path d="M105 45 L105 75" stroke="#4A7A68" stroke-width="3"/>
+  </g>
+  
+  <!-- Text: PREP POINT UK (Navy Blue #1B365D) -->
+  <text x="150" y="75" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#1B365D">PREP POINT UK</text>
+</svg>
