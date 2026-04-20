@@ -380,7 +380,7 @@ export default function AzenHomePage() {
                   Schedule a strategy call
                 </p>
                 <h2 className="text-3xl font-semibold">
-                  Free 20-minute AI audit call
+                  Free 30-minute AI audit call
                 </h2>
               </Reveal>
               <Reveal delay={0.07}>
