@@ -373,7 +373,7 @@ export default function AzenHomePage() {
           id="book"
           className="relative border-t border-white/10 bg-white/5/5 py-16 md:py-20"
         >
-          <div className="mx-auto max-w-7xl px-4 md:px-8 grid grid-cols-12 gap-10 items-start">
+          <div className="mx-auto max-w-7xl px-4 md:px-8 grid grid-cols-12 gap-10 items-center">
             <div className="col-span-12 md:col-span-5">
               <Reveal>
                 <p className="text-xs uppercase tracking-[0.25em] text-cyan-200 mb-3">
