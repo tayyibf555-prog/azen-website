@@ -18,6 +18,7 @@ import {
   ChevronRight,
   Target,
   BarChart3,
+  X,
 } from "lucide-react";
 
 /* ---------------------------
@@ -75,6 +76,7 @@ export default function AzenHomePage() {
   const heroWords = ["Audit", "Educate", "Develop"];
   const [heroIndex, setHeroIndex] = useState(0);
 
+
   useEffect(() => {
     const interval = setInterval(
       () => setHeroIndex((prev) => (prev + 1) % heroWords.length),
@@ -125,9 +127,9 @@ export default function AzenHomePage() {
       {/* NAVBAR */}
       <Navbar />
 
-      {/* HERO */}
-      <main className="relative z-10">
-        <section id="hero" className="pt-14 md:pt-20 pb-16 md:pb-24">
+      {/* HERO SECTION - REBUILT FOR PREMIUM CENTRED LAYOUT */}
+      <main className="relative z-10 w-full overflow-hidden">
+        <section id="hero" className="pt-24 md:pt-32 pb-40 relative">
           <div className="mx-auto max-w-7xl px-4 md:px-8 grid grid-cols-12 gap-10 items-center">
             {/* text */}
             <div className="col-span-12 lg:col-span-7">
@@ -175,7 +177,7 @@ export default function AzenHomePage() {
                   <a href="https://calendly.com/tayyib-azen/30min"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded-full bg-cyan-400 text-slate-950 px-6 py-3 text-sm font-semibold shadow-[0_18px_60px_rgba(34,211,238,0.35)] hover:opacity-90"
+                    className="inline-flex items-center gap-2 rounded-full bg-cyan-400 text-slate-950 px-6 py-3 text-sm font-semibold shadow-[0_18px_60px_rgba(34,211,238,0.35)] hover:scale-105 active:scale-95 transition-all duration-300 ring-2 ring-cyan-400/20 hover:ring-cyan-400/50"
                   >
                     Let&apos;s partner up
                     <ArrowRight className="w-4 h-4" />
@@ -184,8 +186,9 @@ export default function AzenHomePage() {
               </Reveal>
             </div>
 
-            {/* hero side panel – dashboard preview */}
-            <div className="col-span-12 lg:col-span-5">
+            {/* Massive Centered Dashboard Mockup (overlapping next section) */}
+            <div className="w-full mt-20 relative lg:-mb-64 md:-mb-40 -mb-24 z-20">
+              <div className="absolute inset-x-8 top-1/4 bottom-0 bg-indigo-500/20 blur-[100px] pointer-events-none rounded-full" />
               <Reveal delay={0.15}>
                 <HeroDashboardCard />
               </Reveal>
@@ -193,14 +196,42 @@ export default function AzenHomePage() {
           </div>
         </section >
 
+        {/* TRUST MARQUEE */}
+        < section className="relative bg-black/50 py-10 md:py-14 border-t border-b border-white/5 overflow-hidden z-10 lg:pt-52 md:pt-32 pt-20" >
+          <div className="flex flex-col items-center">
+            <p className="text-xs uppercase tracking-[0.2em] text-white/40 mb-6 drop-shadow-md">
+              POWERING INNOVATIVE TEAMS WORLDWIDE
+            </p>
+            <div className="w-full inline-flex flex-nowrap overflow-hidden [mask-image:_linear-gradient(to_right,transparent_0,_black_128px,_black_calc(100%-128px),transparent_100%)]">
+              <ul className="flex items-center justify-center md:justify-start [&_li]:mx-8 [&_img]:max-w-none animate-[infinite-scroll_30s_linear_infinite]">
+                {/* 1st set */}
+                {["Acme Corp", "Quantum", "Echo", "Lumina", "Apex", "Veritas"].map((name, i) => (
+                  <li key={`tr1-${i}`} className="text-xl md:text-2xl font-bold text-white/20 whitespace-nowrap">{name}</li>
+                ))}
+                {/* 2nd set for seamless loop */}
+                {["Acme Corp", "Quantum", "Echo", "Lumina", "Apex", "Veritas"].map((name, i) => (
+                  <li key={`tr2-${i}`} className="text-xl md:text-2xl font-bold text-white/20 whitespace-nowrap">{name}</li>
+                ))}
+              </ul>
+            </div>
+
+            <style jsx>{`
+              @keyframes infinite-scroll {
+                from { transform: translateX(0); }
+                to { transform: translateX(-50%); }
+              }
+            `}</style>
+          </div>
+        </section >
+
         {/* STRATEGY-FIRST APPROACH + DASHBOARD */}
         < section
           id="how"
-          className="relative border-t border-white/10 bg-black/10 py-16 md:py-20"
+          className="relative bg-black/10 py-24 md:py-32"
         >
           <div className="mx-auto max-w-7xl px-4 md:px-8 grid grid-cols-12 gap-10 items-start">
             {/* timeline */}
-            <div className="col-span-12 lg:col-span-5" ref={strategyRef}>
+            <div className="col-span-12 lg:col-span-5 lg:sticky lg:top-32 self-start" ref={strategyRef}>
               <Reveal>
                 <p className="text-xs uppercase tracking-[0.25em] text-cyan-200 mb-3">
                   What is it we do?
@@ -248,7 +279,8 @@ export default function AzenHomePage() {
             </div>
 
             {/* dashboard panel */}
-            <div className="col-span-12 lg:col-span-7">
+            <div className="col-span-12 lg:col-span-7 relative">
+              <div className="absolute inset-x-10 inset-y-10 bg-cyan-500/10 blur-[100px] pointer-events-none" />
               <Reveal delay={0.1}>
                 <StrategyDashboardPanel />
               </Reveal>
@@ -379,16 +411,15 @@ export default function AzenHomePage() {
               </Reveal>
             </div>
 
-            <div className="col-span-12 md:col-span-7 flex justify-center items-center">
+            <div className="col-span-12 md:col-span-7 flex items-center justify-center md:justify-end mt-8 md:mt-0">
               <Reveal delay={0.1}>
                 <a
                   href="https://calendly.com/tayyib-azen/30min"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-2xl bg-cyan-400 text-slate-950 px-8 py-5 text-lg font-semibold shadow-[0_18px_60px_rgba(34,211,238,0.35)] hover:opacity-90 transition-opacity"
+                  className="inline-block rounded-full bg-cyan-400 text-slate-950 px-10 py-5 text-lg font-bold shadow-[0_0_60px_rgba(34,211,238,0.3)] hover:scale-105 active:scale-95 transition-all duration-300 ring-4 ring-cyan-400/20 hover:ring-cyan-400/50"
                 >
-                  Book a meeting here
-                  <ArrowRight className="w-5 h-5" />
+                  Book your Free Audit
                 </a>
               </Reveal>
             </div>
@@ -520,6 +551,27 @@ export default function AzenHomePage() {
           </div>
         </section >
 
+        {/* FULL BLEED TESTIMONIAL */}
+        < section className="relative w-full bg-cyan-900/20 py-24 md:py-32 overflow-hidden flex items-center justify-center text-center" >
+          <div className="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black/60 to-transparent pointer-events-none" />
+          <Reveal>
+            <div className="max-w-4xl mx-auto px-6 relative z-10">
+              <p className="text-2xl md:text-5xl font-light text-white leading-relaxed tracking-tight italic">
+                &quot;Azen completely transformed how we handle inbound queries. Our team saves 20 hours a week, and our customers get instant answers at 2 AM. It&apos;s a game-changer.&quot;
+              </p>
+              <div className="mt-8 flex flex-col items-center">
+                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-cyan-400 to-indigo-500 p-[2px]">
+                  <div className="w-full h-full rounded-full bg-slate-900 flex items-center justify-center text-xl font-bold">
+                    SJ
+                  </div>
+                </div>
+                <h4 className="mt-4 font-semibold text-white">Sarah Jenkins</h4>
+                <p className="text-sm text-white/50">Director of Operations, Lumina Corp</p>
+              </div>
+            </div>
+          </Reveal>
+        </section >
+
         {/* FOOTER */}
         < footer
           id="contact"
@@ -598,6 +650,7 @@ export default function AzenHomePage() {
           </div>
         </footer >
       </main >
+
     </div >
   );
 }

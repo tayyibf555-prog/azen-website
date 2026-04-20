@@ -32,7 +32,7 @@ export default function Navbar() {
                         <Link to="/cases" className="hover:text-white">
                             Case Studies
                         </Link>
-                        <a href="/#book" className="hover:text-white">
+                        <a href="https://calendly.com/tayyib-azen/30min" target="_blank" rel="noopener noreferrer" className="hover:text-white">
                             Book a Call
                         </a>
                         <Link to="/referrals" className="hover:text-white">
@@ -45,7 +45,9 @@ export default function Navbar() {
                             Contact
                         </a>
                         <a
-                            href="/#book"
+                            href="https://calendly.com/tayyib-azen/30min"
+                            target="_blank"
+                            rel="noopener noreferrer"
                             className="relative inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-medium text-cyan-100 group"
                         >
                             <span className="absolute inset-0 rounded-full border border-cyan-300/40 group-hover:border-cyan-300 transition-colors" />
@@ -97,7 +99,7 @@ export default function Navbar() {
                                 Case Studies
                             </Link>
                             {[
-                                ["Book a Call", "/#book"],
+                                ["Book a Call", "https://calendly.com/tayyib-azen/30min"],
                                 ["Referrals", "/referrals"],
                                 ["FAQ", "/#faq"],
                                 ["Contact", "/#contact"],
@@ -106,6 +108,8 @@ export default function Navbar() {
                                     <a
                                         key={href}
                                         href={href}
+                                        target={href.startsWith("http") ? "_blank" : undefined}
+                                        rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
                                         onClick={() => setMobileOpen(false)}
                                         className="block py-1 text-white/80"
                                     >

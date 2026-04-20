@@ -319,7 +319,7 @@ export default function CaseStudyDetail() {
                             </p>
                             <div className="flex flex-col sm:flex-row gap-4 justify-center">
                                 <a
-                                    href="/#book"
+                                    href="https://calendly.com/tayyib-azen/30min" target="_blank" rel="noopener noreferrer"
                                     className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-cyan-400 text-[#062035] font-bold hover:bg-cyan-300 transition-colors shadow-lg shadow-cyan-900/20"
                                 >
                                     <Clock className="w-5 h-5" />

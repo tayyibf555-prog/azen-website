@@ -4,6 +4,7 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import AzenHomePage from "./AzenHomePage.jsx";
+import AzenHomePagePremium from "./AzenHomePagePremium.jsx";
 import Receptionist from "./pages/solutions/Receptionist.jsx";
 import Automation from "./pages/solutions/Automation.jsx";
 import Audit from "./pages/solutions/Audit.jsx";
@@ -30,6 +31,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <Router>
       <Routes>
         <Route path="/" element={<AzenHomePage />} />
+        <Route path="/premium" element={<AzenHomePagePremium />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/solutions/receptionist" element={<Receptionist />} />
         <Route path="/solutions/automation" element={<Automation />} />
