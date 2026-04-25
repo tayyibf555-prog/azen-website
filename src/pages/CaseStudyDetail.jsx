@@ -125,7 +125,7 @@ export default function CaseStudyDetail() {
 
     if (!caseStudy) {
         return (
-            <div className="min-h-screen bg-gradient-to-b from-black to-[#0a1b3f] text-white selection:bg-cyan-500/30 flex items-center justify-center">
+            <div className="min-h-screen bg-gradient-to-b from-black to-blue-900 text-white selection:bg-cyan-500/30 flex items-center justify-center">
                 <div className="text-center">
                     <h1 className="text-4xl font-bold mb-4">Case Study Not Found</h1>
                     <Link to="/cases" className="text-cyan-400 hover:underline">Back to Case Studies</Link>
@@ -148,7 +148,7 @@ export default function CaseStudyDetail() {
     };
 
     return (
-        <div className="min-h-screen text-white bg-gradient-to-b from-black to-[#0a1b3f] relative overflow-hidden font-sans">
+        <div className="min-h-screen text-white bg-gradient-to-b from-black to-blue-900 relative overflow-hidden font-sans">
             {/* Background gradients */}
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_50%_at_30%_10%,rgba(0,215,192,0.1),transparent_60%),radial-gradient(50%_40%_at_75%_20%,rgba(0,108,255,0.1),transparent_60%)]" />
 
