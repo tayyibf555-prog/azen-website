@@ -102,7 +102,7 @@ export default function AzenHomePage() {
   }, [intro]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-tr from-black to-blue-900 text-white font-sans selection:bg-cyan-500/30">
+    <div className="min-h-screen bg-gradient-to-tr from-black to-blue-900 bg-fixed text-white font-sans selection:bg-cyan-500/30">
       <AnimatePresence>
         {intro && (
           <motion.div
