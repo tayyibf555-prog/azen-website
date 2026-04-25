@@ -16,7 +16,7 @@ export default function AuditPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-black to-blue-900 text-white selection:bg-cyan-500/30 font-sans">
+    <div className="min-h-screen bg-gradient-to-tr from-black to-blue-900 text-white selection:bg-cyan-500/30 font-sans">
       {/* Background gradients */}
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_50%_at_30%_10%,rgba(0,215,192,0.18),transparent_60%),radial-gradient(50%_40%_at_75%_20%,rgba(0,108,255,0.15),transparent_60%)]" />
 
