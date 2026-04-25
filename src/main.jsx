@@ -15,7 +15,7 @@ import "./index.css";
 
 function Contact() {
   return (
-    <div className="min-h-screen bg-[#07173A] text-white px-8 py-16">
+    <div className="min-h-screen bg-gradient-to-b from-black to-[#0a1b3f] text-white px-8 py-16">
       <div className="max-w-3xl mx-auto">
         <h1 className="text-4xl font-semibold">Contact</h1>
         <p className="mt-4 text-white/70">
