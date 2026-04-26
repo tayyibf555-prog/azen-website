@@ -1,15 +1,901 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Azen Digital</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  </head>
-  <body class="bg-[#07173A]">
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Azen - Apple Concept Full Site</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @font-face {
+            font-family: 'SF Pro Display';
+            src: url('https://applesocial.s3.amazonaws.com/assets/typography/fonts/sanfrancisco/sanfranciscodisplay-bold-webfont.woff') format('woff');
+            font-weight: 700;
+        }
+
+        @font-face {
+            font-family: 'SF Pro Text';
+            src: url('https://applesocial.s3.amazonaws.com/assets/typography/fonts/sanfrancisco/sanfranciscotext-regular-webfont.woff') format('woff');
+            font-weight: 400;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
+            -webkit-font-smoothing: antialiased;
+            background-color: #000000;
+            color: #F5F5F7;
+            overflow-x: hidden;
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Glass effect for components */
+        .glass-nav {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+        }
+
+        .terminal-glow {
+            box-shadow: 0 0 50px rgba(0, 113, 227, 0.15), inset 0 0 20px rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(40px);
+        }
+
+        .text-glow {
+            background: linear-gradient(180deg, #FFFFFF 0%, #88888C 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .bg-gradient-tr-fixed {
+            background: linear-gradient(to top right, #000000 0%, #000000 40%, #0a1b3f 100%);
+            background-attachment: fixed;
+        }
+
+        @keyframes typingSequence {
+
+            0%,
+            15% {
+                content: "> Initializing Azen core agent...";
+            }
+
+            16%,
+            35% {
+                content: "> Securing API handshakes [256-bit encrypted]...";
+            }
+
+            36%,
+            60% {
+                content: "> Parsing 14,000 rows of unstructured CSV data...";
+            }
+
+            61%,
+            85% {
+                content: "> Injecting logic vectors into CRM pipeline...";
+            }
+
+            86%,
+            100% {
+                content: "> Success. 42 hours of manual labor automated.";
+            }
+        }
+
+        .typewriter-text::after {
+            content: "";
+            animation: typingSequence 10s infinite;
+        }
+
+        details>summary {
+            list-style: none;
+        }
+
+        details>summary::-webkit-details-marker {
+            display: none;
+        }
+
+        /* Custom Range Slider */
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #ffffff;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 40px rgba(0, 113, 227, 0.6);
+            border: 2px solid #000;
+        }
+
+        input[type=range]::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #ffffff;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 40px rgba(0, 113, 227, 0.6);
+            border: none;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        apple: { blue: '#0071e3', gray: '#86868b', dark: '#1d1d1f' }
+                    },
+                    animation: {
+                        'marquee': 'marquee 80s linear infinite',
+                    },
+                    keyframes: {
+                        marquee: {
+                            '0%': { transform: 'translateX(0)' },
+                            '100%': { transform: 'translateX(calc(-100% - 2rem))' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-gradient-tr-fixed min-h-screen text-white relative">
+
+    <!-- Floating Pill Nav -->
+    <div class="absolute top-6 inset-x-0 z-50 flex justify-center pointer-events-none px-6">
+        <nav
+            class="pointer-events-auto py-2.5 px-3 flex justify-between items-center glass-nav rounded-full border border-white/10 shadow-2xl gap-8 md:gap-16 w-full max-w-fit">
+            <div class="text-xl font-bold tracking-tighter pl-3 text-white">azen.</div>
+            <div class="hidden md:flex gap-8 text-[11px] uppercase text-apple-gray font-bold tracking-widest">
+                <a href="#solutions" class="hover:text-white transition">Capabilities</a>
+                <a href="#portfolio" class="hover:text-white transition">Portfolio</a>
+                <a href="#how" class="hover:text-white transition">The Process</a>
+                <a href="#faq" class="hover:text-white transition">FAQ</a>
+            </div>
+            <a href="https://calendly.com/tayyib-azen/30min" target="_blank"
+                class="bg-[#0071e3] text-white px-5 py-2 rounded-full text-[11px] font-bold uppercase tracking-widest hover:bg-[#005bb5] transition">
+                Book Call
+            </a>
+        </nav>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="relative pt-40 pb-16 px-6 max-w-6xl mx-auto flex flex-col items-center justify-center">
+
+        <h1
+            class="text-5xl sm:text-6xl md:text-[100px] font-bold text-center tracking-tighter leading-[1.05] md:leading-[1] mb-8 pb-4 text-glow mx-auto max-w-5xl">
+            <span class="block">Stop renting time.</span>
+            <span class="block">Build leverage.</span>
+        </h1>
+
+        <p
+            class="text-apple-gray text-lg sm:text-xl md:text-3xl max-w-3xl text-center mb-12 md:mb-16 font-medium tracking-tight px-2">
+            We map your exact bottlenecks and deploy custom AI infrastructure to automate the impossible.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto px-6 sm:px-0 items-center justify-center">
+            <a href="https://calendly.com/tayyib-azen/30min" target="_blank"
+                class="w-full sm:w-auto bg-[#0071e3] text-white px-8 py-3.5 rounded-full text-center font-bold hover:bg-[#005bb5] transition shadow-[0_0_20px_rgba(0,113,227,0.4)]">Book
+                Audit</a>
+            <a href="#solutions"
+                class="w-full sm:w-auto px-8 py-3.5 rounded-full text-center font-bold border border-white/20 hover:bg-white/10 transition text-white">View
+                Solutions</a>
+        </div>
+    </section>
+
+
+
+    <!-- Interactive Terminal Demo (Kept the glass here as it represents a physical screen) -->
+    <section class="px-6 pb-32 max-w-5xl mx-auto w-full border-b border-white/5">
+        <div
+            class="rounded-2xl p-6 font-mono text-sm md:text-base terminal-glow bg-[#0a0a0c]/80 backdrop-blur-3xl relative overflow-hidden">
+            <!-- Faux Window Controls -->
+            <div class="flex gap-2 mb-6 border-b border-white/5 pb-4">
+                <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+            </div>
+            <div class="flex flex-col gap-2 min-h-[100px]">
+                <div class="opacity-50">root@azen-deploy ~ % ./run-orchestration.sh</div>
+                <div class="flex items-start break-all">
+                    <span class="text-[#0071e3] font-bold mr-3 shrink-0">system</span>
+                    <span class="typewriter-text text-[#c1c1c1]"></span>
+                    <span class="w-2 h-4 bg-white inline-block animate-pulse ml-1 self-center"></span>
+                </div>
+            </div>
+            <div
+                class="absolute bottom-0 right-0 w-64 h-64 bg-[#0071e3]/10 rounded-full blur-[80px] pointer-events-none">
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio: Strip (Kept but cleaned up) -->
+    <section id="portfolio" class="pt-24 pb-32 overflow-hidden border-b border-white/5">
+        <div class="w-full">
+            <div class="mb-20 px-6 max-w-7xl mx-auto text-center">
+                <h2 class="text-xs text-[#0071e3] uppercase tracking-widest font-bold mb-6">01 / Portfolio</h2>
+                <h3 class="text-5xl md:text-7xl font-bold tracking-tighter text-glow max-w-4xl mx-auto leading-[1.05]">
+                    Real clients. Real numbers.</h3>
+            </div>
+
+            <!-- Infinite Marquee Carousel -->
+            <div class="flex overflow-hidden w-full group pb-12 gap-8 relative select-none">
+
+                <!-- Track 1 -->
+                <div
+                    class="flex shrink-0 justify-around gap-8 min-w-full animate-marquee group-hover:[animation-play-state:paused]">
+
+                    <!-- Card 1: Prep Point -->
+                    <a href="case-study-prep-point.html"
+                        class="w-[85vw] sm:w-[450px] md:w-[700px] aspect-[16/9] bg-[#070707] rounded-3xl overflow-hidden relative block flex-shrink-0 hover:scale-[1.02] transition-transform duration-500 border border-white/5 cursor-pointer group/card">
+                        <div
+                            class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
+                            <img src="case%20study%20images%20/Prep%20point%20case%20study.png"
+                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" loading="lazy">
+                        </div>
+                        <div
+                            class="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black via-black/80 to-transparent z-10 pointer-events-none">
+                        </div>
+                        <div class="absolute bottom-8 left-8 text-white font-bold tracking-tight text-xl z-20">Prep
+                            Point</div>
+                        <div
+                            class="absolute bottom-8 right-8 text-apple-gray font-medium text-sm border-b border-apple-gray/30 pb-0.5 z-20">
+                            85% Error Reduction</div>
+                    </a>
+
+                    <!-- Card 2: Superior Accounting -->
+                    <a href="case-study-superior-accounting.html"
+                        class="w-[85vw] sm:w-[450px] md:w-[700px] aspect-[16/9] bg-[#070707] rounded-3xl overflow-hidden relative block flex-shrink-0 hover:scale-[1.02] transition-transform duration-500 border border-white/5 cursor-pointer group/card">
+                        <div
+                            class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
+                            <img src="case%20study%20images%20/Superior%20Accounting%20case%20study.png"
+                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" loading="lazy">
+                        </div>
+                        <div
+                            class="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black via-black/80 to-transparent z-10 pointer-events-none">
+                        </div>
+                        <div class="absolute bottom-8 left-8 text-white font-bold tracking-tight text-xl z-20">Superior
+                            Accounting</div>
+                        <div
+                            class="absolute bottom-8 right-8 text-apple-gray font-medium text-sm border-b border-apple-gray/30 pb-0.5 z-20">
+                            78% Call Resolution</div>
+                    </a>
+
+                    <!-- Card 3: TTT Departmentals -->
+                    <a href="case-study-ttt.html"
+                        class="w-[85vw] sm:w-[450px] md:w-[700px] aspect-[16/9] bg-[#070707] rounded-3xl overflow-hidden relative block flex-shrink-0 hover:scale-[1.02] transition-transform duration-500 border border-white/5 cursor-pointer group/card">
+                        <div
+                            class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
+                            <img src="case%20study%20images%20/TTT%20case%20study.png"
+                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" loading="lazy">
+                        </div>
+                        <div
+                            class="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black via-black/80 to-transparent z-10 pointer-events-none">
+                        </div>
+                        <div class="absolute bottom-8 left-8 text-white font-bold tracking-tight text-xl z-20">TTT
+                            Departmentals</div>
+                        <div
+                            class="absolute bottom-8 right-8 text-apple-gray font-medium text-sm border-b border-apple-gray/30 pb-0.5 z-20">
+                            90% Faster Sourcing</div>
+                    </a>
+
+                    <!-- Card 4: Little Oaks -->
+                    <a href="case-study-little-oaks.html"
+                        class="w-[85vw] sm:w-[450px] md:w-[700px] aspect-[16/9] bg-[#070707] rounded-3xl overflow-hidden relative block flex-shrink-0 hover:scale-[1.02] transition-transform duration-500 border border-white/5 cursor-pointer group/card">
+                        <div
+                            class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
+                            <img src="case%20study%20images%20/little%20oaks%20crm%20case%20study.png"
+                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" loading="lazy">
+                        </div>
+                        <div
+                            class="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black via-black/80 to-transparent z-10 pointer-events-none">
+                        </div>
+                        <div class="absolute bottom-8 left-8 text-white font-bold tracking-tight text-xl z-20">Little
+                            Oaks</div>
+                        <div
+                            class="absolute bottom-8 right-8 text-apple-gray font-medium text-sm border-b border-apple-gray/30 pb-0.5 z-20">
+                            24/7 Operations</div>
+                    </a>
+
+                    <!-- Card 5: Zia Ul Quran -->
+                    <a href="case-study-zia-ul-quran.html"
+                        class="w-[85vw] sm:w-[450px] md:w-[700px] aspect-[16/9] bg-[#070707] rounded-3xl overflow-hidden relative block flex-shrink-0 hover:scale-[1.02] transition-transform duration-500 border border-white/5 cursor-pointer group/card">
+                        <div
+                            class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
+                            <img src="case%20study%20images%20/zia%20ul%20quran%20case%20study.png"
+                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" loading="lazy">
+                        </div>
+                        <div
+                            class="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black via-black/80 to-transparent z-10 pointer-events-none">
+                        </div>
+                        <div class="absolute bottom-8 left-8 text-white font-bold tracking-tight text-xl z-20">Zia Ul
+                            Quran</div>
+                        <div
+                            class="absolute bottom-8 right-8 text-apple-gray font-medium text-sm border-b border-apple-gray/30 pb-0.5 z-20">
+                            3x Internal Efficiency</div>
+                    </a>
+
+                    <!-- Card 6: Zia Ul Ummah Foundation -->
+                    <a href="case-study-zia-ul-ummah.html"
+                        class="w-[85vw] sm:w-[450px] md:w-[700px] aspect-[16/9] bg-[#070707] rounded-3xl overflow-hidden relative block flex-shrink-0 hover:scale-[1.02] transition-transform duration-500 border border-white/5 cursor-pointer group/card">
+                        <div
+                            class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
+                            <img src="case%20study%20images%20/zia%20ul%20ummah%20case%20study.png"
+                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" loading="lazy">
+                        </div>
+                        <div
+                            class="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black via-black/80 to-transparent z-10 pointer-events-none">
+                        </div>
+                        <div class="absolute bottom-8 left-8 text-white font-bold tracking-tight text-xl z-20">Zia Ul
+                            Ummah</div>
+                        <div
+                            class="absolute bottom-8 right-8 text-apple-gray font-medium text-sm border-b border-apple-gray/30 pb-0.5 z-20">
+                            Automated Data Entry</div>
+                    </a>
+
+                    <!-- Card 7: Azen EYOS -->
+                    <a href="case-study-eyos.html"
+                        class="w-[85vw] sm:w-[450px] md:w-[700px] aspect-[16/9] bg-[#070707] rounded-3xl overflow-hidden relative block flex-shrink-0 hover:scale-[1.02] transition-transform duration-500 border border-white/5 cursor-pointer group/card">
+                        <div
+                            class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
+                            <img src="case%20study%20images%20/Azen%20EYOS%20Case%20study.png"
+                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" loading="lazy">
+                        </div>
+                        <div
+                            class="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black via-black/80 to-transparent z-10 pointer-events-none">
+                        </div>
+                        <div class="absolute bottom-8 left-8 text-white font-bold tracking-tight text-xl z-20">Azen
+                            EYOS</div>
+                        <div
+                            class="absolute bottom-8 right-8 text-apple-gray font-medium text-sm border-b border-apple-gray/30 pb-0.5 z-20">
+                            Automated Data Infrastructure</div>
+                    </a>
+
+                </div>
+
+                <!-- Track 2 (Duplicate for Seamless Loop) -->
+                <div
+                    class="flex shrink-0 justify-around gap-8 min-w-full animate-marquee group-hover:[animation-play-state:paused]">
+
+                    <!-- Card 1: Prep Point -->
+                    <a href="case-study-prep-point.html"
+                        class="w-[85vw] sm:w-[450px] md:w-[700px] aspect-[16/9] bg-[#070707] rounded-3xl overflow-hidden relative block flex-shrink-0 hover:scale-[1.02] transition-transform duration-500 border border-white/5 cursor-pointer group/card">
+                        <div
+                            class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
+                            <img src="case%20study%20images%20/Prep%20point%20case%20study.png"
+                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" loading="lazy">
+                        </div>
+                        <div
+                            class="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black via-black/80 to-transparent z-10 pointer-events-none">
+                        </div>
+                        <div class="absolute bottom-8 left-8 text-white font-bold tracking-tight text-xl z-20">Prep
+                            Point</div>
+                        <div
+                            class="absolute bottom-8 right-8 text-apple-gray font-medium text-sm border-b border-apple-gray/30 pb-0.5 z-20">
+                            85% Error Reduction</div>
+                    </a>
+
+                    <!-- Card 2: Superior Accounting -->
+                    <a href="case-study-superior-accounting.html"
+                        class="w-[85vw] sm:w-[450px] md:w-[700px] aspect-[16/9] bg-[#070707] rounded-3xl overflow-hidden relative block flex-shrink-0 hover:scale-[1.02] transition-transform duration-500 border border-white/5 cursor-pointer group/card">
+                        <div
+                            class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
+                            <img src="case%20study%20images%20/Superior%20Accounting%20case%20study.png"
+                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" loading="lazy">
+                        </div>
+                        <div
+                            class="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black via-black/80 to-transparent z-10 pointer-events-none">
+                        </div>
+                        <div class="absolute bottom-8 left-8 text-white font-bold tracking-tight text-xl z-20">Superior
+                            Accounting</div>
+                        <div
+                            class="absolute bottom-8 right-8 text-apple-gray font-medium text-sm border-b border-apple-gray/30 pb-0.5 z-20">
+                            78% Call Resolution</div>
+                    </a>
+
+                    <!-- Card 3: TTT Departmentals -->
+                    <a href="case-study-ttt.html"
+                        class="w-[85vw] sm:w-[450px] md:w-[700px] aspect-[16/9] bg-[#070707] rounded-3xl overflow-hidden relative block flex-shrink-0 hover:scale-[1.02] transition-transform duration-500 border border-white/5 cursor-pointer group/card">
+                        <div
+                            class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
+                            <img src="case%20study%20images%20/TTT%20case%20study.png"
+                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" loading="lazy">
+                        </div>
+                        <div
+                            class="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black via-black/80 to-transparent z-10 pointer-events-none">
+                        </div>
+                        <div class="absolute bottom-8 left-8 text-white font-bold tracking-tight text-xl z-20">TTT
+                            Departmentals</div>
+                        <div
+                            class="absolute bottom-8 right-8 text-apple-gray font-medium text-sm border-b border-apple-gray/30 pb-0.5 z-20">
+                            90% Faster Sourcing</div>
+                    </a>
+
+                    <!-- Card 4: Little Oaks -->
+                    <a href="case-study-little-oaks.html"
+                        class="w-[85vw] sm:w-[450px] md:w-[700px] aspect-[16/9] bg-[#070707] rounded-3xl overflow-hidden relative block flex-shrink-0 hover:scale-[1.02] transition-transform duration-500 border border-white/5 cursor-pointer group/card">
+                        <div
+                            class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
+                            <img src="case%20study%20images%20/little%20oaks%20crm%20case%20study.png"
+                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" loading="lazy">
+                        </div>
+                        <div
+                            class="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black via-black/80 to-transparent z-10 pointer-events-none">
+                        </div>
+                        <div class="absolute bottom-8 left-8 text-white font-bold tracking-tight text-xl z-20">Little
+                            Oaks</div>
+                        <div
+                            class="absolute bottom-8 right-8 text-apple-gray font-medium text-sm border-b border-apple-gray/30 pb-0.5 z-20">
+                            24/7 Operations</div>
+                    </a>
+
+                    <!-- Card 5: Zia Ul Quran -->
+                    <a href="case-study-zia-ul-quran.html"
+                        class="w-[85vw] sm:w-[450px] md:w-[700px] aspect-[16/9] bg-[#070707] rounded-3xl overflow-hidden relative block flex-shrink-0 hover:scale-[1.02] transition-transform duration-500 border border-white/5 cursor-pointer group/card">
+                        <div
+                            class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
+                            <img src="case%20study%20images%20/zia%20ul%20quran%20case%20study.png"
+                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" loading="lazy">
+                        </div>
+                        <div
+                            class="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black via-black/80 to-transparent z-10 pointer-events-none">
+                        </div>
+                        <div class="absolute bottom-8 left-8 text-white font-bold tracking-tight text-xl z-20">Zia Ul
+                            Quran</div>
+                        <div
+                            class="absolute bottom-8 right-8 text-apple-gray font-medium text-sm border-b border-apple-gray/30 pb-0.5 z-20">
+                            3x Internal Efficiency</div>
+                    </a>
+
+                    <!-- Card 6: Zia Ul Ummah Foundation -->
+                    <a href="case-study-zia-ul-ummah.html"
+                        class="w-[85vw] sm:w-[450px] md:w-[700px] aspect-[16/9] bg-[#070707] rounded-3xl overflow-hidden relative block flex-shrink-0 hover:scale-[1.02] transition-transform duration-500 border border-white/5 cursor-pointer group/card">
+                        <div
+                            class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
+                            <img src="case%20study%20images%20/zia%20ul%20ummah%20case%20study.png"
+                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" loading="lazy">
+                        </div>
+                        <div
+                            class="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black via-black/80 to-transparent z-10 pointer-events-none">
+                        </div>
+                        <div class="absolute bottom-8 left-8 text-white font-bold tracking-tight text-xl z-20">Zia Ul
+                            Ummah</div>
+                        <div
+                            class="absolute bottom-8 right-8 text-apple-gray font-medium text-sm border-b border-apple-gray/30 pb-0.5 z-20">
+                            Automated Data Entry</div>
+                    </a>
+
+                    <!-- Card 7: Azen EYOS -->
+                    <a href="case-study-eyos.html"
+                        class="w-[85vw] sm:w-[450px] md:w-[700px] aspect-[16/9] bg-[#070707] rounded-3xl overflow-hidden relative block flex-shrink-0 hover:scale-[1.02] transition-transform duration-500 border border-white/5 cursor-pointer group/card">
+                        <div
+                            class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
+                            <img src="case%20study%20images%20/Azen%20EYOS%20Case%20study.png"
+                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" loading="lazy">
+                        </div>
+                        <div
+                            class="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black via-black/80 to-transparent z-10 pointer-events-none">
+                        </div>
+                        <div class="absolute bottom-8 left-8 text-white font-bold tracking-tight text-xl z-20">Azen
+                            EYOS</div>
+                        <div
+                            class="absolute bottom-8 right-8 text-apple-gray font-medium text-sm border-b border-apple-gray/30 pb-0.5 z-20">
+                            Automated Data Infrastructure</div>
+                    </a>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Trusted By (Stripped Down) -->
+    <section class="py-16">
+        <p class="text-center text-[10px] text-apple-gray uppercase tracking-widest mb-10 font-bold">Systems currently
+            executing at</p>
+        <div class="flex justify-center flex-wrap gap-12 md:gap-24 opacity-40 grayscale invert items-center">
+            <h3 class="text-2xl font-bold tracking-tight">Zia Ul Quran</h3>
+            <h3 class="text-xl font-bold tracking-tight">Grand Oak</h3>
+            <h3 class="text-xl font-bold tracking-tight">S.A. Solutions</h3>
+        </div>
+    </section>
+
+    <!-- ROI Calculator Interactive Element -->
+    <section class="max-w-4xl mx-auto px-6 pb-24 w-full pt-16">
+        <div
+            class="glass-nav rounded-3xl p-8 md:p-12 border border-white/10 text-center relative overflow-hidden group">
+            <!-- Glow background -->
+            <div
+                class="absolute inset-0 bg-gradient-to-b from-[#0071e3]/10 to-transparent opacity-50 z-0 transition-opacity duration-500 group-hover:opacity-100">
+            </div>
+
+            <div class="relative z-10">
+                <h2 class="text-xs tracking-widest uppercase font-bold text-[#0071e3] mb-8">Calculate Your Leverage</h2>
+
+                <div class="mb-10">
+                    <div class="text-[60px] sm:text-[80px] md:text-[120px] font-bold tracking-tighter leading-none text-glow mb-2 transition-all duration-100"
+                        id="roi-output">£23,400</div>
+                    <div class="text-lg md:text-xl text-white font-medium">Yearly Capital Recovered</div>
+                </div>
+
+                <div class="max-w-xl mx-auto">
+                    <div class="flex justify-between text-xs font-bold text-apple-gray mb-4 uppercase tracking-widest">
+                        <span>10 Hrs/Wk</span>
+                        <span id="hours-display" class="text-white">10 Hrs</span>
+                        <span>500+ Hrs</span>
+                    </div>
+
+                    <input type="range" min="10" max="500" value="10"
+                        class="w-full h-1.5 bg-white/20 rounded-lg appearance-none cursor-pointer outline-none relative z-20"
+                        id="roi-slider">
+
+                    <p class="text-[11px] text-apple-gray mt-6 font-medium tracking-wide">Based on a £45/hr average
+                        manual entry execution cost over 52 weeks.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const slider = document.getElementById('roi-slider');
+            const output = document.getElementById('roi-output');
+            const hoursDisplay = document.getElementById('hours-display');
+
+            const formatter = new Intl.NumberFormat('en-GB', {
+                style: 'currency',
+                currency: 'GBP',
+                maximumFractionDigits: 0,
+            });
+
+            const calculateROI = (hours) => {
+                return hours * 45 * 52;
+            };
+
+            const updateSlider = () => {
+                const hours = parseInt(slider.value);
+                hoursDisplay.innerText = hours + " Hrs";
+                output.innerText = formatter.format(calculateROI(hours));
+            };
+
+            if (slider) {
+                slider.addEventListener('input', updateSlider);
+                updateSlider();
+            }
+        });
+    </script>
+
+    <!-- Capabilities (Completely Editorial, Borderless, Animated) -->
+    <section id="solutions" class="pt-40 pb-20 px-6 max-w-7xl mx-auto">
+        <div class="mb-32 reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out">
+            <h2 class="text-xs text-[#0071e3] uppercase tracking-widest font-bold mb-6">02 / Capabilities</h2>
+            <h3
+                class="text-[2.5rem] leading-[1.05] md:text-5xl lg:text-7xl font-bold tracking-tighter text-glow max-w-3xl">
+                Complex
+                workflows, executed autonomously.</h3>
+        </div>
+
+        <div class="space-y-40">
+
+            <!-- Capability 1 -->
+            <div
+                class="flex flex-col md:flex-row justify-between items-start md:items-center gap-12 reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out">
+                <div class="md:w-1/2">
+                    <h4
+                        class="text-[2.75rem] sm:text-6xl md:text-8xl font-bold tracking-tighter mb-4 md:mb-8 text-white">
+                        Agents.</h4>
+                    <p class="text-xl md:text-2xl text-apple-gray leading-tight font-medium max-w-lg">
+                        Forget basic chatbots. Deploy intelligent systems that reason through problems, interact with
+                        external APIs, and execute multi-step logic.
+                    </p>
+                </div>
+                <!-- Line turning blue class: scroll-line-container -->
+                <div
+                    class="md:w-1/2 self-stretch border-l border-white/10 pl-8 md:pl-16 flex flex-col justify-center gap-8 relative scroll-line-container">
+                    <div class="absolute top-0 left-[-1px] w-[2px] bg-[#0071e3] scroll-line-fill shadow-[0_0_15px_rgba(0,113,227,0.8)]"
+                        style="height: 0%;"></div>
+                    <div
+                        class="text-xl font-medium text-white reveal opacity-0 translate-y-5 transition-all duration-700 delay-100">
+                        Dynamic Decision Logic</div>
+                    <div
+                        class="text-xl font-medium text-white reveal opacity-0 translate-y-5 transition-all duration-700 delay-200">
+                        API Native Executions</div>
+                    <div
+                        class="text-xl font-medium text-white reveal opacity-0 translate-y-5 transition-all duration-700 delay-300">
+                        Self-Correcting Protocols</div>
+                </div>
+            </div>
+
+            <!-- Capability 2 -->
+            <div
+                class="flex flex-col-reverse md:flex-row justify-between items-start md:items-center gap-12 reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out">
+                <div
+                    class="md:w-1/2 self-stretch border-r border-white/10 pr-8 md:pr-16 flex flex-col justify-center items-end text-right gap-8 relative scroll-line-container">
+                    <div class="absolute top-0 right-[-1px] w-[2px] bg-[#0071e3] scroll-line-fill shadow-[0_0_15px_rgba(0,113,227,0.8)]"
+                        style="height: 0%;"></div>
+                    <div
+                        class="text-xl font-medium text-white reveal opacity-0 translate-y-5 transition-all duration-700 delay-100">
+                        CRM & ERP Unification</div>
+                    <div
+                        class="text-xl font-medium text-white reveal opacity-0 translate-y-5 transition-all duration-700 delay-200">
+                        Webhook Intercepts</div>
+                    <div
+                        class="text-xl font-medium text-white reveal opacity-0 translate-y-5 transition-all duration-700 delay-300">
+                        Continuous Sync</div>
+                </div>
+                <div class="md:w-1/2">
+                    <h4
+                        class="text-[2.75rem] sm:text-6xl md:text-8xl font-bold tracking-tighter mb-4 md:mb-8 text-white">
+                        Orchestrate.</h4>
+                    <p class="text-xl md:text-2xl text-apple-gray leading-tight font-medium max-w-lg">
+                        Break down your data silos. Our architecture weaves your operations together—making disjointed
+                        platforms communicate seamlessly in real-time.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Capability 3 -->
+            <div
+                class="flex flex-col md:flex-row justify-between items-start md:items-center gap-12 reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out">
+                <div class="md:w-1/2">
+                    <h4
+                        class="text-[2.75rem] sm:text-6xl md:text-8xl font-bold tracking-tighter mb-4 md:mb-8 text-white">
+                        Retrieval.</h4>
+                    <p class="text-xl md:text-2xl text-apple-gray leading-tight font-medium max-w-lg">
+                        Turn disorganized thousands of company documents into instantly queryable corporate memory banks
+                        using Enterprise RAG infrastructure.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Security Divider (Minimal) -->
+    <section class="py-32 px-6 max-w-7xl mx-auto border-t border-white/10">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-12">
+            <div class="max-w-2xl">
+                <svg class="w-12 h-12 text-[#0071e3] mb-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>
+                <h3 class="text-4xl md:text-5xl font-bold tracking-tighter mb-6">Zero public training.</h3>
+                <p class="text-xl md:text-2xl text-apple-gray font-medium leading-tight">We build walls around your IP.
+                    Client data
+                    routes through secured endpoints and is strictly prohibited from training external LLM models.
+                    End-to-end encryption. SOC 2 compliant.</p>
+            </div>
+            <div class="text-right">
+                <div class="text-sm font-bold tracking-widest text-[#0071e3] uppercase mb-2">Security Standard</div>
+                <div class="text-3xl font-bold">GDPR Ready</div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- How we build (Editorial Process) -->
+    <section id="how" class="py-40 px-6 max-w-7xl mx-auto border-t border-white/10 relative">
+        <!-- Ambient glow for aesthetic -->
+        <div
+            class="absolute top-1/2 left-0 -translate-y-1/2 w-[800px] h-[800px] bg-[#0071e3]/10 rounded-full blur-[150px] pointer-events-none">
+        </div>
+
+        <div class="mb-32 reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out relative z-10">
+            <h2 class="text-xs text-[#0071e3] uppercase tracking-widest font-bold mb-6">03 / The Process</h2>
+            <h3 class="text-5xl md:text-7xl font-bold tracking-tighter text-glow max-w-3xl leading-[1.05]">No fluff.
+                Just execution.</h3>
+        </div>
+
+        <div class="flex flex-col gap-12 md:gap-24 relative z-10">
+
+            <div
+                class="group flex flex-col md:flex-row gap-12 border-t border-white/10 pt-10 hover:border-[#0071e3]/30 transition-colors duration-700 reveal opacity-0 translate-y-10 delay-100 relative cursor-default">
+                <!-- Hover subtle light flash -->
+                <div
+                    class="absolute inset-0 bg-gradient-to-r from-[#0071e3]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none -mt-10 pt-10">
+                </div>
+                <div
+                    class="text-3xl font-bold text-apple-gray w-32 shrink-0 group-hover:text-[#0071e3] transition-colors duration-500">
+                    01.</div>
+                <div class="max-w-3xl group-hover:translate-x-4 transition-transform duration-700 ease-out">
+                    <h4
+                        class="text-4xl md:text-5xl font-bold tracking-tighter mb-6 text-white group-hover:text-glow transition-all duration-500">
+                        The Audit</h4>
+                    <p
+                        class="text-2xl text-apple-gray leading-tight font-medium group-hover:text-white/90 transition-colors duration-500">
+                        We map your entire architecture. We
+                        find the exact bottlenecks bleeding time and money. We lay out the orchestration blueprint
+                        before writing a single line of code.</p>
+                </div>
+            </div>
+
+            <div
+                class="group flex flex-col md:flex-row gap-12 border-t border-white/10 pt-10 hover:border-[#0071e3]/30 transition-colors duration-700 reveal opacity-0 translate-y-10 delay-200 relative cursor-default">
+                <div
+                    class="absolute inset-0 bg-gradient-to-r from-[#0071e3]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none -mt-10 pt-10">
+                </div>
+                <div
+                    class="text-3xl font-bold text-apple-gray w-32 shrink-0 group-hover:text-[#0071e3] transition-colors duration-500">
+                    02.</div>
+                <div class="max-w-3xl group-hover:translate-x-4 transition-transform duration-700 ease-out">
+                    <h4
+                        class="text-4xl md:text-5xl font-bold tracking-tighter mb-6 text-white group-hover:text-glow transition-all duration-500">
+                        The Code</h4>
+                    <p
+                        class="text-2xl text-apple-gray leading-tight font-medium group-hover:text-white/90 transition-colors duration-500">
+                        We engineer the native integrations,
+                        build the custom LLM wrappers, and write the backend scripts. Everything is deployed directly to
+                        your secure stack.</p>
+                </div>
+            </div>
+
+            <div
+                class="group flex flex-col md:flex-row gap-12 border-t border-white/10 pt-10 hover:border-[#0071e3]/30 transition-colors duration-700 reveal opacity-0 translate-y-10 delay-300 relative cursor-default">
+                <div
+                    class="absolute inset-0 bg-gradient-to-r from-[#0071e3]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none -mt-10 pt-10">
+                </div>
+                <div
+                    class="text-3xl font-bold text-apple-gray w-32 shrink-0 group-hover:text-[#0071e3] transition-colors duration-500">
+                    03.</div>
+                <div class="max-w-3xl group-hover:translate-x-4 transition-transform duration-700 ease-out">
+                    <h4
+                        class="text-4xl md:text-5xl font-bold tracking-tighter mb-6 text-white group-hover:text-glow transition-all duration-500">
+                        The Run</h4>
+                    <p
+                        class="text-2xl text-apple-gray leading-tight font-medium group-hover:text-white/90 transition-colors duration-500">
+                        We flip the switch. Your massive
+                        manual workloads evaporate. The system runs autonomously in the background 24/7. We monitor the
+                        uptime.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Founder Perspective -->
+    <section class="py-40 px-6 bg-black relative border-y border-white/10">
+        <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-start gap-16 md:gap-32">
+            <!-- Founder Image -->
+            <div
+                class="w-[300px] h-[300px] shrink-0 bg-white/5 grayscale flex items-center justify-center relative overflow-hidden rounded-[2rem] border border-white/5">
+                <img src="founder.png" alt="Tayyib Arbab"
+                    class="w-full h-full object-cover object-top scale-125 transform">
+            </div>
+            <div>
+                <h3 class="text-3xl md:text-4xl font-bold tracking-tight mb-12 leading-relaxed text-white">
+                    "Most agencies sell you overpriced solutions you don't need.<br><br>At Azen, we build solutions
+                    tailored to your needs. Strategy before code. Custom over generic. Built around how your business
+                    actually runs — not what's easiest to sell."
+                </h3>
+                <p class="font-bold text-xl text-white tracking-tight">Tayyib Arbab</p>
+                <p class="text-apple-gray mt-1">Founder, Systems Engineer</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section (Clean editorial) -->
+    <section id="faq" class="py-40 px-6 max-w-4xl mx-auto">
+        <h2 class="text-xs text-[#0071e3] uppercase tracking-widest font-bold mb-6">04 / Details</h2>
+        <h3 class="text-5xl md:text-7xl font-bold tracking-tighter mb-20 text-white">Straight answers.</h3>
+
+        <div class="space-y-0 border-t border-white/10">
+            <details class="group cursor-pointer py-10 border-b border-white/10">
+                <summary
+                    class="text-2xl md:text-3xl font-bold tracking-tight flex justify-between items-center focus:outline-none text-white/90 group-hover:text-white transition">
+                    Does this actually work with legacy systems?
+                    <span
+                        class="text-apple-gray text-3xl font-light group-open:rotate-45 transition-transform duration-300 pointer-events-none">+</span>
+                </summary>
+                <p class="mt-8 text-apple-gray text-xl leading-relaxed max-w-3xl font-medium">Yes. If your software has
+                    an API, webhooks, or allows basic database access, we can orchestrate it. We routinely integrate
+                    with clunky CRMs, outdated ERPs, and bespoke internal tools.</p>
+            </details>
+
+            <details class="group cursor-pointer py-10 border-b border-white/10">
+                <summary
+                    class="text-2xl md:text-3xl font-bold tracking-tight flex justify-between items-center focus:outline-none text-white/90 group-hover:text-white transition">
+                    How much will this cost?
+                    <span
+                        class="text-apple-gray text-3xl font-light group-open:rotate-45 transition-transform duration-300 pointer-events-none">+</span>
+                </summary>
+                <p class="mt-8 text-apple-gray text-xl leading-relaxed max-w-3xl font-medium">We don't charge hourly. We
+                    charge for the infrastructure deployed. After the Discovery Audit, you receive a flat, transparent
+                    quote for the entire build. Most implementations net a 300% ROI within the first year on saved labor
+                    alone.</p>
+            </details>
+
+            <details class="group cursor-pointer py-10 border-b border-white/10">
+                <summary
+                    class="text-2xl md:text-3xl font-bold tracking-tight flex justify-between items-center focus:outline-none text-white/90 group-hover:text-white transition">
+                    Will this ever break?
+                    <span
+                        class="text-apple-gray text-3xl font-light group-open:rotate-45 transition-transform duration-300 pointer-events-none">+</span>
+                </summary>
+                <p class="mt-8 text-apple-gray text-xl leading-relaxed max-w-3xl font-medium">Any system can face API
+                    downtime. However, we build robust error handling and fallback protocols into our scripts. If an
+                    integration fails, the system safely queues the task and alerts us automatically before it enters
+                    fail-state.</p>
+            </details>
+        </div>
+    </section>
+
+    <!-- Final CTA (Stark) -->
+    <section class="py-40 px-6 bg-black text-center relative overflow-hidden flex flex-col items-center">
+        <div
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#0071e3]/10 rounded-full blur-[150px] pointer-events-none">
+        </div>
+        <h2
+            class="text-[3rem] leading-[1.05] sm:text-[4rem] md:text-[6rem] lg:text-[7rem] md:leading-[0.9] font-bold tracking-tighter text-center mb-8 relative z-10 text-white max-w-5xl mx-auto">
+            <span class="block">The leverage is</span>
+            <span class="block">in the systems.</span>
+        </h2>
+        <p class="text-xl md:text-2xl text-apple-gray mb-10 md:mb-16 relative z-10 font-medium max-w-2xl mx-auto px-4">
+            Book a free audit. We'll find yours.</p>
+        <a href="https://calendly.com/tayyib-azen/30min" target="_blank"
+            class="inline-block bg-[#0071e3] text-white px-12 py-5 rounded-full font-bold text-xl hover:bg-[#005bb5] transition-all shadow-[0_0_50px_rgba(0,113,227,0.3)] relative z-10">
+            Book your Audit
+        </a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/10 py-16 px-6 bg-black">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="text-2xl font-bold tracking-tighter text-white">azen.</div>
+            <div class="text-sm text-apple-gray font-medium">&copy; 2026 Azen Digital. All rights reserved.</div>
+            <div class="flex gap-8 text-sm text-apple-gray font-medium">
+                <a href="#" class="hover:text-white transition">Privacy Policy</a>
+                <a href="#" class="hover:text-white transition">Terms of Service</a>
+                <a href="#" class="hover:text-white transition">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive Scroll Animations -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Fade-in Elements Observer
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.replace('opacity-0', 'opacity-100');
+                        entry.target.classList.replace('translate-y-10', 'translate-y-0');
+                        entry.target.classList.replace('translate-y-5', 'translate-y-0');
+                    }
+                });
+            }, { threshold: 0.15 });
+
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+            // Scroll-Linked Blue Lines
+            const scrollLines = document.querySelectorAll('.scroll-line-container');
+            const handleScroll = () => {
+                const windowHeight = window.innerHeight;
+                scrollLines.forEach(container => {
+                    const rect = container.getBoundingClientRect();
+                    // Fill line starts when top is 80% down the screen, ends when 30% down the screen.
+                    let progress = ((windowHeight * 0.8) - rect.top) / (windowHeight * 0.5);
+                    progress = Math.max(0, Math.min(1, progress));
+
+                    const lineFill = container.querySelector('.scroll-line-fill');
+                    if (lineFill) {
+                        lineFill.style.height = `${progress * 100}%`;
+                    }
+                });
+            };
+
+            window.addEventListener('scroll', handleScroll);
+            handleScroll(); // Trigger instantly on load
+        });
+    </script>
+</body>
+
 </html>
