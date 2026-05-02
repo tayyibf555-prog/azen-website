@@ -3,171 +3,108 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Azen - Apple Concept Full Site</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @font-face {
-            font-family: 'SF Pro Display';
-            src: url('https://applesocial.s3.amazonaws.com/assets/typography/fonts/sanfrancisco/sanfranciscodisplay-bold-webfont.woff') format('woff');
-            font-weight: 700;
-        }
 
-        @font-face {
-            font-family: 'SF Pro Text';
-            src: url('https://applesocial.s3.amazonaws.com/assets/typography/fonts/sanfrancisco/sanfranciscotext-regular-webfont.woff') format('woff');
-            font-weight: 400;
-        }
+    <title>Azen Digital | Custom AI infrastructure for ops-heavy businesses</title>
+    <meta name="description" content="Azen Digital deploys custom AI orchestration, autonomous agents, and Enterprise RAG infrastructure for accounting, logistics, education, and service-based businesses. Strategy before code. Flat-fee builds, not hourly.">
+    <meta name="author" content="Azen Digital">
+    <meta name="theme-color" content="#0a0e1f">
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
-            -webkit-font-smoothing: antialiased;
-            background-color: #000000;
-            color: #F5F5F7;
-            overflow-x: hidden;
-        }
+    <!-- Canonical -->
+    <link rel="canonical" href="https://www.azen.io/">
 
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="apple-touch-icon" href="favicon.svg">
 
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Azen Digital">
+    <meta property="og:title" content="Azen Digital | Custom AI infrastructure">
+    <meta property="og:description" content="We map your bottlenecks and deploy custom AI infrastructure that automates the manual work bleeding your team. Flat-fee builds. 300% ROI year one.">
+    <meta property="og:url" content="https://www.azen.io/">
+    <meta property="og:image" content="https://www.azen.io/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
 
-        /* Glass effect for components */
-        .glass-nav {
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: saturate(180%) blur(20px);
-            -webkit-backdrop-filter: saturate(180%) blur(20px);
-        }
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Azen Digital | Custom AI infrastructure">
+    <meta name="twitter:description" content="We map your bottlenecks and deploy custom AI infrastructure. Flat-fee builds. Strategy before code.">
+    <meta name="twitter:image" content="https://www.azen.io/og-image.png">
 
-        .terminal-glow {
-            box-shadow: 0 0 50px rgba(0, 113, 227, 0.15), inset 0 0 20px rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(40px);
-        }
-
-        .text-glow {
-            background: linear-gradient(180deg, #FFFFFF 0%, #88888C 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .bg-gradient-tr-fixed {
-            background: linear-gradient(to top right, #000000 0%, #000000 40%, #0a1b3f 100%);
-            background-attachment: fixed;
-        }
-
-        @keyframes typingSequence {
-
-            0%,
-            15% {
-                content: "> Initializing Azen core agent...";
-            }
-
-            16%,
-            35% {
-                content: "> Securing API handshakes [256-bit encrypted]...";
-            }
-
-            36%,
-            60% {
-                content: "> Parsing 14,000 rows of unstructured CSV data...";
-            }
-
-            61%,
-            85% {
-                content: "> Injecting logic vectors into CRM pipeline...";
-            }
-
-            86%,
-            100% {
-                content: "> Success. 42 hours of manual labor automated.";
-            }
-        }
-
-        .typewriter-text::after {
-            content: "";
-            animation: typingSequence 10s infinite;
-        }
-
-        details>summary {
-            list-style: none;
-        }
-
-        details>summary::-webkit-details-marker {
-            display: none;
-        }
-
-        /* Custom Range Slider */
-        input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            background: #ffffff;
-            cursor: pointer;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 40px rgba(0, 113, 227, 0.6);
-            border: 2px solid #000;
-        }
-
-        input[type=range]::-moz-range-thumb {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            background: #ffffff;
-            cursor: pointer;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 40px rgba(0, 113, 227, 0.6);
-            border: none;
-        }
-    </style>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        apple: { blue: '#0071e3', gray: '#86868b', dark: '#1d1d1f' }
-                    },
-                    animation: {
-                        'marquee': 'marquee 80s linear infinite',
-                    },
-                    keyframes: {
-                        marquee: {
-                            '0%': { transform: 'translateX(0)' },
-                            '100%': { transform: 'translateX(calc(-100% - 2rem))' },
-                        }
-                    }
-                }
-            }
-        }
+    <!-- Schema.org / JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Azen Digital",
+      "url": "https://www.azen.io/",
+      "logo": "https://www.azen.io/favicon.svg",
+      "description": "Custom AI infrastructure agency. Autonomous agents, orchestration, and Enterprise RAG for ops-heavy businesses.",
+      "founder": { "@type": "Person", "name": "Tayyib Arbab", "jobTitle": "Founder, Systems Engineer" },
+      "sameAs": []
+    }
     </script>
+
+    <!-- Preconnect (for Mona Sans + JetBrains Mono via Google Fonts) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Built Tailwind CSS (replaces cdn.tailwindcss.com) -->
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body class="bg-gradient-tr-fixed min-h-screen text-white relative">
 
+    <!-- Skip link (a11y) -->
+    <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[60] focus:bg-white focus:text-black focus:px-4 focus:py-2 focus:rounded">Skip to content</a>
+
     <!-- Floating Pill Nav -->
     <div class="absolute top-6 inset-x-0 z-50 flex justify-center pointer-events-none px-6">
-        <nav
-            class="pointer-events-auto py-2.5 px-3 flex justify-between items-center glass-nav rounded-full border border-white/10 shadow-2xl gap-8 md:gap-16 w-full max-w-fit">
-            <div class="text-xl font-bold tracking-tighter pl-3 text-white">azen.</div>
+        <nav aria-label="Primary"
+            class="pointer-events-auto py-2.5 px-3 flex justify-between items-center glass-nav rounded-full border border-white/10 shadow-2xl gap-4 sm:gap-8 md:gap-16 w-full max-w-fit">
+            <a href="#" aria-label="Azen home" class="text-xl font-bold tracking-tighter pl-3 text-white">azen.</a>
             <div class="hidden md:flex gap-8 text-[11px] uppercase text-apple-gray font-bold tracking-widest">
                 <a href="#solutions" class="hover:text-white transition">Capabilities</a>
                 <a href="#portfolio" class="hover:text-white transition">Portfolio</a>
                 <a href="#how" class="hover:text-white transition">The Process</a>
                 <a href="#faq" class="hover:text-white transition">FAQ</a>
             </div>
-            <a href="https://calendly.com/tayyib-azen/30min" target="_blank"
-                class="bg-[#0071e3] text-white px-5 py-2 rounded-full text-[11px] font-bold uppercase tracking-widest hover:bg-[#005bb5] transition">
-                Book Call
+            <a href="https://calendly.com/tayyib-azen/30min" target="_blank" rel="noopener"
+                class="hidden sm:inline-block bg-[#0071e3] text-white px-5 py-2 rounded-full text-[11px] font-bold uppercase tracking-widest hover:bg-[#005bb5] transition focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60">
+                Book Audit
             </a>
+            <!-- Mobile menu button -->
+            <button id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="mobile-drawer"
+                class="md:hidden inline-flex items-center justify-center w-11 h-11 rounded-full text-white hover:bg-white/10 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60">
+                <svg id="nav-icon-open" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                    <path d="M4 7h16M4 12h16M4 17h16"/>
+                </svg>
+                <svg id="nav-icon-close" class="w-5 h-5 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                    <path d="M6 6l12 12M18 6L6 18"/>
+                </svg>
+            </button>
         </nav>
     </div>
 
+    <!-- Mobile drawer -->
+    <div id="mobile-drawer" data-open="false" aria-hidden="true"
+        class="mobile-drawer fixed inset-x-0 top-0 z-40 md:hidden glass-nav border-b border-white/10 px-6 pt-28 pb-10">
+        <ul class="flex flex-col gap-2 text-2xl font-bold tracking-tight text-white">
+            <li><a href="#solutions" class="block py-3 border-b border-white/10 hover:text-[#0071e3] transition" data-nav-link>Capabilities</a></li>
+            <li><a href="#portfolio" class="block py-3 border-b border-white/10 hover:text-[#0071e3] transition" data-nav-link>Portfolio</a></li>
+            <li><a href="#how" class="block py-3 border-b border-white/10 hover:text-[#0071e3] transition" data-nav-link>The Process</a></li>
+            <li><a href="#faq" class="block py-3 border-b border-white/10 hover:text-[#0071e3] transition" data-nav-link>FAQ</a></li>
+        </ul>
+        <a href="https://calendly.com/tayyib-azen/30min" target="_blank" rel="noopener"
+            class="mt-8 inline-flex items-center justify-center w-full bg-[#0071e3] text-white px-6 py-4 rounded-full font-bold hover:bg-[#005bb5] transition">
+            Book Audit
+        </a>
+    </div>
+
     <!-- Hero Section -->
+    <main id="main">
     <section class="relative pt-40 pb-16 px-6 max-w-6xl mx-auto flex flex-col items-center justify-center">
 
         <h1
@@ -178,15 +115,15 @@
 
         <p
             class="text-apple-gray text-lg sm:text-xl md:text-3xl max-w-3xl text-center mb-12 md:mb-16 font-medium tracking-tight px-2">
-            We map your exact bottlenecks and deploy custom AI infrastructure to automate the impossible.
+            We map your exact bottlenecks and deploy custom AI infrastructure that automates the manual work bleeding your team.
         </p>
 
         <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto px-6 sm:px-0 items-center justify-center">
-            <a href="https://calendly.com/tayyib-azen/30min" target="_blank"
-                class="w-full sm:w-auto bg-[#0071e3] text-white px-8 py-3.5 rounded-full text-center font-bold hover:bg-[#005bb5] transition shadow-[0_0_20px_rgba(0,113,227,0.4)]">Book
+            <a href="https://calendly.com/tayyib-azen/30min" target="_blank" rel="noopener"
+                class="w-full sm:w-auto bg-[#0071e3] text-white px-8 py-3.5 rounded-full text-center font-bold hover:bg-[#005bb5] transition shadow-[0_0_20px_rgba(0,113,227,0.4)] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60">Book
                 Audit</a>
             <a href="#solutions"
-                class="w-full sm:w-auto px-8 py-3.5 rounded-full text-center font-bold border border-white/20 hover:bg-white/10 transition text-white">View
+                class="w-full sm:w-auto px-8 py-3.5 rounded-full text-center font-bold border border-white/20 hover:bg-white/10 transition text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60">View
                 Solutions</a>
         </div>
     </section>
@@ -239,6 +176,7 @@
                         <div
                             class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
                             <img src="case%20study%20images%20/Prep%20point%20case%20study.png"
+                                alt="Prep Point dashboard showing automated order processing with 85% error reduction"
                                 class="w-full h-full object-contain object-top rounded-xl shadow-2xl" loading="lazy">
                         </div>
                         <div
@@ -257,6 +195,7 @@
                         <div
                             class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
                             <img src="case%20study%20images%20/Superior%20Accounting%20case%20study.png"
+                                alt="Superior Accounting client portal with call analytics and 78% call resolution metric"
                                 class="w-full h-full object-contain object-top rounded-xl shadow-2xl" loading="lazy">
                         </div>
                         <div
@@ -275,6 +214,7 @@
                         <div
                             class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
                             <img src="case%20study%20images%20/TTT%20case%20study.png"
+                                alt="TTT Departmentals procurement dashboard with sourcing time and cost analytics, 90% faster sourcing"
                                 class="w-full h-full object-contain object-top rounded-xl shadow-2xl" loading="lazy">
                         </div>
                         <div
@@ -293,6 +233,7 @@
                         <div
                             class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
                             <img src="case%20study%20images%20/little%20oaks%20crm%20case%20study.png"
+                                alt="Little Oaks nursery CRM dashboard with parent and staff attendance views, 24/7 operations"
                                 class="w-full h-full object-contain object-top rounded-xl shadow-2xl" loading="lazy">
                         </div>
                         <div
@@ -311,6 +252,7 @@
                         <div
                             class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
                             <img src="case%20study%20images%20/zia%20ul%20quran%20case%20study.png"
+                                alt="Zia Ul Quran website homepage with Arabic and English content, 3x internal efficiency"
                                 class="w-full h-full object-contain object-top rounded-xl shadow-2xl" loading="lazy">
                         </div>
                         <div
@@ -329,6 +271,7 @@
                         <div
                             class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
                             <img src="case%20study%20images%20/zia%20ul%20ummah%20case%20study.png"
+                                alt="Zia Ul Ummah Foundation operations dashboard with automated data entry"
                                 class="w-full h-full object-contain object-top rounded-xl shadow-2xl" loading="lazy">
                         </div>
                         <div
@@ -347,6 +290,7 @@
                         <div
                             class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
                             <img src="case%20study%20images%20/Azen%20EYOS%20Case%20study.png"
+                                alt="Azen EYOS early-years operating system with automated data infrastructure for nurseries"
                                 class="w-full h-full object-contain object-top rounded-xl shadow-2xl" loading="lazy">
                         </div>
                         <div
@@ -371,6 +315,7 @@
                         <div
                             class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
                             <img src="case%20study%20images%20/Prep%20point%20case%20study.png"
+                                alt="Prep Point dashboard showing automated order processing with 85% error reduction"
                                 class="w-full h-full object-contain object-top rounded-xl shadow-2xl" loading="lazy">
                         </div>
                         <div
@@ -389,6 +334,7 @@
                         <div
                             class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
                             <img src="case%20study%20images%20/Superior%20Accounting%20case%20study.png"
+                                alt="Superior Accounting client portal with call analytics and 78% call resolution metric"
                                 class="w-full h-full object-contain object-top rounded-xl shadow-2xl" loading="lazy">
                         </div>
                         <div
@@ -407,6 +353,7 @@
                         <div
                             class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
                             <img src="case%20study%20images%20/TTT%20case%20study.png"
+                                alt="TTT Departmentals procurement dashboard with sourcing time and cost analytics, 90% faster sourcing"
                                 class="w-full h-full object-contain object-top rounded-xl shadow-2xl" loading="lazy">
                         </div>
                         <div
@@ -425,6 +372,7 @@
                         <div
                             class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
                             <img src="case%20study%20images%20/little%20oaks%20crm%20case%20study.png"
+                                alt="Little Oaks nursery CRM dashboard with parent and staff attendance views, 24/7 operations"
                                 class="w-full h-full object-contain object-top rounded-xl shadow-2xl" loading="lazy">
                         </div>
                         <div
@@ -443,6 +391,7 @@
                         <div
                             class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
                             <img src="case%20study%20images%20/zia%20ul%20quran%20case%20study.png"
+                                alt="Zia Ul Quran website homepage with Arabic and English content, 3x internal efficiency"
                                 class="w-full h-full object-contain object-top rounded-xl shadow-2xl" loading="lazy">
                         </div>
                         <div
@@ -461,6 +410,7 @@
                         <div
                             class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
                             <img src="case%20study%20images%20/zia%20ul%20ummah%20case%20study.png"
+                                alt="Zia Ul Ummah Foundation operations dashboard with automated data entry"
                                 class="w-full h-full object-contain object-top rounded-xl shadow-2xl" loading="lazy">
                         </div>
                         <div
@@ -479,6 +429,7 @@
                         <div
                             class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
                             <img src="case%20study%20images%20/Azen%20EYOS%20Case%20study.png"
+                                alt="Azen EYOS early-years operating system with automated data infrastructure for nurseries"
                                 class="w-full h-full object-contain object-top rounded-xl shadow-2xl" loading="lazy">
                         </div>
                         <div
@@ -636,8 +587,8 @@
                         class="text-[2.75rem] sm:text-6xl md:text-8xl font-bold tracking-tighter mb-4 md:mb-8 text-white">
                         Orchestrate.</h4>
                     <p class="text-xl md:text-2xl text-apple-gray leading-tight font-medium max-w-lg">
-                        Break down your data silos. Our architecture weaves your operations together—making disjointed
-                        platforms communicate seamlessly in real-time.
+                        Break down your data silos. Our architecture weaves your operations together. Disjointed
+                        platforms communicate seamlessly, in real time.
                     </p>
                 </div>
             </div>
@@ -762,7 +713,7 @@
     </section>
 
     <!-- Founder Perspective -->
-    <section class="py-40 px-6 bg-black relative border-y border-white/10">
+    <section class="py-40 px-6 bg-indigo-drench relative border-y border-white/10">
         <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-start gap-16 md:gap-32">
             <!-- Founder Image -->
             <div
@@ -774,7 +725,7 @@
                 <h3 class="text-3xl md:text-4xl font-bold tracking-tight mb-12 leading-relaxed text-white">
                     "Most agencies sell you overpriced solutions you don't need.<br><br>At Azen, we build solutions
                     tailored to your needs. Strategy before code. Custom over generic. Built around how your business
-                    actually runs — not what's easiest to sell."
+                    actually runs, not what's easiest to sell."
                 </h3>
                 <p class="font-bold text-xl text-white tracking-tight">Tayyib Arbab</p>
                 <p class="text-apple-gray mt-1">Founder, Systems Engineer</p>
@@ -793,7 +744,7 @@
                     class="text-2xl md:text-3xl font-bold tracking-tight flex justify-between items-center focus:outline-none text-white/90 group-hover:text-white transition">
                     Does this actually work with legacy systems?
                     <span
-                        class="text-apple-gray text-3xl font-light group-open:rotate-45 transition-transform duration-300 pointer-events-none">+</span>
+                        class="text-apple-gray text-3xl font-light group-open:rotate-45 transition-transform duration-300 pointer-events-none" aria-hidden="true">+</span>
                 </summary>
                 <p class="mt-8 text-apple-gray text-xl leading-relaxed max-w-3xl font-medium">Yes. If your software has
                     an API, webhooks, or allows basic database access, we can orchestrate it. We routinely integrate
@@ -805,12 +756,61 @@
                     class="text-2xl md:text-3xl font-bold tracking-tight flex justify-between items-center focus:outline-none text-white/90 group-hover:text-white transition">
                     How much will this cost?
                     <span
-                        class="text-apple-gray text-3xl font-light group-open:rotate-45 transition-transform duration-300 pointer-events-none">+</span>
+                        class="text-apple-gray text-3xl font-light group-open:rotate-45 transition-transform duration-300 pointer-events-none" aria-hidden="true">+</span>
                 </summary>
                 <p class="mt-8 text-apple-gray text-xl leading-relaxed max-w-3xl font-medium">We don't charge hourly. We
                     charge for the infrastructure deployed. After the Discovery Audit, you receive a flat, transparent
-                    quote for the entire build. Most implementations net a 300% ROI within the first year on saved labor
-                    alone.</p>
+                    quote for the entire build. Typical engagements range from £8k for a single workflow to £40k+ for full multi-system orchestration. Most implementations net a 300% ROI within the first year on saved labor alone.</p>
+            </details>
+
+            <details class="group cursor-pointer py-10 border-b border-white/10">
+                <summary
+                    class="text-2xl md:text-3xl font-bold tracking-tight flex justify-between items-center focus:outline-none text-white/90 group-hover:text-white transition">
+                    How long does a typical build take?
+                    <span
+                        class="text-apple-gray text-3xl font-light group-open:rotate-45 transition-transform duration-300 pointer-events-none" aria-hidden="true">+</span>
+                </summary>
+                <p class="mt-8 text-apple-gray text-xl leading-relaxed max-w-3xl font-medium">Discovery Audit: 1 to 2 weeks. Single-workflow build: 3 to 6 weeks. Multi-system orchestration: 8 to 14 weeks. We never quote a build until the audit is done. You get phase-by-phase milestones with checkpoint demos so the work is visible the whole way through.</p>
+            </details>
+
+            <details class="group cursor-pointer py-10 border-b border-white/10">
+                <summary
+                    class="text-2xl md:text-3xl font-bold tracking-tight flex justify-between items-center focus:outline-none text-white/90 group-hover:text-white transition">
+                    Who owns the code and the IP?
+                    <span
+                        class="text-apple-gray text-3xl font-light group-open:rotate-45 transition-transform duration-300 pointer-events-none" aria-hidden="true">+</span>
+                </summary>
+                <p class="mt-8 text-apple-gray text-xl leading-relaxed max-w-3xl font-medium">You do. Source code, prompts, schemas, and any custom models we train on your data are yours. Everything ships into your infrastructure: your cloud account, your secrets manager, your repo. We retain no client data after handover beyond what's required for ongoing support agreements.</p>
+            </details>
+
+            <details class="group cursor-pointer py-10 border-b border-white/10">
+                <summary
+                    class="text-2xl md:text-3xl font-bold tracking-tight flex justify-between items-center focus:outline-none text-white/90 group-hover:text-white transition">
+                    What about vendor lock-in if a model provider changes?
+                    <span
+                        class="text-apple-gray text-3xl font-light group-open:rotate-45 transition-transform duration-300 pointer-events-none" aria-hidden="true">+</span>
+                </summary>
+                <p class="mt-8 text-apple-gray text-xl leading-relaxed max-w-3xl font-medium">Every system we build abstracts the model layer behind a provider-agnostic interface. Swapping from one foundation model to another is a config change, not a rebuild. We routinely deploy systems that fail over between providers automatically based on cost, latency, or availability.</p>
+            </details>
+
+            <details class="group cursor-pointer py-10 border-b border-white/10">
+                <summary
+                    class="text-2xl md:text-3xl font-bold tracking-tight flex justify-between items-center focus:outline-none text-white/90 group-hover:text-white transition">
+                    Can my team operate the system after handover?
+                    <span
+                        class="text-apple-gray text-3xl font-light group-open:rotate-45 transition-transform duration-300 pointer-events-none" aria-hidden="true">+</span>
+                </summary>
+                <p class="mt-8 text-apple-gray text-xl leading-relaxed max-w-3xl font-medium">Yes. Every build ships with a runbook, an admin dashboard for non-technical operators, and a recorded handover session covering monitoring, retraining, and common failure modes. We offer optional retainer support for the first 90 days, after which most clients self-manage.</p>
+            </details>
+
+            <details class="group cursor-pointer py-10 border-b border-white/10">
+                <summary
+                    class="text-2xl md:text-3xl font-bold tracking-tight flex justify-between items-center focus:outline-none text-white/90 group-hover:text-white transition">
+                    What does the Discovery Audit actually output?
+                    <span
+                        class="text-apple-gray text-3xl font-light group-open:rotate-45 transition-transform duration-300 pointer-events-none" aria-hidden="true">+</span>
+                </summary>
+                <p class="mt-8 text-apple-gray text-xl leading-relaxed max-w-3xl font-medium">A written architecture document mapping every manual workflow, the systems they touch, the labor cost in hours per week, and a prioritized build sequence with effort estimates. If the math doesn't justify a build, we'll tell you. The audit is paid; if you proceed with a build, the cost is credited.</p>
             </details>
 
             <details class="group cursor-pointer py-10 border-b border-white/10">
@@ -818,18 +818,18 @@
                     class="text-2xl md:text-3xl font-bold tracking-tight flex justify-between items-center focus:outline-none text-white/90 group-hover:text-white transition">
                     Will this ever break?
                     <span
-                        class="text-apple-gray text-3xl font-light group-open:rotate-45 transition-transform duration-300 pointer-events-none">+</span>
+                        class="text-apple-gray text-3xl font-light group-open:rotate-45 transition-transform duration-300 pointer-events-none" aria-hidden="true">+</span>
                 </summary>
                 <p class="mt-8 text-apple-gray text-xl leading-relaxed max-w-3xl font-medium">Any system can face API
-                    downtime. However, we build robust error handling and fallback protocols into our scripts. If an
+                    downtime. We build robust error handling and fallback protocols into every script. If an
                     integration fails, the system safely queues the task and alerts us automatically before it enters
-                    fail-state.</p>
+                    a fail state. Every build ships with uptime monitoring and an incident runbook.</p>
             </details>
         </div>
     </section>
 
     <!-- Final CTA (Stark) -->
-    <section class="py-40 px-6 bg-black text-center relative overflow-hidden flex flex-col items-center">
+    <section class="py-40 px-6 bg-indigo-drench text-center relative overflow-hidden flex flex-col items-center">
         <div
             class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#0071e3]/10 rounded-full blur-[150px] pointer-events-none">
         </div>
@@ -840,22 +840,23 @@
         </h2>
         <p class="text-xl md:text-2xl text-apple-gray mb-10 md:mb-16 relative z-10 font-medium max-w-2xl mx-auto px-4">
             Book a free audit. We'll find yours.</p>
-        <a href="https://calendly.com/tayyib-azen/30min" target="_blank"
-            class="inline-block bg-[#0071e3] text-white px-12 py-5 rounded-full font-bold text-xl hover:bg-[#005bb5] transition-all shadow-[0_0_50px_rgba(0,113,227,0.3)] relative z-10">
-            Book your Audit
+        <a href="https://calendly.com/tayyib-azen/30min" target="_blank" rel="noopener"
+            class="inline-block bg-[#0071e3] text-white px-12 py-5 rounded-full font-bold text-xl hover:bg-[#005bb5] transition-all shadow-[0_0_50px_rgba(0,113,227,0.3)] relative z-10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60">
+            Book Audit
         </a>
     </section>
+    </main>
 
     <!-- Footer -->
-    <footer class="border-t border-white/10 py-16 px-6 bg-black">
+    <footer class="border-t border-white/10 py-16 px-6">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
             <div class="text-2xl font-bold tracking-tighter text-white">azen.</div>
             <div class="text-sm text-apple-gray font-medium">&copy; 2026 Azen Digital. All rights reserved.</div>
-            <div class="flex gap-8 text-sm text-apple-gray font-medium">
-                <a href="#" class="hover:text-white transition">Privacy Policy</a>
-                <a href="#" class="hover:text-white transition">Terms of Service</a>
-                <a href="#" class="hover:text-white transition">Contact</a>
-            </div>
+            <nav aria-label="Legal" class="flex gap-8 text-sm text-apple-gray font-medium">
+                <a href="privacy.html" class="hover:text-white transition">Privacy Policy</a>
+                <a href="terms.html" class="hover:text-white transition">Terms of Service</a>
+                <a href="mailto:hello@azen.io" class="hover:text-white transition">Contact</a>
+            </nav>
         </div>
     </footer>
 
@@ -894,6 +895,33 @@
 
             window.addEventListener('scroll', handleScroll);
             handleScroll(); // Trigger instantly on load
+
+            // Mobile nav drawer toggle
+            const toggle = document.getElementById('nav-toggle');
+            const drawer = document.getElementById('mobile-drawer');
+            const iconOpen = document.getElementById('nav-icon-open');
+            const iconClose = document.getElementById('nav-icon-close');
+            if (toggle && drawer) {
+                const setOpen = (open) => {
+                    drawer.dataset.open = String(open);
+                    drawer.setAttribute('aria-hidden', String(!open));
+                    toggle.setAttribute('aria-expanded', String(open));
+                    if (iconOpen && iconClose) {
+                        iconOpen.classList.toggle('hidden', open);
+                        iconClose.classList.toggle('hidden', !open);
+                    }
+                    document.body.style.overflow = open ? 'hidden' : '';
+                };
+                toggle.addEventListener('click', () => {
+                    setOpen(drawer.dataset.open !== 'true');
+                });
+                drawer.querySelectorAll('[data-nav-link]').forEach(link => {
+                    link.addEventListener('click', () => setOpen(false));
+                });
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && drawer.dataset.open === 'true') setOpen(false);
+                });
+            }
         });
     </script>
 </body>

@@ -1,0 +1,171 @@
+/* Mona Sans (free, open-source, GitHub) — distinctive sans for display + body. */
+@import url('https://fonts.googleapis.com/css2?family=Mona+Sans:ital,wght@0,200..900;1,200..900&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================================================
+   Tokens
+   ==========================================================*/
+:root {
+  --ink-deep: oklch(0.06 0.012 260);   /* near-black, tinted indigo */
+  --ink: oklch(0.10 0.012 260);
+  --ink-soft: oklch(0.16 0.012 260);
+  --line: oklch(0.98 0.005 260 / 0.10);
+  --line-strong: oklch(0.98 0.005 260 / 0.20);
+  --indigo: #0071e3;
+  --indigo-deep: #005bb5;
+  --indigo-deep-bg: oklch(0.30 0.18 260);
+  --paper: oklch(0.98 0.005 260);
+  --gray: #86868b;
+}
+
+/* ==========================================================
+   Base
+   ==========================================================*/
+html {
+  scroll-behavior: smooth;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: 'Mona Sans', 'Inter Tight', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+  font-feature-settings: 'ss01', 'cv11';
+  -webkit-font-smoothing: antialiased;
+  background-color: var(--ink-deep);
+  color: var(--paper);
+  overflow-x: hidden;
+  line-height: 1.5;
+}
+
+::selection {
+  background-color: var(--indigo);
+  color: white;
+}
+
+/* ==========================================================
+   Reusable utilities (kept from original)
+   ==========================================================*/
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Glass nav — kept, retuned tint (original name preserved) */
+.glass-nav {
+  background: oklch(0.06 0.012 260 / 0.7);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+}
+
+/*
+   Terminal frame — softer shadow, indigo restraint.
+   Original class name kept so HTML doesn't need a rename.
+*/
+.terminal-glow {
+  border: 1px solid var(--line-strong);
+  background: oklch(0.10 0.012 260 / 0.7);
+  box-shadow:
+    0 1px 0 oklch(1 0 0 / 0.04) inset,
+    0 12px 40px -12px oklch(0 0 0 / 0.5);
+  backdrop-filter: blur(20px);
+}
+
+/*
+   Display headlines — was a gradient (background-clip: text), an absolute-ban
+   "gradient text" pattern. Now SOLID color. Original class name kept so HTML
+   doesn't need to change. Pure #fff is also banned, so we use near-paper.
+*/
+.text-glow {
+  color: oklch(0.985 0.003 260);
+  letter-spacing: -0.02em;
+  background: none;
+  -webkit-background-clip: initial;
+  -webkit-text-fill-color: currentColor;
+}
+
+/* Background field — tinted indigo wash, not pure #000.
+   Original class name kept. */
+.bg-gradient-tr-fixed {
+  background:
+    radial-gradient(ellipse 1200px 800px at 80% 0%, oklch(0.30 0.18 260 / 0.20), transparent 60%),
+    radial-gradient(ellipse 800px 600px at 0% 100%, oklch(0.30 0.18 260 / 0.10), transparent 70%),
+    var(--ink-deep);
+  background-attachment: fixed;
+}
+
+/* Indigo accent section background — Committed strategy.
+   Used on Founder Perspective + Final CTA sections to break the all-dark
+   monotone and create one moment of color commitment. */
+.bg-indigo-drench {
+  background:
+    radial-gradient(ellipse 1400px 1000px at 50% 50%, oklch(0.34 0.20 260 / 0.45), transparent 70%),
+    var(--ink-deep);
+}
+
+/* Typing sequence — preserved */
+@keyframes typingSequence {
+  0%,  15%  { content: "> Initializing Azen core agent..."; }
+  16%, 35%  { content: "> Securing API handshakes [256-bit encrypted]..."; }
+  36%, 60%  { content: "> Parsing 14,000 rows of unstructured CSV data..."; }
+  61%, 85%  { content: "> Injecting logic vectors into CRM pipeline..."; }
+  86%, 100% { content: "> Success. 42 hours of manual labor automated."; }
+}
+.typewriter-text::after {
+  content: "";
+  animation: typingSequence 10s infinite;
+}
+
+/* details summary — chevron only */
+details > summary { list-style: none; }
+details > summary::-webkit-details-marker { display: none; }
+
+/* Range slider — softer thumb, no colored glow */
+input[type=range] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  height: 24px;
+}
+input[type=range]::-webkit-slider-runnable-track {
+  height: 2px;
+  background: var(--line-strong);
+  border-radius: 9999px;
+}
+input[type=range]::-moz-range-track {
+  height: 2px;
+  background: var(--line-strong);
+  border-radius: 9999px;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--paper);
+  cursor: pointer;
+  margin-top: -11px;
+  box-shadow: 0 1px 4px oklch(0 0 0 / 0.4);
+  border: 1px solid oklch(0 0 0 / 0.2);
+}
+input[type=range]::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--paper);
+  cursor: pointer;
+  border: 1px solid oklch(0 0 0 / 0.2);
+}
+
+/* Subtle scroll-line accent (kept; thinner) */
+.scroll-line-fill {
+  background: var(--indigo);
+}
+
+/* Mobile drawer */
+.mobile-drawer { transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+.mobile-drawer[data-open="false"] { transform: translateY(-100%); }
+.mobile-drawer[data-open="true"]  { transform: translateY(0); }
+
+/* Reveal on scroll */
+.reveal { transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1); }
