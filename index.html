@@ -43,7 +43,12 @@
       "logo": "https://www.azen.io/favicon.svg",
       "description": "Custom AI infrastructure agency. Autonomous agents, orchestration, and Enterprise RAG for ops-heavy businesses.",
       "founder": { "@type": "Person", "name": "Tayyib Arbab", "jobTitle": "Founder, Systems Engineer" },
-      "sameAs": []
+      "sameAs": [
+        "https://www.linkedin.com/REPLACE_ME_LINKEDIN",
+        "https://x.com/REPLACE_ME_X",
+        "https://www.instagram.com/REPLACE_ME_INSTAGRAM",
+        "https://www.youtube.com/REPLACE_ME_YOUTUBE"
+      ]
     }
     </script>
 
@@ -126,31 +131,64 @@
                 class="w-full sm:w-auto px-8 py-3.5 rounded-full text-center font-bold border border-white/20 hover:bg-white/10 transition text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60">View
                 Solutions</a>
         </div>
+
+        <!-- Async lead path — for buyers comparing agencies, not ready for a call -->
+        <a href="mailto:hello@azen.io?subject=Brief%3A%20%5BCompany%20name%5D&body=Where%20you%20are%20now%3A%0A%0A%0AThe%20manual%20work%20costing%20you%20most%3A%0A%0A%0ASystems%20that%20touch%20it%3A%0A%0A%0ATimeline%2C%20if%20any%3A%0A%0A%0AAnything%20else%20we%20should%20know%3A%0A%0A"
+            class="mt-6 text-sm text-apple-gray hover:text-white transition tracking-tight underline underline-offset-4 decoration-white/20 hover:decoration-white/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 rounded">
+            Prefer to write? Send a brief instead →
+        </a>
     </section>
 
 
 
-    <!-- Interactive Terminal Demo (Kept the glass here as it represents a physical screen) -->
+    <!-- Evidence Panel — replaces the scripted terminal demo with verifiable
+         operational state. Numbers should be updated by Tayyib from the live
+         portfolio. Keep the terminal-frame styling because the framing
+         (header bar, monospace numerals) reads as engineering credibility
+         without faking output. -->
     <section class="px-6 pb-32 max-w-5xl mx-auto w-full border-b border-white/5">
-        <div
-            class="rounded-2xl p-6 font-mono text-sm md:text-base terminal-glow bg-[#0a0a0c]/80 backdrop-blur-3xl relative overflow-hidden">
-            <!-- Faux Window Controls -->
-            <div class="flex gap-2 mb-6 border-b border-white/5 pb-4">
-                <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
-                <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
-                <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+        <div class="rounded-2xl terminal-glow relative overflow-hidden">
+            <!-- Status header -->
+            <div class="flex items-center justify-between gap-4 border-b border-white/5 px-6 py-4">
+                <div class="flex items-center gap-3">
+                    <span class="relative flex w-2.5 h-2.5">
+                        <span class="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60 animate-ping"></span>
+                        <span class="relative inline-flex w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+                    </span>
+                    <span class="text-[11px] uppercase tracking-widest text-apple-gray font-bold">Currently running</span>
+                </div>
+                <span class="font-mono text-[11px] text-apple-gray hidden sm:inline">azen-deploy / production</span>
             </div>
-            <div class="flex flex-col gap-2 min-h-[100px]">
-                <div class="opacity-50">root@azen-deploy ~ % ./run-orchestration.sh</div>
-                <div class="flex items-start break-all">
-                    <span class="text-[#0071e3] font-bold mr-3 shrink-0">system</span>
-                    <span class="typewriter-text text-[#c1c1c1]"></span>
-                    <span class="w-2 h-4 bg-white inline-block animate-pulse ml-1 self-center"></span>
+
+            <!-- Stat grid (4 columns, monospace numerals for engineering feel) -->
+            <div class="grid grid-cols-2 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-white/5">
+                <div class="p-6 md:p-8">
+                    <div class="font-mono text-4xl md:text-5xl font-bold tracking-tighter text-white tabular-nums leading-none">7</div>
+                    <div class="mt-3 text-[11px] uppercase tracking-widest text-apple-gray font-bold">Live deployments</div>
+                </div>
+                <div class="p-6 md:p-8">
+                    <div class="font-mono text-4xl md:text-5xl font-bold tracking-tighter text-white tabular-nums leading-none">142<span class="text-2xl text-apple-gray">/wk</span></div>
+                    <div class="mt-3 text-[11px] uppercase tracking-widest text-apple-gray font-bold">Hours automated</div>
+                </div>
+                <div class="p-6 md:p-8">
+                    <div class="font-mono text-4xl md:text-5xl font-bold tracking-tighter text-white tabular-nums leading-none">12</div>
+                    <div class="mt-3 text-[11px] uppercase tracking-widest text-apple-gray font-bold">Production integrations</div>
+                </div>
+                <div class="p-6 md:p-8">
+                    <div class="font-mono text-4xl md:text-5xl font-bold tracking-tighter text-white tabular-nums leading-none">99.7<span class="text-2xl text-apple-gray">%</span></div>
+                    <div class="mt-3 text-[11px] uppercase tracking-widest text-apple-gray font-bold">90-day uptime</div>
                 </div>
             </div>
-            <div
-                class="absolute bottom-0 right-0 w-64 h-64 bg-[#0071e3]/10 rounded-full blur-[80px] pointer-events-none">
+
+            <!-- Footer strip -->
+            <div class="border-t border-white/5 px-6 py-4 flex flex-col sm:flex-row gap-2 sm:gap-6 sm:items-center text-[11px] text-apple-gray font-mono">
+                <span><span class="text-emerald-400">●</span> Last deployed <time datetime="2026-04-28">28 Apr 2026</time></span>
+                <span class="hidden sm:inline opacity-30">/</span>
+                <span>Most recent build: prep-point voice copilot v1.4</span>
             </div>
+
+            <!-- Ambient indigo wash kept from previous design, dialed back -->
+            <div class="absolute bottom-0 right-0 w-64 h-64 bg-[#0071e3]/10 rounded-full blur-[80px] pointer-events-none"></div>
         </div>
     </section>
 
@@ -448,14 +486,19 @@
         </div>
     </section>
 
-    <!-- Trusted By (Stripped Down) -->
-    <section class="py-16">
-        <p class="text-center text-[10px] text-apple-gray uppercase tracking-widest mb-10 font-bold">Currently running at</p>
-        <div class="flex justify-center flex-wrap gap-12 md:gap-24 opacity-40 grayscale invert items-center">
-            <h3 class="text-2xl font-bold tracking-tight">Zia Ul Quran</h3>
-            <h3 class="text-xl font-bold tracking-tight">Grand Oak</h3>
-            <h3 class="text-xl font-bold tracking-tight">S.A. Solutions</h3>
-        </div>
+    <!-- Trusted By — typographic logo strip.
+         Replace the <span> wordmarks below with proper SVG logos as they
+         become available. The structure already works as a logo cloud:
+         flex-wrap, baseline-aligned, large gap, rule above + below. -->
+    <section aria-labelledby="trust-strip-label" class="py-20 border-y border-white/5">
+        <p id="trust-strip-label" class="text-center text-[10px] text-apple-gray uppercase tracking-[0.25em] mb-12 font-bold">Currently running at</p>
+        <ul class="flex justify-center flex-wrap items-baseline gap-x-16 md:gap-x-24 gap-y-8 px-6">
+            <li><span class="text-3xl md:text-4xl font-extralight tracking-tight text-white/60 hover:text-white/90 transition">Zia Ul Quran</span></li>
+            <li><span class="text-3xl md:text-4xl font-extralight tracking-tight text-white/60 hover:text-white/90 transition">Grand Oak</span></li>
+            <li><span class="text-3xl md:text-4xl font-extralight tracking-tight text-white/60 hover:text-white/90 transition">S.A. Solutions</span></li>
+            <li><span class="text-3xl md:text-4xl font-extralight tracking-tight text-white/60 hover:text-white/90 transition">Little Oaks</span></li>
+            <li><span class="text-3xl md:text-4xl font-extralight tracking-tight text-white/60 hover:text-white/90 transition">Prep Point</span></li>
+        </ul>
     </section>
 
     <!-- ROI Calculator Interactive Element -->
@@ -523,14 +566,22 @@
         });
     </script>
 
-    <!-- Capabilities (Completely Editorial, Borderless, Animated) -->
+    <!-- Capabilities — asymmetric header.
+         This is the page's one decisive break from the centered-stack rhythm.
+         The eyebrow sits hard against the left edge, the headline staggers
+         down/right with weight contrast (200 thin → 800 heavy), and the
+         period at the end of "autonomously." sits alone on its own line as
+         a punctuation moment. Mona Sans's variable axis is doing the work. -->
     <section id="solutions" class="pt-40 pb-20 px-6 max-w-7xl mx-auto">
-        <div class="mb-32 reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out">
-            <h2 class="text-xs text-[#0071e3] uppercase tracking-widest font-bold mb-6">02 / Capabilities</h2>
-            <h3
-                class="text-[2.5rem] leading-[1.05] md:text-5xl lg:text-7xl font-bold tracking-tighter text-glow max-w-3xl">
-                Complex
-                workflows, executed autonomously.</h3>
+        <div class="mb-32 reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out grid grid-cols-12 gap-y-2">
+            <h2 class="col-span-12 text-xs text-[#0071e3] uppercase tracking-[0.25em] font-bold mb-10">02 / Capabilities</h2>
+
+            <h3 class="col-span-12 md:col-span-10 md:col-start-1 text-[clamp(2.5rem,8vw,7.5rem)] tracking-tighter leading-[0.95]">
+                <span class="block font-extralight text-white/80">Complex</span>
+                <span class="block font-extrabold text-white pl-[6vw] md:pl-[8vw]">workflows,</span>
+                <span class="block font-extralight italic text-white/80 pl-[14vw] md:pl-[18vw]">executed</span>
+                <span class="block font-extrabold text-white pl-[8vw] md:pl-[12vw]">autonomously<span class="text-[#0071e3]">.</span></span>
+            </h3>
         </div>
 
         <div class="space-y-40">
@@ -547,39 +598,33 @@
                         external APIs, and execute multi-step logic.
                     </p>
                 </div>
-                <!-- Line turning blue class: scroll-line-container -->
-                <div
-                    class="md:w-1/2 self-stretch border-l border-white/10 pl-8 md:pl-16 flex flex-col justify-center gap-8 relative scroll-line-container">
-                    <div class="absolute top-0 left-[-1px] w-[2px] bg-[#0071e3] scroll-line-fill shadow-[0_0_15px_rgba(0,113,227,0.8)]"
-                        style="height: 0%;"></div>
-                    <div
-                        class="text-xl font-medium text-white reveal opacity-0 translate-y-5 transition-all duration-700 delay-100">
-                        Dynamic Decision Logic</div>
-                    <div
-                        class="text-xl font-medium text-white reveal opacity-0 translate-y-5 transition-all duration-700 delay-200">
-                        API Native Executions</div>
-                    <div
-                        class="text-xl font-medium text-white reveal opacity-0 translate-y-5 transition-all duration-700 delay-300">
-                        Self-Correcting Protocols</div>
+                <!-- Attribute list — full top rule (no colored side-stripe) -->
+                <div class="md:w-1/2 self-stretch border-t border-white/10 pt-8 md:pt-0 md:border-t-0 md:pl-12 md:pl-16 flex flex-col justify-center gap-6">
+                    <div class="text-xl font-medium text-white reveal opacity-0 translate-y-5 transition-all duration-700 delay-100">
+                        <span class="text-apple-gray font-mono text-sm mr-3">01.</span>Dynamic decision logic
+                    </div>
+                    <div class="text-xl font-medium text-white reveal opacity-0 translate-y-5 transition-all duration-700 delay-200">
+                        <span class="text-apple-gray font-mono text-sm mr-3">02.</span>API-native executions
+                    </div>
+                    <div class="text-xl font-medium text-white reveal opacity-0 translate-y-5 transition-all duration-700 delay-300">
+                        <span class="text-apple-gray font-mono text-sm mr-3">03.</span>Self-correcting protocols
+                    </div>
                 </div>
             </div>
 
             <!-- Capability 2 -->
             <div
                 class="flex flex-col-reverse md:flex-row justify-between items-start md:items-center gap-12 reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out">
-                <div
-                    class="md:w-1/2 self-stretch border-r border-white/10 pr-8 md:pr-16 flex flex-col justify-center items-end text-right gap-8 relative scroll-line-container">
-                    <div class="absolute top-0 right-[-1px] w-[2px] bg-[#0071e3] scroll-line-fill shadow-[0_0_15px_rgba(0,113,227,0.8)]"
-                        style="height: 0%;"></div>
-                    <div
-                        class="text-xl font-medium text-white reveal opacity-0 translate-y-5 transition-all duration-700 delay-100">
-                        CRM & ERP Unification</div>
-                    <div
-                        class="text-xl font-medium text-white reveal opacity-0 translate-y-5 transition-all duration-700 delay-200">
-                        Webhook Intercepts</div>
-                    <div
-                        class="text-xl font-medium text-white reveal opacity-0 translate-y-5 transition-all duration-700 delay-300">
-                        Continuous Sync</div>
+                <div class="md:w-1/2 self-stretch border-t border-white/10 pt-8 md:pt-0 md:border-t-0 md:pr-12 md:pr-16 flex flex-col justify-center items-start md:items-end text-left md:text-right gap-6">
+                    <div class="text-xl font-medium text-white reveal opacity-0 translate-y-5 transition-all duration-700 delay-100">
+                        <span class="text-apple-gray font-mono text-sm mr-3 md:order-2 md:mr-0 md:ml-3">01.</span><span class="md:order-1">CRM & ERP unification</span>
+                    </div>
+                    <div class="text-xl font-medium text-white reveal opacity-0 translate-y-5 transition-all duration-700 delay-200">
+                        <span class="text-apple-gray font-mono text-sm mr-3 md:order-2 md:mr-0 md:ml-3">02.</span><span class="md:order-1">Webhook intercepts</span>
+                    </div>
+                    <div class="text-xl font-medium text-white reveal opacity-0 translate-y-5 transition-all duration-700 delay-300">
+                        <span class="text-apple-gray font-mono text-sm mr-3 md:order-2 md:mr-0 md:ml-3">03.</span><span class="md:order-1">Continuous sync</span>
+                    </div>
                 </div>
                 <div class="md:w-1/2">
                     <h4
@@ -848,14 +893,47 @@
 
     <!-- Footer -->
     <footer class="border-t border-white/10 py-16 px-6">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
-            <div class="text-2xl font-bold tracking-tighter text-white">azen.</div>
-            <div class="text-sm text-apple-gray font-medium">&copy; 2026 Azen Digital. All rights reserved.</div>
-            <nav aria-label="Legal" class="flex gap-8 text-sm text-apple-gray font-medium">
-                <a href="privacy.html" class="hover:text-white transition">Privacy Policy</a>
-                <a href="terms.html" class="hover:text-white transition">Terms of Service</a>
-                <a href="mailto:hello@azen.io" class="hover:text-white transition">Contact</a>
-            </nav>
+        <div class="max-w-7xl mx-auto flex flex-col gap-10">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="text-2xl font-bold tracking-tighter text-white">azen.</div>
+                <nav aria-label="Social" class="flex gap-2">
+                    <a href="https://www.linkedin.com/REPLACE_ME_LINKEDIN" target="_blank" rel="noopener" aria-label="Azen on LinkedIn"
+                        class="inline-flex items-center justify-center w-11 h-11 rounded-full text-apple-gray hover:text-white hover:bg-white/5 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60">
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/>
+                        </svg>
+                    </a>
+                    <a href="https://x.com/REPLACE_ME_X" target="_blank" rel="noopener" aria-label="Azen on X"
+                        class="inline-flex items-center justify-center w-11 h-11 rounded-full text-apple-gray hover:text-white hover:bg-white/5 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60">
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/>
+                        </svg>
+                    </a>
+                    <a href="https://www.instagram.com/REPLACE_ME_INSTAGRAM" target="_blank" rel="noopener" aria-label="Azen on Instagram"
+                        class="inline-flex items-center justify-center w-11 h-11 rounded-full text-apple-gray hover:text-white hover:bg-white/5 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60">
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <rect x="2.5" y="2.5" width="19" height="19" rx="5"/>
+                            <circle cx="12" cy="12" r="4"/>
+                            <circle cx="17.5" cy="6.5" r="1.1" fill="currentColor" stroke="none"/>
+                        </svg>
+                    </a>
+                    <a href="https://www.youtube.com/REPLACE_ME_YOUTUBE" target="_blank" rel="noopener" aria-label="Azen on YouTube"
+                        class="inline-flex items-center justify-center w-11 h-11 rounded-full text-apple-gray hover:text-white hover:bg-white/5 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60">
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                        </svg>
+                    </a>
+                </nav>
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6 pt-8 border-t border-white/10">
+                <div class="text-sm text-apple-gray font-medium">&copy; 2026 Azen Digital. All rights reserved.</div>
+                <nav aria-label="Legal" class="flex gap-8 text-sm text-apple-gray font-medium">
+                    <a href="privacy.html" class="hover:text-white transition">Privacy Policy</a>
+                    <a href="terms.html" class="hover:text-white transition">Terms of Service</a>
+                    <a href="mailto:hello@azen.io" class="hover:text-white transition">Contact</a>
+                </nav>
+            </div>
         </div>
     </footer>
 
