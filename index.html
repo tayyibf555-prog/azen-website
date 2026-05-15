@@ -56,8 +56,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <!-- Built Tailwind CSS (replaces cdn.tailwindcss.com) -->
-    <link rel="stylesheet" href="styles.css">
+    <!-- Built Tailwind CSS (replaces cdn.tailwindcss.com).
+         Cache-bust on each rebuild via the ?v= query — update the
+         version number when styles.css regenerates. -->
+    <link rel="stylesheet" href="styles.css?v=20260516">
 </head>
 
 <body class="bg-gradient-tr-fixed min-h-screen text-paper relative">
@@ -111,35 +113,35 @@
 
     <!-- Hero Section -->
     <main id="main">
-    <section class="relative pt-40 pb-16 px-6 max-w-6xl mx-auto flex flex-col items-center justify-center">
 
-        <!-- Place + time stamp. Grounds the page in the physical world,
-             signals recency, and gives the opening a distinctive editorial
-             beat instead of the AI-agency reflex "lead with a tagline". -->
-        <p class="font-mono text-[10px] sm:text-xs uppercase tracking-[0.3em] text-apple-gray mb-12 flex items-center gap-3">
+    <!-- Asymmetric hero. Left-aligned across the board, headline staggers
+         down/right with weight contrast (extralight → italic → extrabold),
+         indigo period accent on "leverage." mirrors the Capabilities
+         heading's closing beat. Hero now reads as a deliberate composition,
+         not a centered-stack template. -->
+    <section class="relative pt-40 pb-16 px-6 max-w-6xl mx-auto">
+
+        <!-- Place stamp — left-aligned mono kicker -->
+        <p class="font-mono text-[10px] sm:text-xs uppercase tracking-[0.3em] text-apple-gray mb-10 flex items-center gap-3">
             <span class="inline-block w-8 h-px bg-apple-gray/40"></span>
             Built in London &middot; Shipping globally
-            <span class="inline-block w-8 h-px bg-apple-gray/40"></span>
         </p>
 
-        <h1
-            class="text-5xl sm:text-6xl md:text-[100px] font-bold text-center tracking-tighter leading-[1.05] md:leading-[1] mb-8 pb-4 text-glow mx-auto max-w-5xl">
-            <span class="block">Stop renting time.</span>
-            <span class="block">Build leverage.</span>
+        <h1 class="tracking-tighter leading-[0.95] text-[clamp(2.75rem,9vw,8rem)] mb-12 max-w-5xl">
+            <span class="block font-extralight text-paper/85">Stop renting time.</span>
+            <span class="block italic font-extralight text-paper/70 pl-[8vw] md:pl-[12vw] mt-2">Build</span>
+            <span class="block font-extrabold text-paper pl-[3vw] md:pl-[4vw] -mt-2">leverage<span class="text-[#0071e3]">.</span></span>
         </h1>
 
-        <p
-            class="text-apple-gray text-lg sm:text-xl md:text-3xl max-w-3xl text-center mb-12 md:mb-16 font-medium tracking-tight px-2">
+        <p class="text-apple-gray text-lg sm:text-xl md:text-2xl max-w-2xl mb-12 md:mb-14 font-medium tracking-tight leading-snug">
             We map your exact bottlenecks and deploy custom AI infrastructure that automates the manual work bleeding your team.
         </p>
 
-        <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto px-6 sm:px-0 items-center justify-center">
+        <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto items-stretch sm:items-center">
             <a href="https://calendly.com/tayyib-azen/30min" target="_blank" rel="noopener"
-                class="w-full sm:w-auto bg-[#0071e3] text-paper px-8 py-3.5 rounded-full text-center font-bold hover:bg-[#005bb5] transition focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60">Book
-                Audit</a>
+                class="w-full sm:w-auto bg-[#0071e3] text-paper px-8 py-3.5 rounded-full text-center font-bold hover:bg-[#005bb5] transition focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60">Book Audit</a>
             <a href="#solutions"
-                class="w-full sm:w-auto px-8 py-3.5 rounded-full text-center font-bold border border-white/20 hover:bg-white/10 transition text-paper focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60">View
-                Solutions</a>
+                class="w-full sm:w-auto px-8 py-3.5 rounded-full text-center font-bold border border-white/20 hover:bg-white/10 transition text-paper focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60">View Solutions</a>
         </div>
 
     </section>
