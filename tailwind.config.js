@@ -13,6 +13,17 @@ export default {
           DEFAULT: 'oklch(0.10 0.012 260)',
           deep: 'oklch(0.06 0.012 260)',
         },
+        // Tinted near-white. Use instead of `text-white` (pure #fff is banned).
+        paper: 'oklch(0.985 0.003 260)',
+        // Lighter brand-blue for small-text use (eyebrows, labels, links).
+        // Standard #0071e3 is too dark to pass WCAG AA at 12px on dark bg
+        // (measures 4.08:1, needs 4.5:1). This token measures ~5.5:1.
+        // Keep #0071e3 for buttons and display-size accents.
+        indigo: {
+          DEFAULT: '#0071e3',
+          deep: '#005bb5',
+          bright: 'oklch(0.78 0.16 255)',
+        },
       },
       fontFamily: {
         sans: ['"Mona Sans"', '"Inter Tight"', '-apple-system', '"Helvetica Neue"', 'sans-serif'],

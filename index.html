@@ -60,7 +60,7 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="bg-gradient-tr-fixed min-h-screen text-white relative">
+<body class="bg-gradient-tr-fixed min-h-screen text-paper relative">
 
     <!-- Skip link (a11y) -->
     <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[60] focus:bg-white focus:text-black focus:px-4 focus:py-2 focus:rounded">Skip to content</a>
@@ -69,20 +69,20 @@
     <div class="absolute top-6 inset-x-0 z-50 flex justify-center pointer-events-none px-6">
         <nav aria-label="Primary"
             class="pointer-events-auto py-2.5 px-3 flex justify-between items-center glass-nav rounded-full border border-white/10 shadow-2xl gap-4 sm:gap-8 md:gap-16 w-full max-w-fit">
-            <a href="#" aria-label="Azen home" class="text-xl font-bold tracking-tighter pl-3 text-white">azen.</a>
+            <a href="#" aria-label="Azen home" class="text-xl font-bold tracking-tighter pl-3 text-paper">azen.</a>
             <div class="hidden md:flex gap-8 text-[11px] uppercase text-apple-gray font-bold tracking-widest">
-                <a href="#solutions" class="hover:text-white transition">Capabilities</a>
-                <a href="#portfolio" class="hover:text-white transition">Portfolio</a>
-                <a href="#how" class="hover:text-white transition">The Process</a>
-                <a href="#faq" class="hover:text-white transition">FAQ</a>
+                <a href="#solutions" class="inline-block py-3 -my-3 hover:text-paper transition">Capabilities</a>
+                <a href="#portfolio" class="inline-block py-3 -my-3 hover:text-paper transition">Portfolio</a>
+                <a href="#how" class="inline-block py-3 -my-3 hover:text-paper transition">The Process</a>
+                <a href="#faq" class="inline-block py-3 -my-3 hover:text-paper transition">FAQ</a>
             </div>
             <a href="https://calendly.com/tayyib-azen/30min" target="_blank" rel="noopener"
-                class="hidden sm:inline-block bg-[#0071e3] text-white px-5 py-2 rounded-full text-[11px] font-bold uppercase tracking-widest hover:bg-[#005bb5] transition focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60">
+                class="hidden sm:inline-block bg-[#0071e3] text-paper px-5 py-2 rounded-full text-[11px] font-bold uppercase tracking-widest hover:bg-[#005bb5] transition focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60">
                 Book Audit
             </a>
             <!-- Mobile menu button -->
             <button id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="mobile-drawer"
-                class="md:hidden inline-flex items-center justify-center w-11 h-11 rounded-full text-white hover:bg-white/10 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60">
+                class="md:hidden inline-flex items-center justify-center w-11 h-11 rounded-full text-paper hover:bg-white/10 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60">
                 <svg id="nav-icon-open" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
                     <path d="M4 7h16M4 12h16M4 17h16"/>
                 </svg>
@@ -93,17 +93,18 @@
         </nav>
     </div>
 
-    <!-- Mobile drawer -->
-    <div id="mobile-drawer" data-open="false" aria-hidden="true"
+    <!-- Mobile drawer — inert when closed so focusable contents are
+         removed from the tab order and screen-reader tree. Toggled by JS. -->
+    <div id="mobile-drawer" data-open="false" aria-hidden="true" inert
         class="mobile-drawer fixed inset-x-0 top-0 z-40 md:hidden glass-nav border-b border-white/10 px-6 pt-28 pb-10">
-        <ul class="flex flex-col gap-2 text-2xl font-bold tracking-tight text-white">
+        <ul class="flex flex-col gap-2 text-2xl font-bold tracking-tight text-paper">
             <li><a href="#solutions" class="block py-3 border-b border-white/10 hover:text-[#0071e3] transition" data-nav-link>Capabilities</a></li>
             <li><a href="#portfolio" class="block py-3 border-b border-white/10 hover:text-[#0071e3] transition" data-nav-link>Portfolio</a></li>
             <li><a href="#how" class="block py-3 border-b border-white/10 hover:text-[#0071e3] transition" data-nav-link>The Process</a></li>
             <li><a href="#faq" class="block py-3 border-b border-white/10 hover:text-[#0071e3] transition" data-nav-link>FAQ</a></li>
         </ul>
         <a href="https://calendly.com/tayyib-azen/30min" target="_blank" rel="noopener"
-            class="mt-8 inline-flex items-center justify-center w-full bg-[#0071e3] text-white px-6 py-4 rounded-full font-bold hover:bg-[#005bb5] transition">
+            class="mt-8 inline-flex items-center justify-center w-full bg-[#0071e3] text-paper px-6 py-4 rounded-full font-bold hover:bg-[#005bb5] transition">
             Book Audit
         </a>
     </div>
@@ -111,6 +112,15 @@
     <!-- Hero Section -->
     <main id="main">
     <section class="relative pt-40 pb-16 px-6 max-w-6xl mx-auto flex flex-col items-center justify-center">
+
+        <!-- Place + time stamp. Grounds the page in the physical world,
+             signals recency, and gives the opening a distinctive editorial
+             beat instead of the AI-agency reflex "lead with a tagline". -->
+        <p class="font-mono text-[10px] sm:text-xs uppercase tracking-[0.3em] text-apple-gray mb-12 flex items-center gap-3">
+            <span class="inline-block w-8 h-px bg-apple-gray/40"></span>
+            Built in London &middot; Shipping globally
+            <span class="inline-block w-8 h-px bg-apple-gray/40"></span>
+        </p>
 
         <h1
             class="text-5xl sm:text-6xl md:text-[100px] font-bold text-center tracking-tighter leading-[1.05] md:leading-[1] mb-8 pb-4 text-glow mx-auto max-w-5xl">
@@ -125,18 +135,13 @@
 
         <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto px-6 sm:px-0 items-center justify-center">
             <a href="https://calendly.com/tayyib-azen/30min" target="_blank" rel="noopener"
-                class="w-full sm:w-auto bg-[#0071e3] text-white px-8 py-3.5 rounded-full text-center font-bold hover:bg-[#005bb5] transition shadow-[0_0_20px_rgba(0,113,227,0.4)] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60">Book
+                class="w-full sm:w-auto bg-[#0071e3] text-paper px-8 py-3.5 rounded-full text-center font-bold hover:bg-[#005bb5] transition focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60">Book
                 Audit</a>
             <a href="#solutions"
-                class="w-full sm:w-auto px-8 py-3.5 rounded-full text-center font-bold border border-white/20 hover:bg-white/10 transition text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60">View
+                class="w-full sm:w-auto px-8 py-3.5 rounded-full text-center font-bold border border-white/20 hover:bg-white/10 transition text-paper focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60">View
                 Solutions</a>
         </div>
 
-        <!-- Async lead path — for buyers comparing agencies, not ready for a call -->
-        <a href="mailto:hello@azen.io?subject=Brief%3A%20%5BCompany%20name%5D&body=Where%20you%20are%20now%3A%0A%0A%0AThe%20manual%20work%20costing%20you%20most%3A%0A%0A%0ASystems%20that%20touch%20it%3A%0A%0A%0ATimeline%2C%20if%20any%3A%0A%0A%0AAnything%20else%20we%20should%20know%3A%0A%0A"
-            class="mt-6 text-sm text-apple-gray hover:text-white transition tracking-tight underline underline-offset-4 decoration-white/20 hover:decoration-white/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 rounded">
-            Prefer to write? Send a brief instead →
-        </a>
     </section>
 
 
@@ -163,19 +168,19 @@
             <!-- Stat grid (4 columns, monospace numerals for engineering feel) -->
             <div class="grid grid-cols-2 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-white/5">
                 <div class="p-6 md:p-8">
-                    <div class="font-mono text-4xl md:text-5xl font-bold tracking-tighter text-white tabular-nums leading-none">7</div>
+                    <div class="font-mono text-4xl md:text-5xl font-bold tracking-tighter text-paper tabular-nums leading-none">7</div>
                     <div class="mt-3 text-[11px] uppercase tracking-widest text-apple-gray font-bold">Live deployments</div>
                 </div>
                 <div class="p-6 md:p-8">
-                    <div class="font-mono text-4xl md:text-5xl font-bold tracking-tighter text-white tabular-nums leading-none">142<span class="text-2xl text-apple-gray">/wk</span></div>
+                    <div class="font-mono text-4xl md:text-5xl font-bold tracking-tighter text-paper tabular-nums leading-none">142<span class="text-2xl text-apple-gray">/wk</span></div>
                     <div class="mt-3 text-[11px] uppercase tracking-widest text-apple-gray font-bold">Hours automated</div>
                 </div>
                 <div class="p-6 md:p-8">
-                    <div class="font-mono text-4xl md:text-5xl font-bold tracking-tighter text-white tabular-nums leading-none">12</div>
+                    <div class="font-mono text-4xl md:text-5xl font-bold tracking-tighter text-paper tabular-nums leading-none">12</div>
                     <div class="mt-3 text-[11px] uppercase tracking-widest text-apple-gray font-bold">Production integrations</div>
                 </div>
                 <div class="p-6 md:p-8">
-                    <div class="font-mono text-4xl md:text-5xl font-bold tracking-tighter text-white tabular-nums leading-none">99.7<span class="text-2xl text-apple-gray">%</span></div>
+                    <div class="font-mono text-4xl md:text-5xl font-bold tracking-tighter text-paper tabular-nums leading-none">99.7<span class="text-2xl text-apple-gray">%</span></div>
                     <div class="mt-3 text-[11px] uppercase tracking-widest text-apple-gray font-bold">90-day uptime</div>
                 </div>
             </div>
@@ -187,8 +192,6 @@
                 <span>Most recent build: prep-point voice copilot v1.4</span>
             </div>
 
-            <!-- Ambient indigo wash kept from previous design, dialed back -->
-            <div class="absolute bottom-0 right-0 w-64 h-64 bg-[#0071e3]/10 rounded-full blur-[80px] pointer-events-none"></div>
         </div>
     </section>
 
@@ -196,9 +199,9 @@
     <section id="portfolio" class="pt-24 pb-32 overflow-hidden border-b border-white/5">
         <div class="w-full">
             <div class="mb-20 px-6 max-w-7xl mx-auto text-center">
-                <h2 class="text-xs text-[#0071e3] uppercase tracking-widest font-bold mb-6">01 / Portfolio</h2>
-                <h3 class="text-5xl md:text-7xl font-bold tracking-tighter text-glow max-w-4xl mx-auto leading-[1.05]">
-                    Real clients. Real numbers.</h3>
+                <p class="text-xs text-indigo-bright uppercase tracking-widest font-bold mb-6">01 / Portfolio</p>
+                <h2 class="text-5xl md:text-7xl font-bold tracking-tighter text-glow max-w-4xl mx-auto leading-[1.05]">
+                    Real clients. Real numbers.</h2>
             </div>
 
             <!-- Infinite Marquee Carousel -->
@@ -213,14 +216,14 @@
                         class="w-[85vw] sm:w-[450px] md:w-[700px] aspect-[16/9] bg-[#070707] rounded-3xl overflow-hidden relative block flex-shrink-0 hover:scale-[1.02] transition-transform duration-500 border border-white/5 cursor-pointer group/card">
                         <div
                             class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
-                            <img src="case%20study%20images%20/Prep%20point%20case%20study.png"
+                            <img src="case%20study%20images%20/Prep%20point%20case%20study.webp"
                                 alt="Prep Point dashboard showing automated order processing with 85% error reduction"
-                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" loading="lazy">
+                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" width="1400" height="766" loading="lazy">
                         </div>
                         <div
                             class="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black via-black/80 to-transparent z-10 pointer-events-none">
                         </div>
-                        <div class="absolute bottom-8 left-8 text-white font-bold tracking-tight text-xl z-20">Prep
+                        <div class="absolute bottom-8 left-8 text-paper font-bold tracking-tight text-xl z-20">Prep
                             Point</div>
                         <div
                             class="absolute bottom-8 right-8 text-apple-gray font-medium text-sm border-b border-apple-gray/30 pb-0.5 z-20">
@@ -232,14 +235,14 @@
                         class="w-[85vw] sm:w-[450px] md:w-[700px] aspect-[16/9] bg-[#070707] rounded-3xl overflow-hidden relative block flex-shrink-0 hover:scale-[1.02] transition-transform duration-500 border border-white/5 cursor-pointer group/card">
                         <div
                             class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
-                            <img src="case%20study%20images%20/Superior%20Accounting%20case%20study.png"
+                            <img src="case%20study%20images%20/Superior%20Accounting%20case%20study.webp"
                                 alt="Superior Accounting client portal with call analytics and 78% call resolution metric"
-                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" loading="lazy">
+                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" width="1400" height="766" loading="lazy">
                         </div>
                         <div
                             class="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black via-black/80 to-transparent z-10 pointer-events-none">
                         </div>
-                        <div class="absolute bottom-8 left-8 text-white font-bold tracking-tight text-xl z-20">Superior
+                        <div class="absolute bottom-8 left-8 text-paper font-bold tracking-tight text-xl z-20">Superior
                             Accounting</div>
                         <div
                             class="absolute bottom-8 right-8 text-apple-gray font-medium text-sm border-b border-apple-gray/30 pb-0.5 z-20">
@@ -251,14 +254,14 @@
                         class="w-[85vw] sm:w-[450px] md:w-[700px] aspect-[16/9] bg-[#070707] rounded-3xl overflow-hidden relative block flex-shrink-0 hover:scale-[1.02] transition-transform duration-500 border border-white/5 cursor-pointer group/card">
                         <div
                             class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
-                            <img src="case%20study%20images%20/TTT%20case%20study.png"
+                            <img src="case%20study%20images%20/TTT%20case%20study.webp"
                                 alt="TTT Departmentals procurement dashboard with sourcing time and cost analytics, 90% faster sourcing"
-                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" loading="lazy">
+                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" width="1400" height="766" loading="lazy">
                         </div>
                         <div
                             class="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black via-black/80 to-transparent z-10 pointer-events-none">
                         </div>
-                        <div class="absolute bottom-8 left-8 text-white font-bold tracking-tight text-xl z-20">TTT
+                        <div class="absolute bottom-8 left-8 text-paper font-bold tracking-tight text-xl z-20">TTT
                             Departmentals</div>
                         <div
                             class="absolute bottom-8 right-8 text-apple-gray font-medium text-sm border-b border-apple-gray/30 pb-0.5 z-20">
@@ -270,14 +273,14 @@
                         class="w-[85vw] sm:w-[450px] md:w-[700px] aspect-[16/9] bg-[#070707] rounded-3xl overflow-hidden relative block flex-shrink-0 hover:scale-[1.02] transition-transform duration-500 border border-white/5 cursor-pointer group/card">
                         <div
                             class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
-                            <img src="case%20study%20images%20/little%20oaks%20crm%20case%20study.png"
+                            <img src="case%20study%20images%20/little%20oaks%20crm%20case%20study.webp"
                                 alt="Little Oaks nursery CRM dashboard with parent and staff attendance views, 24/7 operations"
-                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" loading="lazy">
+                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" width="1400" height="766" loading="lazy">
                         </div>
                         <div
                             class="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black via-black/80 to-transparent z-10 pointer-events-none">
                         </div>
-                        <div class="absolute bottom-8 left-8 text-white font-bold tracking-tight text-xl z-20">Little
+                        <div class="absolute bottom-8 left-8 text-paper font-bold tracking-tight text-xl z-20">Little
                             Oaks</div>
                         <div
                             class="absolute bottom-8 right-8 text-apple-gray font-medium text-sm border-b border-apple-gray/30 pb-0.5 z-20">
@@ -289,14 +292,14 @@
                         class="w-[85vw] sm:w-[450px] md:w-[700px] aspect-[16/9] bg-[#070707] rounded-3xl overflow-hidden relative block flex-shrink-0 hover:scale-[1.02] transition-transform duration-500 border border-white/5 cursor-pointer group/card">
                         <div
                             class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
-                            <img src="case%20study%20images%20/zia%20ul%20quran%20case%20study.png"
+                            <img src="case%20study%20images%20/zia%20ul%20quran%20case%20study.webp"
                                 alt="Zia Ul Quran website homepage with Arabic and English content, 3x internal efficiency"
-                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" loading="lazy">
+                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" width="1400" height="766" loading="lazy">
                         </div>
                         <div
                             class="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black via-black/80 to-transparent z-10 pointer-events-none">
                         </div>
-                        <div class="absolute bottom-8 left-8 text-white font-bold tracking-tight text-xl z-20">Zia Ul
+                        <div class="absolute bottom-8 left-8 text-paper font-bold tracking-tight text-xl z-20">Zia Ul
                             Quran</div>
                         <div
                             class="absolute bottom-8 right-8 text-apple-gray font-medium text-sm border-b border-apple-gray/30 pb-0.5 z-20">
@@ -308,14 +311,14 @@
                         class="w-[85vw] sm:w-[450px] md:w-[700px] aspect-[16/9] bg-[#070707] rounded-3xl overflow-hidden relative block flex-shrink-0 hover:scale-[1.02] transition-transform duration-500 border border-white/5 cursor-pointer group/card">
                         <div
                             class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
-                            <img src="case%20study%20images%20/zia%20ul%20ummah%20case%20study.png"
+                            <img src="case%20study%20images%20/zia%20ul%20ummah%20case%20study.webp"
                                 alt="Zia Ul Ummah Foundation operations dashboard with automated data entry"
-                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" loading="lazy">
+                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" width="1400" height="766" loading="lazy">
                         </div>
                         <div
                             class="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black via-black/80 to-transparent z-10 pointer-events-none">
                         </div>
-                        <div class="absolute bottom-8 left-8 text-white font-bold tracking-tight text-xl z-20">Zia Ul
+                        <div class="absolute bottom-8 left-8 text-paper font-bold tracking-tight text-xl z-20">Zia Ul
                             Ummah</div>
                         <div
                             class="absolute bottom-8 right-8 text-apple-gray font-medium text-sm border-b border-apple-gray/30 pb-0.5 z-20">
@@ -327,14 +330,14 @@
                         class="w-[85vw] sm:w-[450px] md:w-[700px] aspect-[16/9] bg-[#070707] rounded-3xl overflow-hidden relative block flex-shrink-0 hover:scale-[1.02] transition-transform duration-500 border border-white/5 cursor-pointer group/card">
                         <div
                             class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
-                            <img src="case%20study%20images%20/Azen%20EYOS%20Case%20study.png"
+                            <img src="case%20study%20images%20/Azen%20EYOS%20Case%20study.webp"
                                 alt="Azen EYOS early-years operating system with automated data infrastructure for nurseries"
-                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" loading="lazy">
+                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" width="1400" height="766" loading="lazy">
                         </div>
                         <div
                             class="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black via-black/80 to-transparent z-10 pointer-events-none">
                         </div>
-                        <div class="absolute bottom-8 left-8 text-white font-bold tracking-tight text-xl z-20">Azen
+                        <div class="absolute bottom-8 left-8 text-paper font-bold tracking-tight text-xl z-20">Azen
                             EYOS</div>
                         <div
                             class="absolute bottom-8 right-8 text-apple-gray font-medium text-sm border-b border-apple-gray/30 pb-0.5 z-20">
@@ -352,14 +355,14 @@
                         class="w-[85vw] sm:w-[450px] md:w-[700px] aspect-[16/9] bg-[#070707] rounded-3xl overflow-hidden relative block flex-shrink-0 hover:scale-[1.02] transition-transform duration-500 border border-white/5 cursor-pointer group/card">
                         <div
                             class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
-                            <img src="case%20study%20images%20/Prep%20point%20case%20study.png"
+                            <img src="case%20study%20images%20/Prep%20point%20case%20study.webp"
                                 alt="Prep Point dashboard showing automated order processing with 85% error reduction"
-                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" loading="lazy">
+                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" width="1400" height="766" loading="lazy">
                         </div>
                         <div
                             class="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black via-black/80 to-transparent z-10 pointer-events-none">
                         </div>
-                        <div class="absolute bottom-8 left-8 text-white font-bold tracking-tight text-xl z-20">Prep
+                        <div class="absolute bottom-8 left-8 text-paper font-bold tracking-tight text-xl z-20">Prep
                             Point</div>
                         <div
                             class="absolute bottom-8 right-8 text-apple-gray font-medium text-sm border-b border-apple-gray/30 pb-0.5 z-20">
@@ -371,14 +374,14 @@
                         class="w-[85vw] sm:w-[450px] md:w-[700px] aspect-[16/9] bg-[#070707] rounded-3xl overflow-hidden relative block flex-shrink-0 hover:scale-[1.02] transition-transform duration-500 border border-white/5 cursor-pointer group/card">
                         <div
                             class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
-                            <img src="case%20study%20images%20/Superior%20Accounting%20case%20study.png"
+                            <img src="case%20study%20images%20/Superior%20Accounting%20case%20study.webp"
                                 alt="Superior Accounting client portal with call analytics and 78% call resolution metric"
-                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" loading="lazy">
+                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" width="1400" height="766" loading="lazy">
                         </div>
                         <div
                             class="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black via-black/80 to-transparent z-10 pointer-events-none">
                         </div>
-                        <div class="absolute bottom-8 left-8 text-white font-bold tracking-tight text-xl z-20">Superior
+                        <div class="absolute bottom-8 left-8 text-paper font-bold tracking-tight text-xl z-20">Superior
                             Accounting</div>
                         <div
                             class="absolute bottom-8 right-8 text-apple-gray font-medium text-sm border-b border-apple-gray/30 pb-0.5 z-20">
@@ -390,14 +393,14 @@
                         class="w-[85vw] sm:w-[450px] md:w-[700px] aspect-[16/9] bg-[#070707] rounded-3xl overflow-hidden relative block flex-shrink-0 hover:scale-[1.02] transition-transform duration-500 border border-white/5 cursor-pointer group/card">
                         <div
                             class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
-                            <img src="case%20study%20images%20/TTT%20case%20study.png"
+                            <img src="case%20study%20images%20/TTT%20case%20study.webp"
                                 alt="TTT Departmentals procurement dashboard with sourcing time and cost analytics, 90% faster sourcing"
-                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" loading="lazy">
+                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" width="1400" height="766" loading="lazy">
                         </div>
                         <div
                             class="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black via-black/80 to-transparent z-10 pointer-events-none">
                         </div>
-                        <div class="absolute bottom-8 left-8 text-white font-bold tracking-tight text-xl z-20">TTT
+                        <div class="absolute bottom-8 left-8 text-paper font-bold tracking-tight text-xl z-20">TTT
                             Departmentals</div>
                         <div
                             class="absolute bottom-8 right-8 text-apple-gray font-medium text-sm border-b border-apple-gray/30 pb-0.5 z-20">
@@ -409,14 +412,14 @@
                         class="w-[85vw] sm:w-[450px] md:w-[700px] aspect-[16/9] bg-[#070707] rounded-3xl overflow-hidden relative block flex-shrink-0 hover:scale-[1.02] transition-transform duration-500 border border-white/5 cursor-pointer group/card">
                         <div
                             class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
-                            <img src="case%20study%20images%20/little%20oaks%20crm%20case%20study.png"
+                            <img src="case%20study%20images%20/little%20oaks%20crm%20case%20study.webp"
                                 alt="Little Oaks nursery CRM dashboard with parent and staff attendance views, 24/7 operations"
-                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" loading="lazy">
+                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" width="1400" height="766" loading="lazy">
                         </div>
                         <div
                             class="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black via-black/80 to-transparent z-10 pointer-events-none">
                         </div>
-                        <div class="absolute bottom-8 left-8 text-white font-bold tracking-tight text-xl z-20">Little
+                        <div class="absolute bottom-8 left-8 text-paper font-bold tracking-tight text-xl z-20">Little
                             Oaks</div>
                         <div
                             class="absolute bottom-8 right-8 text-apple-gray font-medium text-sm border-b border-apple-gray/30 pb-0.5 z-20">
@@ -428,14 +431,14 @@
                         class="w-[85vw] sm:w-[450px] md:w-[700px] aspect-[16/9] bg-[#070707] rounded-3xl overflow-hidden relative block flex-shrink-0 hover:scale-[1.02] transition-transform duration-500 border border-white/5 cursor-pointer group/card">
                         <div
                             class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
-                            <img src="case%20study%20images%20/zia%20ul%20quran%20case%20study.png"
+                            <img src="case%20study%20images%20/zia%20ul%20quran%20case%20study.webp"
                                 alt="Zia Ul Quran website homepage with Arabic and English content, 3x internal efficiency"
-                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" loading="lazy">
+                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" width="1400" height="766" loading="lazy">
                         </div>
                         <div
                             class="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black via-black/80 to-transparent z-10 pointer-events-none">
                         </div>
-                        <div class="absolute bottom-8 left-8 text-white font-bold tracking-tight text-xl z-20">Zia Ul
+                        <div class="absolute bottom-8 left-8 text-paper font-bold tracking-tight text-xl z-20">Zia Ul
                             Quran</div>
                         <div
                             class="absolute bottom-8 right-8 text-apple-gray font-medium text-sm border-b border-apple-gray/30 pb-0.5 z-20">
@@ -447,14 +450,14 @@
                         class="w-[85vw] sm:w-[450px] md:w-[700px] aspect-[16/9] bg-[#070707] rounded-3xl overflow-hidden relative block flex-shrink-0 hover:scale-[1.02] transition-transform duration-500 border border-white/5 cursor-pointer group/card">
                         <div
                             class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
-                            <img src="case%20study%20images%20/zia%20ul%20ummah%20case%20study.png"
+                            <img src="case%20study%20images%20/zia%20ul%20ummah%20case%20study.webp"
                                 alt="Zia Ul Ummah Foundation operations dashboard with automated data entry"
-                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" loading="lazy">
+                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" width="1400" height="766" loading="lazy">
                         </div>
                         <div
                             class="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black via-black/80 to-transparent z-10 pointer-events-none">
                         </div>
-                        <div class="absolute bottom-8 left-8 text-white font-bold tracking-tight text-xl z-20">Zia Ul
+                        <div class="absolute bottom-8 left-8 text-paper font-bold tracking-tight text-xl z-20">Zia Ul
                             Ummah</div>
                         <div
                             class="absolute bottom-8 right-8 text-apple-gray font-medium text-sm border-b border-apple-gray/30 pb-0.5 z-20">
@@ -466,14 +469,14 @@
                         class="w-[85vw] sm:w-[450px] md:w-[700px] aspect-[16/9] bg-[#070707] rounded-3xl overflow-hidden relative block flex-shrink-0 hover:scale-[1.02] transition-transform duration-500 border border-white/5 cursor-pointer group/card">
                         <div
                             class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
-                            <img src="case%20study%20images%20/Azen%20EYOS%20Case%20study.png"
+                            <img src="case%20study%20images%20/Azen%20EYOS%20Case%20study.webp"
                                 alt="Azen EYOS early-years operating system with automated data infrastructure for nurseries"
-                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" loading="lazy">
+                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" width="1400" height="766" loading="lazy">
                         </div>
                         <div
                             class="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black via-black/80 to-transparent z-10 pointer-events-none">
                         </div>
-                        <div class="absolute bottom-8 left-8 text-white font-bold tracking-tight text-xl z-20">Azen
+                        <div class="absolute bottom-8 left-8 text-paper font-bold tracking-tight text-xl z-20">Azen
                             EYOS</div>
                         <div
                             class="absolute bottom-8 right-8 text-apple-gray font-medium text-sm border-b border-apple-gray/30 pb-0.5 z-20">
@@ -511,18 +514,18 @@
             </div>
 
             <div class="relative z-10">
-                <h2 class="text-xs tracking-widest uppercase font-bold text-[#0071e3] mb-8">Calculate Your Leverage</h2>
+                <p class="text-xs tracking-widest uppercase font-bold text-indigo-bright mb-8">Calculate Your Leverage</p>
 
                 <div class="mb-10">
                     <div class="text-[60px] sm:text-[80px] md:text-[120px] font-bold tracking-tighter leading-none text-glow mb-2 transition-all duration-100"
                         id="roi-output">£23,400</div>
-                    <div class="text-lg md:text-xl text-white font-medium">Yearly Capital Recovered</div>
+                    <div class="text-lg md:text-xl text-paper font-medium">Yearly Capital Recovered</div>
                 </div>
 
                 <div class="max-w-xl mx-auto">
                     <div class="flex justify-between text-xs font-bold text-apple-gray mb-4 uppercase tracking-widest">
                         <span>10 Hrs/Wk</span>
-                        <span id="hours-display" class="text-white">10 Hrs</span>
+                        <span id="hours-display" class="text-paper">10 Hrs</span>
                         <span>500+ Hrs</span>
                     </div>
 
@@ -574,14 +577,14 @@
          a punctuation moment. Mona Sans's variable axis is doing the work. -->
     <section id="solutions" class="pt-40 pb-20 px-6 max-w-7xl mx-auto">
         <div class="mb-32 reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out grid grid-cols-12 gap-y-2">
-            <h2 class="col-span-12 text-xs text-[#0071e3] uppercase tracking-[0.25em] font-bold mb-10">02 / Capabilities</h2>
+            <h2 class="col-span-12 text-xs text-indigo-bright uppercase tracking-[0.25em] font-bold mb-10">02 / Capabilities</h2>
 
-            <h3 class="col-span-12 md:col-span-10 md:col-start-1 text-[clamp(2.5rem,8vw,7.5rem)] tracking-tighter leading-[0.95]">
+            <h2 class="col-span-12 md:col-span-10 md:col-start-1 text-[clamp(2.5rem,8vw,7.5rem)] tracking-tighter leading-[0.95]">
                 <span class="block font-extralight text-white/80">Complex</span>
-                <span class="block font-extrabold text-white pl-[6vw] md:pl-[8vw]">workflows,</span>
+                <span class="block font-extrabold text-paper pl-[6vw] md:pl-[8vw]">workflows,</span>
                 <span class="block font-extralight italic text-white/80 pl-[14vw] md:pl-[18vw]">executed</span>
-                <span class="block font-extrabold text-white pl-[8vw] md:pl-[12vw]">autonomously<span class="text-[#0071e3]">.</span></span>
-            </h3>
+                <span class="block font-extrabold text-paper pl-[8vw] md:pl-[12vw]">autonomously<span class="text-[#0071e3]">.</span></span>
+            </h2>
         </div>
 
         <div class="space-y-40">
@@ -590,9 +593,9 @@
             <div
                 class="flex flex-col md:flex-row justify-between items-start md:items-center gap-12 reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out">
                 <div class="md:w-1/2">
-                    <h4
-                        class="text-[2.75rem] sm:text-6xl md:text-8xl font-bold tracking-tighter mb-4 md:mb-8 text-white">
-                        Agents.</h4>
+                    <h3
+                        class="text-[2.75rem] sm:text-6xl md:text-8xl font-bold tracking-tighter mb-4 md:mb-8 text-paper">
+                        Agents.</h3>
                     <p class="text-xl md:text-2xl text-apple-gray leading-tight font-medium max-w-lg">
                         Forget basic chatbots. Deploy intelligent systems that reason through problems, interact with
                         external APIs, and execute multi-step logic.
@@ -600,13 +603,13 @@
                 </div>
                 <!-- Attribute list — full top rule (no colored side-stripe) -->
                 <div class="md:w-1/2 self-stretch border-t border-white/10 pt-8 md:pt-0 md:border-t-0 md:pl-12 md:pl-16 flex flex-col justify-center gap-6">
-                    <div class="text-xl font-medium text-white reveal opacity-0 translate-y-5 transition-all duration-700 delay-100">
+                    <div class="text-xl font-medium text-paper reveal opacity-0 translate-y-5 transition-all duration-700 delay-100">
                         <span class="text-apple-gray font-mono text-sm mr-3">01.</span>Dynamic decision logic
                     </div>
-                    <div class="text-xl font-medium text-white reveal opacity-0 translate-y-5 transition-all duration-700 delay-200">
+                    <div class="text-xl font-medium text-paper reveal opacity-0 translate-y-5 transition-all duration-700 delay-200">
                         <span class="text-apple-gray font-mono text-sm mr-3">02.</span>API-native executions
                     </div>
-                    <div class="text-xl font-medium text-white reveal opacity-0 translate-y-5 transition-all duration-700 delay-300">
+                    <div class="text-xl font-medium text-paper reveal opacity-0 translate-y-5 transition-all duration-700 delay-300">
                         <span class="text-apple-gray font-mono text-sm mr-3">03.</span>Self-correcting protocols
                     </div>
                 </div>
@@ -616,20 +619,20 @@
             <div
                 class="flex flex-col-reverse md:flex-row justify-between items-start md:items-center gap-12 reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out">
                 <div class="md:w-1/2 self-stretch border-t border-white/10 pt-8 md:pt-0 md:border-t-0 md:pr-12 md:pr-16 flex flex-col justify-center items-start md:items-end text-left md:text-right gap-6">
-                    <div class="text-xl font-medium text-white reveal opacity-0 translate-y-5 transition-all duration-700 delay-100">
+                    <div class="text-xl font-medium text-paper reveal opacity-0 translate-y-5 transition-all duration-700 delay-100">
                         <span class="text-apple-gray font-mono text-sm mr-3 md:order-2 md:mr-0 md:ml-3">01.</span><span class="md:order-1">CRM & ERP unification</span>
                     </div>
-                    <div class="text-xl font-medium text-white reveal opacity-0 translate-y-5 transition-all duration-700 delay-200">
+                    <div class="text-xl font-medium text-paper reveal opacity-0 translate-y-5 transition-all duration-700 delay-200">
                         <span class="text-apple-gray font-mono text-sm mr-3 md:order-2 md:mr-0 md:ml-3">02.</span><span class="md:order-1">Webhook intercepts</span>
                     </div>
-                    <div class="text-xl font-medium text-white reveal opacity-0 translate-y-5 transition-all duration-700 delay-300">
+                    <div class="text-xl font-medium text-paper reveal opacity-0 translate-y-5 transition-all duration-700 delay-300">
                         <span class="text-apple-gray font-mono text-sm mr-3 md:order-2 md:mr-0 md:ml-3">03.</span><span class="md:order-1">Continuous sync</span>
                     </div>
                 </div>
                 <div class="md:w-1/2">
-                    <h4
-                        class="text-[2.75rem] sm:text-6xl md:text-8xl font-bold tracking-tighter mb-4 md:mb-8 text-white">
-                        Orchestrate.</h4>
+                    <h3
+                        class="text-[2.75rem] sm:text-6xl md:text-8xl font-bold tracking-tighter mb-4 md:mb-8 text-paper">
+                        Orchestrate.</h3>
                     <p class="text-xl md:text-2xl text-apple-gray leading-tight font-medium max-w-lg">
                         Break down your data silos. Our architecture weaves your operations together. Disjointed
                         platforms communicate seamlessly, in real time.
@@ -641,9 +644,9 @@
             <div
                 class="flex flex-col md:flex-row justify-between items-start md:items-center gap-12 reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out">
                 <div class="md:w-1/2">
-                    <h4
-                        class="text-[2.75rem] sm:text-6xl md:text-8xl font-bold tracking-tighter mb-4 md:mb-8 text-white">
-                        Retrieval.</h4>
+                    <h3
+                        class="text-[2.75rem] sm:text-6xl md:text-8xl font-bold tracking-tighter mb-4 md:mb-8 text-paper">
+                        Retrieval.</h3>
                     <p class="text-xl md:text-2xl text-apple-gray leading-tight font-medium max-w-lg">
                         Turn disorganized thousands of company documents into instantly queryable corporate memory banks
                         using Enterprise RAG infrastructure.
@@ -662,14 +665,14 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                 </svg>
-                <h3 class="text-4xl md:text-5xl font-bold tracking-tighter mb-6">Zero public training.</h3>
+                <h2 class="text-4xl md:text-5xl font-bold tracking-tighter mb-6">Zero public training.</h2>
                 <p class="text-xl md:text-2xl text-apple-gray font-medium leading-tight">We build walls around your IP.
                     Client data
                     routes through secured endpoints and is strictly prohibited from training external LLM models.
                     End-to-end encryption. SOC 2 compliant.</p>
             </div>
             <div class="text-right">
-                <div class="text-sm font-bold tracking-widest text-[#0071e3] uppercase mb-2">Security Standard</div>
+                <div class="text-sm font-bold tracking-widest text-indigo-bright uppercase mb-2">Security Standard</div>
                 <div class="text-3xl font-bold">GDPR Ready</div>
             </div>
         </div>
@@ -679,15 +682,10 @@
 
     <!-- How we build (Editorial Process) -->
     <section id="how" class="py-40 px-6 max-w-7xl mx-auto border-t border-white/10 relative">
-        <!-- Ambient glow for aesthetic -->
-        <div
-            class="absolute top-1/2 left-0 -translate-y-1/2 w-[800px] h-[800px] bg-[#0071e3]/10 rounded-full blur-[150px] pointer-events-none">
-        </div>
-
         <div class="mb-32 reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out relative z-10">
-            <h2 class="text-xs text-[#0071e3] uppercase tracking-widest font-bold mb-6">03 / The Process</h2>
-            <h3 class="text-5xl md:text-7xl font-bold tracking-tighter text-glow max-w-3xl leading-[1.05]">No fluff.
-                Just execution.</h3>
+            <p class="text-xs text-indigo-bright uppercase tracking-widest font-bold mb-6">03 / The Process</p>
+            <h2 class="text-5xl md:text-7xl font-bold tracking-tighter text-glow max-w-3xl leading-[1.05]">No fluff.
+                Just execution.</h2>
         </div>
 
         <div class="flex flex-col gap-12 md:gap-24 relative z-10">
@@ -702,9 +700,9 @@
                     class="text-3xl font-bold text-apple-gray w-32 shrink-0 group-hover:text-[#0071e3] transition-colors duration-500">
                     01.</div>
                 <div class="max-w-3xl group-hover:translate-x-4 transition-transform duration-700 ease-out">
-                    <h4
-                        class="text-4xl md:text-5xl font-bold tracking-tighter mb-6 text-white group-hover:text-glow transition-all duration-500">
-                        The Audit</h4>
+                    <h3
+                        class="text-4xl md:text-5xl font-bold tracking-tighter mb-6 text-paper group-hover:text-glow transition-all duration-500">
+                        The Audit</h3>
                     <p
                         class="text-2xl text-apple-gray leading-tight font-medium group-hover:text-white/90 transition-colors duration-500">
                         We map your entire architecture. We
@@ -722,9 +720,9 @@
                     class="text-3xl font-bold text-apple-gray w-32 shrink-0 group-hover:text-[#0071e3] transition-colors duration-500">
                     02.</div>
                 <div class="max-w-3xl group-hover:translate-x-4 transition-transform duration-700 ease-out">
-                    <h4
-                        class="text-4xl md:text-5xl font-bold tracking-tighter mb-6 text-white group-hover:text-glow transition-all duration-500">
-                        The Code</h4>
+                    <h3
+                        class="text-4xl md:text-5xl font-bold tracking-tighter mb-6 text-paper group-hover:text-glow transition-all duration-500">
+                        The Code</h3>
                     <p
                         class="text-2xl text-apple-gray leading-tight font-medium group-hover:text-white/90 transition-colors duration-500">
                         We engineer the native integrations,
@@ -742,9 +740,9 @@
                     class="text-3xl font-bold text-apple-gray w-32 shrink-0 group-hover:text-[#0071e3] transition-colors duration-500">
                     03.</div>
                 <div class="max-w-3xl group-hover:translate-x-4 transition-transform duration-700 ease-out">
-                    <h4
-                        class="text-4xl md:text-5xl font-bold tracking-tighter mb-6 text-white group-hover:text-glow transition-all duration-500">
-                        The Run</h4>
+                    <h3
+                        class="text-4xl md:text-5xl font-bold tracking-tighter mb-6 text-paper group-hover:text-glow transition-all duration-500">
+                        The Run</h3>
                     <p
                         class="text-2xl text-apple-gray leading-tight font-medium group-hover:text-white/90 transition-colors duration-500">
                         We flip the switch. Your massive
@@ -762,16 +760,16 @@
             <!-- Founder Image -->
             <div
                 class="w-[300px] h-[300px] shrink-0 bg-white/5 grayscale flex items-center justify-center relative overflow-hidden rounded-[2rem] border border-white/5">
-                <img src="founder.png" alt="Tayyib Arbab"
+                <img src="founder.webp" width="1200" height="779" alt="Tayyib Arbab"
                     class="w-full h-full object-cover object-top scale-125 transform">
             </div>
             <div>
-                <h3 class="text-3xl md:text-4xl font-bold tracking-tight mb-12 leading-relaxed text-white">
+                <h3 class="text-3xl md:text-4xl font-bold tracking-tight mb-12 leading-relaxed text-paper">
                     "Most agencies sell you overpriced solutions you don't need.<br><br>At Azen, we build solutions
                     tailored to your needs. Strategy before code. Custom over generic. Built around how your business
                     actually runs, not what's easiest to sell."
                 </h3>
-                <p class="font-bold text-xl text-white tracking-tight">Tayyib Arbab</p>
+                <p class="font-bold text-xl text-paper tracking-tight">Tayyib Arbab</p>
                 <p class="text-apple-gray mt-1">Founder, Systems Engineer</p>
             </div>
         </div>
@@ -779,8 +777,8 @@
 
     <!-- FAQ Section (Clean editorial) -->
     <section id="faq" class="py-40 px-6 max-w-4xl mx-auto">
-        <h2 class="text-xs text-[#0071e3] uppercase tracking-widest font-bold mb-6">04 / Details</h2>
-        <h3 class="text-5xl md:text-7xl font-bold tracking-tighter mb-20 text-white">Straight answers.</h3>
+        <p class="text-xs text-indigo-bright uppercase tracking-widest font-bold mb-6">04 / Details</p>
+        <h2 class="text-5xl md:text-7xl font-bold tracking-tighter mb-20 text-paper">Straight answers.</h2>
 
         <div class="space-y-0 border-t border-white/10">
             <details class="group cursor-pointer py-10 border-b border-white/10">
@@ -872,21 +870,27 @@
         </div>
     </section>
 
-    <!-- Final CTA (Stark) -->
+    <!-- Final CTA (Stark). The indigo-drench background provides color
+         commitment; the radial blur halo that used to live here was a
+         decorative AI tell. Removed. -->
     <section class="py-40 px-6 bg-indigo-drench text-center relative overflow-hidden flex flex-col items-center">
-        <div
-            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#0071e3]/10 rounded-full blur-[150px] pointer-events-none">
-        </div>
         <h2
-            class="text-[3rem] leading-[1.05] sm:text-[4rem] md:text-[6rem] lg:text-[7rem] md:leading-[0.9] font-bold tracking-tighter text-center mb-8 relative z-10 text-white max-w-5xl mx-auto">
+            class="text-[3rem] leading-[1.05] sm:text-[4rem] md:text-[6rem] lg:text-[7rem] md:leading-[0.9] font-bold tracking-tighter text-center mb-8 relative z-10 text-paper max-w-5xl mx-auto">
             <span class="block">The leverage is</span>
             <span class="block">in the systems.</span>
         </h2>
         <p class="text-xl md:text-2xl text-apple-gray mb-10 md:mb-16 relative z-10 font-medium max-w-2xl mx-auto px-4">
             Book a free audit. We'll find yours.</p>
         <a href="https://calendly.com/tayyib-azen/30min" target="_blank" rel="noopener"
-            class="inline-block bg-[#0071e3] text-white px-12 py-5 rounded-full font-bold text-xl hover:bg-[#005bb5] transition-all shadow-[0_0_50px_rgba(0,113,227,0.3)] relative z-10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60">
+            class="inline-block bg-[#0071e3] text-paper px-12 py-5 rounded-full font-bold text-xl hover:bg-[#005bb5] transition-all relative z-10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60">
             Book Audit
+        </a>
+        <!-- Async lead path — for buyers who want to send a written brief
+             instead of booking a call. Lives here (not in the hero) so it
+             doesn't dilute the primary action. -->
+        <a href="mailto:hello@azen.io?subject=Brief%3A%20%5BCompany%20name%5D&body=Where%20you%20are%20now%3A%0A%0A%0AThe%20manual%20work%20costing%20you%20most%3A%0A%0A%0ASystems%20that%20touch%20it%3A%0A%0A%0ATimeline%2C%20if%20any%3A%0A%0A%0AAnything%20else%20we%20should%20know%3A%0A%0A"
+            class="mt-8 inline-block text-sm text-apple-gray hover:text-paper transition tracking-tight relative z-10 focus:outline-none rounded">
+            Or send a brief in writing →
         </a>
     </section>
     </main>
@@ -895,7 +899,7 @@
     <footer class="border-t border-white/10 py-16 px-6">
         <div class="max-w-7xl mx-auto flex flex-col gap-10">
             <div class="flex flex-col md:flex-row justify-between items-center gap-6">
-                <div class="text-2xl font-bold tracking-tighter text-white">azen.</div>
+                <div class="text-2xl font-bold tracking-tighter text-paper">azen.</div>
                 <nav aria-label="Social" class="flex gap-2">
                     <a href="https://www.linkedin.com/REPLACE_ME_LINKEDIN" target="_blank" rel="noopener" aria-label="Azen on LinkedIn"
                         class="inline-flex items-center justify-center w-11 h-11 rounded-full text-apple-gray hover:text-white hover:bg-white/5 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60">
@@ -929,9 +933,9 @@
             <div class="flex flex-col md:flex-row justify-between items-center gap-6 pt-8 border-t border-white/10">
                 <div class="text-sm text-apple-gray font-medium">&copy; 2026 Azen Digital. All rights reserved.</div>
                 <nav aria-label="Legal" class="flex gap-8 text-sm text-apple-gray font-medium">
-                    <a href="privacy.html" class="hover:text-white transition">Privacy Policy</a>
-                    <a href="terms.html" class="hover:text-white transition">Terms of Service</a>
-                    <a href="mailto:hello@azen.io" class="hover:text-white transition">Contact</a>
+                    <a href="privacy.html" class="inline-block py-3 -my-3 hover:text-paper transition">Privacy Policy</a>
+                    <a href="terms.html" class="inline-block py-3 -my-3 hover:text-paper transition">Terms of Service</a>
+                    <a href="mailto:hello@azen.io" class="inline-block py-3 -my-3 hover:text-paper transition">Contact</a>
                 </nav>
             </div>
         </div>
@@ -982,6 +986,11 @@
                 const setOpen = (open) => {
                     drawer.dataset.open = String(open);
                     drawer.setAttribute('aria-hidden', String(!open));
+                    if (open) {
+                        drawer.removeAttribute('inert');
+                    } else {
+                        drawer.setAttribute('inert', '');
+                    }
                     toggle.setAttribute('aria-expanded', String(open));
                     if (iconOpen && iconClose) {
                         iconOpen.classList.toggle('hidden', open);

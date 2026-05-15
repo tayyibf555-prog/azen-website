@@ -29,6 +29,40 @@ html {
   text-rendering: optimizeLegibility;
 }
 
+/* Honor user OS preference: no animation, no smooth scroll, no transitions. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .typewriter-text::after,
+  .animate-marquee {
+    animation: none !important;
+  }
+}
+
+/* Global focus indicator. Every interactive element needs a visible focus.
+   The earlier code declared :focus-visible:ring-* on five elements but missed
+   the FAQ summary, the ROI slider, and the typing terminal-frame. This rule
+   is a global safety net; component-level rings still override. */
+*:focus-visible {
+  outline: 2px solid oklch(0.85 0.05 260);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+/* For pill-shaped buttons and round controls, use a ring instead so we don't
+   get a square outline around a circle. */
+button:focus-visible,
+a:focus-visible.rounded-full,
+.rounded-full:focus-visible {
+  outline-offset: 4px;
+}
+
 body {
   font-family: 'Mona Sans', 'Inter Tight', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
   font-feature-settings: 'ss01', 'cv11';
