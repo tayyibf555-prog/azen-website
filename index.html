@@ -59,7 +59,7 @@
     <!-- Built Tailwind CSS (replaces cdn.tailwindcss.com).
          Cache-bust on each rebuild via the ?v= query — update the
          version number when styles.css regenerates. -->
-    <link rel="stylesheet" href="styles.css?v=20260517">
+    <link rel="stylesheet" href="styles.css?v=20260518">
 </head>
 
 <body class="bg-gradient-tr-fixed min-h-screen text-paper relative">
@@ -114,30 +114,29 @@
     <!-- Hero Section -->
     <main id="main">
 
-    <!-- Asymmetric hero. Left-aligned across the board, headline staggers
-         down/right with weight contrast (extralight → italic → extrabold),
-         indigo period accent on "leverage." mirrors the Capabilities
-         heading's closing beat. Hero now reads as a deliberate composition,
-         not a centered-stack template. -->
-    <section class="relative pt-40 pb-16 px-6 max-w-6xl mx-auto">
+    <!-- Hero — centered, weight-contrast couplet. "Stop renting time."
+         in extralight sets up the page's tonal range; "Build leverage."
+         in extrabold delivers it, with the indigo period mirroring the
+         closing beat on Capabilities's "autonomously." Two-line couplet
+         with thin setup → heavy payoff. -->
+    <section class="relative pt-40 pb-16 px-6 max-w-6xl mx-auto flex flex-col items-center text-center">
 
-        <!-- Place stamp — left-aligned mono kicker -->
         <p class="font-mono text-[10px] sm:text-xs uppercase tracking-[0.3em] text-apple-gray mb-10 flex items-center gap-3">
             <span class="inline-block w-8 h-px bg-apple-gray/40"></span>
             Built in London &middot; Shipping globally
+            <span class="inline-block w-8 h-px bg-apple-gray/40"></span>
         </p>
 
-        <h1 class="tracking-tighter leading-[0.95] text-[clamp(2.75rem,9vw,8rem)] mb-12 max-w-5xl">
-            <span class="block font-extralight text-paper/85">Stop renting time.</span>
-            <span class="block italic font-extralight text-paper/70 pl-[8vw] md:pl-[12vw] mt-2">Build</span>
-            <span class="block font-extrabold text-paper pl-[3vw] md:pl-[4vw] -mt-2">leverage<span class="text-[#0071e3]">.</span></span>
+        <h1 class="tracking-tighter leading-[0.95] text-[clamp(2.75rem,9vw,8rem)] mb-10 max-w-5xl">
+            <span class="block font-extralight text-paper/80">Stop renting time.</span>
+            <span class="block font-extrabold text-paper">Build leverage<span class="text-[#0071e3]">.</span></span>
         </h1>
 
         <p class="text-apple-gray text-lg sm:text-xl md:text-2xl max-w-2xl mb-12 md:mb-14 font-medium tracking-tight leading-snug">
             We map your exact bottlenecks and deploy custom AI infrastructure that automates the manual work bleeding your team.
         </p>
 
-        <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto items-stretch sm:items-center">
+        <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto items-stretch sm:items-center justify-center">
             <a href="https://calendly.com/tayyib-azen/30min" target="_blank" rel="noopener"
                 class="w-full sm:w-auto bg-[#0071e3] text-paper px-8 py-3.5 rounded-full text-center font-bold hover:bg-[#005bb5] transition focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60">Book Audit</a>
             <a href="#solutions"
