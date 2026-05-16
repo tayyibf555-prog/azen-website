@@ -26,7 +26,7 @@ export default {
         },
       },
       fontFamily: {
-        sans: ['"Mona Sans"', '"Inter Tight"', '-apple-system', '"Helvetica Neue"', 'sans-serif'],
+        sans: ['"Hanken Grotesk"', '-apple-system', '"Helvetica Neue"', 'sans-serif'],
         mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
       },
       animation: {

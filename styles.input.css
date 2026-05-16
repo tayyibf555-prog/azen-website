@@ -1,5 +1,10 @@
-/* Mona Sans (free, open-source, GitHub) — distinctive sans for display + body. */
-@import url('https://fonts.googleapis.com/css2?family=Mona+Sans:ital,wght@0,200..900;1,200..900&family=JetBrains+Mono:wght@400;500&display=swap');
+/* Hanken Grotesk (free, Google Fonts) — Swiss-influenced neutral grotesque
+   with a confident weight range (100-900) and a true italic. Replaces
+   Mona Sans because Mona reads as too humanist/soft for a brand that wants
+   to feel like a serious engineering company. Hanken is neutral without
+   being faceless, and isn't in the Vercel/Stripe/Linear aesthetic lane the
+   audit flagged. JetBrains Mono kept for the monospace stamp + numerals. */
+@import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=JetBrains+Mono:wght@400;500&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -64,8 +69,8 @@ a:focus-visible.rounded-full,
 }
 
 body {
-  font-family: 'Mona Sans', 'Inter Tight', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
-  font-feature-settings: 'ss01', 'cv11';
+  font-family: 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+  font-feature-settings: 'ss01';
   -webkit-font-smoothing: antialiased;
   background-color: var(--ink-deep);
   color: var(--paper);
