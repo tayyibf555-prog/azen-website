@@ -1,10 +1,11 @@
 /* Hanken Grotesk (free, Google Fonts) — Swiss-influenced neutral grotesque
-   with a confident weight range (100-900) and a true italic. Replaces
-   Mona Sans because Mona reads as too humanist/soft for a brand that wants
-   to feel like a serious engineering company. Hanken is neutral without
-   being faceless, and isn't in the Vercel/Stripe/Linear aesthetic lane the
-   audit flagged. JetBrains Mono kept for the monospace stamp + numerals. */
-@import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=JetBrains+Mono:wght@400;500&display=swap');
+   with a confident weight range (100-900) and a true italic. JetBrains
+   Mono kept for the monospace stamp + numerals.
+   Geist (free, Google Fonts) — added for the thin display lines on the
+   Capabilities hero. Hanken at ExtraLight (200) read as too spindly; Geist
+   Light (300) has more solid letterforms while keeping the thin/bold
+   weight contrast against Hanken ExtraBold. */
+@import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=Geist:wght@300;400&family=JetBrains+Mono:wght@400;500&display=swap');
 
 @tailwind base;
 @tailwind components;

@@ -28,6 +28,9 @@ export default {
       fontFamily: {
         sans: ['"Hanken Grotesk"', '-apple-system', '"Helvetica Neue"', 'sans-serif'],
         mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+        // Geist Light for the thin display lines on the Capabilities hero.
+        // Falls back to Hanken Grotesk Light if Geist isn't available yet.
+        geist: ['"Geist"', '"Hanken Grotesk"', '-apple-system', 'sans-serif'],
       },
       animation: {
         marquee: 'marquee 80s linear infinite',
