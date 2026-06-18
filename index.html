@@ -141,52 +141,25 @@
 
 
 
-    <!-- Evidence Panel — replaces the scripted terminal demo with verifiable
-         operational state. Numbers should be updated by Tayyib from the live
-         portfolio. Keep the terminal-frame styling because the framing
-         (header bar, monospace numerals) reads as engineering credibility
-         without faking output. -->
+    <!-- Hero animation panel — replaces the previous "Currently running"
+         evidence-stats box. 15 s azen logo-reveal loop (Higgsfield generated)
+         compressed to H.264 ~2.4 MB at 1080p, with a WebP poster of the
+         resolved logo frame so first-paint shows brand even before the
+         video buffers. Keeps the rounded-2xl + terminal-glow frame so the
+         visual treatment matches the rest of the page. -->
     <section class="px-6 pb-32 max-w-5xl mx-auto w-full border-b border-white/5">
-        <div class="rounded-2xl terminal-glow relative overflow-hidden">
-            <!-- Status header -->
-            <div class="flex items-center justify-between gap-4 border-b border-white/5 px-6 py-4">
-                <div class="flex items-center gap-3">
-                    <span class="relative flex w-2.5 h-2.5">
-                        <span class="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60 animate-ping"></span>
-                        <span class="relative inline-flex w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
-                    </span>
-                    <span class="text-[11px] uppercase tracking-widest text-apple-gray font-bold">Currently running</span>
-                </div>
-                <span class="font-mono text-[11px] text-apple-gray hidden sm:inline">azen-deploy / production</span>
-            </div>
-
-            <!-- Stat grid (4 columns, monospace numerals for engineering feel) -->
-            <div class="grid grid-cols-2 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-white/5">
-                <div class="p-6 md:p-8">
-                    <div class="font-mono text-4xl md:text-5xl font-bold tracking-tighter text-paper tabular-nums leading-none">7</div>
-                    <div class="mt-3 text-[11px] uppercase tracking-widest text-apple-gray font-bold">Live deployments</div>
-                </div>
-                <div class="p-6 md:p-8">
-                    <div class="font-mono text-4xl md:text-5xl font-bold tracking-tighter text-paper tabular-nums leading-none">142<span class="text-2xl text-apple-gray">/wk</span></div>
-                    <div class="mt-3 text-[11px] uppercase tracking-widest text-apple-gray font-bold">Hours automated</div>
-                </div>
-                <div class="p-6 md:p-8">
-                    <div class="font-mono text-4xl md:text-5xl font-bold tracking-tighter text-paper tabular-nums leading-none">12</div>
-                    <div class="mt-3 text-[11px] uppercase tracking-widest text-apple-gray font-bold">Production integrations</div>
-                </div>
-                <div class="p-6 md:p-8">
-                    <div class="font-mono text-4xl md:text-5xl font-bold tracking-tighter text-paper tabular-nums leading-none">99.7<span class="text-2xl text-apple-gray">%</span></div>
-                    <div class="mt-3 text-[11px] uppercase tracking-widest text-apple-gray font-bold">90-day uptime</div>
-                </div>
-            </div>
-
-            <!-- Footer strip -->
-            <div class="border-t border-white/5 px-6 py-4 flex flex-col sm:flex-row gap-2 sm:gap-6 sm:items-center text-[11px] text-apple-gray font-mono">
-                <span><span class="text-emerald-400">●</span> Last deployed <time datetime="2026-04-28">28 Apr 2026</time></span>
-                <span class="hidden sm:inline opacity-30">/</span>
-                <span>Most recent build: prep-point voice copilot v1.4</span>
-            </div>
-
+        <div class="rounded-2xl terminal-glow relative overflow-hidden bg-black">
+            <video
+                class="block w-full h-auto"
+                src="/videos/hero-loop.mp4"
+                poster="/videos/hero-loop.webp"
+                autoplay
+                muted
+                loop
+                playsinline
+                preload="metadata"
+                aria-label="Azen brand reveal animation">
+            </video>
         </div>
     </section>
 
