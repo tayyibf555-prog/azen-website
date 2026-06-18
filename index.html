@@ -126,6 +126,24 @@
             <span class="block font-extrabold text-paper">Build leverage<span class="text-[#0071e3]">.</span></span>
         </h1>
 
+        <!-- Brand-reveal animation, now sitting directly under the headline.
+             ~2.4 MB H.264 loop (15 s) with a WebP poster of the resolved
+             "azen." wordmark so first paint shows brand. Constrained to
+             max-w-4xl so it doesn't visually outweigh the headline above. -->
+        <div class="w-full max-w-4xl mb-12 md:mb-16 rounded-2xl terminal-glow relative overflow-hidden bg-black">
+            <video
+                class="block w-full h-auto"
+                src="/videos/hero-loop.mp4"
+                poster="/videos/hero-loop.webp"
+                autoplay
+                muted
+                loop
+                playsinline
+                preload="metadata"
+                aria-label="Azen brand reveal animation">
+            </video>
+        </div>
+
         <p class="text-apple-gray text-lg sm:text-xl md:text-2xl max-w-2xl mb-12 md:mb-14 font-medium tracking-tight leading-snug">
             We map your exact bottlenecks and deploy custom AI infrastructure that automates the manual work bleeding your team.
         </p>
@@ -141,27 +159,10 @@
 
 
 
-    <!-- Hero animation panel — replaces the previous "Currently running"
-         evidence-stats box. 15 s azen logo-reveal loop (Higgsfield generated)
-         compressed to H.264 ~2.4 MB at 1080p, with a WebP poster of the
-         resolved logo frame so first-paint shows brand even before the
-         video buffers. Keeps the rounded-2xl + terminal-glow frame so the
-         visual treatment matches the rest of the page. -->
-    <section class="px-6 pb-32 max-w-5xl mx-auto w-full border-b border-white/5">
-        <div class="rounded-2xl terminal-glow relative overflow-hidden bg-black">
-            <video
-                class="block w-full h-auto"
-                src="/videos/hero-loop.mp4"
-                poster="/videos/hero-loop.webp"
-                autoplay
-                muted
-                loop
-                playsinline
-                preload="metadata"
-                aria-label="Azen brand reveal animation">
-            </video>
-        </div>
-    </section>
+    <!-- Section divider — the animation that used to live in this slot
+         is now part of the hero above. Keep the hairline rule so the
+         hero-to-portfolio handoff still feels intentional. -->
+    <div class="max-w-5xl mx-auto px-6 border-b border-white/5"></div>
 
     <!-- Portfolio: Strip (Kept but cleaned up) -->
     <section id="portfolio" class="pt-24 pb-32 overflow-hidden border-b border-white/5">
