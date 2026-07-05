@@ -1,48 +1,50 @@
 ---
 version: alpha
 name: azen-design-system
-description: "A near-black indigo-tinted canvas (oklch(0.06 0.012 260)) carrying a single committed accent: Apple-blue #0071e3, spent only on CTAs and punctuation beats. The system reads as industrial engineering: Archivo pushed to its Expanded width (font-stretch 125%) at weight 800, uppercase, for all display work — machined equipment-label energy — with a dimmed setup line / paper payoff line couplet and the blue full-stop as the recurring punctuation beat. Body runs Archivo normal-width 400-500; JetBrains Mono carries every annotation, stamp, and numeral. Surfaces are hairline-bordered panels on white/5, radius 1rem-2rem, with one glow treatment (terminal-glow) reserved for proof surfaces. Atmosphere comes from heavily dimmed indigo cinematic stills under gradient overlays, never decorative gradients. Motion: quiet 900ms-1s ease-out reveals plus two pinned scroll set pieces (horizontal work gallery, three-phase process)."
+description: "Engineering blueprint on paper. A warm paper ground (oklch(0.985 0.006 255)) carrying a fixed drafting grid (fine 24px + heavy 120px ink-blue lines), deep ink-navy text, and the one committed blue #0071e3 doing rules, annotations, CTAs, and two fully drenched blue sections (Founder, Final CTA) where text flips to paper. The deliberate counter-move to the saturated dark-AI-agency lane: light, airy, precise. Display work is Schibsted Grotesk at weight 800, sentence case, -0.025em, with a dimmed setup line / ink payoff line couplet and the blue full-stop as the recurring punctuation beat. JetBrains Mono carries annotations, stamps, and numerals — the drafting-label register. Surfaces are white drawing-sheet cards with hairline ink borders and soft paper shadows. Dark appears only as framed objects: dashboard screenshots in browser chrome, the brand film panel. Motion: quiet 900ms-1s ease-out reveals plus two pinned scroll set pieces (horizontal work gallery, three-phase process)."
 
 colors:
-  canvas: "oklch(0.06 0.012 260)"      # --ink-deep, near-black tinted indigo
-  surface-1: "oklch(0.10 0.012 260)"   # --ink
-  surface-2: "oklch(0.16 0.012 260)"   # --ink-soft
-  ink: "oklch(0.98 0.005 260)"         # --paper, warm white
-  ink-muted: "#86868b"                 # --gray, Apple secondary gray
-  accent: "#0071e3"                    # --indigo, the ONE chroma
-  accent-hover: "#005bb5"              # --indigo-deep
-  accent-drench: "oklch(0.30 0.18 260)" # --indigo-deep-bg, founder section ground
-  hairline: "oklch(0.98 0.005 260 / 0.10)"        # --line
-  hairline-strong: "oklch(0.98 0.005 260 / 0.20)" # --line-strong
-  status-live: "#34d399"               # emerald, status dots only
+  ground: "oklch(0.985 0.006 255)"      # paper
+  ground-soft: "oklch(0.955 0.010 255)" # recessed panels
+  ink-deep: "oklch(0.13 0.030 260)"     # headline ink navy
+  ink: "oklch(0.18 0.030 260)"          # body ink
+  accent: "#0071e3"                     # the ONE blue
+  accent-hover: "#005bb5"
+  accent-drench: "oklch(0.44 0.19 258)" # drenched section ground
+  accent-eyebrow: "oklch(0.47 0.17 255)" # indigo-bright: AA at 11px on paper
+  hairline: "oklch(0.18 0.03 260 / 0.12)"
+  grid-line: "oklch(0.55 0.16 255 / 0.28)" # drafting grid
+  paper: "oklch(0.985 0.003 260)"       # text ON blue grounds
+  gray: "#6e6e73"                        # secondary text, AA on paper
+  status-live: "#059669"                 # emerald-600 on paper
 
 color-strategy: >
-  Committed-restrained hybrid: tinted near-black neutrals + one saturated blue
-  under 10% of surface area, plus one drenched section (founder panel on
-  accent-drench). Blue lands ONLY on primary CTAs, link hovers, and the
-  closing-period punctuation beat. Emerald is reserved for live-status dots.
-  No gradients as decoration; gradient overlays exist only to dim imagery.
+  Committed light: paper ground structured by the ink-blue drafting grid,
+  ink-navy text, one saturated blue on CTAs / rules / punctuation beats,
+  and two fully drenched blue sections (Founder, Final CTA) where text
+  flips to paper and primary buttons flip to white-on-blue. Emerald is
+  reserved for live-status dots. No decorative gradients.
 
 typography:
   display-hero:
-    fontFamily: Archivo (font-stretch 125%, uppercase, .display class)
+    fontFamily: Schibsted Grotesk (weight 800, sentence case, .display class)
     fontSize: clamp(3.2rem, 11vw, 11rem)
     fontWeight: 800
     lineHeight: 0.92
     letterSpacing: -0.015em
-    note: dimmed setup line (white/35-45) then paper payoff line + blue period
+    note: dimmed setup line (ink/40) then ink-deep payoff line + blue period
   display-section:
-    fontFamily: Archivo Expanded (.display)
+    fontFamily: Schibsted Grotesk (.display)
     fontSize: clamp(2.2rem, 4.5-9vw, 8.5rem) per section scale
     fontWeight: 800
     lineHeight: 0.92-0.95
   headline:
-    fontFamily: Archivo
+    fontFamily: Schibsted Grotesk
     fontSize: 1.25rem-2rem
     fontWeight: 700
     letterSpacing: tracking-tight
   body:
-    fontFamily: Archivo
+    fontFamily: Schibsted Grotesk
     fontSize: 1rem-1.25rem
     fontWeight: 400-500
     lineHeight: 1.5
@@ -72,10 +74,11 @@ layout:
 
 imagery:
   policy: >
-    Cinematic stills generated in-palette (deep indigo grounds, single blue
-    glow), dimmed to 12-25% opacity under bg-gradient overlays. Texture you
-    feel, not pictures you look at. Real photography only for the founder.
-    Case studies always shown as real product screenshots, framed uniformly.
+    Texture comes from the CSS drafting grid, not imagery. Dark appears only
+    as framed objects on the paper ground: dashboard screenshots inside
+    browser-chrome frames, the brand film in its panel. Real photography
+    only for the founder (full colour). The dark atmosphere stills from the
+    previous direction remain in public/atmosphere/ but are unused.
 
 motion:
   reveals: "opacity 0→1 + translateY 10→0, 1000ms ease-out, IntersectionObserver-triggered"

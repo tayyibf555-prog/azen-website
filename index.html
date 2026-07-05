@@ -57,10 +57,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <!-- Built Tailwind CSS. Cache-bust via ?v= on each rebuild. -->
-    <link rel="stylesheet" href="styles.css?v=20260705c">
+    <link rel="stylesheet" href="styles.css?v=20260705e">
 </head>
 
-<body class="bg-gradient-tr-fixed min-h-screen text-paper relative">
+<body class="bg-gradient-tr-fixed min-h-screen text-ink relative">
 
     <!-- Boot intro — mono cursor, wordmark types in, blue period lands,
          overlay wipes up. Runs once per session; skipped entirely under
@@ -75,21 +75,21 @@
     <!-- Floating Pill Nav -->
     <div class="absolute top-6 inset-x-0 z-50 flex justify-center pointer-events-none px-6">
         <nav aria-label="Primary"
-            class="pointer-events-auto py-2.5 px-3 flex justify-between items-center glass-nav rounded-full border border-white/10 shadow-2xl gap-4 sm:gap-8 md:gap-16 w-full max-w-fit">
-            <a href="#" aria-label="Azen home" class="text-xl font-bold tracking-tighter pl-3 text-paper">azen.</a>
+            class="pointer-events-auto py-2.5 px-3 flex justify-between items-center glass-nav rounded-full border border-ink/10 shadow-2xl gap-4 sm:gap-8 md:gap-16 w-full max-w-fit">
+            <a href="#" aria-label="Azen home" class="text-xl font-bold tracking-tighter pl-3 text-ink">azen.</a>
             <div class="hidden md:flex gap-8 text-[11px] uppercase text-apple-gray font-bold tracking-widest">
-                <a href="#work" class="inline-block py-3 -my-3 hover:text-paper transition">Systems</a>
-                <a href="#solutions" class="inline-block py-3 -my-3 hover:text-paper transition">Capabilities</a>
-                <a href="#how" class="inline-block py-3 -my-3 hover:text-paper transition">Process</a>
-                <a href="#faq" class="inline-block py-3 -my-3 hover:text-paper transition">FAQ</a>
+                <a href="#work" class="inline-block py-3 -my-3 hover:text-ink transition">Systems</a>
+                <a href="#solutions" class="inline-block py-3 -my-3 hover:text-ink transition">Capabilities</a>
+                <a href="#how" class="inline-block py-3 -my-3 hover:text-ink transition">Process</a>
+                <a href="#faq" class="inline-block py-3 -my-3 hover:text-ink transition">FAQ</a>
             </div>
             <a href="https://calendly.com/tayyib-azen/30min" target="_blank" rel="noopener"
-                class="hidden sm:inline-block bg-[#0071e3] text-paper px-5 py-2 rounded-full text-[11px] font-bold uppercase tracking-widest hover:bg-[#005bb5] transition focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60">
+                class="hidden sm:inline-block bg-[#0071e3] text-white px-5 py-2 rounded-full text-[11px] font-bold uppercase tracking-widest hover:bg-[#005bb5] transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0071e3]/60">
                 Book Audit
             </a>
             <!-- Mobile menu button -->
             <button id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="mobile-drawer"
-                class="md:hidden inline-flex items-center justify-center w-11 h-11 rounded-full text-paper hover:bg-white/10 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60">
+                class="md:hidden inline-flex items-center justify-center w-11 h-11 rounded-full text-ink hover:bg-ink/5 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0071e3]/60">
                 <svg id="nav-icon-open" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
                     <path d="M4 7h16M4 12h16M4 17h16"/>
                 </svg>
@@ -102,15 +102,15 @@
 
     <!-- Mobile drawer — inert when closed. Toggled by JS. -->
     <div id="mobile-drawer" data-open="false" aria-hidden="true" inert
-        class="mobile-drawer fixed inset-x-0 top-0 z-40 md:hidden glass-nav border-b border-white/10 px-6 pt-28 pb-10">
-        <ul class="flex flex-col gap-2 text-2xl font-bold tracking-tight text-paper">
-            <li><a href="#work" class="block py-3 border-b border-white/10 hover:text-[#0071e3] transition" data-nav-link>Systems</a></li>
-            <li><a href="#solutions" class="block py-3 border-b border-white/10 hover:text-[#0071e3] transition" data-nav-link>Capabilities</a></li>
-            <li><a href="#how" class="block py-3 border-b border-white/10 hover:text-[#0071e3] transition" data-nav-link>Process</a></li>
-            <li><a href="#faq" class="block py-3 border-b border-white/10 hover:text-[#0071e3] transition" data-nav-link>FAQ</a></li>
+        class="mobile-drawer fixed inset-x-0 top-0 z-40 md:hidden glass-nav border-b border-ink/10 px-6 pt-28 pb-10">
+        <ul class="flex flex-col gap-2 text-2xl font-bold tracking-tight text-ink">
+            <li><a href="#work" class="block py-3 border-b border-ink/10 hover:text-[#0071e3] transition" data-nav-link>Systems</a></li>
+            <li><a href="#solutions" class="block py-3 border-b border-ink/10 hover:text-[#0071e3] transition" data-nav-link>Capabilities</a></li>
+            <li><a href="#how" class="block py-3 border-b border-ink/10 hover:text-[#0071e3] transition" data-nav-link>Process</a></li>
+            <li><a href="#faq" class="block py-3 border-b border-ink/10 hover:text-[#0071e3] transition" data-nav-link>FAQ</a></li>
         </ul>
         <a href="https://calendly.com/tayyib-azen/30min" target="_blank" rel="noopener"
-            class="mt-8 inline-flex items-center justify-center w-full bg-[#0071e3] text-paper px-6 py-4 rounded-full font-bold hover:bg-[#005bb5] transition">
+            class="mt-8 inline-flex items-center justify-center w-full bg-[#0071e3] text-white px-6 py-4 rounded-full font-bold hover:bg-[#005bb5] transition">
             Book Audit
         </a>
     </div>
@@ -122,20 +122,15 @@
          the filament atmosphere. Candid, confrontational, precise.
          ──────────────────────────────────────────────────────────── -->
     <section class="relative min-h-screen flex flex-col justify-center px-6 overflow-hidden">
-        <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
-            <img src="/atmosphere/atmos-hero.webp" alt="" width="2048" height="1152"
-                class="absolute inset-0 w-full h-full object-cover opacity-70">
-            <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[var(--ink-deep)]"></div>
-        </div>
 
         <div class="max-w-7xl mx-auto w-full relative z-10 pt-24">
             <p class="font-mono text-[11px] uppercase tracking-[0.3em] text-apple-gray mb-10 hero-line" style="--d:0ms">
-                London <span class="text-white/25 mx-2">/</span> Custom AI infrastructure
+                London <span class="text-ink/25 mx-2">/</span> Custom AI infrastructure
             </p>
 
             <h1 class="display text-[clamp(3.2rem,11vw,11rem)] leading-[0.92] mb-12">
-                <span class="block text-white/35 hero-line" style="--d:120ms">Manual work</span>
-                <span class="block text-paper hero-line" style="--d:260ms">is a choice<span class="text-[#0071e3]">.</span></span>
+                <span class="block text-ink/40 hero-line" style="--d:120ms">Manual work</span>
+                <span class="block text-ink hero-line" style="--d:260ms">is a choice<span class="text-[#0071e3]">.</span></span>
             </h1>
 
             <div class="max-w-xl hero-line" style="--d:420ms">
@@ -145,15 +140,15 @@
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 items-stretch sm:items-center">
                     <a href="https://calendly.com/tayyib-azen/30min" target="_blank" rel="noopener"
-                        class="bg-[#0071e3] text-paper px-8 py-4 rounded-full text-center font-bold hover:bg-[#005bb5] transition focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60">Book Audit</a>
+                        class="bg-[#0071e3] text-white px-8 py-4 rounded-full text-center font-bold hover:bg-[#005bb5] transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0071e3]/60">Book Audit</a>
                     <a href="#work"
-                        class="px-8 py-4 rounded-full text-center font-bold border border-white/20 hover:bg-white/10 transition text-paper focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60">See the systems</a>
+                        class="px-8 py-4 rounded-full text-center font-bold border border-ink/20 hover:bg-ink/5 transition text-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0071e3]/60">See the systems</a>
                 </div>
             </div>
         </div>
 
         <!-- Scroll cue -->
-        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 font-mono text-[10px] uppercase tracking-[0.3em] text-white/30 hero-line" style="--d:700ms" aria-hidden="true">
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 font-mono text-[10px] uppercase tracking-[0.3em] text-ink/30 hero-line" style="--d:700ms" aria-hidden="true">
             Scroll
         </div>
     </section>
@@ -162,7 +157,7 @@
          PROOF BAND — evidence before pitch. Real portfolio aggregates,
          count-up on entry. The only "live" element is the status dot.
          ──────────────────────────────────────────────────────────── -->
-    <section class="border-y border-white/5 relative">
+    <section class="border-y border-ink/10 relative">
         <div class="max-w-7xl mx-auto px-6 py-10 flex flex-col lg:flex-row lg:items-center gap-8 lg:gap-14">
             <div class="flex items-center gap-3 shrink-0">
                 <span class="relative flex w-2.5 h-2.5">
@@ -173,24 +168,24 @@
             </div>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-14 flex-1">
                 <div>
-                    <div class="font-mono text-3xl md:text-4xl font-bold tracking-tighter text-paper tabular-nums leading-none" data-countup="7">0</div>
+                    <div class="font-mono text-3xl md:text-4xl font-bold tracking-tighter text-ink tabular-nums leading-none" data-countup="7">0</div>
                     <div class="mt-2 text-[10px] uppercase tracking-widest text-apple-gray font-bold">Live deployments</div>
                 </div>
                 <div>
-                    <div class="font-mono text-3xl md:text-4xl font-bold tracking-tighter text-paper tabular-nums leading-none"><span data-countup="142">0</span><span class="text-lg text-apple-gray">/wk</span></div>
+                    <div class="font-mono text-3xl md:text-4xl font-bold tracking-tighter text-ink tabular-nums leading-none"><span data-countup="142">0</span><span class="text-lg text-apple-gray">/wk</span></div>
                     <div class="mt-2 text-[10px] uppercase tracking-widest text-apple-gray font-bold">Hours automated</div>
                 </div>
                 <div>
-                    <div class="font-mono text-3xl md:text-4xl font-bold tracking-tighter text-paper tabular-nums leading-none" data-countup="12">0</div>
+                    <div class="font-mono text-3xl md:text-4xl font-bold tracking-tighter text-ink tabular-nums leading-none" data-countup="12">0</div>
                     <div class="mt-2 text-[10px] uppercase tracking-widest text-apple-gray font-bold">Integrations</div>
                 </div>
                 <div>
-                    <div class="font-mono text-3xl md:text-4xl font-bold tracking-tighter text-paper tabular-nums leading-none"><span data-countup="99.7" data-decimals="1">0</span><span class="text-lg text-apple-gray">%</span></div>
+                    <div class="font-mono text-3xl md:text-4xl font-bold tracking-tighter text-ink tabular-nums leading-none"><span data-countup="99.7" data-decimals="1">0</span><span class="text-lg text-apple-gray">%</span></div>
                     <div class="mt-2 text-[10px] uppercase tracking-widest text-apple-gray font-bold">90-day uptime</div>
                 </div>
             </div>
             <div class="hidden xl:block font-mono text-[10px] text-apple-gray shrink-0">
-                <span class="text-emerald-400">●</span> Last deploy <time datetime="2026-04-28">28 Apr 2026</time>
+                <span class="text-emerald-600">●</span> Last deploy <time datetime="2026-04-28">28 Apr 2026</time>
             </div>
         </div>
     </section>
@@ -208,7 +203,7 @@
                 <div class="max-w-7xl mx-auto px-6 w-full mb-10 flex items-end justify-between gap-6">
                     <div>
                         <p class="font-mono text-[11px] uppercase tracking-[0.3em] text-indigo-bright font-bold mb-5">01 / Shipped systems</p>
-                        <h2 class="display text-[clamp(2.4rem,6vw,5.5rem)] leading-[0.95] text-paper reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out">
+                        <h2 class="display text-[clamp(2.4rem,6vw,5.5rem)] leading-[0.95] text-ink reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out">
                             Real clients.<br>Real numbers<span class="text-[#0071e3]">.</span>
                         </h2>
                     </div>
@@ -229,8 +224,8 @@
                                     class="work-shot" width="1400" height="766" loading="lazy">
                             </div>
                             <div class="flex justify-between items-baseline mt-5">
-                                <span class="text-xl font-bold tracking-tight text-paper">Prep Point</span>
-                                <span class="font-mono text-sm text-apple-gray group-hover/card:text-paper transition">85% error reduction</span>
+                                <span class="text-xl font-bold tracking-tight text-ink">Prep Point</span>
+                                <span class="font-mono text-sm text-apple-gray group-hover/card:text-ink transition">85% error reduction</span>
                             </div>
                         </a>
 
@@ -245,8 +240,8 @@
                                     class="work-shot" width="1400" height="766" loading="lazy">
                             </div>
                             <div class="flex justify-between items-baseline mt-5">
-                                <span class="text-xl font-bold tracking-tight text-paper">Superior Accounting</span>
-                                <span class="font-mono text-sm text-apple-gray group-hover/card:text-paper transition">78% call resolution</span>
+                                <span class="text-xl font-bold tracking-tight text-ink">Superior Accounting</span>
+                                <span class="font-mono text-sm text-apple-gray group-hover/card:text-ink transition">78% call resolution</span>
                             </div>
                         </a>
 
@@ -261,8 +256,8 @@
                                     class="work-shot" width="1400" height="766" loading="lazy">
                             </div>
                             <div class="flex justify-between items-baseline mt-5">
-                                <span class="text-xl font-bold tracking-tight text-paper">TTT Departmentals</span>
-                                <span class="font-mono text-sm text-apple-gray group-hover/card:text-paper transition">90% faster sourcing</span>
+                                <span class="text-xl font-bold tracking-tight text-ink">TTT Departmentals</span>
+                                <span class="font-mono text-sm text-apple-gray group-hover/card:text-ink transition">90% faster sourcing</span>
                             </div>
                         </a>
 
@@ -277,8 +272,8 @@
                                     class="work-shot" width="1400" height="766" loading="lazy">
                             </div>
                             <div class="flex justify-between items-baseline mt-5">
-                                <span class="text-xl font-bold tracking-tight text-paper">Little Oaks</span>
-                                <span class="font-mono text-sm text-apple-gray group-hover/card:text-paper transition">24/7 operations</span>
+                                <span class="text-xl font-bold tracking-tight text-ink">Little Oaks</span>
+                                <span class="font-mono text-sm text-apple-gray group-hover/card:text-ink transition">24/7 operations</span>
                             </div>
                         </a>
 
@@ -293,8 +288,8 @@
                                     class="work-shot" width="1400" height="766" loading="lazy">
                             </div>
                             <div class="flex justify-between items-baseline mt-5">
-                                <span class="text-xl font-bold tracking-tight text-paper">Zia Ul Quran</span>
-                                <span class="font-mono text-sm text-apple-gray group-hover/card:text-paper transition">3x internal efficiency</span>
+                                <span class="text-xl font-bold tracking-tight text-ink">Zia Ul Quran</span>
+                                <span class="font-mono text-sm text-apple-gray group-hover/card:text-ink transition">3x internal efficiency</span>
                             </div>
                         </a>
 
@@ -309,8 +304,8 @@
                                     class="work-shot" width="1400" height="766" loading="lazy">
                             </div>
                             <div class="flex justify-between items-baseline mt-5">
-                                <span class="text-xl font-bold tracking-tight text-paper">Zia Ul Ummah</span>
-                                <span class="font-mono text-sm text-apple-gray group-hover/card:text-paper transition">Automated data entry</span>
+                                <span class="text-xl font-bold tracking-tight text-ink">Zia Ul Ummah</span>
+                                <span class="font-mono text-sm text-apple-gray group-hover/card:text-ink transition">Automated data entry</span>
                             </div>
                         </a>
 
@@ -325,8 +320,8 @@
                                     class="work-shot" width="1400" height="766" loading="lazy">
                             </div>
                             <div class="flex justify-between items-baseline mt-5">
-                                <span class="text-xl font-bold tracking-tight text-paper">Azen EYOS</span>
-                                <span class="font-mono text-sm text-apple-gray group-hover/card:text-paper transition">Automated data infrastructure</span>
+                                <span class="text-xl font-bold tracking-tight text-ink">Azen EYOS</span>
+                                <span class="font-mono text-sm text-apple-gray group-hover/card:text-ink transition">Automated data infrastructure</span>
                             </div>
                         </a>
 
@@ -347,11 +342,6 @@
          alternating alignment. Machine atmosphere behind.
          ──────────────────────────────────────────────────────────── -->
     <section id="solutions" class="relative py-32 md:py-44 px-6 overflow-hidden">
-        <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
-            <img src="/atmosphere/atmos-machine.webp" alt="" width="2048" height="1152"
-                class="absolute inset-0 w-full h-full object-cover object-right opacity-40">
-            <div class="absolute inset-0 bg-gradient-to-b from-[var(--ink-deep)] via-transparent to-[var(--ink-deep)]"></div>
-        </div>
 
         <div class="max-w-7xl mx-auto relative z-10">
             <p class="font-mono text-[11px] uppercase tracking-[0.3em] text-indigo-bright font-bold mb-24">02 / What we deploy</p>
@@ -359,46 +349,46 @@
             <div class="space-y-32 md:space-y-44">
 
                 <div class="reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out">
-                    <h3 class="display text-[clamp(2.8rem,9vw,8.5rem)] leading-none text-paper mb-8">Agents<span class="text-[#0071e3]">.</span></h3>
+                    <h3 class="display text-[clamp(2.8rem,9vw,8.5rem)] leading-none text-ink mb-8">Agents<span class="text-[#0071e3]">.</span></h3>
                     <div class="flex flex-col md:flex-row gap-10 md:gap-24 md:items-start">
                         <p class="text-xl md:text-2xl text-apple-gray leading-tight font-medium max-w-lg">
                             Forget basic chatbots. Deploy intelligent systems that reason through problems, interact
                             with external APIs, and execute multi-step logic.
                         </p>
                         <ul class="font-mono text-sm text-apple-gray space-y-3 md:pt-2">
-                            <li><span class="text-white/25 mr-3">01</span>Dynamic decision logic</li>
-                            <li><span class="text-white/25 mr-3">02</span>API-native executions</li>
-                            <li><span class="text-white/25 mr-3">03</span>Self-correcting protocols</li>
+                            <li><span class="text-ink/25 mr-3">01</span>Dynamic decision logic</li>
+                            <li><span class="text-ink/25 mr-3">02</span>API-native executions</li>
+                            <li><span class="text-ink/25 mr-3">03</span>Self-correcting protocols</li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out md:text-right">
-                    <h3 class="display text-[clamp(2.8rem,9vw,8.5rem)] leading-none text-paper mb-8">Orchestrate<span class="text-[#0071e3]">.</span></h3>
+                    <h3 class="display text-[clamp(2.8rem,9vw,8.5rem)] leading-none text-ink mb-8">Orchestrate<span class="text-[#0071e3]">.</span></h3>
                     <div class="flex flex-col md:flex-row-reverse gap-10 md:gap-24 md:items-start">
                         <p class="text-xl md:text-2xl text-apple-gray leading-tight font-medium max-w-lg md:ml-auto md:text-right">
                             Break down your data silos. Our architecture weaves your operations together. Disjointed
                             platforms communicate seamlessly, in real time.
                         </p>
                         <ul class="font-mono text-sm text-apple-gray space-y-3 md:pt-2 md:text-right">
-                            <li>CRM &amp; ERP unification<span class="text-white/25 ml-3">01</span></li>
-                            <li>Webhook intercepts<span class="text-white/25 ml-3">02</span></li>
-                            <li>Continuous sync<span class="text-white/25 ml-3">03</span></li>
+                            <li>CRM &amp; ERP unification<span class="text-ink/25 ml-3">01</span></li>
+                            <li>Webhook intercepts<span class="text-ink/25 ml-3">02</span></li>
+                            <li>Continuous sync<span class="text-ink/25 ml-3">03</span></li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out">
-                    <h3 class="display text-[clamp(2.8rem,9vw,8.5rem)] leading-none text-paper mb-8">Retrieval<span class="text-[#0071e3]">.</span></h3>
+                    <h3 class="display text-[clamp(2.8rem,9vw,8.5rem)] leading-none text-ink mb-8">Retrieval<span class="text-[#0071e3]">.</span></h3>
                     <div class="flex flex-col md:flex-row gap-10 md:gap-24 md:items-start">
                         <p class="text-xl md:text-2xl text-apple-gray leading-tight font-medium max-w-lg">
                             Turn thousands of disorganized company documents into instantly queryable corporate memory
                             using Enterprise RAG infrastructure.
                         </p>
                         <ul class="font-mono text-sm text-apple-gray space-y-3 md:pt-2">
-                            <li><span class="text-white/25 mr-3">01</span>Vector memory banks</li>
-                            <li><span class="text-white/25 mr-3">02</span>Source-grounded answers</li>
-                            <li><span class="text-white/25 mr-3">03</span>Permission-aware search</li>
+                            <li><span class="text-ink/25 mr-3">01</span>Vector memory banks</li>
+                            <li><span class="text-ink/25 mr-3">02</span>Source-grounded answers</li>
+                            <li><span class="text-ink/25 mr-3">03</span>Permission-aware search</li>
                         </ul>
                     </div>
                 </div>
@@ -408,10 +398,10 @@
     </section>
 
     <!-- Security — one candid mono line, not a whole section. -->
-    <section class="border-y border-white/5">
+    <section class="border-y border-ink/10">
         <div class="max-w-7xl mx-auto px-6 py-8 flex flex-col md:flex-row md:items-center justify-between gap-4 font-mono text-[11px] uppercase tracking-[0.2em] text-apple-gray">
-            <span>Zero public training <span class="text-white/25 mx-2">/</span> client data never trains external models</span>
-            <span>End-to-end encrypted <span class="text-white/25 mx-2">/</span> GDPR ready <span class="text-white/25 mx-2">/</span> SOC 2</span>
+            <span>Zero public training <span class="text-ink/25 mx-2">/</span> client data never trains external models</span>
+            <span>End-to-end encrypted <span class="text-ink/25 mx-2">/</span> GDPR ready <span class="text-ink/25 mx-2">/</span> SOC 2</span>
         </div>
     </section>
 
@@ -423,19 +413,14 @@
 
         <div class="process-pin hidden md:block" id="process-pin">
             <div class="process-sticky">
-                <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
-                    <img src="/atmosphere/atmos-blueprint.webp" alt="" width="2048" height="1152"
-                        class="absolute inset-0 w-full h-full object-cover opacity-25">
-                    <div class="absolute inset-0 bg-gradient-to-b from-[var(--ink-deep)] via-transparent to-[var(--ink-deep)]"></div>
-                </div>
 
                 <div class="max-w-7xl mx-auto px-6 w-full relative z-10">
                     <p class="font-mono text-[11px] uppercase tracking-[0.3em] text-indigo-bright font-bold mb-5">03 / The process</p>
-                    <h2 class="display text-[clamp(2.2rem,4.5vw,4.5rem)] leading-[0.95] text-paper mb-16">No fluff. Just execution<span class="text-[#0071e3]">.</span></h2>
+                    <h2 class="display text-[clamp(2.2rem,4.5vw,4.5rem)] leading-[0.95] text-ink mb-16">No fluff. Just execution<span class="text-[#0071e3]">.</span></h2>
 
                     <div class="grid grid-cols-12 gap-8 items-center">
                         <div class="col-span-4 lg:col-span-3">
-                            <div class="display text-[8rem] lg:text-[11rem] leading-none text-paper tabular-nums select-none" id="process-num" aria-hidden="true">01</div>
+                            <div class="display text-[8rem] lg:text-[11rem] leading-none text-ink tabular-nums select-none" id="process-num" aria-hidden="true">01</div>
                             <div class="mt-8 h-px w-full bg-white/10 relative overflow-hidden">
                                 <div class="absolute inset-y-0 left-0 w-full bg-[#0071e3] origin-left scale-x-0" id="process-fill"></div>
                             </div>
@@ -449,21 +434,21 @@
                         <div class="col-span-8 lg:col-span-8 lg:col-start-5 relative min-h-[22rem]">
                             <div class="process-panel is-active" data-process-panel>
                                 <p class="font-mono text-[11px] uppercase tracking-[0.25em] text-apple-gray mb-6">Phase 01 / Discovery</p>
-                                <h3 class="display text-4xl lg:text-6xl text-paper mb-8">The Audit</h3>
+                                <h3 class="display text-4xl lg:text-6xl text-ink mb-8">The Audit</h3>
                                 <p class="text-2xl lg:text-3xl text-apple-gray leading-tight font-medium max-w-2xl">
                                     We map your entire architecture. We find the exact bottlenecks bleeding time and
                                     money. We lay out the orchestration blueprint before writing a single line of code.</p>
                             </div>
                             <div class="process-panel" data-process-panel>
                                 <p class="font-mono text-[11px] uppercase tracking-[0.25em] text-apple-gray mb-6">Phase 02 / Build</p>
-                                <h3 class="display text-4xl lg:text-6xl text-paper mb-8">The Code</h3>
+                                <h3 class="display text-4xl lg:text-6xl text-ink mb-8">The Code</h3>
                                 <p class="text-2xl lg:text-3xl text-apple-gray leading-tight font-medium max-w-2xl">
                                     We engineer the native integrations, build the custom LLM wrappers, and write the
                                     backend scripts. Everything is deployed directly to your secure stack.</p>
                             </div>
                             <div class="process-panel" data-process-panel>
                                 <p class="font-mono text-[11px] uppercase tracking-[0.25em] text-apple-gray mb-6">Phase 03 / Autonomous</p>
-                                <h3 class="display text-4xl lg:text-6xl text-paper mb-8">The Run</h3>
+                                <h3 class="display text-4xl lg:text-6xl text-ink mb-8">The Run</h3>
                                 <p class="text-2xl lg:text-3xl text-apple-gray leading-tight font-medium max-w-2xl">
                                     We flip the switch. Your massive manual workloads evaporate. The system runs
                                     autonomously in the background 24/7. We monitor the uptime.</p>
@@ -478,27 +463,27 @@
         <div class="process-static md:hidden py-32 px-6 max-w-7xl mx-auto">
             <div class="mb-20 reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out">
                 <p class="font-mono text-[11px] uppercase tracking-[0.3em] text-indigo-bright font-bold mb-5">03 / The process</p>
-                <h2 class="display text-4xl leading-[0.95] text-paper">No fluff. Just execution<span class="text-[#0071e3]">.</span></h2>
+                <h2 class="display text-4xl leading-[0.95] text-ink">No fluff. Just execution<span class="text-[#0071e3]">.</span></h2>
             </div>
 
             <div class="flex flex-col gap-12">
-                <div class="border-t border-white/10 pt-8 reveal opacity-0 translate-y-10 delay-100">
+                <div class="border-t border-ink/10 pt-8 reveal opacity-0 translate-y-10 delay-100">
                     <p class="font-mono text-[11px] uppercase tracking-[0.25em] text-apple-gray mb-4">Phase 01 / Discovery</p>
-                    <h3 class="display text-3xl text-paper mb-5">The Audit</h3>
+                    <h3 class="display text-3xl text-ink mb-5">The Audit</h3>
                     <p class="text-xl text-apple-gray leading-tight font-medium">
                         We map your entire architecture. We find the exact bottlenecks bleeding time and money. We lay
                         out the orchestration blueprint before writing a single line of code.</p>
                 </div>
-                <div class="border-t border-white/10 pt-8 reveal opacity-0 translate-y-10 delay-200">
+                <div class="border-t border-ink/10 pt-8 reveal opacity-0 translate-y-10 delay-200">
                     <p class="font-mono text-[11px] uppercase tracking-[0.25em] text-apple-gray mb-4">Phase 02 / Build</p>
-                    <h3 class="display text-3xl text-paper mb-5">The Code</h3>
+                    <h3 class="display text-3xl text-ink mb-5">The Code</h3>
                     <p class="text-xl text-apple-gray leading-tight font-medium">
                         We engineer the native integrations, build the custom LLM wrappers, and write the backend
                         scripts. Everything is deployed directly to your secure stack.</p>
                 </div>
-                <div class="border-t border-white/10 pt-8 reveal opacity-0 translate-y-10 delay-300">
+                <div class="border-t border-ink/10 pt-8 reveal opacity-0 translate-y-10 delay-300">
                     <p class="font-mono text-[11px] uppercase tracking-[0.25em] text-apple-gray mb-4">Phase 03 / Autonomous</p>
-                    <h3 class="display text-3xl text-paper mb-5">The Run</h3>
+                    <h3 class="display text-3xl text-ink mb-5">The Run</h3>
                     <p class="text-xl text-apple-gray leading-tight font-medium">
                         We flip the switch. Your massive manual workloads evaporate. The system runs autonomously in
                         the background 24/7. We monitor the uptime.</p>
@@ -527,11 +512,11 @@
     <!-- ────────────────────────────────────────────────────────────
          04 / THE MATH — ROI calculator, left-anchored industrial.
          ──────────────────────────────────────────────────────────── -->
-    <section class="py-24 md:py-32 px-6 border-t border-white/5">
+    <section class="py-24 md:py-32 px-6 border-t border-ink/10">
         <div class="max-w-7xl mx-auto grid md:grid-cols-[1fr_1.4fr] gap-14 md:gap-24 items-center">
             <div>
                 <p class="font-mono text-[11px] uppercase tracking-[0.3em] text-indigo-bright font-bold mb-5">04 / The math</p>
-                <h2 class="display text-[clamp(2.2rem,4.5vw,4rem)] leading-[0.95] text-paper mb-6">What is manual work costing you<span class="text-[#0071e3]">?</span></h2>
+                <h2 class="display text-[clamp(2.2rem,4.5vw,4rem)] leading-[0.95] text-ink mb-6">What is manual work costing you<span class="text-[#0071e3]">?</span></h2>
                 <p class="text-apple-gray text-lg font-medium leading-snug max-w-md">
                     Drag the hours your team spends on repeatable manual work. Based on a £45/hr average execution
                     cost over 52 weeks.
@@ -539,17 +524,17 @@
             </div>
             <div class="rounded-2xl terminal-glow p-8 md:p-12">
                 <div class="mb-10">
-                    <div class="font-mono text-[3.4rem] sm:text-[4.5rem] md:text-[5.5rem] font-bold tracking-tighter leading-none text-paper tabular-nums mb-3" id="roi-output">£23,400</div>
+                    <div class="font-mono text-[3.4rem] sm:text-[4.5rem] md:text-[5.5rem] font-bold tracking-tighter leading-none text-ink tabular-nums mb-3" id="roi-output">£23,400</div>
                     <div class="text-lg text-apple-gray font-medium">Yearly capital recovered</div>
                 </div>
                 <div>
                     <div class="flex justify-between font-mono text-[11px] font-bold text-apple-gray mb-4 uppercase tracking-widest">
                         <span>10 hrs/wk</span>
-                        <span id="hours-display" class="text-paper">10 Hrs</span>
+                        <span id="hours-display" class="text-ink">10 Hrs</span>
                         <span>500+ hrs</span>
                     </div>
                     <input type="range" min="10" max="500" value="10"
-                        class="w-full h-1.5 bg-white/20 rounded-lg appearance-none cursor-pointer outline-none relative z-20"
+                        class="w-full h-1.5 bg-ink/15 rounded-lg appearance-none cursor-pointer outline-none relative z-20"
                         id="roi-slider" aria-label="Hours per week of manual work">
                 </div>
             </div>
@@ -585,12 +570,12 @@
         <div class="max-w-7xl mx-auto grid md:grid-cols-[1fr_1.6fr] gap-14 md:gap-24 items-start">
             <div class="md:sticky md:top-32">
                 <p class="font-mono text-[11px] uppercase tracking-[0.3em] text-indigo-bright font-bold mb-5">05 / Details</p>
-                <h2 class="display text-[clamp(2.4rem,5vw,4.5rem)] leading-[0.95] text-paper">Straight answers<span class="text-[#0071e3]">.</span></h2>
+                <h2 class="display text-[clamp(2.4rem,5vw,4.5rem)] leading-[0.95] text-ink">Straight answers<span class="text-[#0071e3]">.</span></h2>
             </div>
 
-            <div class="space-y-0 border-t border-white/10">
-                <details class="group cursor-pointer py-8 border-b border-white/10">
-                    <summary class="text-xl md:text-2xl font-bold tracking-tight leading-snug flex justify-between items-center gap-6 focus:outline-none text-white/90 group-hover:text-white transition">
+            <div class="space-y-0 border-t border-ink/10">
+                <details class="group cursor-pointer py-8 border-b border-ink/10">
+                    <summary class="text-xl md:text-2xl font-bold tracking-tight leading-snug flex justify-between items-center gap-6 focus:outline-none text-ink/90 group-hover:text-ink-deep transition">
                         Does this actually work with legacy systems?
                         <span class="text-apple-gray text-3xl font-light group-open:rotate-45 transition-transform duration-300 pointer-events-none shrink-0" aria-hidden="true">+</span>
                     </summary>
@@ -599,8 +584,8 @@
                         with clunky CRMs, outdated ERPs, and bespoke internal tools.</p>
                 </details>
 
-                <details class="group cursor-pointer py-8 border-b border-white/10">
-                    <summary class="text-xl md:text-2xl font-bold tracking-tight leading-snug flex justify-between items-center gap-6 focus:outline-none text-white/90 group-hover:text-white transition">
+                <details class="group cursor-pointer py-8 border-b border-ink/10">
+                    <summary class="text-xl md:text-2xl font-bold tracking-tight leading-snug flex justify-between items-center gap-6 focus:outline-none text-ink/90 group-hover:text-ink-deep transition">
                         How much will this cost?
                         <span class="text-apple-gray text-3xl font-light group-open:rotate-45 transition-transform duration-300 pointer-events-none shrink-0" aria-hidden="true">+</span>
                     </summary>
@@ -611,8 +596,8 @@
                         saved labor alone.</p>
                 </details>
 
-                <details class="group cursor-pointer py-8 border-b border-white/10">
-                    <summary class="text-xl md:text-2xl font-bold tracking-tight leading-snug flex justify-between items-center gap-6 focus:outline-none text-white/90 group-hover:text-white transition">
+                <details class="group cursor-pointer py-8 border-b border-ink/10">
+                    <summary class="text-xl md:text-2xl font-bold tracking-tight leading-snug flex justify-between items-center gap-6 focus:outline-none text-ink/90 group-hover:text-ink-deep transition">
                         How long does a typical build take?
                         <span class="text-apple-gray text-3xl font-light group-open:rotate-45 transition-transform duration-300 pointer-events-none shrink-0" aria-hidden="true">+</span>
                     </summary>
@@ -622,8 +607,8 @@
                         is visible the whole way through.</p>
                 </details>
 
-                <details class="group cursor-pointer py-8 border-b border-white/10">
-                    <summary class="text-xl md:text-2xl font-bold tracking-tight leading-snug flex justify-between items-center gap-6 focus:outline-none text-white/90 group-hover:text-white transition">
+                <details class="group cursor-pointer py-8 border-b border-ink/10">
+                    <summary class="text-xl md:text-2xl font-bold tracking-tight leading-snug flex justify-between items-center gap-6 focus:outline-none text-ink/90 group-hover:text-ink-deep transition">
                         Who owns the code and the IP?
                         <span class="text-apple-gray text-3xl font-light group-open:rotate-45 transition-transform duration-300 pointer-events-none shrink-0" aria-hidden="true">+</span>
                     </summary>
@@ -633,8 +618,8 @@
                         after handover beyond what's required for ongoing support agreements.</p>
                 </details>
 
-                <details class="group cursor-pointer py-8 border-b border-white/10">
-                    <summary class="text-xl md:text-2xl font-bold tracking-tight leading-snug flex justify-between items-center gap-6 focus:outline-none text-white/90 group-hover:text-white transition">
+                <details class="group cursor-pointer py-8 border-b border-ink/10">
+                    <summary class="text-xl md:text-2xl font-bold tracking-tight leading-snug flex justify-between items-center gap-6 focus:outline-none text-ink/90 group-hover:text-ink-deep transition">
                         What about vendor lock-in if a model provider changes?
                         <span class="text-apple-gray text-3xl font-light group-open:rotate-45 transition-transform duration-300 pointer-events-none shrink-0" aria-hidden="true">+</span>
                     </summary>
@@ -644,8 +629,8 @@
                         providers automatically based on cost, latency, or availability.</p>
                 </details>
 
-                <details class="group cursor-pointer py-8 border-b border-white/10">
-                    <summary class="text-xl md:text-2xl font-bold tracking-tight leading-snug flex justify-between items-center gap-6 focus:outline-none text-white/90 group-hover:text-white transition">
+                <details class="group cursor-pointer py-8 border-b border-ink/10">
+                    <summary class="text-xl md:text-2xl font-bold tracking-tight leading-snug flex justify-between items-center gap-6 focus:outline-none text-ink/90 group-hover:text-ink-deep transition">
                         Can my team operate the system after handover?
                         <span class="text-apple-gray text-3xl font-light group-open:rotate-45 transition-transform duration-300 pointer-events-none shrink-0" aria-hidden="true">+</span>
                     </summary>
@@ -655,8 +640,8 @@
                         first 90 days, after which most clients self-manage.</p>
                 </details>
 
-                <details class="group cursor-pointer py-8 border-b border-white/10">
-                    <summary class="text-xl md:text-2xl font-bold tracking-tight leading-snug flex justify-between items-center gap-6 focus:outline-none text-white/90 group-hover:text-white transition">
+                <details class="group cursor-pointer py-8 border-b border-ink/10">
+                    <summary class="text-xl md:text-2xl font-bold tracking-tight leading-snug flex justify-between items-center gap-6 focus:outline-none text-ink/90 group-hover:text-ink-deep transition">
                         What does the Discovery Audit actually output?
                         <span class="text-apple-gray text-3xl font-light group-open:rotate-45 transition-transform duration-300 pointer-events-none shrink-0" aria-hidden="true">+</span>
                     </summary>
@@ -666,8 +651,8 @@
                         tell you. The audit is paid; if you proceed with a build, the cost is credited.</p>
                 </details>
 
-                <details class="group cursor-pointer py-8 border-b border-white/10">
-                    <summary class="text-xl md:text-2xl font-bold tracking-tight leading-snug flex justify-between items-center gap-6 focus:outline-none text-white/90 group-hover:text-white transition">
+                <details class="group cursor-pointer py-8 border-b border-ink/10">
+                    <summary class="text-xl md:text-2xl font-bold tracking-tight leading-snug flex justify-between items-center gap-6 focus:outline-none text-ink/90 group-hover:text-ink-deep transition">
                         Will this ever break?
                         <span class="text-apple-gray text-3xl font-light group-open:rotate-45 transition-transform duration-300 pointer-events-none shrink-0" aria-hidden="true">+</span>
                     </summary>
@@ -685,11 +670,6 @@
          drenched climax.
          ──────────────────────────────────────────────────────────── -->
     <section class="py-40 md:py-48 px-6 bg-indigo-drench text-center relative overflow-hidden flex flex-col items-center">
-        <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
-            <img src="/atmosphere/atmos-drench.webp" alt="" width="2048" height="1152"
-                class="absolute inset-0 w-full h-full object-cover opacity-45 mix-blend-luminosity">
-            <div class="absolute inset-0 bg-gradient-to-b from-[var(--ink-deep)]/70 via-transparent to-transparent"></div>
-        </div>
         <h2 class="display text-[clamp(2.8rem,8.5vw,8rem)] leading-[0.92] text-center mb-10 relative z-10 max-w-6xl mx-auto">
             <span class="block text-white/45 reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out">Stop renting time.</span>
             <span class="block text-paper reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out delay-150">Build leverage<span class="text-[#0071e3]">.</span></span>
@@ -697,7 +677,7 @@
         <p class="text-xl md:text-2xl text-white/70 mb-12 relative z-10 font-medium max-w-2xl mx-auto px-4 reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out delay-300">
             Book a free audit. We'll find yours.</p>
         <a href="https://calendly.com/tayyib-azen/30min" target="_blank" rel="noopener"
-            class="inline-block bg-[#0071e3] text-paper px-12 py-5 rounded-full font-bold text-xl hover:bg-[#005bb5] transition-all relative z-10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60">
+            class="inline-block bg-white text-[#005bb5] px-12 py-5 rounded-full font-bold text-xl hover:bg-white/90 transition-all relative z-10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60">
             Book Audit
         </a>
         <a href="mailto:hello@azen.io?subject=Brief%3A%20%5BCompany%20name%5D&body=Where%20you%20are%20now%3A%0A%0A%0AThe%20manual%20work%20costing%20you%20most%3A%0A%0A%0ASystems%20that%20touch%20it%3A%0A%0A%0ATimeline%2C%20if%20any%3A%0A%0A%0AAnything%20else%20we%20should%20know%3A%0A%0A"
@@ -708,25 +688,25 @@
     </main>
 
     <!-- Footer -->
-    <footer class="border-t border-white/10 py-16 px-6">
+    <footer class="border-t border-ink/10 py-16 px-6">
         <div class="max-w-7xl mx-auto flex flex-col gap-10">
             <div class="flex flex-col md:flex-row justify-between items-center gap-6">
-                <div class="text-2xl font-bold tracking-tighter text-paper">azen.</div>
+                <div class="text-2xl font-bold tracking-tighter text-ink">azen.</div>
                 <nav aria-label="Social" class="flex gap-2">
                     <a href="https://www.linkedin.com/REPLACE_ME_LINKEDIN" target="_blank" rel="noopener" aria-label="Azen on LinkedIn"
-                        class="inline-flex items-center justify-center w-11 h-11 rounded-full text-apple-gray hover:text-white hover:bg-white/5 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60">
+                        class="inline-flex items-center justify-center w-11 h-11 rounded-full text-apple-gray hover:text-ink-deep hover:bg-ink/5 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0071e3]/60">
                         <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                             <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/>
                         </svg>
                     </a>
                     <a href="https://x.com/REPLACE_ME_X" target="_blank" rel="noopener" aria-label="Azen on X"
-                        class="inline-flex items-center justify-center w-11 h-11 rounded-full text-apple-gray hover:text-white hover:bg-white/5 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60">
+                        class="inline-flex items-center justify-center w-11 h-11 rounded-full text-apple-gray hover:text-ink-deep hover:bg-ink/5 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0071e3]/60">
                         <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                             <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/>
                         </svg>
                     </a>
                     <a href="https://www.instagram.com/REPLACE_ME_INSTAGRAM" target="_blank" rel="noopener" aria-label="Azen on Instagram"
-                        class="inline-flex items-center justify-center w-11 h-11 rounded-full text-apple-gray hover:text-white hover:bg-white/5 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60">
+                        class="inline-flex items-center justify-center w-11 h-11 rounded-full text-apple-gray hover:text-ink-deep hover:bg-ink/5 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0071e3]/60">
                         <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <rect x="2.5" y="2.5" width="19" height="19" rx="5"/>
                             <circle cx="12" cy="12" r="4"/>
@@ -734,7 +714,7 @@
                         </svg>
                     </a>
                     <a href="https://www.youtube.com/REPLACE_ME_YOUTUBE" target="_blank" rel="noopener" aria-label="Azen on YouTube"
-                        class="inline-flex items-center justify-center w-11 h-11 rounded-full text-apple-gray hover:text-white hover:bg-white/5 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60">
+                        class="inline-flex items-center justify-center w-11 h-11 rounded-full text-apple-gray hover:text-ink-deep hover:bg-ink/5 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0071e3]/60">
                         <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                             <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
                         </svg>
@@ -742,12 +722,12 @@
                 </nav>
             </div>
 
-            <div class="flex flex-col md:flex-row justify-between items-center gap-6 pt-8 border-t border-white/10">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6 pt-8 border-t border-ink/10">
                 <div class="text-sm text-apple-gray font-medium">&copy; 2026 Azen Digital. All rights reserved.</div>
                 <nav aria-label="Legal" class="flex gap-8 text-sm text-apple-gray font-medium">
-                    <a href="privacy.html" class="inline-block py-3 -my-3 hover:text-paper transition">Privacy Policy</a>
-                    <a href="terms.html" class="inline-block py-3 -my-3 hover:text-paper transition">Terms of Service</a>
-                    <a href="mailto:hello@azen.io" class="inline-block py-3 -my-3 hover:text-paper transition">Contact</a>
+                    <a href="privacy.html" class="inline-block py-3 -my-3 hover:text-ink transition">Privacy Policy</a>
+                    <a href="terms.html" class="inline-block py-3 -my-3 hover:text-ink transition">Terms of Service</a>
+                    <a href="mailto:hello@azen.io" class="inline-block py-3 -my-3 hover:text-ink transition">Contact</a>
                 </nav>
             </div>
         </div>
