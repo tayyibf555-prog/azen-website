@@ -59,7 +59,7 @@
     <!-- Built Tailwind CSS (replaces cdn.tailwindcss.com).
          Cache-bust on each rebuild via the ?v= query — update the
          version number when styles.css regenerates. -->
-    <link rel="stylesheet" href="styles.css?v=20260520">
+    <link rel="stylesheet" href="styles.css?v=20260705">
 </head>
 
 <body class="bg-gradient-tr-fixed min-h-screen text-paper relative">
@@ -120,6 +120,16 @@
          closing beat on Capabilities's "autonomously." Two-line couplet
          with thin setup → heavy payoff. -->
     <section class="relative pt-40 pb-16 px-6 max-w-6xl mx-auto flex flex-col items-center text-center">
+
+        <!-- Atmosphere: one blue filament wave across a near-black field,
+             full-bleed behind the hero. The still is 90% darkness so it can
+             run at high opacity without touching text contrast. Fades to
+             ink-deep at the bottom for a clean handoff. -->
+        <div class="absolute inset-y-0 left-1/2 -translate-x-1/2 w-screen -z-10 pointer-events-none overflow-hidden" aria-hidden="true">
+            <img src="/atmosphere/atmos-hero.webp" alt="" width="2048" height="1152"
+                class="absolute inset-0 w-full h-full object-cover opacity-60">
+            <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[var(--ink-deep)]"></div>
+        </div>
 
         <h1 class="tracking-tighter leading-[0.95] text-[clamp(2.75rem,9vw,8rem)] mb-10 max-w-5xl">
             <span class="block font-extralight text-paper/80">Stop renting time.</span>
@@ -184,10 +194,16 @@
                     <a href="case-study-prep-point.html"
                         class="w-[85vw] sm:w-[450px] md:w-[700px] aspect-[16/9] bg-[#070707] rounded-3xl overflow-hidden relative block flex-shrink-0 hover:scale-[1.02] transition-transform duration-500 border border-white/5 cursor-pointer group/card">
                         <div
-                            class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
-                            <img src="case%20study%20images%20/Prep%20point%20case%20study.webp"
+                            class="absolute inset-0 p-4 sm:p-6 z-0 opacity-80 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
+                            <div class="flex flex-col w-full h-full rounded-xl overflow-hidden shadow-2xl border border-white/5 bg-[oklch(0.09_0.012_260)]">
+                                <div class="case-chrome shrink-0">
+                                    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                                    <span class="addr">prep-point / azen build</span>
+                                </div>
+                                <img src="case%20study%20images%20/Prep%20point%20case%20study.webp"
                                 alt="Prep Point dashboard showing automated order processing with 85% error reduction"
-                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" width="1400" height="766" loading="lazy">
+                                class="w-full flex-1 min-h-0 object-cover object-top" width="1400" height="766" loading="lazy">
+                            </div>
                         </div>
                         <div
                             class="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black via-black/80 to-transparent z-10 pointer-events-none">
@@ -203,10 +219,16 @@
                     <a href="case-study-superior-accounting.html"
                         class="w-[85vw] sm:w-[450px] md:w-[700px] aspect-[16/9] bg-[#070707] rounded-3xl overflow-hidden relative block flex-shrink-0 hover:scale-[1.02] transition-transform duration-500 border border-white/5 cursor-pointer group/card">
                         <div
-                            class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
-                            <img src="case%20study%20images%20/Superior%20Accounting%20case%20study.webp"
+                            class="absolute inset-0 p-4 sm:p-6 z-0 opacity-80 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
+                            <div class="flex flex-col w-full h-full rounded-xl overflow-hidden shadow-2xl border border-white/5 bg-[oklch(0.09_0.012_260)]">
+                                <div class="case-chrome shrink-0">
+                                    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                                    <span class="addr">superior-accounting / azen build</span>
+                                </div>
+                                <img src="case%20study%20images%20/Superior%20Accounting%20case%20study.webp"
                                 alt="Superior Accounting client portal with call analytics and 78% call resolution metric"
-                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" width="1400" height="766" loading="lazy">
+                                class="w-full flex-1 min-h-0 object-cover object-top" width="1400" height="766" loading="lazy">
+                            </div>
                         </div>
                         <div
                             class="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black via-black/80 to-transparent z-10 pointer-events-none">
@@ -222,10 +244,16 @@
                     <a href="case-study-ttt.html"
                         class="w-[85vw] sm:w-[450px] md:w-[700px] aspect-[16/9] bg-[#070707] rounded-3xl overflow-hidden relative block flex-shrink-0 hover:scale-[1.02] transition-transform duration-500 border border-white/5 cursor-pointer group/card">
                         <div
-                            class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
-                            <img src="case%20study%20images%20/TTT%20case%20study.webp"
+                            class="absolute inset-0 p-4 sm:p-6 z-0 opacity-80 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
+                            <div class="flex flex-col w-full h-full rounded-xl overflow-hidden shadow-2xl border border-white/5 bg-[oklch(0.09_0.012_260)]">
+                                <div class="case-chrome shrink-0">
+                                    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                                    <span class="addr">ttt / azen build</span>
+                                </div>
+                                <img src="case%20study%20images%20/TTT%20case%20study.webp"
                                 alt="TTT Departmentals procurement dashboard with sourcing time and cost analytics, 90% faster sourcing"
-                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" width="1400" height="766" loading="lazy">
+                                class="w-full flex-1 min-h-0 object-cover object-top" width="1400" height="766" loading="lazy">
+                            </div>
                         </div>
                         <div
                             class="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black via-black/80 to-transparent z-10 pointer-events-none">
@@ -241,10 +269,16 @@
                     <a href="case-study-little-oaks.html"
                         class="w-[85vw] sm:w-[450px] md:w-[700px] aspect-[16/9] bg-[#070707] rounded-3xl overflow-hidden relative block flex-shrink-0 hover:scale-[1.02] transition-transform duration-500 border border-white/5 cursor-pointer group/card">
                         <div
-                            class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
-                            <img src="case%20study%20images%20/little%20oaks%20crm%20case%20study.webp"
+                            class="absolute inset-0 p-4 sm:p-6 z-0 opacity-80 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
+                            <div class="flex flex-col w-full h-full rounded-xl overflow-hidden shadow-2xl border border-white/5 bg-[oklch(0.09_0.012_260)]">
+                                <div class="case-chrome shrink-0">
+                                    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                                    <span class="addr">little-oaks-crm / azen build</span>
+                                </div>
+                                <img src="case%20study%20images%20/little%20oaks%20crm%20case%20study.webp"
                                 alt="Little Oaks nursery CRM dashboard with parent and staff attendance views, 24/7 operations"
-                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" width="1400" height="766" loading="lazy">
+                                class="w-full flex-1 min-h-0 object-cover object-top" width="1400" height="766" loading="lazy">
+                            </div>
                         </div>
                         <div
                             class="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black via-black/80 to-transparent z-10 pointer-events-none">
@@ -260,10 +294,16 @@
                     <a href="case-study-zia-ul-quran.html"
                         class="w-[85vw] sm:w-[450px] md:w-[700px] aspect-[16/9] bg-[#070707] rounded-3xl overflow-hidden relative block flex-shrink-0 hover:scale-[1.02] transition-transform duration-500 border border-white/5 cursor-pointer group/card">
                         <div
-                            class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
-                            <img src="case%20study%20images%20/zia%20ul%20quran%20case%20study.webp"
+                            class="absolute inset-0 p-4 sm:p-6 z-0 opacity-80 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
+                            <div class="flex flex-col w-full h-full rounded-xl overflow-hidden shadow-2xl border border-white/5 bg-[oklch(0.09_0.012_260)]">
+                                <div class="case-chrome shrink-0">
+                                    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                                    <span class="addr">zia-ul-quran / azen build</span>
+                                </div>
+                                <img src="case%20study%20images%20/zia%20ul%20quran%20case%20study.webp"
                                 alt="Zia Ul Quran website homepage with Arabic and English content, 3x internal efficiency"
-                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" width="1400" height="766" loading="lazy">
+                                class="w-full flex-1 min-h-0 object-cover object-top" width="1400" height="766" loading="lazy">
+                            </div>
                         </div>
                         <div
                             class="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black via-black/80 to-transparent z-10 pointer-events-none">
@@ -279,10 +319,16 @@
                     <a href="case-study-zia-ul-ummah.html"
                         class="w-[85vw] sm:w-[450px] md:w-[700px] aspect-[16/9] bg-[#070707] rounded-3xl overflow-hidden relative block flex-shrink-0 hover:scale-[1.02] transition-transform duration-500 border border-white/5 cursor-pointer group/card">
                         <div
-                            class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
-                            <img src="case%20study%20images%20/zia%20ul%20ummah%20case%20study.webp"
+                            class="absolute inset-0 p-4 sm:p-6 z-0 opacity-80 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
+                            <div class="flex flex-col w-full h-full rounded-xl overflow-hidden shadow-2xl border border-white/5 bg-[oklch(0.09_0.012_260)]">
+                                <div class="case-chrome shrink-0">
+                                    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                                    <span class="addr">zia-ul-ummah / azen build</span>
+                                </div>
+                                <img src="case%20study%20images%20/zia%20ul%20ummah%20case%20study.webp"
                                 alt="Zia Ul Ummah Foundation operations dashboard with automated data entry"
-                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" width="1400" height="766" loading="lazy">
+                                class="w-full flex-1 min-h-0 object-cover object-top" width="1400" height="766" loading="lazy">
+                            </div>
                         </div>
                         <div
                             class="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black via-black/80 to-transparent z-10 pointer-events-none">
@@ -298,10 +344,16 @@
                     <a href="case-study-eyos.html"
                         class="w-[85vw] sm:w-[450px] md:w-[700px] aspect-[16/9] bg-[#070707] rounded-3xl overflow-hidden relative block flex-shrink-0 hover:scale-[1.02] transition-transform duration-500 border border-white/5 cursor-pointer group/card">
                         <div
-                            class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
-                            <img src="case%20study%20images%20/Azen%20EYOS%20Case%20study.webp"
+                            class="absolute inset-0 p-4 sm:p-6 z-0 opacity-80 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
+                            <div class="flex flex-col w-full h-full rounded-xl overflow-hidden shadow-2xl border border-white/5 bg-[oklch(0.09_0.012_260)]">
+                                <div class="case-chrome shrink-0">
+                                    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                                    <span class="addr">azen-eyos / azen build</span>
+                                </div>
+                                <img src="case%20study%20images%20/Azen%20EYOS%20Case%20study.webp"
                                 alt="Azen EYOS early-years operating system with automated data infrastructure for nurseries"
-                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" width="1400" height="766" loading="lazy">
+                                class="w-full flex-1 min-h-0 object-cover object-top" width="1400" height="766" loading="lazy">
+                            </div>
                         </div>
                         <div
                             class="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black via-black/80 to-transparent z-10 pointer-events-none">
@@ -323,10 +375,16 @@
                     <a href="case-study-prep-point.html"
                         class="w-[85vw] sm:w-[450px] md:w-[700px] aspect-[16/9] bg-[#070707] rounded-3xl overflow-hidden relative block flex-shrink-0 hover:scale-[1.02] transition-transform duration-500 border border-white/5 cursor-pointer group/card">
                         <div
-                            class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
-                            <img src="case%20study%20images%20/Prep%20point%20case%20study.webp"
+                            class="absolute inset-0 p-4 sm:p-6 z-0 opacity-80 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
+                            <div class="flex flex-col w-full h-full rounded-xl overflow-hidden shadow-2xl border border-white/5 bg-[oklch(0.09_0.012_260)]">
+                                <div class="case-chrome shrink-0">
+                                    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                                    <span class="addr">prep-point / azen build</span>
+                                </div>
+                                <img src="case%20study%20images%20/Prep%20point%20case%20study.webp"
                                 alt="Prep Point dashboard showing automated order processing with 85% error reduction"
-                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" width="1400" height="766" loading="lazy">
+                                class="w-full flex-1 min-h-0 object-cover object-top" width="1400" height="766" loading="lazy">
+                            </div>
                         </div>
                         <div
                             class="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black via-black/80 to-transparent z-10 pointer-events-none">
@@ -342,10 +400,16 @@
                     <a href="case-study-superior-accounting.html"
                         class="w-[85vw] sm:w-[450px] md:w-[700px] aspect-[16/9] bg-[#070707] rounded-3xl overflow-hidden relative block flex-shrink-0 hover:scale-[1.02] transition-transform duration-500 border border-white/5 cursor-pointer group/card">
                         <div
-                            class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
-                            <img src="case%20study%20images%20/Superior%20Accounting%20case%20study.webp"
+                            class="absolute inset-0 p-4 sm:p-6 z-0 opacity-80 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
+                            <div class="flex flex-col w-full h-full rounded-xl overflow-hidden shadow-2xl border border-white/5 bg-[oklch(0.09_0.012_260)]">
+                                <div class="case-chrome shrink-0">
+                                    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                                    <span class="addr">superior-accounting / azen build</span>
+                                </div>
+                                <img src="case%20study%20images%20/Superior%20Accounting%20case%20study.webp"
                                 alt="Superior Accounting client portal with call analytics and 78% call resolution metric"
-                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" width="1400" height="766" loading="lazy">
+                                class="w-full flex-1 min-h-0 object-cover object-top" width="1400" height="766" loading="lazy">
+                            </div>
                         </div>
                         <div
                             class="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black via-black/80 to-transparent z-10 pointer-events-none">
@@ -361,10 +425,16 @@
                     <a href="case-study-ttt.html"
                         class="w-[85vw] sm:w-[450px] md:w-[700px] aspect-[16/9] bg-[#070707] rounded-3xl overflow-hidden relative block flex-shrink-0 hover:scale-[1.02] transition-transform duration-500 border border-white/5 cursor-pointer group/card">
                         <div
-                            class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
-                            <img src="case%20study%20images%20/TTT%20case%20study.webp"
+                            class="absolute inset-0 p-4 sm:p-6 z-0 opacity-80 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
+                            <div class="flex flex-col w-full h-full rounded-xl overflow-hidden shadow-2xl border border-white/5 bg-[oklch(0.09_0.012_260)]">
+                                <div class="case-chrome shrink-0">
+                                    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                                    <span class="addr">ttt / azen build</span>
+                                </div>
+                                <img src="case%20study%20images%20/TTT%20case%20study.webp"
                                 alt="TTT Departmentals procurement dashboard with sourcing time and cost analytics, 90% faster sourcing"
-                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" width="1400" height="766" loading="lazy">
+                                class="w-full flex-1 min-h-0 object-cover object-top" width="1400" height="766" loading="lazy">
+                            </div>
                         </div>
                         <div
                             class="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black via-black/80 to-transparent z-10 pointer-events-none">
@@ -380,10 +450,16 @@
                     <a href="case-study-little-oaks.html"
                         class="w-[85vw] sm:w-[450px] md:w-[700px] aspect-[16/9] bg-[#070707] rounded-3xl overflow-hidden relative block flex-shrink-0 hover:scale-[1.02] transition-transform duration-500 border border-white/5 cursor-pointer group/card">
                         <div
-                            class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
-                            <img src="case%20study%20images%20/little%20oaks%20crm%20case%20study.webp"
+                            class="absolute inset-0 p-4 sm:p-6 z-0 opacity-80 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
+                            <div class="flex flex-col w-full h-full rounded-xl overflow-hidden shadow-2xl border border-white/5 bg-[oklch(0.09_0.012_260)]">
+                                <div class="case-chrome shrink-0">
+                                    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                                    <span class="addr">little-oaks-crm / azen build</span>
+                                </div>
+                                <img src="case%20study%20images%20/little%20oaks%20crm%20case%20study.webp"
                                 alt="Little Oaks nursery CRM dashboard with parent and staff attendance views, 24/7 operations"
-                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" width="1400" height="766" loading="lazy">
+                                class="w-full flex-1 min-h-0 object-cover object-top" width="1400" height="766" loading="lazy">
+                            </div>
                         </div>
                         <div
                             class="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black via-black/80 to-transparent z-10 pointer-events-none">
@@ -399,10 +475,16 @@
                     <a href="case-study-zia-ul-quran.html"
                         class="w-[85vw] sm:w-[450px] md:w-[700px] aspect-[16/9] bg-[#070707] rounded-3xl overflow-hidden relative block flex-shrink-0 hover:scale-[1.02] transition-transform duration-500 border border-white/5 cursor-pointer group/card">
                         <div
-                            class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
-                            <img src="case%20study%20images%20/zia%20ul%20quran%20case%20study.webp"
+                            class="absolute inset-0 p-4 sm:p-6 z-0 opacity-80 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
+                            <div class="flex flex-col w-full h-full rounded-xl overflow-hidden shadow-2xl border border-white/5 bg-[oklch(0.09_0.012_260)]">
+                                <div class="case-chrome shrink-0">
+                                    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                                    <span class="addr">zia-ul-quran / azen build</span>
+                                </div>
+                                <img src="case%20study%20images%20/zia%20ul%20quran%20case%20study.webp"
                                 alt="Zia Ul Quran website homepage with Arabic and English content, 3x internal efficiency"
-                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" width="1400" height="766" loading="lazy">
+                                class="w-full flex-1 min-h-0 object-cover object-top" width="1400" height="766" loading="lazy">
+                            </div>
                         </div>
                         <div
                             class="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black via-black/80 to-transparent z-10 pointer-events-none">
@@ -418,10 +500,16 @@
                     <a href="case-study-zia-ul-ummah.html"
                         class="w-[85vw] sm:w-[450px] md:w-[700px] aspect-[16/9] bg-[#070707] rounded-3xl overflow-hidden relative block flex-shrink-0 hover:scale-[1.02] transition-transform duration-500 border border-white/5 cursor-pointer group/card">
                         <div
-                            class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
-                            <img src="case%20study%20images%20/zia%20ul%20ummah%20case%20study.webp"
+                            class="absolute inset-0 p-4 sm:p-6 z-0 opacity-80 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
+                            <div class="flex flex-col w-full h-full rounded-xl overflow-hidden shadow-2xl border border-white/5 bg-[oklch(0.09_0.012_260)]">
+                                <div class="case-chrome shrink-0">
+                                    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                                    <span class="addr">zia-ul-ummah / azen build</span>
+                                </div>
+                                <img src="case%20study%20images%20/zia%20ul%20ummah%20case%20study.webp"
                                 alt="Zia Ul Ummah Foundation operations dashboard with automated data entry"
-                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" width="1400" height="766" loading="lazy">
+                                class="w-full flex-1 min-h-0 object-cover object-top" width="1400" height="766" loading="lazy">
+                            </div>
                         </div>
                         <div
                             class="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black via-black/80 to-transparent z-10 pointer-events-none">
@@ -437,10 +525,16 @@
                     <a href="case-study-eyos.html"
                         class="w-[85vw] sm:w-[450px] md:w-[700px] aspect-[16/9] bg-[#070707] rounded-3xl overflow-hidden relative block flex-shrink-0 hover:scale-[1.02] transition-transform duration-500 border border-white/5 cursor-pointer group/card">
                         <div
-                            class="absolute inset-0 p-4 sm:p-6 z-0 opacity-60 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
-                            <img src="case%20study%20images%20/Azen%20EYOS%20Case%20study.webp"
+                            class="absolute inset-0 p-4 sm:p-6 z-0 opacity-80 group-hover/card:opacity-100 group-hover/card:scale-[1.02] transition-all duration-700">
+                            <div class="flex flex-col w-full h-full rounded-xl overflow-hidden shadow-2xl border border-white/5 bg-[oklch(0.09_0.012_260)]">
+                                <div class="case-chrome shrink-0">
+                                    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                                    <span class="addr">azen-eyos / azen build</span>
+                                </div>
+                                <img src="case%20study%20images%20/Azen%20EYOS%20Case%20study.webp"
                                 alt="Azen EYOS early-years operating system with automated data infrastructure for nurseries"
-                                class="w-full h-full object-contain object-top rounded-xl shadow-2xl" width="1400" height="766" loading="lazy">
+                                class="w-full flex-1 min-h-0 object-cover object-top" width="1400" height="766" loading="lazy">
+                            </div>
                         </div>
                         <div
                             class="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black via-black/80 to-transparent z-10 pointer-events-none">
@@ -471,6 +565,48 @@
             <li><span class="text-3xl md:text-4xl font-extralight tracking-tight text-white/60 hover:text-white/90 transition">Little Oaks</span></li>
             <li><span class="text-3xl md:text-4xl font-extralight tracking-tight text-white/60 hover:text-white/90 transition">Prep Point</span></li>
         </ul>
+
+        <!-- Operational state — the proof surface for the strip above.
+             Real portfolio aggregates (update as the portfolio moves);
+             numerals count up once on scroll into view. No fake telemetry:
+             the only "live" element is the status dot. -->
+        <div class="max-w-5xl mx-auto px-6 mt-20">
+            <div class="rounded-2xl terminal-glow relative overflow-hidden">
+                <div class="flex items-center justify-between gap-4 border-b border-white/5 px-6 py-4">
+                    <div class="flex items-center gap-3">
+                        <span class="relative flex w-2.5 h-2.5">
+                            <span class="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60 animate-ping"></span>
+                            <span class="relative inline-flex w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+                        </span>
+                        <span class="text-[11px] uppercase tracking-widest text-apple-gray font-bold">Operational state</span>
+                    </div>
+                    <span class="font-mono text-[11px] text-apple-gray hidden sm:inline">portfolio aggregate</span>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-white/5">
+                    <div class="p-6 md:p-8">
+                        <div class="font-mono text-4xl md:text-5xl font-bold tracking-tighter text-paper tabular-nums leading-none" data-countup="7">0</div>
+                        <div class="mt-3 text-[11px] uppercase tracking-widest text-apple-gray font-bold">Live deployments</div>
+                    </div>
+                    <div class="p-6 md:p-8">
+                        <div class="font-mono text-4xl md:text-5xl font-bold tracking-tighter text-paper tabular-nums leading-none"><span data-countup="142">0</span><span class="text-2xl text-apple-gray">/wk</span></div>
+                        <div class="mt-3 text-[11px] uppercase tracking-widest text-apple-gray font-bold">Hours automated</div>
+                    </div>
+                    <div class="p-6 md:p-8">
+                        <div class="font-mono text-4xl md:text-5xl font-bold tracking-tighter text-paper tabular-nums leading-none" data-countup="12">0</div>
+                        <div class="mt-3 text-[11px] uppercase tracking-widest text-apple-gray font-bold">Production integrations</div>
+                    </div>
+                    <div class="p-6 md:p-8">
+                        <div class="font-mono text-4xl md:text-5xl font-bold tracking-tighter text-paper tabular-nums leading-none"><span data-countup="99.7" data-decimals="1">0</span><span class="text-2xl text-apple-gray">%</span></div>
+                        <div class="mt-3 text-[11px] uppercase tracking-widest text-apple-gray font-bold">90-day uptime</div>
+                    </div>
+                </div>
+                <div class="border-t border-white/5 px-6 py-4 flex flex-col sm:flex-row gap-2 sm:gap-6 sm:items-center text-[11px] text-apple-gray font-mono">
+                    <span><span class="text-emerald-400">●</span> Last deployed <time datetime="2026-04-28">28 Apr 2026</time></span>
+                    <span class="hidden sm:inline opacity-30">/</span>
+                    <span>Most recent build: prep-point voice copilot v1.4</span>
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- ROI Calculator Interactive Element -->
@@ -544,7 +680,14 @@
          down/right with weight contrast (200 thin → 800 heavy), and the
          period at the end of "autonomously." sits alone on its own line as
          a punctuation moment. Mona Sans's variable axis is doing the work. -->
-    <section id="solutions" class="pt-40 pb-20 px-6 max-w-7xl mx-auto">
+    <section id="solutions" class="relative pt-40 pb-20 px-6 max-w-7xl mx-auto">
+        <!-- Atmosphere: blue-rim machinery macro, right-weighted, heavily
+             dimmed. Texture for the engineering claim, not a picture. -->
+        <div class="absolute inset-y-0 left-1/2 -translate-x-1/2 w-screen -z-10 pointer-events-none overflow-hidden" aria-hidden="true">
+            <img src="/atmosphere/atmos-machine.webp" alt="" width="2048" height="1152"
+                class="absolute inset-0 w-full h-full object-cover object-right opacity-40">
+            <div class="absolute inset-0 bg-gradient-to-b from-[var(--ink-deep)] via-transparent to-[var(--ink-deep)]"></div>
+        </div>
         <div class="mb-32 reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out grid grid-cols-12 gap-y-2">
             <h2 class="col-span-12 text-xs text-indigo-bright uppercase tracking-[0.25em] font-bold mb-10">02 / Capabilities</h2>
 
@@ -649,77 +792,107 @@
 
 
 
-    <!-- How we build (Editorial Process) -->
-    <section id="how" class="py-40 px-6 max-w-7xl mx-auto border-t border-white/10 relative">
-        <div class="mb-32 reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out relative z-10">
-            <p class="text-xs text-indigo-bright uppercase tracking-widest font-bold mb-6">03 / The Process</p>
-            <h2 class="text-5xl md:text-7xl font-bold tracking-tighter text-glow max-w-3xl leading-[1.05]">No fluff.
-                Just execution.</h2>
+    <!-- How we build — THE signature scroll moment. On md+ (and only when
+         motion is allowed) the section pins for ~2 extra viewports while
+         the three phases advance: giant thin phase numeral crossfades,
+         progress rail fills, panels hand off. The blueprint atmosphere
+         sits behind at 25%. Mobile and prefers-reduced-motion get the
+         static editorial stack instead — content-identical. -->
+    <section id="how" class="border-t border-white/10 relative">
+
+        <!-- Pinned sequence (md+, motion allowed) -->
+        <div class="process-pin hidden md:block" id="process-pin">
+            <div class="process-sticky">
+                <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+                    <img src="/atmosphere/atmos-blueprint.webp" alt="" width="2048" height="1152"
+                        class="absolute inset-0 w-full h-full object-cover opacity-25">
+                    <div class="absolute inset-0 bg-gradient-to-b from-[var(--ink-deep)] via-transparent to-[var(--ink-deep)]"></div>
+                </div>
+
+                <div class="max-w-7xl mx-auto px-6 w-full relative z-10">
+                    <p class="text-xs text-indigo-bright uppercase tracking-widest font-bold mb-6">03 / The Process</p>
+                    <h2 class="text-5xl md:text-6xl font-bold tracking-tighter text-glow leading-[1.05] mb-16">No fluff. Just execution.</h2>
+
+                    <div class="grid grid-cols-12 gap-8 items-center">
+                        <!-- Rail: giant numeral + progress track -->
+                        <div class="col-span-4 lg:col-span-3">
+                            <div class="font-extralight text-[9rem] lg:text-[12rem] leading-none tracking-tighter text-paper tabular-nums select-none" id="process-num" aria-hidden="true">01</div>
+                            <div class="mt-8 h-px w-full bg-white/10 relative overflow-hidden">
+                                <div class="absolute inset-y-0 left-0 w-full bg-[#0071e3] origin-left scale-x-0" id="process-fill"></div>
+                            </div>
+                            <div class="mt-4 flex justify-between font-mono text-[11px] text-apple-gray">
+                                <span data-process-step="0" class="transition-colors duration-300">Audit</span>
+                                <span data-process-step="1" class="transition-colors duration-300">Code</span>
+                                <span data-process-step="2" class="transition-colors duration-300">Run</span>
+                            </div>
+                        </div>
+
+                        <!-- Panels: stacked, one active at a time -->
+                        <div class="col-span-8 lg:col-span-8 lg:col-start-5 relative min-h-[22rem]">
+                            <div class="process-panel is-active" data-process-panel>
+                                <p class="font-mono text-[11px] uppercase tracking-[0.25em] text-apple-gray mb-6">Phase 01 / Discovery</p>
+                                <h3 class="text-4xl lg:text-6xl font-bold tracking-tighter mb-8 text-paper">The Audit</h3>
+                                <p class="text-2xl lg:text-3xl text-apple-gray leading-tight font-medium max-w-2xl">
+                                    We map your entire architecture. We find the exact bottlenecks bleeding time and
+                                    money. We lay out the orchestration blueprint before writing a single line of code.</p>
+                            </div>
+                            <div class="process-panel" data-process-panel>
+                                <p class="font-mono text-[11px] uppercase tracking-[0.25em] text-apple-gray mb-6">Phase 02 / Build</p>
+                                <h3 class="text-4xl lg:text-6xl font-bold tracking-tighter mb-8 text-paper">The Code</h3>
+                                <p class="text-2xl lg:text-3xl text-apple-gray leading-tight font-medium max-w-2xl">
+                                    We engineer the native integrations, build the custom LLM wrappers, and write the
+                                    backend scripts. Everything is deployed directly to your secure stack.</p>
+                            </div>
+                            <div class="process-panel" data-process-panel>
+                                <p class="font-mono text-[11px] uppercase tracking-[0.25em] text-apple-gray mb-6">Phase 03 / Autonomous</p>
+                                <h3 class="text-4xl lg:text-6xl font-bold tracking-tighter mb-8 text-paper">The Run</h3>
+                                <p class="text-2xl lg:text-3xl text-apple-gray leading-tight font-medium max-w-2xl">
+                                    We flip the switch. Your massive manual workloads evaporate. The system runs
+                                    autonomously in the background 24/7. We monitor the uptime.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="flex flex-col gap-12 md:gap-24 relative z-10">
-
-            <div
-                class="group flex flex-col md:flex-row gap-12 border-t border-white/10 pt-10 hover:border-[#0071e3]/30 transition-colors duration-700 reveal opacity-0 translate-y-10 delay-100 relative cursor-default">
-                <!-- Hover subtle light flash -->
-                <div
-                    class="absolute inset-0 bg-gradient-to-r from-[#0071e3]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none -mt-10 pt-10">
-                </div>
-                <div
-                    class="text-3xl font-bold text-apple-gray w-32 shrink-0 group-hover:text-[#0071e3] transition-colors duration-500">
-                    01.</div>
-                <div class="max-w-3xl group-hover:translate-x-4 transition-transform duration-700 ease-out">
-                    <h3
-                        class="text-4xl md:text-5xl font-bold tracking-tighter mb-6 text-paper group-hover:text-glow transition-all duration-500">
-                        The Audit</h3>
-                    <p
-                        class="text-2xl text-apple-gray leading-tight font-medium group-hover:text-white/90 transition-colors duration-500">
-                        We map your entire architecture. We
-                        find the exact bottlenecks bleeding time and money. We lay out the orchestration blueprint
-                        before writing a single line of code.</p>
-                </div>
+        <!-- Static editorial stack (mobile + prefers-reduced-motion) -->
+        <div class="process-static md:hidden py-40 px-6 max-w-7xl mx-auto">
+            <div class="mb-24 reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out relative z-10">
+                <p class="text-xs text-indigo-bright uppercase tracking-widest font-bold mb-6">03 / The Process</p>
+                <h2 class="text-5xl font-bold tracking-tighter text-glow max-w-3xl leading-[1.05]">No fluff.
+                    Just execution.</h2>
             </div>
 
-            <div
-                class="group flex flex-col md:flex-row gap-12 border-t border-white/10 pt-10 hover:border-[#0071e3]/30 transition-colors duration-700 reveal opacity-0 translate-y-10 delay-200 relative cursor-default">
-                <div
-                    class="absolute inset-0 bg-gradient-to-r from-[#0071e3]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none -mt-10 pt-10">
+            <div class="flex flex-col gap-12 relative z-10">
+                <div class="flex flex-col gap-6 border-t border-white/10 pt-10 reveal opacity-0 translate-y-10 delay-100">
+                    <div class="text-3xl font-bold text-apple-gray">01.</div>
+                    <div>
+                        <h3 class="text-4xl font-bold tracking-tighter mb-6 text-paper">The Audit</h3>
+                        <p class="text-2xl text-apple-gray leading-tight font-medium">
+                            We map your entire architecture. We find the exact bottlenecks bleeding time and money. We
+                            lay out the orchestration blueprint before writing a single line of code.</p>
+                    </div>
                 </div>
-                <div
-                    class="text-3xl font-bold text-apple-gray w-32 shrink-0 group-hover:text-[#0071e3] transition-colors duration-500">
-                    02.</div>
-                <div class="max-w-3xl group-hover:translate-x-4 transition-transform duration-700 ease-out">
-                    <h3
-                        class="text-4xl md:text-5xl font-bold tracking-tighter mb-6 text-paper group-hover:text-glow transition-all duration-500">
-                        The Code</h3>
-                    <p
-                        class="text-2xl text-apple-gray leading-tight font-medium group-hover:text-white/90 transition-colors duration-500">
-                        We engineer the native integrations,
-                        build the custom LLM wrappers, and write the backend scripts. Everything is deployed directly to
-                        your secure stack.</p>
+                <div class="flex flex-col gap-6 border-t border-white/10 pt-10 reveal opacity-0 translate-y-10 delay-200">
+                    <div class="text-3xl font-bold text-apple-gray">02.</div>
+                    <div>
+                        <h3 class="text-4xl font-bold tracking-tighter mb-6 text-paper">The Code</h3>
+                        <p class="text-2xl text-apple-gray leading-tight font-medium">
+                            We engineer the native integrations, build the custom LLM wrappers, and write the backend
+                            scripts. Everything is deployed directly to your secure stack.</p>
+                    </div>
                 </div>
-            </div>
-
-            <div
-                class="group flex flex-col md:flex-row gap-12 border-t border-white/10 pt-10 hover:border-[#0071e3]/30 transition-colors duration-700 reveal opacity-0 translate-y-10 delay-300 relative cursor-default">
-                <div
-                    class="absolute inset-0 bg-gradient-to-r from-[#0071e3]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none -mt-10 pt-10">
-                </div>
-                <div
-                    class="text-3xl font-bold text-apple-gray w-32 shrink-0 group-hover:text-[#0071e3] transition-colors duration-500">
-                    03.</div>
-                <div class="max-w-3xl group-hover:translate-x-4 transition-transform duration-700 ease-out">
-                    <h3
-                        class="text-4xl md:text-5xl font-bold tracking-tighter mb-6 text-paper group-hover:text-glow transition-all duration-500">
-                        The Run</h3>
-                    <p
-                        class="text-2xl text-apple-gray leading-tight font-medium group-hover:text-white/90 transition-colors duration-500">
-                        We flip the switch. Your massive
-                        manual workloads evaporate. The system runs autonomously in the background 24/7. We monitor the
-                        uptime.</p>
+                <div class="flex flex-col gap-6 border-t border-white/10 pt-10 reveal opacity-0 translate-y-10 delay-300">
+                    <div class="text-3xl font-bold text-apple-gray">03.</div>
+                    <div>
+                        <h3 class="text-4xl font-bold tracking-tighter mb-6 text-paper">The Run</h3>
+                        <p class="text-2xl text-apple-gray leading-tight font-medium">
+                            We flip the switch. Your massive manual workloads evaporate. The system runs autonomously
+                            in the background 24/7. We monitor the uptime.</p>
+                    </div>
                 </div>
             </div>
-
         </div>
     </section>
 
@@ -843,6 +1016,13 @@
          commitment; the radial blur halo that used to live here was a
          decorative AI tell. Removed. -->
     <section class="py-40 px-6 bg-indigo-drench text-center relative overflow-hidden flex flex-col items-center">
+        <!-- Drenched atmosphere: volumetric blue light rising from the
+             bottom, blended over the indigo-drench ground. -->
+        <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+            <img src="/atmosphere/atmos-drench.webp" alt="" width="2048" height="1152"
+                class="absolute inset-0 w-full h-full object-cover opacity-45 mix-blend-luminosity">
+            <div class="absolute inset-0 bg-gradient-to-b from-[var(--ink-deep)]/70 via-transparent to-transparent"></div>
+        </div>
         <h2
             class="text-[3rem] leading-[1.05] sm:text-[4rem] md:text-[6rem] lg:text-[7rem] md:leading-[0.9] font-bold tracking-tighter text-center mb-8 relative z-10 text-paper max-w-5xl mx-auto">
             <span class="block">The leverage is</span>
@@ -945,6 +1125,70 @@
 
             window.addEventListener('scroll', handleScroll);
             handleScroll(); // Trigger instantly on load
+
+            // Process pin — drives the signature scroll moment. Progress
+            // across the 320vh wrapper maps to phase index (0-2) and the
+            // rail fill. Skipped when reduced motion is on (CSS hides the
+            // pin and shows the static stack instead).
+            const processPin = document.getElementById('process-pin');
+            const motionOK = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (processPin && motionOK) {
+                const panels = processPin.querySelectorAll('[data-process-panel]');
+                const steps = processPin.querySelectorAll('[data-process-step]');
+                const fill = document.getElementById('process-fill');
+                const numEl = document.getElementById('process-num');
+                let lastIdx = -1;
+                const onProcessScroll = () => {
+                    const rect = processPin.getBoundingClientRect();
+                    const total = rect.height - window.innerHeight;
+                    if (total <= 0) return;
+                    const p = Math.max(0, Math.min(1, -rect.top / total));
+                    if (fill) fill.style.transform = `scaleX(${p})`;
+                    const idx = Math.min(2, Math.floor(p * 3));
+                    if (idx !== lastIdx) {
+                        lastIdx = idx;
+                        panels.forEach((el, i) => {
+                            el.classList.toggle('is-active', i === idx);
+                            el.classList.toggle('is-past', i < idx);
+                        });
+                        steps.forEach((el, i) => el.classList.toggle('is-on', i <= idx));
+                        if (numEl) numEl.textContent = String(idx + 1).padStart(2, '0');
+                    }
+                };
+                window.addEventListener('scroll', onProcessScroll, { passive: true });
+                onProcessScroll();
+            }
+
+            // Count-up numerals in the operational-state panel. Runs once
+            // when the panel enters the viewport; ~1.1s, exponential ease-out
+            // so digits land instead of slamming.
+            const countEls = document.querySelectorAll('[data-countup]');
+            if (countEls.length) {
+                const easeOut = t => 1 - Math.pow(2, -10 * t);
+                const runCount = (el) => {
+                    const target = parseFloat(el.dataset.countup);
+                    const decimals = parseInt(el.dataset.decimals || '0', 10);
+                    if (!motionOK) { el.textContent = target.toFixed(decimals); return; }
+                    const t0 = performance.now();
+                    const dur = 1100;
+                    const tick = (now) => {
+                        const t = Math.min(1, (now - t0) / dur);
+                        el.textContent = (target * easeOut(t)).toFixed(decimals);
+                        if (t < 1) requestAnimationFrame(tick);
+                        else el.textContent = target.toFixed(decimals);
+                    };
+                    requestAnimationFrame(tick);
+                };
+                const countObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            runCount(entry.target);
+                            countObserver.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.5 });
+                countEls.forEach(el => countObserver.observe(el));
+            }
 
             // Mobile nav drawer toggle
             const toggle = document.getElementById('nav-toggle');

@@ -209,3 +209,85 @@ input[type=range]::-moz-range-thumb {
 
 /* Reveal on scroll */
 .reveal { transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1); }
+
+/* ==========================================================
+   Redesign v2 — process pin, case chrome, selection, FAQ
+   ==========================================================*/
+
+/* Selection carries the one blue */
+::selection { background: var(--indigo); color: var(--paper); }
+
+/* --- Signature scroll moment: the process pin ------------- */
+/* Wrapper is 3 viewports tall; the sticky child holds one. The
+   scroll distance across the wrapper drives phase index + rail
+   fill (set from JS via transform, cheap to animate). */
+.process-pin { height: 320vh; }
+.process-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+.process-panel {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+.process-panel.is-active { opacity: 1; transform: none; pointer-events: auto; }
+.process-panel.is-past   { opacity: 0; transform: translateY(-32px); }
+#process-fill {
+  transition: transform 0.15s linear;
+  will-change: transform;
+}
+[data-process-step].is-on { color: var(--paper); }
+
+/* Reduced motion: kill the pin entirely, show the static stack
+   at every viewport width. */
+@media (prefers-reduced-motion: reduce) {
+  .process-pin { display: none !important; }
+  .process-static { display: block !important; }
+}
+
+/* --- Case study cards: uniform browser chrome -------------- */
+.case-chrome {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 0.9rem;
+  background: oklch(0.13 0.012 260 / 0.92);
+  border-bottom: 1px solid var(--line);
+  border-radius: 0.75rem 0.75rem 0 0;
+}
+.case-chrome .dot { width: 8px; height: 8px; border-radius: 50%; background: oklch(0.35 0.012 260); }
+.case-chrome .addr {
+  margin-left: 0.5rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--gray);
+  background: oklch(0.09 0.012 260);
+  border: 1px solid var(--line);
+  border-radius: 9999px;
+  padding: 0.15rem 0.8rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* --- FAQ micro-interaction --------------------------------- */
+/* The +→× marker rotation already lives in the markup
+   (group-open:rotate-45); this adds a soft settle on the answer. */
+details[open] > *:not(summary) { animation: faqIn 0.45s cubic-bezier(0.22, 1, 0.36, 1); }
+@keyframes faqIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: none; }
+}
