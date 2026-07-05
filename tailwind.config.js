@@ -6,8 +6,7 @@ export default {
       colors: {
         apple: {
           blue: '#0071e3',
-          // Secondary text on the cyanotype navy ground — AA at small sizes.
-          gray: '#9a9aa2',
+          gray: '#86868b',
           dark: '#1d1d1f',
         },
         // Ink navy — the light theme's text colours. text-ink for body,
@@ -27,8 +26,10 @@ export default {
         },
       },
       fontFamily: {
-        sans: ['"Schibsted Grotesk"', '-apple-system', '"Helvetica Neue"', 'sans-serif'],
+        sans: ['"Hanken Grotesk"', '-apple-system', '"Helvetica Neue"', 'sans-serif'],
         mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+        // Geist Light for the thin display lines (user-tuned pairing).
+        geist: ['"Geist"', '"Hanken Grotesk"', '-apple-system', 'sans-serif'],
       },
       animation: {
         marquee: 'marquee 80s linear infinite',
