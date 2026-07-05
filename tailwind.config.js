@@ -6,9 +6,8 @@ export default {
       colors: {
         apple: {
           blue: '#0071e3',
-          // Secondary text on the paper ground — #86868b failed AA on
-          // white at small sizes; this measures ~4.7:1.
-          gray: '#6e6e73',
+          // Secondary text on the cyanotype navy ground — AA at small sizes.
+          gray: '#9a9aa2',
           dark: '#1d1d1f',
         },
         // Ink navy — the light theme's text colours. text-ink for body,
@@ -19,12 +18,12 @@ export default {
         },
         // Tinted near-white — text ON blue drench grounds and buttons.
         paper: 'oklch(0.985 0.003 260 / <alpha-value>)',
-        // Brand-blue for small-text use (eyebrows, labels) on PAPER —
-        // needs to be darker than #0071e3 to hold AA at 11px.
+        // Lighter brand-blue for small-text use (eyebrows, labels) on the
+        // navy ground — #0071e3 is too dark to hold AA at 11px on dark.
         indigo: {
           DEFAULT: '#0071e3',
           deep: '#005bb5',
-          bright: 'oklch(0.47 0.17 255)',
+          bright: 'oklch(0.78 0.16 255)',
         },
       },
       fontFamily: {

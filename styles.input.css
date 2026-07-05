@@ -14,22 +14,23 @@
    Tokens
    ==========================================================*/
 :root {
-  /* Light theme — engineering blueprint on paper. Ground is warm paper
-     tinted toward the brand hue; text is deep ink navy; the one blue
-     does rules, annotations, CTAs, and two drenched sections. */
-  --ground: oklch(0.985 0.006 255);        /* paper */
-  --ground-soft: oklch(0.955 0.010 255);   /* recessed panels */
-  --ink-deep: oklch(0.13 0.030 260);       /* headline ink navy */
-  --ink: oklch(0.18 0.030 260);            /* body ink */
-  --ink-soft: oklch(0.32 0.025 260);
-  --line: oklch(0.18 0.03 260 / 0.12);
-  --line-strong: oklch(0.18 0.03 260 / 0.22);
-  --blue-line: oklch(0.55 0.16 255 / 0.28); /* drafting-grid ink */
+  /* Cyanotype theme — an actual blueprint: deep blue-navy ground with
+     light drafting-grid line-work, paper text, the one blue on CTAs,
+     rules, and punctuation beats. The user's original palette carrying
+     the redesigned structure and type. */
+  --ground: oklch(0.10 0.030 258);         /* cyanotype navy */
+  --ground-soft: oklch(0.14 0.032 258);    /* raised panels */
+  --ink-deep: oklch(0.985 0.005 258);      /* headline paper (naming kept for sweep symmetry) */
+  --ink: oklch(0.96 0.006 258);            /* body paper */
+  --ink-soft: oklch(0.80 0.015 258);
+  --line: oklch(0.98 0.005 258 / 0.10);
+  --line-strong: oklch(0.98 0.005 258 / 0.20);
+  --blue-line: oklch(0.75 0.10 255 / 0.10); /* drafting-grid light-blue */
   --indigo: #0071e3;
   --indigo-deep: #005bb5;
-  --indigo-deep-bg: oklch(0.44 0.19 258);  /* drench ground */
+  --indigo-deep-bg: oklch(0.44 0.19 258);  /* drench ground (unchanged) */
   --paper: oklch(0.985 0.005 260);         /* light text ON blue/dark */
-  --gray: #6e6e73;                          /* secondary text, AA on paper */
+  --gray: #9a9aa2;                          /* secondary text, AA on navy */
 }
 
 /* ==========================================================
@@ -105,7 +106,7 @@ body {
 
 /* Glass nav — light frosted paper (original name preserved) */
 .glass-nav {
-  background: oklch(0.985 0.006 255 / 0.75);
+  background: oklch(0.10 0.030 258 / 0.72);
   backdrop-filter: saturate(180%) blur(20px);
   -webkit-backdrop-filter: saturate(180%) blur(20px);
 }
@@ -116,10 +117,10 @@ body {
 */
 .terminal-glow {
   border: 1px solid var(--line);
-  background: oklch(1 0.002 255 / 0.85);
+  background: oklch(0.13 0.032 258 / 0.80);
   box-shadow:
-    0 1px 2px oklch(0.18 0.03 260 / 0.05),
-    0 16px 48px -20px oklch(0.18 0.03 260 / 0.18);
+    0 1px 0 oklch(1 0 0 / 0.05) inset,
+    0 16px 48px -20px oklch(0 0 0 / 0.55);
   backdrop-filter: blur(12px);
 }
 
@@ -139,8 +140,8 @@ body {
   background:
     linear-gradient(var(--blue-line) 1px, transparent 1px) 0 0 / 100% 120px,
     linear-gradient(90deg, var(--blue-line) 1px, transparent 1px) 0 0 / 120px 100%,
-    linear-gradient(oklch(0.55 0.16 255 / 0.07) 1px, transparent 1px) 0 0 / 100% 24px,
-    linear-gradient(90deg, oklch(0.55 0.16 255 / 0.07) 1px, transparent 1px) 0 0 / 24px 100%,
+    linear-gradient(oklch(0.80 0.08 255 / 0.045) 1px, transparent 1px) 0 0 / 100% 24px,
+    linear-gradient(90deg, oklch(0.80 0.08 255 / 0.045) 1px, transparent 1px) 0 0 / 24px 100%,
     var(--ground);
   background-attachment: fixed;
 }
@@ -275,18 +276,18 @@ input[type=range]::-moz-range-thumb {
   align-items: center;
   gap: 0.5rem;
   padding: 0.55rem 0.9rem;
-  background: oklch(0.94 0.008 255);
+  background: oklch(0.16 0.032 258 / 0.95);
   border-bottom: 1px solid var(--line);
   border-radius: 0.75rem 0.75rem 0 0;
 }
-.case-chrome .dot { width: 8px; height: 8px; border-radius: 50%; background: oklch(0.78 0.012 255); }
+.case-chrome .dot { width: 8px; height: 8px; border-radius: 50%; background: oklch(0.42 0.03 258); }
 .case-chrome .addr {
   margin-left: 0.5rem;
   font-family: 'JetBrains Mono', monospace;
   font-size: 10px;
   letter-spacing: 0.08em;
   color: var(--gray);
-  background: oklch(1 0 0 / 0.9);
+  background: oklch(0.09 0.028 258);
   border: 1px solid var(--line);
   border-radius: 9999px;
   padding: 0.15rem 0.8rem;
@@ -385,8 +386,8 @@ body.is-live .hero-line { opacity: 1; transform: none; }
   border-radius: 1rem;
   overflow: hidden;
   border: 1px solid var(--line);
-  background: oklch(1 0.002 255);
-  box-shadow: 0 24px 60px -30px oklch(0.18 0.03 260 / 0.35);
+  background: oklch(0.09 0.028 258);
+  box-shadow: 0 24px 60px -30px oklch(0 0 0 / 0.65);
   transition: border-color 0.4s, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .work-panel:hover .work-frame { border-color: var(--line-strong); transform: translateY(-4px); }
