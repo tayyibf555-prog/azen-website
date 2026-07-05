@@ -30,73 +30,74 @@
     <meta name="twitter:title" content="Little Oaks 24/7 nursery operations">
     <meta name="twitter:description" content="How Azen built a CRM and operations platform for a UK nursery, automating attendance, parent communications, and staff scheduling for round-the-clock operation.">
 
-    <!-- Preconnect for Google Fonts (Mona Sans + JetBrains Mono) -->
+    <!-- Preconnect for Google Fonts (Archivo + JetBrains Mono) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <!-- Built Tailwind CSS -->
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=20260705c">
 </head>
 
-<body class="bg-gradient-tr-fixed min-h-screen text-paper relative selection:bg-[#0071e3] selection:text-white pb-32">
+<body class="bg-gradient-tr-fixed min-h-screen text-paper relative">
 
-    <!-- Background Grid / Dots -->
-    <div
-        class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.08)_1px,transparent_1px)] bg-[length:24px_24px] pointer-events-none">
-    </div>
-    <div class="fixed inset-0 -z-10 bg-gradient-to-b from-black via-black/90 to-[#0a1b3f]/80 pointer-events-none"></div>
-
-    <!-- Navigation (Static pill format) -->
-    <nav class="absolute top-8 left-0 right-0 z-50 flex justify-center px-4">
-        <div class="nav-glass px-8 py-3 rounded-full flex items-center justify-between shadow-2xl max-w-3xl w-full">
-            <div class="text-xl font-bold tracking-tighter pl-3 text-paper">azen.</div>
-            <div class="hidden md:flex items-center gap-8 text-sm font-medium text-apple-gray">
-                <a href="index.html" class="hover:text-white transition-colors">Home</a>
-                <a href="index.html#solutions" class="hover:text-white transition-colors">Capabilities</a>
-                <a href="index.html#portfolio" class="hover:text-white transition-colors">Portfolio</a>
+    <!-- Pill nav — matches the homepage voice. -->
+    <nav aria-label="Primary" class="absolute top-6 left-0 right-0 z-50 flex justify-center px-6">
+        <div class="glass-nav py-2.5 px-3 rounded-full border border-white/10 shadow-2xl flex items-center gap-4 sm:gap-8 max-w-fit w-full justify-between">
+            <a href="index.html" aria-label="Azen home" class="text-xl font-bold tracking-tighter pl-3 text-paper">azen.</a>
+            <div class="hidden md:flex gap-8 text-[11px] uppercase text-apple-gray font-bold tracking-widest">
+                <a href="index.html#work" class="inline-block py-3 -my-3 hover:text-paper transition">Systems</a>
+                <a href="index.html#solutions" class="inline-block py-3 -my-3 hover:text-paper transition">Capabilities</a>
+                <a href="index.html#how" class="inline-block py-3 -my-3 hover:text-paper transition">Process</a>
             </div>
-            <a href="https://calendly.com/tayyib-azen/30min" target="_blank"
-                class="bg-white text-black px-5 py-2 rounded-full text-sm font-bold hover:scale-105 transition-transform">Book
-                Audit</a>
+            <a href="https://calendly.com/tayyib-azen/30min" target="_blank" rel="noopener"
+                class="bg-[#0071e3] text-paper px-5 py-2 rounded-full text-[11px] font-bold uppercase tracking-widest hover:bg-[#005bb5] transition focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60">
+                Book Audit
+            </a>
         </div>
     </nav>
 
-    <!-- Case Study Hero -->
-    <header class="pt-48 pb-20 px-6 max-w-5xl mx-auto text-center border-b border-white/10">
-        <div class="text-xs text-indigo-bright uppercase tracking-widest font-bold mb-6">Case Study</div>
-        <h1 class="text-5xl md:text-8xl font-bold tracking-tighter text-paper drop-shadow-xl mb-8 leading-[1.05]">Little
-            Oaks
-            Software Architecture</h1>
-        <p class="text-xl md:text-2xl text-[#86868b] max-w-3xl mx-auto font-medium leading-relaxed">
-            Architecting a highly playful, modern digital frontend backed by a robust internal CRM to capture and secure
-            early years enrollments.
-        </p>
+    <!-- Case hero — left-anchored, industrial display voice, blueprint atmosphere. -->
+    <header class="relative pt-44 pb-16 px-6 overflow-hidden border-b border-white/5">
+        <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+            <img src="/atmosphere/atmos-blueprint.webp" alt="" width="2048" height="1152"
+                class="absolute inset-0 w-full h-full object-cover opacity-30">
+            <div class="absolute inset-0 bg-gradient-to-b from-[var(--ink-deep)]/60 via-transparent to-[var(--ink-deep)]"></div>
+        </div>
+        <div class="max-w-7xl mx-auto relative z-10">
+            <p class="font-mono text-[11px] uppercase tracking-[0.3em] text-indigo-bright font-bold mb-8">Case study <span class="text-white/25 mx-1">/</span> little-oaks</p>
+            <h1 class="display text-[clamp(2.6rem,7vw,6.5rem)] leading-[0.92] text-paper mb-8 max-w-5xl">Little Oaks Software Architecture<span class="text-[#0071e3]">.</span></h1>
+            <p class="text-xl md:text-2xl text-apple-gray max-w-3xl font-medium leading-snug">Architecting a highly playful, modern digital frontend backed by a robust internal CRM to capture and secure early years enrollments.</p>
+        </div>
     </header>
 
     <!-- Metrics Bar -->
     <section class="max-w-7xl mx-auto px-6 py-12">
         <div
-            class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-white/10">
-            <div class="py-4">
-                <div class="text-4xl md:text-6xl font-bold tracking-tighter text-paper mb-2">3x</div>
-                <div class="text-sm tracking-widest text-[#86868b] uppercase font-bold">Lead Conversions</div>
+            class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="border-t border-white/10 pt-5">
+                <div class="font-mono text-4xl md:text-5xl font-bold tracking-tighter text-paper tabular-nums mb-2">3x</div>
+                <div class="text-[10px] tracking-widest text-apple-gray uppercase font-bold">Lead Conversions</div>
             </div>
-            <div class="py-4">
-                <div class="text-4xl md:text-6xl font-bold tracking-tighter text-paper mb-2">100%</div>
-                <div class="text-sm tracking-widest text-[#86868b] uppercase font-bold">Brand Modernization</div>
+            <div class="border-t border-white/10 pt-5">
+                <div class="font-mono text-4xl md:text-5xl font-bold tracking-tighter text-paper tabular-nums mb-2">100%</div>
+                <div class="text-[10px] tracking-widest text-apple-gray uppercase font-bold">Brand Modernization</div>
             </div>
-            <div class="py-4">
-                <div class="text-4xl md:text-6xl font-bold tracking-tighter text-paper mb-2">Secure</div>
-                <div class="text-sm tracking-widest text-[#86868b] uppercase font-bold">CRM Integration</div>
+            <div class="border-t border-white/10 pt-5">
+                <div class="font-mono text-4xl md:text-5xl font-bold tracking-tighter text-paper tabular-nums mb-2">Secure</div>
+                <div class="text-[10px] tracking-widest text-apple-gray uppercase font-bold">CRM Integration</div>
             </div>
         </div>
     </section>
 
     <!-- Full Image Showcase -->
     <section class="px-6 pb-24 max-w-[90rem] mx-auto">
-        <div class="bg-[#070707] rounded-3xl p-4 sm:p-12 border border-white/10">
+        <div class="rounded-2xl overflow-hidden border border-white/10 bg-[oklch(0.09_0.012_260)] shadow-[0_32px_80px_-32px_rgba(0,0,0,0.7)]">
+            <div class="case-chrome shrink-0">
+                <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                <span class="addr">little-oaks / azen build</span>
+            </div>
             <img src="case%20study%20images%20/little%20oaks%20crm%20case%20study.webp"
-                class="w-full h-auto object-contain rounded-xl shadow-[0_0_50px_rgba(255,255,255,0.05)]"
+                class="w-full h-auto object-contain"
                 alt="Little Oaks 24/7 nursery operations dashboard screenshot">
         </div>
     </section>
@@ -105,7 +106,7 @@
     <section class="max-w-4xl mx-auto px-6 space-y-24">
 
         <div>
-            <h2 class="text-3xl md:text-5xl font-bold tracking-tight mb-8">The Problem.</h2>
+            <h2 class="display text-3xl md:text-5xl mb-8">The Problem.</h2>
             <p class="text-lg md:text-xl text-[#86868b] leading-relaxed font-medium">
                 The practice needed a digital presence that matched their energetic and playful real-world environment,
                 but they were stuck with an outdated, rigid layout. More critically, they had no centralized
@@ -115,7 +116,7 @@
         </div>
 
         <div class="border-t border-white/10 pt-10">
-            <h2 class="text-3xl md:text-5xl font-bold tracking-tight mb-8">CRM & Frontend Design.</h2>
+            <h2 class="display text-3xl md:text-5xl mb-8">CRM & Frontend Design.</h2>
             <p class="text-lg md:text-xl text-[#86868b] leading-relaxed font-medium">
                 We designed a vibrant, highly engaging web interface that appeals directly to modern parents while
                 strictly maintaining institutional trust. Behind the aesthetic frontend, we wired a custom CRM system to
@@ -124,15 +125,31 @@
             </p>
         </div>
 
-        <div class="bg-white/5 rounded-3xl p-10 md:p-16 text-center border border-white/10 mt-32">
-            <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-6">Stop renting time.</h2>
+        <div class="bg-indigo-drench rounded-3xl p-10 md:p-16 text-center border border-white/10 mt-32 relative overflow-hidden">
+            <h2 class="display text-2xl md:text-4xl mb-6">Stop renting time.</h2>
             <p class="text-[#86868b] mb-10 text-lg">Deploy leverage and scale without the headcount.</p>
-            <a href="index.html"
-                class="inline-block bg-white text-black px-8 py-4 rounded-full font-bold text-lg hover:scale-105 transition-transform">Return
-                to Portfolio</a>
+            <div class="flex flex-col sm:flex-row gap-4 items-center justify-center">
+                <a href="https://calendly.com/tayyib-azen/30min" target="_blank" rel="noopener"
+                    class="inline-block bg-[#0071e3] text-paper px-8 py-4 rounded-full font-bold text-lg hover:bg-[#005bb5] transition focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60">Book Audit</a>
+                <a href="index.html#work"
+                    class="inline-block px-8 py-4 rounded-full font-bold text-lg border border-white/20 text-paper hover:bg-white/10 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60">Back to systems</a>
+            </div>
         </div>
 
     </section>
+
+    <!-- Footer — slim version of the homepage bar -->
+    <footer class="border-t border-white/10 py-12 px-6 mt-32">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="text-xl font-bold tracking-tighter text-paper">azen.</div>
+            <nav aria-label="Legal" class="flex gap-8 text-sm text-apple-gray font-medium">
+                <a href="index.html" class="inline-block py-3 -my-3 hover:text-paper transition">Home</a>
+                <a href="privacy.html" class="inline-block py-3 -my-3 hover:text-paper transition">Privacy</a>
+                <a href="terms.html" class="inline-block py-3 -my-3 hover:text-paper transition">Terms</a>
+                <a href="mailto:hello@azen.io" class="inline-block py-3 -my-3 hover:text-paper transition">Contact</a>
+            </nav>
+        </div>
+    </footer>
 
 </body>
 
