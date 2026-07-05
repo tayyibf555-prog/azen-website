@@ -1,11 +1,11 @@
-/* Hanken Grotesk (free, Google Fonts) — Swiss-influenced neutral grotesque
-   with a confident weight range (100-900) and a true italic. JetBrains
-   Mono kept for the monospace stamp + numerals.
-   Geist (free, Google Fonts) — added for the thin display lines on the
-   Capabilities hero. Hanken at ExtraLight (200) read as too spindly; Geist
-   Light (300) has more solid letterforms while keeping the thin/bold
-   weight contrast against Hanken ExtraBold. */
-@import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=Geist:wght@300;400&family=JetBrains+Mono:wght@400;500&display=swap');
+/* Archivo (free, Google Fonts) — grotesque with industrial-signage roots
+   and a variable width axis. The redesign's voice: display type runs
+   Expanded (font-stretch 125%) at heavy weights, uppercase — machined
+   equipment-label energy. Body runs normal width 400-500. JetBrains Mono
+   carries every annotation, stamp, and numeral. Chosen via the font
+   procedure against "precise, candid, load-bearing"; deliberately not
+   Inter / Space Grotesk / Hanken territory. */
+@import url('https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&family=JetBrains+Mono:wght@400;500&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -70,13 +70,22 @@ a:focus-visible.rounded-full,
 }
 
 body {
-  font-family: 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
-  font-feature-settings: 'ss01';
+  font-family: 'Archivo', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   background-color: var(--ink-deep);
   color: var(--paper);
   overflow-x: hidden;
   line-height: 1.5;
+}
+
+/* Display voice — Archivo pushed to its Expanded width at heavy weight,
+   uppercase. The redesign's typographic signature. */
+.display {
+  font-family: 'Archivo', sans-serif;
+  font-stretch: 125%;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.015em;
 }
 
 ::selection {
@@ -290,4 +299,126 @@ details[open] > *:not(summary) { animation: faqIn 0.45s cubic-bezier(0.22, 1, 0.
 @keyframes faqIn {
   from { opacity: 0; transform: translateY(-6px); }
   to   { opacity: 1; transform: none; }
+}
+
+/* ==========================================================
+   Redesign v2 — boot intro, hero stagger, work gallery, film
+   ==========================================================*/
+
+/* --- Boot intro -------------------------------------------- */
+.boot-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ink-deep);
+  transition: transform 0.65s cubic-bezier(0.76, 0, 0.24, 1);
+}
+.boot-intro.is-done { transform: translateY(-100%); }
+.boot-word {
+  font-size: clamp(3rem, 10vw, 7rem);
+  color: var(--paper);
+  line-height: 1;
+  text-transform: lowercase; /* the wordmark is lowercase */
+}
+.boot-caret {
+  display: inline-block;
+  width: 0.09em;
+  height: 0.82em;
+  margin-left: 0.06em;
+  background: var(--indigo);
+  vertical-align: baseline;
+  animation: bootBlink 0.55s step-end infinite alternate;
+  transition: opacity 0.2s;
+}
+@keyframes bootBlink { from { opacity: 1; } to { opacity: 0.15; } }
+@media (prefers-reduced-motion: reduce) {
+  .boot-intro { display: none !important; }
+}
+
+/* Hero lines hold until the boot lifts, then stagger in. When there is
+   no boot (repeat visit / reduced motion), body.is-live is set
+   immediately and the stagger plays from load. */
+.hero-line {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--d, 0ms);
+}
+body.is-live .hero-line { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .hero-line { opacity: 1 !important; transform: none !important; }
+}
+
+/* --- Work gallery: pinned horizontal scroll-jack ------------ */
+/* Default (mobile / no-JS / reduced motion): native horizontal
+   snap scroll. When JS activates the pin on md+, .is-pinned turns
+   the sticky + transform behaviour on. */
+.work-pin { padding: 7rem 0; }
+.work-viewport { overflow: hidden; }
+.work-track {
+  display: flex;
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+  padding: 0 max(1.5rem, calc((100vw - 80rem) / 2 + 1.5rem));
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.work-track::-webkit-scrollbar { display: none; }
+.work-panel {
+  flex: 0 0 auto;
+  width: min(85vw, 780px);
+  scroll-snap-align: center;
+  text-decoration: none;
+}
+.work-frame {
+  display: flex;
+  flex-direction: column;
+  aspect-ratio: 16 / 9.6;
+  border-radius: 1rem;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: oklch(0.09 0.012 260);
+  box-shadow: 0 24px 60px -24px oklch(0 0 0 / 0.6);
+  transition: border-color 0.4s, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.work-panel:hover .work-frame { border-color: var(--line-strong); transform: translateY(-4px); }
+.work-shot {
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  object-fit: cover;
+  object-position: top;
+}
+/* Pinned mode (set by JS on md+ with motion allowed) */
+.work-pin.is-pinned { padding: 0; }
+.work-pin.is-pinned .work-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+.work-pin.is-pinned .work-track {
+  overflow-x: visible;
+  scroll-snap-type: none;
+  will-change: transform;
+}
+.work-pin.is-pinned .work-panel { width: min(70vw, 900px); }
+#work-fill { transition: transform 0.15s linear; will-change: transform; }
+
+/* --- Brand film scale --------------------------------------- */
+.film-scale {
+  transform: scale(0.86);
+  transform-origin: center center;
+  will-change: transform;
+}
+@media (prefers-reduced-motion: reduce) {
+  .film-scale { transform: none !important; }
 }

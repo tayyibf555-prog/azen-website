@@ -1,7 +1,7 @@
 ---
 version: alpha
 name: azen-design-system
-description: "A near-black indigo-tinted canvas (oklch(0.06 0.012 260)) carrying a single committed accent: Apple-blue #0071e3, spent only on CTAs and punctuation beats. The system reads as serious engineering: Hanken Grotesk across a 100-900 weight range doing thin/bold couplet work at display sizes (ExtraLight setup line, ExtraBold payoff line, blue full-stop), Geist Light for the thinnest display lines, JetBrains Mono for operational stamps and numerals. Surfaces are hairline-bordered panels on white/5, radius 1rem-2rem, with one glow treatment (terminal-glow) reserved for proof surfaces. Atmosphere comes from heavily dimmed indigo cinematic stills under gradient overlays, never from decorative gradients. Motion is quiet: 1000ms ease-out reveals, one scroll-driven signature moment per page."
+description: "A near-black indigo-tinted canvas (oklch(0.06 0.012 260)) carrying a single committed accent: Apple-blue #0071e3, spent only on CTAs and punctuation beats. The system reads as industrial engineering: Archivo pushed to its Expanded width (font-stretch 125%) at weight 800, uppercase, for all display work — machined equipment-label energy — with a dimmed setup line / paper payoff line couplet and the blue full-stop as the recurring punctuation beat. Body runs Archivo normal-width 400-500; JetBrains Mono carries every annotation, stamp, and numeral. Surfaces are hairline-bordered panels on white/5, radius 1rem-2rem, with one glow treatment (terminal-glow) reserved for proof surfaces. Atmosphere comes from heavily dimmed indigo cinematic stills under gradient overlays, never decorative gradients. Motion: quiet 900ms-1s ease-out reveals plus two pinned scroll set pieces (horizontal work gallery, three-phase process)."
 
 colors:
   canvas: "oklch(0.06 0.012 260)"      # --ink-deep, near-black tinted indigo
@@ -25,23 +25,24 @@ color-strategy: >
 
 typography:
   display-hero:
-    fontFamily: Hanken Grotesk
-    fontSize: clamp(2.75rem, 9vw, 8rem)
-    fontWeight: 200 setup line / 800 payoff line
-    lineHeight: 0.95
-    letterSpacing: tracking-tighter (-0.05em)
+    fontFamily: Archivo (font-stretch 125%, uppercase, .display class)
+    fontSize: clamp(3.2rem, 11vw, 11rem)
+    fontWeight: 800
+    lineHeight: 0.92
+    letterSpacing: -0.015em
+    note: dimmed setup line (white/35-45) then paper payoff line + blue period
   display-section:
-    fontFamily: Hanken Grotesk (bold lines) + Geist 300 (thin lines)
-    fontSize: clamp(2.5rem, 8vw, 7.5rem)
-    fontWeight: 300 thin / 800 bold
-    lineHeight: 0.95
+    fontFamily: Archivo Expanded (.display)
+    fontSize: clamp(2.2rem, 4.5-9vw, 8.5rem) per section scale
+    fontWeight: 800
+    lineHeight: 0.92-0.95
   headline:
-    fontFamily: Hanken Grotesk
-    fontSize: 1.875rem-2.25rem
+    fontFamily: Archivo
+    fontSize: 1.25rem-2rem
     fontWeight: 700
     letterSpacing: tracking-tight
   body:
-    fontFamily: Hanken Grotesk
+    fontFamily: Archivo
     fontSize: 1rem-1.25rem
     fontWeight: 400-500
     lineHeight: 1.5
