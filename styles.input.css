@@ -549,3 +549,113 @@ body.is-live .hero-line { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) {
   .scroll-cue-arrow { animation: none; }
 }
+
+/* ==========================================================
+   Redesign v2.3 — atmosphere + system visuals
+   ==========================================================*/
+
+/* --- Film grain ------------------------------------------------
+   Fixed SVG-noise veil over the whole page. Pointer-transparent,
+   barely-there — it kills the "flat digital black" and reads as
+   material. */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  pointer-events: none;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* --- Mouse spotlight -------------------------------------------
+   A soft indigo pool that trails the pointer. JS feeds --mx/--my;
+   hidden on touch / reduced motion. */
+.spotlight {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(560px circle at var(--mx, 50%) var(--my, 35%),
+    oklch(0.45 0.19 258 / 0.09), transparent 65%);
+}
+@media (hover: none), (prefers-reduced-motion: reduce) {
+  .spotlight { display: none; }
+}
+
+/* --- Scroll progress bar -------------------------------------- */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 95;
+  background: var(--indigo);
+  transform-origin: left;
+  transform: scaleX(0);
+  pointer-events: none;
+}
+
+/* --- Hero: stronger beam + counter-glow ------------------------ */
+.hero-beam {
+  background: conic-gradient(from 262deg at 112% 34%,
+    transparent 42%,
+    oklch(0.62 0.17 256 / 0.15) 48.5%,
+    oklch(0.82 0.11 256 / 0.28) 50%,
+    oklch(0.62 0.17 256 / 0.15) 51.5%,
+    transparent 58%);
+}
+.hero-glow-bl {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse 620px 420px at 4% 96%,
+    oklch(0.32 0.18 260 / 0.28), transparent 70%);
+}
+
+/* --- Capability system diagrams --------------------------------
+   Small engineered visuals: pulsing agent node, traveling sync
+   pulse, scanning retrieval stack. */
+.cap-viz { width: 240px; }
+.viz-dash {
+  stroke-dasharray: 4 4;
+  animation: vizDash 1.1s linear infinite;
+}
+@keyframes vizDash { to { stroke-dashoffset: -8; } }
+.viz-pulse {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: vizPulse 2.2s ease-in-out infinite;
+}
+@keyframes vizPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%      { transform: scale(1.5); opacity: 0.55; }
+}
+.viz-scan {
+  animation: vizScan 3.2s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+@keyframes vizScan {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(58px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .viz-dash, .viz-pulse, .viz-scan { animation: none; }
+}
+
+/* --- Ghost section numerals ------------------------------------
+   Huge outlined index floating behind section headers. */
+.section-ghost {
+  position: absolute;
+  top: -1rem;
+  right: -0.5rem;
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-weight: 800;
+  font-size: clamp(8rem, 18vw, 16rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: transparent;
+  -webkit-text-stroke: 1px oklch(0.985 0.003 260 / 0.07);
+  pointer-events: none;
+  user-select: none;
+}

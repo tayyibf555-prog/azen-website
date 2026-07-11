@@ -57,7 +57,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <!-- Built Tailwind CSS. Cache-bust via ?v= on each rebuild. -->
-    <link rel="stylesheet" href="styles.css?v=20260711b">
+    <link rel="stylesheet" href="styles.css?v=20260711c">
 </head>
 
 <body class="bg-gradient-tr-fixed min-h-screen text-paper relative">
@@ -71,6 +71,10 @@
 
     <!-- Skip link (a11y) -->
     <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[60] focus:bg-white focus:text-black focus:px-4 focus:py-2 focus:rounded">Skip to content</a>
+
+    <!-- Atmosphere: cursor spotlight + scroll progress -->
+    <div class="spotlight" id="spotlight" aria-hidden="true"></div>
+    <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
 
     <!-- Floating Pill Nav -->
     <div class="absolute top-6 inset-x-0 z-50 flex justify-center pointer-events-none px-6">
@@ -124,6 +128,7 @@
          ──────────────────────────────────────────────────────────── -->
     <section class="relative min-h-screen flex flex-col justify-center px-6 overflow-hidden">
         <div class="hero-beam" aria-hidden="true"></div>
+        <div class="hero-glow-bl" aria-hidden="true"></div>
 
         <div class="max-w-6xl mx-auto w-full relative z-10 pt-24 flex flex-col items-center text-center">
             <p class="hero-line font-mono text-[11px] uppercase tracking-[0.3em] text-indigo-bright font-bold mb-8" style="--d:40ms">[ AI infrastructure &middot; London ]</p>
@@ -142,6 +147,18 @@
                         class="w-full sm:w-auto bg-[#0071e3] text-white px-8 py-3.5 rounded-full text-center font-bold hover:bg-[#005bb5] transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0071e3]/60">Book Audit</a>
                     <a href="#work"
                         class="w-full sm:w-auto px-8 py-3.5 rounded-full text-center font-bold border border-white/20 hover:bg-white/10 transition text-paper focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0071e3]/60">See the systems</a>
+                </div>
+            </div>
+
+            <div class="hero-line w-full max-w-2xl mt-16 hidden sm:block" style="--d:560ms" aria-hidden="true">
+                <div class="terminal-glow rounded-xl overflow-hidden text-left">
+                    <div class="case-chrome">
+                        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                        <span class="addr">azen-core / live</span>
+                    </div>
+                    <div class="px-5 py-4 font-mono text-xs text-apple-gray whitespace-nowrap overflow-hidden">
+                        <span class="typewriter-text"></span><span class="inline-block w-[7px] h-[13px] bg-[#0071e3] align-middle ml-1"></span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -372,6 +389,7 @@
          alternating alignment. Machine atmosphere behind.
          ──────────────────────────────────────────────────────────── -->
     <section id="solutions" class="relative py-32 md:py-44 px-6 overflow-hidden">
+        <div class="section-ghost" aria-hidden="true">02</div>
 
         <div class="max-w-7xl mx-auto relative z-10">
             <p class="font-mono text-[11px] uppercase tracking-[0.3em] text-indigo-bright font-bold mb-24">[ 02 / What we deploy ]</p>
@@ -390,6 +408,16 @@
                             <li><span class="text-white/25 mr-3">02</span>API-native executions</li>
                             <li><span class="text-white/25 mr-3">03</span>Self-correcting protocols</li>
                         </ul>
+                        <div class="cap-viz terminal-glow rounded-xl p-4 hidden lg:block shrink-0 ml-auto" aria-hidden="true">
+                            <svg viewBox="0 0 208 104" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M36 52 H104 M104 52 L168 24 M104 52 L168 80" stroke="oklch(0.98 0.005 260 / 0.22)" class="viz-dash"/>
+                                <circle cx="36" cy="52" r="6" fill="#0071e3" class="viz-pulse"/>
+                                <circle cx="104" cy="52" r="4.5" fill="oklch(0.985 0.003 260 / 0.5)"/>
+                                <circle cx="168" cy="24" r="4.5" fill="oklch(0.985 0.003 260 / 0.35)"/>
+                                <circle cx="168" cy="80" r="4.5" fill="oklch(0.985 0.003 260 / 0.35)"/>
+                            </svg>
+                            <p class="font-mono text-[9px] uppercase tracking-[0.2em] text-apple-gray mt-2">agent &rarr; reason &rarr; act</p>
+                        </div>
                     </div>
                 </div>
 
@@ -405,6 +433,18 @@
                             <li>Webhook intercepts<span class="text-white/25 ml-3">02</span></li>
                             <li>Continuous sync<span class="text-white/25 ml-3">03</span></li>
                         </ul>
+                        <div class="cap-viz terminal-glow rounded-xl p-4 hidden lg:block shrink-0 mr-auto" aria-hidden="true">
+                            <svg viewBox="0 0 208 104" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="12" y="38" width="44" height="28" rx="6" stroke="oklch(0.98 0.005 260 / 0.3)"/>
+                                <rect x="82" y="38" width="44" height="28" rx="6" stroke="oklch(0.98 0.005 260 / 0.3)"/>
+                                <rect x="152" y="38" width="44" height="28" rx="6" stroke="oklch(0.98 0.005 260 / 0.3)"/>
+                                <path d="M56 52 H82 M126 52 H152" stroke="oklch(0.98 0.005 260 / 0.18)"/>
+                                <circle r="3" fill="#0071e3">
+                                    <animateMotion dur="2.6s" repeatCount="indefinite" path="M56 52 H152"/>
+                                </circle>
+                            </svg>
+                            <p class="font-mono text-[9px] uppercase tracking-[0.2em] text-apple-gray mt-2">crm &harr; erp &harr; ops</p>
+                        </div>
                     </div>
                 </div>
 
@@ -420,6 +460,16 @@
                             <li><span class="text-white/25 mr-3">02</span>Source-grounded answers</li>
                             <li><span class="text-white/25 mr-3">03</span>Permission-aware search</li>
                         </ul>
+                        <div class="cap-viz terminal-glow rounded-xl p-4 hidden lg:block shrink-0 ml-auto" aria-hidden="true">
+                            <svg viewBox="0 0 208 104" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g stroke="oklch(0.98 0.005 260 / 0.25)">
+                                    <path d="M20 22 H150"/><path d="M20 38 H188"/><path d="M20 54 H132"/>
+                                    <path d="M20 70 H170"/><path d="M20 86 H110"/>
+                                </g>
+                                <rect x="12" y="14" width="184" height="16" rx="3" fill="oklch(0.45 0.19 258 / 0.28)" class="viz-scan"/>
+                            </svg>
+                            <p class="font-mono text-[9px] uppercase tracking-[0.2em] text-apple-gray mt-2">query &rarr; grounded answer</p>
+                        </div>
                     </div>
                 </div>
 
@@ -541,8 +591,9 @@
     <!-- ────────────────────────────────────────────────────────────
          04 / THE MATH — ROI calculator, left-anchored industrial.
          ──────────────────────────────────────────────────────────── -->
-    <section class="py-24 md:py-32 px-6">
-        <div class="max-w-7xl mx-auto grid md:grid-cols-[1fr_1.4fr] gap-14 md:gap-24 items-center">
+    <section class="py-24 md:py-32 px-6 relative overflow-hidden">
+        <div class="section-ghost" aria-hidden="true">04</div>
+        <div class="max-w-7xl mx-auto grid md:grid-cols-[1fr_1.4fr] gap-14 md:gap-24 items-center relative">
             <div>
                 <p class="font-mono text-[11px] uppercase tracking-[0.3em] text-indigo-bright font-bold mb-5">[ 04 / The math ]</p>
                 <h2 class="display text-[clamp(2.2rem,4.5vw,4rem)] leading-[0.95] text-paper mb-6">What is manual work costing you<span class="text-[#0071e3]">?</span></h2>
@@ -575,8 +626,9 @@
          own line ("most agencies sell you overpriced solutions")
          turned into a conversion surface.
          ──────────────────────────────────────────────────────────── -->
-    <section class="py-24 md:py-36 px-6">
-        <div class="max-w-7xl mx-auto">
+    <section class="py-24 md:py-36 px-6 relative overflow-hidden">
+        <div class="section-ghost" aria-hidden="true">05</div>
+        <div class="max-w-7xl mx-auto relative">
             <p class="font-mono text-[11px] uppercase tracking-[0.3em] text-indigo-bright font-bold mb-5">[ 05 / The difference ]</p>
             <h2 class="display text-[clamp(2.2rem,4.5vw,4rem)] leading-[0.95] text-paper mb-14 reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out">
                 Not your typical agency<span class="text-[#0071e3]">.</span>
@@ -641,8 +693,9 @@
     <!-- ────────────────────────────────────────────────────────────
          05 / STRAIGHT ANSWERS — sticky headline left, details right.
          ──────────────────────────────────────────────────────────── -->
-    <section id="faq" class="py-32 md:py-40 px-6">
-        <div class="max-w-7xl mx-auto grid md:grid-cols-[1fr_1.6fr] gap-14 md:gap-24 items-start">
+    <section id="faq" class="py-32 md:py-40 px-6 relative overflow-hidden">
+        <div class="section-ghost" aria-hidden="true">06</div>
+        <div class="max-w-7xl mx-auto grid md:grid-cols-[1fr_1.6fr] gap-14 md:gap-24 items-start relative">
             <div class="md:sticky md:top-32">
                 <p class="font-mono text-[11px] uppercase tracking-[0.3em] text-indigo-bright font-bold mb-5">[ 06 / Details ]</p>
                 <h2 class="display text-[clamp(2.4rem,5vw,4.5rem)] leading-[0.95] text-paper">Straight answers<span class="text-[#0071e3]">.</span></h2>
@@ -990,6 +1043,35 @@
                 };
                 window.addEventListener('scroll', onFilmScroll, { passive: true });
                 onFilmScroll();
+            }
+
+            // ── Cursor spotlight ─────────────────────────────────
+            const spotlight = document.getElementById('spotlight');
+            if (spotlight && motionOK && window.matchMedia('(hover: hover)').matches) {
+                let sx = 0, sy = 0, queued = false;
+                window.addEventListener('pointermove', (e) => {
+                    sx = e.clientX; sy = e.clientY;
+                    if (!queued) {
+                        queued = true;
+                        requestAnimationFrame(() => {
+                            spotlight.style.setProperty('--mx', sx + 'px');
+                            spotlight.style.setProperty('--my', sy + 'px');
+                            queued = false;
+                        });
+                    }
+                }, { passive: true });
+            }
+
+            // ── Scroll progress bar ──────────────────────────────
+            const progress = document.getElementById('scroll-progress');
+            if (progress) {
+                const onProgress = () => {
+                    const max = document.documentElement.scrollHeight - window.innerHeight;
+                    const p = max > 0 ? window.scrollY / max : 0;
+                    progress.style.transform = `scaleX(${p})`;
+                };
+                window.addEventListener('scroll', onProgress, { passive: true });
+                onProgress();
             }
 
             // ── ROI calculator ───────────────────────────────────
