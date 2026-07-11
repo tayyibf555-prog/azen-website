@@ -420,3 +420,91 @@ body.is-live .hero-line { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) {
   .film-scale { transform: none !important; }
 }
+
+/* ==========================================================
+   Redesign v2.1 — reference-driven pass (Mobbin board)
+   ==========================================================*/
+
+/* --- Hero light beam (Grok company-page register) -----------
+   A single directional blade of indigo light entering from the
+   right edge. Pure CSS conic gradient + blur — no imagery. */
+.hero-beam {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: conic-gradient(from 262deg at 112% 34%,
+    transparent 42%,
+    oklch(0.62 0.17 256 / 0.10) 48.5%,
+    oklch(0.82 0.11 256 / 0.20) 50%,
+    oklch(0.62 0.17 256 / 0.10) 51.5%,
+    transparent 58%);
+  filter: blur(22px);
+  animation: beamBreathe 9s ease-in-out infinite alternate;
+}
+@keyframes beamBreathe {
+  from { opacity: 0.55; }
+  to   { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-beam { animation: none; opacity: 0.7; }
+}
+
+/* --- Stat cards (Spade register) -----------------------------
+   Hairline corner ticks drawn with background gradients; mono
+   label up top, display numeral at the bottom. */
+.stat-card {
+  position: relative;
+  min-height: 10.5rem;
+  padding: 1.5rem 1.4rem 1.3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-image:
+    linear-gradient(var(--line-strong), var(--line-strong)),
+    linear-gradient(var(--line-strong), var(--line-strong)),
+    linear-gradient(var(--line-strong), var(--line-strong)),
+    linear-gradient(var(--line-strong), var(--line-strong)),
+    linear-gradient(var(--line-strong), var(--line-strong)),
+    linear-gradient(var(--line-strong), var(--line-strong)),
+    linear-gradient(var(--line-strong), var(--line-strong)),
+    linear-gradient(var(--line-strong), var(--line-strong));
+  background-repeat: no-repeat;
+  background-size:
+    16px 1px, 1px 16px,   /* top-left */
+    16px 1px, 1px 16px,   /* top-right */
+    16px 1px, 1px 16px,   /* bottom-left */
+    16px 1px, 1px 16px;   /* bottom-right */
+  background-position:
+    top left, top left,
+    top right, top right,
+    bottom left, bottom left,
+    bottom right, bottom right;
+}
+
+/* --- Process ghost numeral (FLORA register) ------------------
+   Outlined, transparent-filled phase number. */
+.ghost-num {
+  color: transparent;
+  -webkit-text-stroke: 1.5px oklch(0.985 0.003 260 / 0.30);
+  transition: -webkit-text-stroke-color 0.4s;
+}
+
+/* --- Work gallery: shot zoom on hover (Koto register) ------- */
+.work-shot {
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.work-panel:hover .work-shot { transform: scale(1.03); }
+@media (prefers-reduced-motion: reduce) {
+  .work-panel:hover .work-shot { transform: none; }
+}
+
+/* --- Final CTA glow (Antimetal register) ---------------------
+   The one full-commitment blue moment: a centred radial glow
+   rising from below the headline. CSS only. */
+.bg-cta-glow {
+  background:
+    radial-gradient(ellipse 1000px 640px at 50% 96%, oklch(0.52 0.22 258 / 0.75), transparent 68%),
+    radial-gradient(ellipse 1700px 1100px at 50% 115%, oklch(0.38 0.20 258 / 0.45), transparent 75%),
+    var(--ground);
+  color: var(--paper);
+}
