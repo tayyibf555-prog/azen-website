@@ -643,6 +643,91 @@ body::after {
   .viz-dash, .viz-pulse, .viz-scan { animation: none; }
 }
 
+/* ==========================================================
+   Redesign v2.4 — showpiece pass
+   ==========================================================*/
+
+/* --- Word-mask headline reveals ---------------------------------
+   JS splits [data-words] headlines into masked word spans; the
+   reveal observer adds .words-in and each word slides up from
+   behind its mask with a stagger (--wd set per word by JS). */
+[data-words] .w {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+[data-words] .w > span {
+  display: inline-block;
+  transform: translateY(115%);
+  transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--wd, 0ms);
+}
+[data-words].words-in .w > span { transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  [data-words] .w > span { transform: none !important; transition: none !important; }
+}
+
+/* --- Hero core object -------------------------------------------
+   Generated render floats slowly; JS adds pointer parallax on the
+   wrapper. The halo sits behind the image. */
+.core-wrap { position: relative; }
+.core-halo {
+  position: absolute;
+  inset: -18%;
+  pointer-events: none;
+  background: radial-gradient(ellipse closest-side, oklch(0.40 0.20 258 / 0.40), transparent 72%);
+  filter: blur(10px);
+}
+.core-float {
+  position: relative;
+  animation: coreFloat 7s ease-in-out infinite alternate;
+  will-change: transform;
+  /* melt the render's square edges into the page ground */
+  -webkit-mask-image: radial-gradient(ellipse 72% 72% at 50% 48%, black 52%, transparent 76%);
+  mask-image: radial-gradient(ellipse 72% 72% at 50% 48%, black 52%, transparent 76%);
+}
+@keyframes coreFloat {
+  from { transform: translateY(-8px); }
+  to   { transform: translateY(10px); }
+}
+.core-parallax {
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+@media (prefers-reduced-motion: reduce) {
+  .core-float { animation: none; }
+  .core-parallax { transform: none !important; }
+}
+
+/* --- System map --------------------------------------------------
+   Full-width animated orchestration diagram. Hairline paths,
+   travelling blue pulses (SMIL), soft core glow. */
+.sysmap-glow { filter: drop-shadow(0 0 18px oklch(0.55 0.22 258 / 0.55)); }
+.sysmap text {
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* --- CTA horizon image -------------------------------------------
+   Generated arc sits at the section base, masked so it melts into
+   the ground on every edge. */
+.cta-horizon {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  width: 100%;
+  height: 72%;
+  object-fit: cover;
+  object-position: center bottom;
+  pointer-events: none;
+  opacity: 0.85;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 45%);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 45%);
+}
+
 /* --- Ghost section numerals ------------------------------------
    Huge outlined index floating behind section headers. */
 .section-ghost {
