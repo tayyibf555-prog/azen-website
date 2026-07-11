@@ -500,11 +500,52 @@ body.is-live .hero-line { opacity: 1; transform: none; }
 
 /* --- Final CTA glow (Antimetal register) ---------------------
    The one full-commitment blue moment: a centred radial glow
-   rising from below the headline. CSS only. */
+   haloing the headline. Both ellipses reach full transparency
+   well inside the section, so the footer continues seamlessly —
+   no hard edge. CSS only. */
 .bg-cta-glow {
   background:
-    radial-gradient(ellipse 1000px 640px at 50% 96%, oklch(0.52 0.22 258 / 0.75), transparent 68%),
-    radial-gradient(ellipse 1700px 1100px at 50% 115%, oklch(0.38 0.20 258 / 0.45), transparent 75%),
+    radial-gradient(ellipse 900px 560px at 50% 55%, oklch(0.52 0.22 258 / 0.60), transparent 64%),
+    radial-gradient(ellipse 1500px 880px at 50% 58%, oklch(0.36 0.20 258 / 0.32), transparent 70%),
     var(--ground);
   color: var(--paper);
+}
+
+/* --- Client marquee ------------------------------------------
+   Track holds two identical copies of the name run; translating
+   the track by exactly -50% loops seamlessly. */
+.marquee-mask {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marqueeHalf 55s linear infinite;
+}
+@keyframes marqueeHalf { to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track { animation: none; }
+}
+
+/* --- Footer ghost wordmark (Koto register) ------------------- */
+.footer-word {
+  color: transparent;
+  -webkit-text-stroke: 1px oklch(0.985 0.003 260 / 0.10);
+  line-height: 0.78;
+  user-select: none;
+}
+
+/* --- Hero scroll cue ------------------------------------------ */
+.scroll-cue-arrow {
+  display: inline-block;
+  animation: cueBob 2.2s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+@keyframes cueBob {
+  0%, 100% { transform: translateY(0); opacity: 0.5; }
+  50%      { transform: translateY(6px); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scroll-cue-arrow { animation: none; }
 }

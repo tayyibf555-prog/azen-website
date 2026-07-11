@@ -57,7 +57,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <!-- Built Tailwind CSS. Cache-bust via ?v= on each rebuild. -->
-    <link rel="stylesheet" href="styles.css?v=20260711a">
+    <link rel="stylesheet" href="styles.css?v=20260711b">
 </head>
 
 <body class="bg-gradient-tr-fixed min-h-screen text-paper relative">
@@ -145,13 +145,17 @@
                 </div>
             </div>
         </div>
+
+        <div class="absolute bottom-8 inset-x-0 flex justify-center hero-line" style="--d:640ms" aria-hidden="true">
+            <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-apple-gray">[ scroll <span class="scroll-cue-arrow">&darr;</span> ]</span>
+        </div>
     </section>
 
     <!-- ────────────────────────────────────────────────────────────
          PROOF BAND — evidence before pitch. Real portfolio aggregates,
          count-up on entry. The only "live" element is the status dot.
          ──────────────────────────────────────────────────────────── -->
-    <section class="border-y border-white/10 relative">
+    <section class="relative">
         <div class="max-w-7xl mx-auto px-6 py-14">
             <div class="flex items-center justify-between gap-6 mb-10">
                 <div class="flex items-center gap-3">
@@ -334,6 +338,36 @@
     </section>
 
     <!-- ────────────────────────────────────────────────────────────
+         CLIENT MARQUEE — the seven live builds, by name. Honest
+         social proof; edges fade via mask, no borders.
+         ──────────────────────────────────────────────────────────── -->
+    <section class="py-20 md:py-24" aria-label="Clients in production">
+        <p class="font-mono text-[10px] uppercase tracking-[0.3em] text-apple-gray font-bold text-center mb-10">[ In production for ]</p>
+        <div class="marquee-mask">
+            <div class="marquee-track gap-16 md:gap-24 pr-16 md:pr-24">
+                <div class="flex shrink-0 items-baseline gap-16 md:gap-24">
+                    <span class="display text-3xl md:text-5xl whitespace-nowrap text-white/[0.16]">Prep Point<span class="text-[#0071e3]/40">.</span></span>
+                    <span class="display text-3xl md:text-5xl whitespace-nowrap text-white/[0.16]">Superior Accounting<span class="text-[#0071e3]/40">.</span></span>
+                    <span class="display text-3xl md:text-5xl whitespace-nowrap text-white/[0.16]">TTT Departmentals<span class="text-[#0071e3]/40">.</span></span>
+                    <span class="display text-3xl md:text-5xl whitespace-nowrap text-white/[0.16]">Little Oaks<span class="text-[#0071e3]/40">.</span></span>
+                    <span class="display text-3xl md:text-5xl whitespace-nowrap text-white/[0.16]">Zia Ul Quran<span class="text-[#0071e3]/40">.</span></span>
+                    <span class="display text-3xl md:text-5xl whitespace-nowrap text-white/[0.16]">Zia Ul Ummah<span class="text-[#0071e3]/40">.</span></span>
+                    <span class="display text-3xl md:text-5xl whitespace-nowrap text-white/[0.16]">Azen EYOS<span class="text-[#0071e3]/40">.</span></span>
+                </div>
+                <div class="flex shrink-0 items-baseline gap-16 md:gap-24" aria-hidden="true">
+                    <span class="display text-3xl md:text-5xl whitespace-nowrap text-white/[0.16]">Prep Point<span class="text-[#0071e3]/40">.</span></span>
+                    <span class="display text-3xl md:text-5xl whitespace-nowrap text-white/[0.16]">Superior Accounting<span class="text-[#0071e3]/40">.</span></span>
+                    <span class="display text-3xl md:text-5xl whitespace-nowrap text-white/[0.16]">TTT Departmentals<span class="text-[#0071e3]/40">.</span></span>
+                    <span class="display text-3xl md:text-5xl whitespace-nowrap text-white/[0.16]">Little Oaks<span class="text-[#0071e3]/40">.</span></span>
+                    <span class="display text-3xl md:text-5xl whitespace-nowrap text-white/[0.16]">Zia Ul Quran<span class="text-[#0071e3]/40">.</span></span>
+                    <span class="display text-3xl md:text-5xl whitespace-nowrap text-white/[0.16]">Zia Ul Ummah<span class="text-[#0071e3]/40">.</span></span>
+                    <span class="display text-3xl md:text-5xl whitespace-nowrap text-white/[0.16]">Azen EYOS<span class="text-[#0071e3]/40">.</span></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ────────────────────────────────────────────────────────────
          02 / WHAT WE DEPLOY — three systems, giant industrial type,
          alternating alignment. Machine atmosphere behind.
          ──────────────────────────────────────────────────────────── -->
@@ -394,10 +428,9 @@
     </section>
 
     <!-- Security — one candid mono line, not a whole section. -->
-    <section class="border-y border-white/10">
-        <div class="max-w-7xl mx-auto px-6 py-8 flex flex-col md:flex-row md:items-center justify-between gap-4 font-mono text-[11px] uppercase tracking-[0.2em] text-apple-gray">
-            <span>Zero public training <span class="text-white/25 mx-2">/</span> client data never trains external models</span>
-            <span>End-to-end encrypted <span class="text-white/25 mx-2">/</span> GDPR ready <span class="text-white/25 mx-2">/</span> SOC 2</span>
+    <section class="py-6">
+        <div class="max-w-7xl mx-auto px-6 text-center font-mono text-[11px] uppercase tracking-[0.2em] text-apple-gray/90 leading-relaxed">
+            Zero public training <span class="text-[#0071e3]/60 mx-2">/</span> end-to-end encrypted <span class="text-[#0071e3]/60 mx-2">/</span> GDPR ready <span class="text-[#0071e3]/60 mx-2">/</span> SOC 2 <span class="text-[#0071e3]/60 mx-2">/</span> client data never trains external models
         </div>
     </section>
 
@@ -508,7 +541,7 @@
     <!-- ────────────────────────────────────────────────────────────
          04 / THE MATH — ROI calculator, left-anchored industrial.
          ──────────────────────────────────────────────────────────── -->
-    <section class="py-24 md:py-32 px-6 border-t border-white/10">
+    <section class="py-24 md:py-32 px-6">
         <div class="max-w-7xl mx-auto grid md:grid-cols-[1fr_1.4fr] gap-14 md:gap-24 items-center">
             <div>
                 <p class="font-mono text-[11px] uppercase tracking-[0.3em] text-indigo-bright font-bold mb-5">[ 04 / The math ]</p>
@@ -538,9 +571,47 @@
     </section>
 
     <!-- ────────────────────────────────────────────────────────────
-         FOUNDER — drenched section, asymmetric, colour photo.
+         05 / THE DIFFERENCE — the candid comparison. The founder's
+         own line ("most agencies sell you overpriced solutions")
+         turned into a conversion surface.
          ──────────────────────────────────────────────────────────── -->
-    <section class="py-32 md:py-40 px-6 relative border-y border-white/10">
+    <section class="py-24 md:py-36 px-6">
+        <div class="max-w-7xl mx-auto">
+            <p class="font-mono text-[11px] uppercase tracking-[0.3em] text-indigo-bright font-bold mb-5">[ 05 / The difference ]</p>
+            <h2 class="display text-[clamp(2.2rem,4.5vw,4rem)] leading-[0.95] text-paper mb-14 reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out">
+                Not your typical agency<span class="text-[#0071e3]">.</span>
+            </h2>
+
+            <div class="grid md:grid-cols-2 gap-4 md:gap-5">
+                <div class="rounded-2xl border border-white/10 bg-white/[0.02] p-8 md:p-10 reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out">
+                    <p class="font-mono text-[10px] uppercase tracking-[0.25em] text-apple-gray font-bold mb-8">Typical agency</p>
+                    <ul class="space-y-5 text-lg text-apple-gray font-medium leading-snug">
+                        <li class="flex gap-4"><span class="font-mono text-white/25 shrink-0" aria-hidden="true">&times;</span>Hourly billing that rewards slow work</li>
+                        <li class="flex gap-4"><span class="font-mono text-white/25 shrink-0" aria-hidden="true">&times;</span>Templated builds resold to every client</li>
+                        <li class="flex gap-4"><span class="font-mono text-white/25 shrink-0" aria-hidden="true">&times;</span>Black-box handover &mdash; you rent your own system</li>
+                        <li class="flex gap-4"><span class="font-mono text-white/25 shrink-0" aria-hidden="true">&times;</span>"AI magic" pitch decks, no numbers</li>
+                        <li class="flex gap-4"><span class="font-mono text-white/25 shrink-0" aria-hidden="true">&times;</span>Gone the week after launch</li>
+                    </ul>
+                </div>
+                <div class="rounded-2xl terminal-glow p-8 md:p-10 relative overflow-hidden reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out delay-150">
+                    <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(ellipse 480px 320px at 85% 0%, oklch(0.34 0.20 260 / 0.25), transparent 70%);" aria-hidden="true"></div>
+                    <p class="font-mono text-[10px] uppercase tracking-[0.25em] text-[#0071e3] font-bold mb-8 relative">The Azen way</p>
+                    <ul class="space-y-5 text-lg text-paper font-medium leading-snug relative">
+                        <li class="flex gap-4"><span class="font-mono text-[#0071e3] shrink-0" aria-hidden="true">&rarr;</span>Flat fee, quoted after the audit &mdash; never hourly</li>
+                        <li class="flex gap-4"><span class="font-mono text-[#0071e3] shrink-0" aria-hidden="true">&rarr;</span>Engineered around your exact stack and workflows</li>
+                        <li class="flex gap-4"><span class="font-mono text-[#0071e3] shrink-0" aria-hidden="true">&rarr;</span>You own the code, the prompts, the infrastructure</li>
+                        <li class="flex gap-4"><span class="font-mono text-[#0071e3] shrink-0" aria-hidden="true">&rarr;</span>Strategy before code &mdash; the math has to justify the build</li>
+                        <li class="flex gap-4"><span class="font-mono text-[#0071e3] shrink-0" aria-hidden="true">&rarr;</span>Monitored uptime, runbooks, 90-day support</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ────────────────────────────────────────────────────────────
+         FOUNDER — dark split, colour photo in hairline frame.
+         ──────────────────────────────────────────────────────────── -->
+    <section class="py-32 md:py-40 px-6 relative">
         <div class="max-w-7xl mx-auto grid md:grid-cols-[1.35fr_1fr] gap-14 md:gap-24 items-center">
             <div class="reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out">
                 <p class="font-mono text-[11px] uppercase tracking-[0.3em] text-indigo-bright font-bold mb-8">[ Founder's note ]</p>
@@ -573,7 +644,7 @@
     <section id="faq" class="py-32 md:py-40 px-6">
         <div class="max-w-7xl mx-auto grid md:grid-cols-[1fr_1.6fr] gap-14 md:gap-24 items-start">
             <div class="md:sticky md:top-32">
-                <p class="font-mono text-[11px] uppercase tracking-[0.3em] text-indigo-bright font-bold mb-5">[ 05 / Details ]</p>
+                <p class="font-mono text-[11px] uppercase tracking-[0.3em] text-indigo-bright font-bold mb-5">[ 06 / Details ]</p>
                 <h2 class="display text-[clamp(2.4rem,5vw,4.5rem)] leading-[0.95] text-paper">Straight answers<span class="text-[#0071e3]">.</span></h2>
             </div>
 
@@ -688,11 +759,15 @@
             class="mt-8 inline-block text-sm text-white/60 hover:text-paper transition tracking-tight relative z-10 focus:outline-none rounded">
             Or send a brief in writing →
         </a>
+        <p class="mt-12 font-mono text-[10px] uppercase tracking-[0.25em] text-white/45 relative z-10 max-w-xl mx-auto leading-loose">
+            Paid audit &middot; credited into any build &middot; if the math doesn't justify it, we tell you
+        </p>
     </section>
     </main>
 
-    <!-- Footer -->
-    <footer class="border-t border-white/10 py-16 px-6">
+    <!-- Footer — borderless; the CTA glow above fades to ground
+         before this begins, so the surface reads continuous. -->
+    <footer class="pt-8 pb-0 px-6 overflow-hidden">
         <div class="max-w-7xl mx-auto flex flex-col gap-10">
             <div class="flex flex-col md:flex-row justify-between items-center gap-6">
                 <div class="text-2xl font-bold tracking-tighter text-paper">azen.</div>
@@ -726,7 +801,7 @@
                 </nav>
             </div>
 
-            <div class="flex flex-col md:flex-row justify-between items-center gap-6 pt-8 border-t border-white/10">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
                 <div class="text-sm text-apple-gray font-medium">&copy; 2026 Azen Digital. All rights reserved.</div>
                 <nav aria-label="Legal" class="flex gap-8 text-sm text-apple-gray font-medium">
                     <a href="privacy.html" class="inline-block py-3 -my-3 hover:text-paper transition">Privacy Policy</a>
@@ -734,6 +809,8 @@
                     <a href="mailto:hello@azen.io" class="inline-block py-3 -my-3 hover:text-paper transition">Contact</a>
                 </nav>
             </div>
+
+            <div class="footer-word display text-center text-[clamp(6rem,21vw,19rem)] tracking-tighter translate-y-[16%] -mb-4" aria-hidden="true">azen.</div>
         </div>
     </footer>
 
