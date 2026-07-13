@@ -525,6 +525,8 @@ body.is-live .hero-line { opacity: 1; transform: none; }
   animation: marqueeHalf 55s linear infinite;
 }
 @keyframes marqueeHalf { to { transform: translateX(-50%); } }
+/* Scroll-linked glide takes over from the auto-marquee (JS drives translateX). */
+.marquee-track[data-glide] { animation: none; will-change: transform; }
 @media (prefers-reduced-motion: reduce) {
   .marquee-track { animation: none; }
 }

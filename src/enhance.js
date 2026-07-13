@@ -1,93 +1,85 @@
 /* ==========================================================
-   anime.js (v4) enhancement layer
+   anime.js (v4) scroll choreography — Quantara-style
    ----------------------------------------------------------
-   Runs alongside the inline vanilla script in index.html — it
-   never touches elements that script already animates. Anime
-   powers the moments where orchestrated timing / SVG line-draw
-   clearly beat CSS keyframes:
+   Scroll-LINKED, smoothed motion (the "weighted glide" feel):
+   every effect is driven by onScroll({ sync }) so it lags a
+   touch behind the scroll and catches up, instead of snapping.
 
-     1. System map — connectors draw themselves in, nodes settle,
-        core springs in, then the travelling pulses switch on.
-     2. Hero halo — a slow living breath behind the core render.
+     [data-parallax]  vertical drift at its own speed
+     [data-glide]     horizontal track that slides sideways
+     [data-scale]     scale/zoom in as it enters
+     [data-rotate]    slow rotation tied to scroll
 
-   Everything is gated on prefers-reduced-motion.
+   All gated on prefers-reduced-motion.
    ========================================================== */
-import {
-  animate,
-  createTimeline,
-  createDrawable,
-  createSpring,
-  stagger,
-  utils,
-} from 'animejs';
+import { animate, onScroll } from 'animejs';
 
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 const boot = () => {
   if (reduceMotion) return;
 
-  /* ---- 1. System map orchestrated reveal --------------------- */
-  const smap = document.querySelector('.sysmap');
-  if (smap) {
-    const conns = smap.querySelectorAll('.smap-conn path');
-    const nodes = smap.querySelectorAll('.smap-node');
-    const core = smap.querySelector('.smap-core');
-    const pulses = smap.querySelector('.smap-pulses');
-
-    const drawables = createDrawable(conns);
-
-    // Hold everything hidden until the section is in view.
-    utils.set(drawables, { draw: '0 0' });
-    utils.set(nodes, { opacity: 0, translateY: 10 });
-    utils.set(core, { opacity: 0, scale: 0.72 });
-    if (pulses) utils.set(pulses, { opacity: 0 });
-
-    let played = false;
-    const play = () => {
-      if (played) return;
-      played = true;
-
-      createTimeline({ defaults: { ease: 'outQuad' } })
-        .add(core, {
-          opacity: [0, 1],
-          scale: [0.72, 1],
-          duration: 760,
-          ease: createSpring({ stiffness: 130, damping: 13 }),
-        })
-        .add(drawables, {
-          draw: ['0 0', '0 1'],
-          duration: 900,
-          delay: stagger(85),
-          ease: 'inOutQuad',
-        }, 180)
-        .add(nodes, {
-          opacity: [0, 1],
-          translateY: [10, 0],
-          duration: 620,
-          delay: stagger(70),
-        }, '-=680')
-        .add(pulses, { opacity: [0, 1], duration: 520 }, '-=160');
-    };
-
-    new IntersectionObserver((entries, obs) => {
-      entries.forEach((e) => {
-        if (e.isIntersecting) { play(); obs.disconnect(); }
-      });
-    }, { threshold: 0.3 }).observe(smap);
-  }
-
-  /* ---- 2. Hero halo living breath ---------------------------- */
-  const halo = document.querySelector('.core-halo');
-  if (halo) {
-    animate(halo, {
-      opacity: [0.42, 0.72],
-      scale: [1, 1.06],
-      duration: 3600,
-      loop: true,
-      alternate: true,
-      ease: 'inOutSine',
+  /* -- 1. Parallax — elements drift vertically, scroll-linked ---- */
+  document.querySelectorAll('[data-parallax]').forEach((el) => {
+    const dist = parseFloat(el.dataset.parallax) || 50; // total px travel
+    animate(el, {
+      translateY: [dist, -dist],
+      ease: 'linear',
+      autoplay: onScroll({
+        target: el,
+        enter: 'top bottom',
+        leave: 'bottom top',
+        sync: 0.9,
+      }),
     });
-  }
+  });
+
+  /* -- 2. Horizontal glide-track — slides sideways on scroll ----- */
+  document.querySelectorAll('[data-glide]').forEach((track) => {
+    const section = track.closest('section') || track.parentElement;
+    const span = Math.max(0, track.scrollWidth - window.innerWidth);
+    const travel = span > 0 ? span * 0.6 : track.offsetWidth * 0.25;
+    animate(track, {
+      translateX: [travel * 0.15, -travel],
+      ease: 'linear',
+      autoplay: onScroll({
+        target: section,
+        enter: 'top bottom',
+        leave: 'bottom top',
+        sync: 0.8,
+      }),
+    });
+  });
+
+  /* -- 3. Scale-on-scroll — zooms in as it enters ---------------- */
+  document.querySelectorAll('[data-scale]').forEach((el) => {
+    const from = parseFloat(el.dataset.scale) || 0.86;
+    animate(el, {
+      scale: [from, 1],
+      ease: 'out(2)',
+      autoplay: onScroll({
+        target: el,
+        enter: 'top bottom',
+        leave: 'center center',
+        sync: 0.7,
+      }),
+    });
+  });
+
+  /* -- 4. Rotate-on-scroll — slow decorative spin ---------------- */
+  document.querySelectorAll('[data-rotate]').forEach((el) => {
+    const deg = parseFloat(el.dataset.rotate) || 120;
+    animate(el, {
+      rotate: [deg * -0.4, deg],
+      ease: 'linear',
+      autoplay: onScroll({
+        target: el,
+        enter: 'top bottom',
+        leave: 'bottom top',
+        sync: 1,
+      }),
+    });
+  });
 };
 
 if (document.readyState === 'loading') {

@@ -57,7 +57,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <!-- Built Tailwind CSS. Cache-bust via ?v= on each rebuild. -->
-    <link rel="stylesheet" href="styles.css?v=20260713b">
+    <link rel="stylesheet" href="styles.css?v=20260713c">
 </head>
 
 <body class="bg-gradient-tr-fixed min-h-screen text-paper relative">
@@ -210,7 +210,7 @@
     <section id="work" class="py-24 md:py-36 px-6">
         <div class="max-w-6xl mx-auto">
             <div class="mb-16 md:mb-20">
-                <p class="font-mono text-[11px] uppercase tracking-[0.3em] text-white/45 font-bold mb-6">/ Our works</p>
+                <p class="font-mono text-[11px] uppercase tracking-[0.3em] text-white/45 font-bold mb-6" data-parallax="26">/ Our works</p>
                 <h2 class="display text-[clamp(2.4rem,6vw,4.75rem)] leading-[0.95] text-paper reveal max-w-3xl" data-words>
                     Structured. Automated. Delivered<span class="text-[#0071e3]">.</span>
                 </h2>
@@ -344,7 +344,7 @@
     <section class="py-20 md:py-24" aria-label="Clients in production">
         <p class="font-mono text-[10px] uppercase tracking-[0.3em] text-apple-gray font-bold text-center mb-10">[ In production for ]</p>
         <div class="marquee-mask">
-            <div class="marquee-track gap-16 md:gap-24 pr-16 md:pr-24">
+            <div class="marquee-track gap-16 md:gap-24 pr-16 md:pr-24" data-glide>
                 <div class="flex shrink-0 items-baseline gap-16 md:gap-24">
                     <span class="display text-3xl md:text-5xl whitespace-nowrap text-white/[0.16]">Prep Point<span class="text-[#0071e3]/40">.</span></span>
                     <span class="display text-3xl md:text-5xl whitespace-nowrap text-white/[0.16]">Superior Accounting<span class="text-[#0071e3]/40">.</span></span>
@@ -532,7 +532,7 @@
          ──────────────────────────────────────────────────────────── -->
     <section class="py-24 md:py-36 px-6">
         <div class="max-w-6xl mx-auto">
-            <div class="rounded-2xl terminal-glow relative overflow-hidden bg-black film-scale" id="film-panel">
+            <div class="rounded-2xl terminal-glow relative overflow-hidden bg-black film-scale" id="film-panel" data-scale="0.86">
                 <video
                     class="block w-full h-auto"
                     src="/videos/hero-loop.mp4"
@@ -584,7 +584,7 @@
     <section class="py-24 md:py-36 px-6">
         <div class="max-w-6xl mx-auto">
             <div class="mb-14 md:mb-16 max-w-2xl">
-                <p class="font-mono text-[11px] uppercase tracking-[0.3em] text-white/45 font-bold mb-6">/ Why us</p>
+                <p class="font-mono text-[11px] uppercase tracking-[0.3em] text-white/45 font-bold mb-6" data-parallax="26">/ Why us</p>
                 <h2 class="display text-[clamp(2.4rem,6vw,4.75rem)] leading-[0.95] text-paper reveal" data-words>
                     Built for real business impact<span class="text-[#0071e3]">.</span>
                 </h2>
@@ -894,6 +894,11 @@
          ──────────────────────────────────────────────────────────── -->
     <section class="py-40 md:py-48 px-6 bg-cta-glow text-center relative overflow-hidden flex flex-col items-center">
         <img src="/core/cta-horizon.webp" alt="" aria-hidden="true" class="cta-horizon" width="1376" height="768" loading="lazy">
+        <svg class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[130vw] max-w-[820px] aspect-square pointer-events-none opacity-[0.14]" data-rotate="150" viewBox="0 0 400 400" fill="none" aria-hidden="true">
+            <circle cx="200" cy="200" r="120" stroke="#0071e3" stroke-width="0.5"/>
+            <circle cx="200" cy="200" r="160" stroke="#0071e3" stroke-width="0.5" stroke-dasharray="2 7"/>
+            <circle cx="200" cy="200" r="196" stroke="oklch(0.985 0.003 260 / 0.35)" stroke-width="0.5"/>
+        </svg>
         <h2 class="display text-[clamp(3rem,7vw,7rem)] leading-[0.92] text-center mb-10 relative z-10 max-w-6xl mx-auto reveal" data-words>
             <span class="block text-paper">The leverage is</span>
             <span class="block text-paper">in the systems<span class="text-[#0071e3]">.</span></span>
@@ -959,7 +964,7 @@
                 </nav>
             </div>
 
-            <div class="footer-word display text-center text-[clamp(6rem,21vw,19rem)] tracking-tighter translate-y-[16%] -mb-4" aria-hidden="true">azen.</div>
+            <div class="footer-word display text-center text-[clamp(6rem,21vw,19rem)] tracking-tighter translate-y-[16%] -mb-4" aria-hidden="true" data-parallax="46">azen.</div>
         </div>
     </footer>
 
@@ -1170,21 +1175,9 @@
                 countEls.forEach(el => countObserver.observe(el));
             }
 
-            // ── Brand film: scale up as it crosses the viewport ──
-            const film = document.getElementById('film-panel');
-            if (film && motionOK) {
-                const onFilmScroll = () => {
-                    const rect = film.getBoundingClientRect();
-                    const vh = window.innerHeight;
-                    // 0 when the panel's top enters at the bottom, 1 when centred
-                    const raw = (vh - rect.top) / (vh * 0.9);
-                    const p = Math.max(0, Math.min(1, raw));
-                    const scale = 0.86 + 0.14 * p;
-                    film.style.transform = `scale(${scale.toFixed(4)})`;
-                };
-                window.addEventListener('scroll', onFilmScroll, { passive: true });
-                onFilmScroll();
-            }
+            // ── Brand film scale-on-scroll now handled by the anime.js
+            //    scroll choreography (enhance.js, [data-scale]) for the
+            //    smoothed Quantara-style feel. ──────────────────────
 
             // ── Hero core parallax ───────────────────────────────
             const coreP = document.getElementById('core-parallax');
