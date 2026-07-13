@@ -705,6 +705,8 @@ body::after {
    Full-width animated orchestration diagram. Hairline paths,
    travelling blue pulses (SMIL), soft core glow. */
 .sysmap-glow { filter: drop-shadow(0 0 18px oklch(0.55 0.22 258 / 0.55)); }
+/* anime.js scales the core group — origin at its own centre, not the SVG origin */
+.smap-core { transform-box: fill-box; transform-origin: center; }
 .sysmap text {
   font-family: 'JetBrains Mono', monospace;
   letter-spacing: 0.14em;

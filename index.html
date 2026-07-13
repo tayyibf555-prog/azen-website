@@ -57,7 +57,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <!-- Built Tailwind CSS. Cache-bust via ?v= on each rebuild. -->
-    <link rel="stylesheet" href="styles.css?v=20260711d">
+    <link rel="stylesheet" href="styles.css?v=20260711e">
 </head>
 
 <body class="bg-gradient-tr-fixed min-h-screen text-paper relative">
@@ -503,7 +503,7 @@
         <div class="max-w-5xl mx-auto">
             <svg class="sysmap w-full h-auto" viewBox="0 0 880 380" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagram of email, calls, spreadsheets, CRM, invoicing and reporting systems connected through the Azen core">
                 <!-- connectors -->
-                <g stroke="oklch(0.98 0.005 260 / 0.14)" stroke-width="1">
+                <g class="smap-conn" stroke="oklch(0.98 0.005 260 / 0.14)" stroke-width="1">
                     <path id="p-l1" d="M180 88 C270 88 280 170 360 174"/>
                     <path id="p-l2" d="M180 208 C250 208 280 196 360 196"/>
                     <path id="p-l3" d="M180 328 C270 328 280 222 360 218"/>
@@ -512,7 +512,7 @@
                     <path id="p-r3" d="M520 218 C600 222 610 328 700 328"/>
                 </g>
                 <!-- travelling pulses -->
-                <g fill="#0071e3">
+                <g class="smap-pulses" fill="#0071e3">
                     <circle r="3"><animateMotion dur="3.1s" repeatCount="indefinite" path="M180 88 C270 88 280 170 360 174"/></circle>
                     <circle r="3"><animateMotion dur="2.5s" begin="0.8s" repeatCount="indefinite" path="M180 208 C250 208 280 196 360 196"/></circle>
                     <circle r="3"><animateMotion dur="3.6s" begin="1.4s" repeatCount="indefinite" path="M180 328 C270 328 280 222 360 218"/></circle>
@@ -522,21 +522,33 @@
                 </g>
                 <!-- peripheral nodes -->
                 <g>
-                    <rect x="60" y="70" width="120" height="36" rx="10" stroke="oklch(0.98 0.005 260 / 0.22)" fill="oklch(0.10 0.012 260 / 0.8)"/>
-                    <text x="120" y="93" text-anchor="middle" font-size="10" fill="#86868b">Email</text>
-                    <rect x="60" y="190" width="120" height="36" rx="10" stroke="oklch(0.98 0.005 260 / 0.22)" fill="oklch(0.10 0.012 260 / 0.8)"/>
-                    <text x="120" y="213" text-anchor="middle" font-size="10" fill="#86868b">Calls</text>
-                    <rect x="60" y="310" width="120" height="36" rx="10" stroke="oklch(0.98 0.005 260 / 0.22)" fill="oklch(0.10 0.012 260 / 0.8)"/>
-                    <text x="120" y="333" text-anchor="middle" font-size="10" fill="#86868b">Sheets</text>
-                    <rect x="700" y="70" width="120" height="36" rx="10" stroke="oklch(0.98 0.005 260 / 0.22)" fill="oklch(0.10 0.012 260 / 0.8)"/>
-                    <text x="760" y="93" text-anchor="middle" font-size="10" fill="#86868b">CRM</text>
-                    <rect x="700" y="190" width="120" height="36" rx="10" stroke="oklch(0.98 0.005 260 / 0.22)" fill="oklch(0.10 0.012 260 / 0.8)"/>
-                    <text x="760" y="213" text-anchor="middle" font-size="10" fill="#86868b">Invoicing</text>
-                    <rect x="700" y="310" width="120" height="36" rx="10" stroke="oklch(0.98 0.005 260 / 0.22)" fill="oklch(0.10 0.012 260 / 0.8)"/>
-                    <text x="760" y="333" text-anchor="middle" font-size="10" fill="#86868b">Reports</text>
+                    <g class="smap-node">
+                        <rect x="60" y="70" width="120" height="36" rx="10" stroke="oklch(0.98 0.005 260 / 0.22)" fill="oklch(0.10 0.012 260 / 0.8)"/>
+                        <text x="120" y="93" text-anchor="middle" font-size="10" fill="#86868b">Email</text>
+                    </g>
+                    <g class="smap-node">
+                        <rect x="60" y="190" width="120" height="36" rx="10" stroke="oklch(0.98 0.005 260 / 0.22)" fill="oklch(0.10 0.012 260 / 0.8)"/>
+                        <text x="120" y="213" text-anchor="middle" font-size="10" fill="#86868b">Calls</text>
+                    </g>
+                    <g class="smap-node">
+                        <rect x="60" y="310" width="120" height="36" rx="10" stroke="oklch(0.98 0.005 260 / 0.22)" fill="oklch(0.10 0.012 260 / 0.8)"/>
+                        <text x="120" y="333" text-anchor="middle" font-size="10" fill="#86868b">Sheets</text>
+                    </g>
+                    <g class="smap-node">
+                        <rect x="700" y="70" width="120" height="36" rx="10" stroke="oklch(0.98 0.005 260 / 0.22)" fill="oklch(0.10 0.012 260 / 0.8)"/>
+                        <text x="760" y="93" text-anchor="middle" font-size="10" fill="#86868b">CRM</text>
+                    </g>
+                    <g class="smap-node">
+                        <rect x="700" y="190" width="120" height="36" rx="10" stroke="oklch(0.98 0.005 260 / 0.22)" fill="oklch(0.10 0.012 260 / 0.8)"/>
+                        <text x="760" y="213" text-anchor="middle" font-size="10" fill="#86868b">Invoicing</text>
+                    </g>
+                    <g class="smap-node">
+                        <rect x="700" y="310" width="120" height="36" rx="10" stroke="oklch(0.98 0.005 260 / 0.22)" fill="oklch(0.10 0.012 260 / 0.8)"/>
+                        <text x="760" y="333" text-anchor="middle" font-size="10" fill="#86868b">Reports</text>
+                    </g>
                 </g>
                 <!-- azen core -->
-                <g class="sysmap-glow">
+                <g class="sysmap-glow smap-core">
                     <rect x="360" y="150" width="160" height="92" rx="16" stroke="oklch(0.60 0.18 258 / 0.6)" fill="oklch(0.10 0.012 260)"/>
                     <text x="440" y="204" text-anchor="middle" font-size="24" style="font-family:'Hanken Grotesk',sans-serif;font-weight:800;letter-spacing:-0.02em;text-transform:none" fill="oklch(0.985 0.003 260)">azen<tspan fill="#0071e3">.</tspan></text>
                 </g>
@@ -938,6 +950,11 @@
             <div class="footer-word display text-center text-[clamp(6rem,21vw,19rem)] tracking-tighter translate-y-[16%] -mb-4" aria-hidden="true">azen.</div>
         </div>
     </footer>
+
+    <!-- anime.js (v4) enhancement layer — bundled by Vite. Powers the
+         system-map draw-in and hero halo; degrades to the static SVG
+         if the module fails to load. -->
+    <script type="module" src="/src/enhance.js"></script>
 
     <!-- Behaviour: boot intro, reveals, work gallery pin, process pin,
          count-ups, film scale, ROI, drawer. Zero dependencies. -->
