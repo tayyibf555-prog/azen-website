@@ -57,7 +57,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <!-- Built Tailwind CSS. Cache-bust via ?v= on each rebuild. -->
-    <link rel="stylesheet" href="styles.css?v=20260713d">
+    <link rel="stylesheet" href="styles.css?v=20260713e">
 </head>
 
 <body class="bg-gradient-tr-fixed min-h-screen text-paper relative">
@@ -127,13 +127,10 @@
          no generated backgrounds.
          ──────────────────────────────────────────────────────────── -->
     <section class="hero-cinematic relative flex flex-col justify-center items-center text-center px-6 overflow-hidden">
-        <!-- Full-bleed cinematic loop. Poster holds the first frame so the
-             hero never flashes empty; scrim keeps type legible and melts
-             into the page ground. -->
-        <video class="hero-video" autoplay muted loop playsinline preload="auto"
-            poster="/videos/hero-monolith2.webp" aria-hidden="true">
-            <source src="/videos/hero-monolith2.mp4" type="video/mp4">
-        </video>
+        <!-- Real-time WebGL 3D "AI core" (Three.js, src/hero3d.js).
+             If WebGL is unavailable the CSS glow-ground shows instead;
+             the scrim keeps type legible and melts into the page ground. -->
+        <div id="hero-3d" class="hero-3d" aria-hidden="true"></div>
         <div class="hero-scrim" aria-hidden="true"></div>
 
         <div class="relative z-10 max-w-5xl mx-auto w-full flex flex-col items-center pt-24">
@@ -972,6 +969,10 @@
          system-map draw-in and hero halo; degrades to the static SVG
          if the module fails to load. -->
     <script type="module" src="/src/enhance.js"></script>
+
+    <!-- Real-time WebGL hero (Three.js). Progressive: degrades to the
+         CSS glow-ground if WebGL is unavailable. -->
+    <script type="module" src="/src/hero3d.js"></script>
 
     <!-- Behaviour: boot intro, reveals, work gallery pin, process pin,
          count-ups, film scale, ROI, drawer. Zero dependencies. -->

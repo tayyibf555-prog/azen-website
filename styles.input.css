@@ -768,6 +768,18 @@ body::after {
   object-fit: cover;
   z-index: 0;
 }
+/* Real-time WebGL hero mount. The gradient is the no-WebGL fallback —
+   an on-theme indigo glow on the ground; the <canvas> paints over it. */
+.hero-3d {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 62% 58% at 50% 48%, oklch(0.30 0.18 260 / 0.32), transparent 72%),
+    radial-gradient(ellipse 120% 80% at 50% 120%, oklch(0.24 0.14 260 / 0.30), transparent 70%),
+    var(--ground);
+}
+.hero-3d canvas { display: block; width: 100%; height: 100%; }
 .hero-scrim {
   position: absolute;
   inset: 0;
