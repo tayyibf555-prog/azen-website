@@ -57,7 +57,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <!-- Built Tailwind CSS. Cache-bust via ?v= on each rebuild. -->
-    <link rel="stylesheet" href="styles.css?v=20260713e">
+    <link rel="stylesheet" href="styles.css?v=20260713f">
 </head>
 
 <body class="bg-gradient-tr-fixed min-h-screen text-paper relative">
@@ -77,7 +77,7 @@
     <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
 
     <!-- Floating Pill Nav -->
-    <div class="absolute top-6 inset-x-0 z-50 flex justify-center pointer-events-none px-6">
+    <div id="floating-nav" class="floating-nav at-top fixed top-6 inset-x-0 z-50 flex justify-center pointer-events-none px-6">
         <nav aria-label="Primary"
             class="pointer-events-auto py-2.5 px-3 flex justify-between items-center glass-nav rounded-full border border-white/10 shadow-2xl gap-4 sm:gap-8 md:gap-16 w-full max-w-fit">
             <a href="#" aria-label="Azen home" class="text-xl font-bold tracking-tighter pl-3 text-paper">azen.</a>
@@ -126,38 +126,37 @@
          setup line, Hanken-extrabold payoff, blue period. Clean ground,
          no generated backgrounds.
          ──────────────────────────────────────────────────────────── -->
-    <section class="hero-cinematic relative flex flex-col justify-center items-center text-center px-6 overflow-hidden">
+    <section class="hero-cinematic relative overflow-hidden">
         <!-- Real-time WebGL 3D "AI core" (Three.js, src/hero3d.js).
-             If WebGL is unavailable the CSS glow-ground shows instead;
-             the scrim keeps type legible and melts into the page ground. -->
+             If WebGL is unavailable the CSS glow-ground shows instead. -->
         <div id="hero-3d" class="hero-3d" aria-hidden="true"></div>
         <div class="hero-scrim" aria-hidden="true"></div>
 
-        <div class="relative z-10 max-w-5xl mx-auto w-full flex flex-col items-center pt-24">
-            <p class="hero-line font-mono text-[11px] uppercase tracking-[0.28em] text-white/55 mb-9 flex flex-wrap justify-center gap-x-5 gap-y-2" style="--d:120ms">
-                <span>/ AI Automation</span>
-                <span>/ Orchestration</span>
-                <span>/ Enterprise RAG</span>
+        <!-- Corner-anchored UI: the 3D scene is the star; text is pinned
+             to the edges. Top-left wordmark, top-right mission, and small
+             controls at the base. -->
+        <div class="absolute top-6 left-6 md:top-9 md:left-10 z-10 hero-line" style="--d:160ms">
+            <div class="text-3xl md:text-[2.4rem] font-extrabold tracking-tighter text-white leading-none">azen<span class="text-[#0071e3]">.</span></div>
+            <p class="mt-3 font-mono text-[9px] md:text-[10px] uppercase tracking-[0.18em] text-white/45 leading-relaxed">
+                &copy; 2026 Azen Digital<br>Custom AI infrastructure &middot; London
             </p>
-            <h1 class="tracking-tighter leading-[0.92] text-[clamp(3rem,9vw,7.5rem)] mb-9">
-                <span class="block font-geist font-light text-white/85 hero-line" style="--d:240ms">Stop renting time.</span>
-                <span class="block font-extrabold text-white hero-line" style="--d:380ms">Build leverage<span class="text-[#0071e3]">.</span></span>
-            </h1>
-            <p class="hero-line text-white/65 text-lg md:text-xl max-w-2xl font-medium tracking-tight leading-snug mb-11" style="--d:520ms">
-                We map your exact bottlenecks and deploy custom AI infrastructure that
-                automates the manual work bleeding your team.
-            </p>
-            <div class="hero-line flex flex-col sm:flex-row gap-4 items-stretch sm:items-center" style="--d:640ms">
-                <a href="https://calendly.com/tayyib-azen/30min" target="_blank" rel="noopener"
-                    class="bg-[#0071e3] text-white px-8 py-3.5 rounded-full text-center font-bold hover:bg-[#005bb5] transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0071e3]/60">Book a free audit</a>
-                <a href="#work"
-                    class="px-8 py-3.5 rounded-full text-center font-bold border border-white/25 backdrop-blur-sm hover:bg-white/10 transition text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0071e3]/60">See the systems</a>
-            </div>
         </div>
 
-        <div class="absolute bottom-8 inset-x-0 flex justify-center hero-line z-10" style="--d:820ms" aria-hidden="true">
-            <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-white/45">[ scroll <span class="scroll-cue-arrow">&darr;</span> ]</span>
+        <div class="absolute top-6 right-6 md:top-9 md:right-10 z-10 max-w-[13rem] md:max-w-[17rem] text-right hero-line" style="--d:300ms">
+            <p class="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.28em] text-[#0071e3] mb-3">//////// Mission</p>
+            <p class="text-white/70 text-[12px] md:text-sm leading-snug font-medium">
+                We map your exact bottlenecks and deploy custom AI infrastructure that automates the manual work bleeding your team.
+            </p>
         </div>
+
+        <div class="absolute bottom-6 left-6 md:bottom-9 md:left-10 z-10 font-mono text-[9px] md:text-[10px] uppercase tracking-[0.28em] text-white/50 hero-line" style="--d:440ms" aria-hidden="true">
+            [ Scroll to explore <span class="scroll-cue-arrow">&darr;</span> ]
+        </div>
+
+        <a href="https://calendly.com/tayyib-azen/30min" target="_blank" rel="noopener"
+           class="absolute bottom-6 right-6 md:bottom-9 md:right-10 z-10 font-mono text-[9px] md:text-[10px] uppercase tracking-[0.28em] text-white hover:text-[#0071e3] transition hero-line focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0071e3]/60 rounded" style="--d:440ms">
+            Book a free audit &rarr;
+        </a>
     </section>
 
     <!-- ────────────────────────────────────────────────────────────
@@ -1215,6 +1214,16 @@
                 };
                 window.addEventListener('scroll', onProgress, { passive: true });
                 onProgress();
+            }
+
+            // ── Floating nav: hidden over the hero, sticky in content ─
+            const floatNav = document.getElementById('floating-nav');
+            if (floatNav) {
+                const onNav = () => {
+                    floatNav.classList.toggle('at-top', window.scrollY < window.innerHeight * 0.7);
+                };
+                window.addEventListener('scroll', onNav, { passive: true });
+                onNav();
             }
 
             // ── ROI calculator ───────────────────────────────────

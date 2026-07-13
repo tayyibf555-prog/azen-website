@@ -786,17 +786,22 @@ body::after {
   z-index: 1;
   pointer-events: none;
   background:
-    /* soft dark pool behind the centred headline for legibility */
-    radial-gradient(ellipse 82% 60% at 50% 46%, oklch(0.04 0.012 260 / 0.60), transparent 80%),
-    /* vertical: heavy at the top over the bright overcast sky, holds through
-       the upper-mid where the clouds are brightest, melts to ground at base */
+    /* edge vignette — darkens the corners so pinned text stays legible
+       while the centre stays clear for the 3D scene */
+    radial-gradient(ellipse 78% 78% at 50% 46%, transparent 45%, oklch(0.03 0.012 260 / 0.62) 100%),
+    /* top band for the nav + bottom melt into the page ground */
     linear-gradient(180deg,
-      oklch(0.04 0.012 260 / 0.88) 0%,
-      oklch(0.04 0.012 260 / 0.52) 38%,
-      oklch(0.05 0.012 260 / 0.42) 64%,
-      oklch(0.05 0.012 260 / 0.58) 82%,
-      var(--ground) 99%);
+      oklch(0.03 0.012 260 / 0.55) 0%,
+      transparent 22%,
+      transparent 68%,
+      oklch(0.04 0.012 260 / 0.55) 88%,
+      var(--ground) 100%);
 }
+
+/* Floating nav: hidden while in the hero (corner wordmark stands in),
+   fades in as a sticky bar once you scroll into the content. */
+.floating-nav { transition: opacity 0.45s ease, transform 0.45s ease; }
+.floating-nav.at-top { opacity: 0; transform: translateY(-12px); pointer-events: none !important; }
 @media (prefers-reduced-motion: reduce) {
   .hero-video { display: none; }
   .hero-cinematic { background: var(--ground); }
