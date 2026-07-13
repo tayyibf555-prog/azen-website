@@ -775,12 +775,14 @@ body::after {
   pointer-events: none;
   background:
     /* soft dark pool behind the centred headline for legibility */
-    radial-gradient(ellipse 78% 56% at 50% 48%, oklch(0.05 0.012 260 / 0.55), transparent 78%),
-    /* vertical: dark under the nav, melts to ground at the base — no hard edge */
+    radial-gradient(ellipse 82% 60% at 50% 46%, oklch(0.04 0.012 260 / 0.60), transparent 80%),
+    /* vertical: heavy at the top over the bright overcast sky, holds through
+       the upper-mid where the clouds are brightest, melts to ground at base */
     linear-gradient(180deg,
-      oklch(0.05 0.012 260 / 0.78) 0%,
-      oklch(0.05 0.012 260 / 0.28) 32%,
-      oklch(0.05 0.012 260 / 0.48) 70%,
+      oklch(0.04 0.012 260 / 0.88) 0%,
+      oklch(0.04 0.012 260 / 0.52) 38%,
+      oklch(0.05 0.012 260 / 0.42) 64%,
+      oklch(0.05 0.012 260 / 0.58) 82%,
       var(--ground) 99%);
 }
 @media (prefers-reduced-motion: reduce) {
