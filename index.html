@@ -57,7 +57,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <!-- Built Tailwind CSS. Cache-bust via ?v= on each rebuild. -->
-    <link rel="stylesheet" href="styles.css?v=20260713a">
+    <link rel="stylesheet" href="styles.css?v=20260713b">
 </head>
 
 <body class="bg-gradient-tr-fixed min-h-screen text-paper relative">
@@ -203,148 +203,136 @@
     </section>
 
     <!-- ────────────────────────────────────────────────────────────
-         01 / SHIPPED SYSTEMS — THE signature scroll moment. On md+
-         the section pins and vertical scroll drives the gallery
-         horizontally through all seven builds. Mobile and reduced
-         motion get native snap scroll. Every panel links to its
-         case study.
+         OUR WORKS — vertical case cards, each a framed shot with a
+         real headline metric and a link into the full case study.
+         (sanjaya "Structured. Automated. Delivered." layout, our data)
          ──────────────────────────────────────────────────────────── -->
-    <section id="work" class="relative">
-        <div class="work-pin" id="work-pin">
-            <div class="work-sticky">
-                <div class="max-w-7xl mx-auto px-6 w-full mb-10 flex items-end justify-between gap-6">
-                    <div>
-                        <p class="font-mono text-[11px] uppercase tracking-[0.3em] text-indigo-bright font-bold mb-5">[ 01 / Shipped systems ]</p>
-                        <h2 class="display text-[clamp(2.4rem,5vw,4.5rem)] leading-[0.95] text-paper reveal" data-words>
-                            Real clients.<br>Real numbers<span class="text-[#0071e3]">.</span>
-                        </h2>
+    <section id="work" class="py-24 md:py-36 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="mb-16 md:mb-20">
+                <p class="font-mono text-[11px] uppercase tracking-[0.3em] text-white/45 font-bold mb-6">/ Our works</p>
+                <h2 class="display text-[clamp(2.4rem,6vw,4.75rem)] leading-[0.95] text-paper reveal max-w-3xl" data-words>
+                    Structured. Automated. Delivered<span class="text-[#0071e3]">.</span>
+                </h2>
+                <p class="mt-6 text-apple-gray text-lg font-medium max-w-xl">Selected workflow builds across logistics, accounting, education and community operations.</p>
+            </div>
+
+            <div class="flex flex-col gap-5 md:gap-6">
+
+                <a href="case-study-prep-point.html" class="work-card group/card">
+                    <div class="work-card-media">
+                        <img src="case%20study%20images%20/Prep%20point%20case%20study.webp" alt="Prep Point automated order-processing dashboard" width="1400" height="766" loading="lazy">
                     </div>
-                    <div class="hidden md:block font-mono text-[11px] text-apple-gray shrink-0 pb-2" id="work-counter">[ 01 / 07 ]</div>
-                </div>
-
-                <div class="work-viewport">
-                    <div class="work-track" id="work-track">
-
-                        <a href="case-study-prep-point.html" class="work-panel group/card">
-                            <div class="work-frame">
-                                <div class="case-chrome shrink-0">
-                                    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-                                    <span class="addr">prep-point / azen build</span>
-                                </div>
-                                <img src="case%20study%20images%20/Prep%20point%20case%20study.webp"
-                                    alt="Prep Point dashboard showing automated order processing with 85% error reduction"
-                                    class="work-shot" width="1400" height="766" loading="lazy">
+                    <div class="work-card-body">
+                        <div class="flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.2em] text-white/40 mb-6">
+                            <span>2025</span><span class="text-white/20">/</span><span>Logistics &middot; 3PL</span>
+                        </div>
+                        <h3 class="text-2xl md:text-3xl font-bold tracking-tight text-paper mb-8 leading-tight">Automating order processing at Prep Point</h3>
+                        <div class="mt-auto flex items-end justify-between gap-6">
+                            <div>
+                                <div class="display text-4xl md:text-5xl text-paper leading-none">85<span class="text-[#0071e3]">%</span></div>
+                                <div class="font-mono text-[10px] uppercase tracking-[0.2em] text-apple-gray mt-2">fewer order errors</div>
                             </div>
-                            <div class="flex justify-between items-baseline mt-5">
-                                <span class="text-xl font-bold tracking-tight text-paper">Prep Point</span>
-                                <span class="font-mono text-sm text-apple-gray group-hover/card:text-paper transition">85% error reduction</span>
-                            </div>
-                        </a>
-
-                        <a href="case-study-superior-accounting.html" class="work-panel group/card">
-                            <div class="work-frame">
-                                <div class="case-chrome shrink-0">
-                                    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-                                    <span class="addr">superior-accounting / azen build</span>
-                                </div>
-                                <img src="case%20study%20images%20/Superior%20Accounting%20case%20study.webp"
-                                    alt="Superior Accounting client portal with call analytics and 78% call resolution metric"
-                                    class="work-shot" width="1400" height="766" loading="lazy">
-                            </div>
-                            <div class="flex justify-between items-baseline mt-5">
-                                <span class="text-xl font-bold tracking-tight text-paper">Superior Accounting</span>
-                                <span class="font-mono text-sm text-apple-gray group-hover/card:text-paper transition">78% call resolution</span>
-                            </div>
-                        </a>
-
-                        <a href="case-study-ttt.html" class="work-panel group/card">
-                            <div class="work-frame">
-                                <div class="case-chrome shrink-0">
-                                    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-                                    <span class="addr">ttt-departmentals / azen build</span>
-                                </div>
-                                <img src="case%20study%20images%20/TTT%20case%20study.webp"
-                                    alt="TTT Departmentals procurement dashboard with sourcing time and cost analytics, 90% faster sourcing"
-                                    class="work-shot" width="1400" height="766" loading="lazy">
-                            </div>
-                            <div class="flex justify-between items-baseline mt-5">
-                                <span class="text-xl font-bold tracking-tight text-paper">TTT Departmentals</span>
-                                <span class="font-mono text-sm text-apple-gray group-hover/card:text-paper transition">90% faster sourcing</span>
-                            </div>
-                        </a>
-
-                        <a href="case-study-little-oaks.html" class="work-panel group/card">
-                            <div class="work-frame">
-                                <div class="case-chrome shrink-0">
-                                    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-                                    <span class="addr">little-oaks-crm / azen build</span>
-                                </div>
-                                <img src="case%20study%20images%20/little%20oaks%20crm%20case%20study.webp"
-                                    alt="Little Oaks nursery CRM dashboard with parent and staff attendance views, 24/7 operations"
-                                    class="work-shot" width="1400" height="766" loading="lazy">
-                            </div>
-                            <div class="flex justify-between items-baseline mt-5">
-                                <span class="text-xl font-bold tracking-tight text-paper">Little Oaks</span>
-                                <span class="font-mono text-sm text-apple-gray group-hover/card:text-paper transition">24/7 operations</span>
-                            </div>
-                        </a>
-
-                        <a href="case-study-zia-ul-quran.html" class="work-panel group/card">
-                            <div class="work-frame">
-                                <div class="case-chrome shrink-0">
-                                    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-                                    <span class="addr">zia-ul-quran / azen build</span>
-                                </div>
-                                <img src="case%20study%20images%20/zia%20ul%20quran%20case%20study.webp"
-                                    alt="Zia Ul Quran website homepage with Arabic and English content, 3x internal efficiency"
-                                    class="work-shot" width="1400" height="766" loading="lazy">
-                            </div>
-                            <div class="flex justify-between items-baseline mt-5">
-                                <span class="text-xl font-bold tracking-tight text-paper">Zia Ul Quran</span>
-                                <span class="font-mono text-sm text-apple-gray group-hover/card:text-paper transition">3x internal efficiency</span>
-                            </div>
-                        </a>
-
-                        <a href="case-study-zia-ul-ummah.html" class="work-panel group/card">
-                            <div class="work-frame">
-                                <div class="case-chrome shrink-0">
-                                    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-                                    <span class="addr">zia-ul-ummah / azen build</span>
-                                </div>
-                                <img src="case%20study%20images%20/zia%20ul%20ummah%20case%20study.webp"
-                                    alt="Zia Ul Ummah Foundation operations dashboard with automated data entry"
-                                    class="work-shot" width="1400" height="766" loading="lazy">
-                            </div>
-                            <div class="flex justify-between items-baseline mt-5">
-                                <span class="text-xl font-bold tracking-tight text-paper">Zia Ul Ummah</span>
-                                <span class="font-mono text-sm text-apple-gray group-hover/card:text-paper transition">Automated data entry</span>
-                            </div>
-                        </a>
-
-                        <a href="case-study-eyos.html" class="work-panel group/card">
-                            <div class="work-frame">
-                                <div class="case-chrome shrink-0">
-                                    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-                                    <span class="addr">azen-eyos / azen build</span>
-                                </div>
-                                <img src="case%20study%20images%20/Azen%20EYOS%20Case%20study.webp"
-                                    alt="Azen EYOS early-years operating system with automated data infrastructure for nurseries"
-                                    class="work-shot" width="1400" height="766" loading="lazy">
-                            </div>
-                            <div class="flex justify-between items-baseline mt-5">
-                                <span class="text-xl font-bold tracking-tight text-paper">Azen EYOS</span>
-                                <span class="font-mono text-sm text-apple-gray group-hover/card:text-paper transition">Automated data infrastructure</span>
-                            </div>
-                        </a>
-
+                            <span class="font-mono text-[11px] uppercase tracking-[0.15em] text-apple-gray group-hover/card:text-[#0071e3] transition shrink-0">View case study &rarr;</span>
+                        </div>
                     </div>
-                </div>
+                </a>
 
-                <div class="max-w-7xl mx-auto px-6 w-full mt-8">
-                    <div class="h-px w-full bg-white/10 relative overflow-hidden">
-                        <div class="absolute inset-y-0 left-0 w-full bg-[#0071e3] origin-left scale-x-0" id="work-fill"></div>
+                <a href="case-study-superior-accounting.html" class="work-card group/card">
+                    <div class="work-card-media">
+                        <img src="case%20study%20images%20/Superior%20Accounting%20case%20study.webp" alt="Superior Accounting AI call-handling portal" width="1400" height="766" loading="lazy">
                     </div>
-                </div>
+                    <div class="work-card-body">
+                        <div class="flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.2em] text-white/40 mb-6">
+                            <span>2025</span><span class="text-white/20">/</span><span>Accounting</span>
+                        </div>
+                        <h3 class="text-2xl md:text-3xl font-bold tracking-tight text-paper mb-8 leading-tight">AI call handling for Superior Accounting</h3>
+                        <div class="mt-auto flex items-end justify-between gap-6">
+                            <div>
+                                <div class="display text-4xl md:text-5xl text-paper leading-none">78<span class="text-[#0071e3]">%</span></div>
+                                <div class="font-mono text-[10px] uppercase tracking-[0.2em] text-apple-gray mt-2">calls resolved by AI</div>
+                            </div>
+                            <span class="font-mono text-[11px] uppercase tracking-[0.15em] text-apple-gray group-hover/card:text-[#0071e3] transition shrink-0">View case study &rarr;</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="case-study-ttt.html" class="work-card group/card">
+                    <div class="work-card-media">
+                        <img src="case%20study%20images%20/TTT%20case%20study.webp" alt="TTT Departmentals procurement automation dashboard" width="1400" height="766" loading="lazy">
+                    </div>
+                    <div class="work-card-body">
+                        <div class="flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.2em] text-white/40 mb-6">
+                            <span>2025</span><span class="text-white/20">/</span><span>Procurement</span>
+                        </div>
+                        <h3 class="text-2xl md:text-3xl font-bold tracking-tight text-paper mb-8 leading-tight">Procurement automation for TTT Departmentals</h3>
+                        <div class="mt-auto flex items-end justify-between gap-6">
+                            <div>
+                                <div class="display text-4xl md:text-5xl text-paper leading-none">90<span class="text-[#0071e3]">%</span></div>
+                                <div class="font-mono text-[10px] uppercase tracking-[0.2em] text-apple-gray mt-2">faster sourcing</div>
+                            </div>
+                            <span class="font-mono text-[11px] uppercase tracking-[0.15em] text-apple-gray group-hover/card:text-[#0071e3] transition shrink-0">View case study &rarr;</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="case-study-little-oaks.html" class="work-card group/card">
+                    <div class="work-card-media">
+                        <img src="case%20study%20images%20/little%20oaks%20crm%20case%20study.webp" alt="Little Oaks nursery CRM dashboard" width="1400" height="766" loading="lazy">
+                    </div>
+                    <div class="work-card-body">
+                        <div class="flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.2em] text-white/40 mb-6">
+                            <span>2025</span><span class="text-white/20">/</span><span>Nurseries</span>
+                        </div>
+                        <h3 class="text-2xl md:text-3xl font-bold tracking-tight text-paper mb-8 leading-tight">A 24/7 operations CRM for Little Oaks</h3>
+                        <div class="mt-auto flex items-end justify-between gap-6">
+                            <div>
+                                <div class="display text-4xl md:text-5xl text-paper leading-none">24/7</div>
+                                <div class="font-mono text-[10px] uppercase tracking-[0.2em] text-apple-gray mt-2">operations coverage</div>
+                            </div>
+                            <span class="font-mono text-[11px] uppercase tracking-[0.15em] text-apple-gray group-hover/card:text-[#0071e3] transition shrink-0">View case study &rarr;</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="case-study-zia-ul-ummah.html" class="work-card group/card">
+                    <div class="work-card-media">
+                        <img src="case%20study%20images%20/zia%20ul%20ummah%20case%20study.webp" alt="Zia Ul Ummah Foundation operations dashboard" width="1400" height="766" loading="lazy">
+                    </div>
+                    <div class="work-card-body">
+                        <div class="flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.2em] text-white/40 mb-6">
+                            <span>2025</span><span class="text-white/20">/</span><span>Non-profit ops</span>
+                        </div>
+                        <h3 class="text-2xl md:text-3xl font-bold tracking-tight text-paper mb-8 leading-tight">Zero-touch data entry for Zia Ul Ummah</h3>
+                        <div class="mt-auto flex items-end justify-between gap-6">
+                            <div>
+                                <div class="display text-4xl md:text-5xl text-paper leading-none">Automated</div>
+                                <div class="font-mono text-[10px] uppercase tracking-[0.2em] text-apple-gray mt-2">data-entry pipeline</div>
+                            </div>
+                            <span class="font-mono text-[11px] uppercase tracking-[0.15em] text-apple-gray group-hover/card:text-[#0071e3] transition shrink-0">View case study &rarr;</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="case-study-eyos.html" class="work-card group/card">
+                    <div class="work-card-media">
+                        <img src="case%20study%20images%20/Azen%20EYOS%20Case%20study.webp" alt="Azen EYOS early-years operating system" width="1400" height="766" loading="lazy">
+                    </div>
+                    <div class="work-card-body">
+                        <div class="flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.2em] text-white/40 mb-6">
+                            <span>2026</span><span class="text-white/20">/</span><span>Early-years platform</span>
+                        </div>
+                        <h3 class="text-2xl md:text-3xl font-bold tracking-tight text-paper mb-8 leading-tight">Azen EYOS &mdash; an operating system for nurseries</h3>
+                        <div class="mt-auto flex items-end justify-between gap-6">
+                            <div>
+                                <div class="display text-4xl md:text-5xl text-paper leading-none">Automated</div>
+                                <div class="font-mono text-[10px] uppercase tracking-[0.2em] text-apple-gray mt-2">data infrastructure</div>
+                            </div>
+                            <span class="font-mono text-[11px] uppercase tracking-[0.15em] text-apple-gray group-hover/card:text-[#0071e3] transition shrink-0">View case study &rarr;</span>
+                        </div>
+                    </div>
+                </a>
+
             </div>
         </div>
     </section>
@@ -362,7 +350,6 @@
                     <span class="display text-3xl md:text-5xl whitespace-nowrap text-white/[0.16]">Superior Accounting<span class="text-[#0071e3]/40">.</span></span>
                     <span class="display text-3xl md:text-5xl whitespace-nowrap text-white/[0.16]">TTT Departmentals<span class="text-[#0071e3]/40">.</span></span>
                     <span class="display text-3xl md:text-5xl whitespace-nowrap text-white/[0.16]">Little Oaks<span class="text-[#0071e3]/40">.</span></span>
-                    <span class="display text-3xl md:text-5xl whitespace-nowrap text-white/[0.16]">Zia Ul Quran<span class="text-[#0071e3]/40">.</span></span>
                     <span class="display text-3xl md:text-5xl whitespace-nowrap text-white/[0.16]">Zia Ul Ummah<span class="text-[#0071e3]/40">.</span></span>
                     <span class="display text-3xl md:text-5xl whitespace-nowrap text-white/[0.16]">Azen EYOS<span class="text-[#0071e3]/40">.</span></span>
                 </div>
@@ -371,7 +358,6 @@
                     <span class="display text-3xl md:text-5xl whitespace-nowrap text-white/[0.16]">Superior Accounting<span class="text-[#0071e3]/40">.</span></span>
                     <span class="display text-3xl md:text-5xl whitespace-nowrap text-white/[0.16]">TTT Departmentals<span class="text-[#0071e3]/40">.</span></span>
                     <span class="display text-3xl md:text-5xl whitespace-nowrap text-white/[0.16]">Little Oaks<span class="text-[#0071e3]/40">.</span></span>
-                    <span class="display text-3xl md:text-5xl whitespace-nowrap text-white/[0.16]">Zia Ul Quran<span class="text-[#0071e3]/40">.</span></span>
                     <span class="display text-3xl md:text-5xl whitespace-nowrap text-white/[0.16]">Zia Ul Ummah<span class="text-[#0071e3]/40">.</span></span>
                     <span class="display text-3xl md:text-5xl whitespace-nowrap text-white/[0.16]">Azen EYOS<span class="text-[#0071e3]/40">.</span></span>
                 </div>
@@ -380,92 +366,67 @@
     </section>
 
     <!-- ────────────────────────────────────────────────────────────
-         02 / WHAT WE DEPLOY — three systems, giant industrial type,
-         alternating alignment. Machine atmosphere behind.
+         SERVICES — four numbered capability blocks (sanjaya "Built to
+         Simplify Operations"), our real stack. Clean bordered cards.
          ──────────────────────────────────────────────────────────── -->
-    <section id="solutions" class="relative py-32 md:py-44 px-6 overflow-hidden">
-        <div class="section-ghost" aria-hidden="true">02</div>
+    <section id="solutions" class="py-24 md:py-36 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="mb-16 md:mb-20 max-w-2xl">
+                <p class="font-mono text-[11px] uppercase tracking-[0.3em] text-white/45 font-bold mb-6">/ Services</p>
+                <h2 class="display text-[clamp(2.4rem,6vw,4.75rem)] leading-[0.95] text-paper reveal" data-words>
+                    Built to simplify operations<span class="text-[#0071e3]">.</span>
+                </h2>
+                <p class="mt-6 text-apple-gray text-lg font-medium">Four systems that streamline workflows, connect your tools, and put intelligence where the manual work is.</p>
+            </div>
 
-        <div class="max-w-7xl mx-auto relative z-10">
-            <p class="font-mono text-[11px] uppercase tracking-[0.3em] text-indigo-bright font-bold mb-24">[ 02 / What we deploy ]</p>
+            <div class="grid md:grid-cols-2 gap-4 md:gap-5">
 
-            <div class="space-y-32 md:space-y-44">
-
-                <div class="reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out">
-                    <h3 class="display text-[clamp(2.75rem,7vw,6rem)] leading-none text-paper mb-8 reveal" data-words>Agents<span class="text-[#0071e3]">.</span></h3>
-                    <div class="flex flex-col md:flex-row gap-10 md:gap-24 md:items-start">
-                        <p class="text-xl md:text-2xl text-apple-gray leading-tight font-medium max-w-lg">
-                            Forget basic chatbots. Deploy intelligent systems that reason through problems, interact
-                            with external APIs, and execute multi-step logic.
-                        </p>
-                        <ul class="font-mono text-sm text-apple-gray space-y-3 md:pt-2">
-                            <li><span class="text-white/25 mr-3">01</span>Dynamic decision logic</li>
-                            <li><span class="text-white/25 mr-3">02</span>API-native executions</li>
-                            <li><span class="text-white/25 mr-3">03</span>Self-correcting protocols</li>
-                        </ul>
-                        <div class="cap-viz terminal-glow rounded-xl p-4 hidden lg:block shrink-0 ml-auto" aria-hidden="true">
-                            <svg viewBox="0 0 208 104" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M36 52 H104 M104 52 L168 24 M104 52 L168 80" stroke="oklch(0.98 0.005 260 / 0.22)" class="viz-dash"/>
-                                <circle cx="36" cy="52" r="6" fill="#0071e3" class="viz-pulse"/>
-                                <circle cx="104" cy="52" r="4.5" fill="oklch(0.985 0.003 260 / 0.5)"/>
-                                <circle cx="168" cy="24" r="4.5" fill="oklch(0.985 0.003 260 / 0.35)"/>
-                                <circle cx="168" cy="80" r="4.5" fill="oklch(0.985 0.003 260 / 0.35)"/>
-                            </svg>
-                            <p class="font-mono text-[9px] uppercase tracking-[0.2em] text-apple-gray mt-2">agent &rarr; reason &rarr; act</p>
-                        </div>
-                    </div>
+                <div class="svc-card reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out">
+                    <p class="font-mono text-[11px] uppercase tracking-[0.25em] text-[#0071e3] mb-8">/ 01</p>
+                    <h3 class="text-2xl md:text-3xl font-bold tracking-tight text-paper mb-3">Autonomous Agents</h3>
+                    <p class="text-apple-gray font-medium leading-snug mb-8">Systems that reason through problems, call your APIs, and execute multi-step logic &mdash; not basic chatbots.</p>
+                    <ul class="mt-auto space-y-3 font-mono text-[13px] text-apple-gray">
+                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>Dynamic decision logic</li>
+                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>API-native execution</li>
+                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>Self-correcting protocols</li>
+                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>Human-in-the-loop controls</li>
+                    </ul>
                 </div>
 
-                <div class="reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out md:text-right">
-                    <h3 class="display text-[clamp(2.75rem,7vw,6rem)] leading-none text-paper mb-8 reveal" data-words>Orchestrate<span class="text-[#0071e3]">.</span></h3>
-                    <div class="flex flex-col md:flex-row-reverse gap-10 md:gap-24 md:items-start">
-                        <p class="text-xl md:text-2xl text-apple-gray leading-tight font-medium max-w-lg md:ml-auto md:text-right">
-                            Break down your data silos. Our architecture weaves your operations together. Disjointed
-                            platforms communicate seamlessly, in real time.
-                        </p>
-                        <ul class="font-mono text-sm text-apple-gray space-y-3 md:pt-2 md:text-right">
-                            <li>CRM &amp; ERP unification<span class="text-white/25 ml-3">01</span></li>
-                            <li>Webhook intercepts<span class="text-white/25 ml-3">02</span></li>
-                            <li>Continuous sync<span class="text-white/25 ml-3">03</span></li>
-                        </ul>
-                        <div class="cap-viz terminal-glow rounded-xl p-4 hidden lg:block shrink-0 mr-auto" aria-hidden="true">
-                            <svg viewBox="0 0 208 104" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <rect x="12" y="38" width="44" height="28" rx="6" stroke="oklch(0.98 0.005 260 / 0.3)"/>
-                                <rect x="82" y="38" width="44" height="28" rx="6" stroke="oklch(0.98 0.005 260 / 0.3)"/>
-                                <rect x="152" y="38" width="44" height="28" rx="6" stroke="oklch(0.98 0.005 260 / 0.3)"/>
-                                <path d="M56 52 H82 M126 52 H152" stroke="oklch(0.98 0.005 260 / 0.18)"/>
-                                <circle r="3" fill="#0071e3">
-                                    <animateMotion dur="2.6s" repeatCount="indefinite" path="M56 52 H152"/>
-                                </circle>
-                            </svg>
-                            <p class="font-mono text-[9px] uppercase tracking-[0.2em] text-apple-gray mt-2">crm &harr; erp &harr; ops</p>
-                        </div>
-                    </div>
+                <div class="svc-card reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out delay-100">
+                    <p class="font-mono text-[11px] uppercase tracking-[0.25em] text-[#0071e3] mb-8">/ 02</p>
+                    <h3 class="text-2xl md:text-3xl font-bold tracking-tight text-paper mb-3">System Orchestration</h3>
+                    <p class="text-apple-gray font-medium leading-snug mb-8">Your disjointed platforms, weaving into one workflow that talks to itself in real time.</p>
+                    <ul class="mt-auto space-y-3 font-mono text-[13px] text-apple-gray">
+                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>CRM &amp; ERP unification</li>
+                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>Webhook intercepts</li>
+                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>Real-time continuous sync</li>
+                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>Cross-platform automation</li>
+                    </ul>
                 </div>
 
-                <div class="reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out">
-                    <h3 class="display text-[clamp(2.75rem,7vw,6rem)] leading-none text-paper mb-8 reveal" data-words>Retrieval<span class="text-[#0071e3]">.</span></h3>
-                    <div class="flex flex-col md:flex-row gap-10 md:gap-24 md:items-start">
-                        <p class="text-xl md:text-2xl text-apple-gray leading-tight font-medium max-w-lg">
-                            Turn thousands of disorganized company documents into instantly queryable corporate memory
-                            using Enterprise RAG infrastructure.
-                        </p>
-                        <ul class="font-mono text-sm text-apple-gray space-y-3 md:pt-2">
-                            <li><span class="text-white/25 mr-3">01</span>Vector memory banks</li>
-                            <li><span class="text-white/25 mr-3">02</span>Source-grounded answers</li>
-                            <li><span class="text-white/25 mr-3">03</span>Permission-aware search</li>
-                        </ul>
-                        <div class="cap-viz terminal-glow rounded-xl p-4 hidden lg:block shrink-0 ml-auto" aria-hidden="true">
-                            <svg viewBox="0 0 208 104" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <g stroke="oklch(0.98 0.005 260 / 0.25)">
-                                    <path d="M20 22 H150"/><path d="M20 38 H188"/><path d="M20 54 H132"/>
-                                    <path d="M20 70 H170"/><path d="M20 86 H110"/>
-                                </g>
-                                <rect x="12" y="14" width="184" height="16" rx="3" fill="oklch(0.45 0.19 258 / 0.28)" class="viz-scan"/>
-                            </svg>
-                            <p class="font-mono text-[9px] uppercase tracking-[0.2em] text-apple-gray mt-2">query &rarr; grounded answer</p>
-                        </div>
-                    </div>
+                <div class="svc-card reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out">
+                    <p class="font-mono text-[11px] uppercase tracking-[0.25em] text-[#0071e3] mb-8">/ 03</p>
+                    <h3 class="text-2xl md:text-3xl font-bold tracking-tight text-paper mb-3">Enterprise Retrieval</h3>
+                    <p class="text-apple-gray font-medium leading-snug mb-8">Thousands of disorganised documents turned into instantly queryable corporate memory.</p>
+                    <ul class="mt-auto space-y-3 font-mono text-[13px] text-apple-gray">
+                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>Vector memory banks</li>
+                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>Source-grounded answers</li>
+                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>Permission-aware search</li>
+                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>Private &mdash; never trains external models</li>
+                    </ul>
+                </div>
+
+                <div class="svc-card reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out delay-100">
+                    <p class="font-mono text-[11px] uppercase tracking-[0.25em] text-[#0071e3] mb-8">/ 04</p>
+                    <h3 class="text-2xl md:text-3xl font-bold tracking-tight text-paper mb-3">Optimization &amp; Integration</h3>
+                    <p class="text-apple-gray font-medium leading-snug mb-8">Connect, refine and scale the stack you already run &mdash; then keep it healthy.</p>
+                    <ul class="mt-auto space-y-3 font-mono text-[13px] text-apple-gray">
+                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>Tech-stack audit &amp; restructuring</li>
+                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>API &amp; platform integrations</li>
+                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>Workflow optimization</li>
+                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>Uptime monitoring &amp; runbooks</li>
+                    </ul>
                 </div>
 
             </div>
@@ -617,41 +578,180 @@
     </section>
 
     <!-- ────────────────────────────────────────────────────────────
-         05 / THE DIFFERENCE — the candid comparison. The founder's
-         own line ("most agencies sell you overpriced solutions")
-         turned into a conversion surface.
+         WHY US — three-column comparison (sanjaya "Built for Real
+         Business Impact"). Azen column highlighted in blue.
          ──────────────────────────────────────────────────────────── -->
-    <section class="py-24 md:py-36 px-6 relative overflow-hidden">
-        <div class="section-ghost" aria-hidden="true">05</div>
-        <div class="max-w-7xl mx-auto relative">
-            <p class="font-mono text-[11px] uppercase tracking-[0.3em] text-indigo-bright font-bold mb-5">[ 05 / The difference ]</p>
-            <h2 class="display text-[clamp(2.2rem,4.5vw,4rem)] leading-[0.95] text-paper mb-14 reveal" data-words>
-                Not your typical agency<span class="text-[#0071e3]">.</span>
-            </h2>
+    <section class="py-24 md:py-36 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="mb-14 md:mb-16 max-w-2xl">
+                <p class="font-mono text-[11px] uppercase tracking-[0.3em] text-white/45 font-bold mb-6">/ Why us</p>
+                <h2 class="display text-[clamp(2.4rem,6vw,4.75rem)] leading-[0.95] text-paper reveal" data-words>
+                    Built for real business impact<span class="text-[#0071e3]">.</span>
+                </h2>
+                <p class="mt-6 text-apple-gray text-lg font-medium">Most agencies talk about AI. We build systems that cut manual work, hold up in production, and stay yours.</p>
+            </div>
 
-            <div class="grid md:grid-cols-2 gap-4 md:gap-5">
-                <div class="rounded-2xl border border-white/10 bg-white/[0.02] p-8 md:p-10 reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out">
-                    <p class="font-mono text-[10px] uppercase tracking-[0.25em] text-apple-gray font-bold mb-8">Typical agency</p>
-                    <ul class="space-y-5 text-lg text-apple-gray font-medium leading-snug">
-                        <li class="flex gap-4"><span class="font-mono text-white/25 shrink-0" aria-hidden="true">&times;</span>Hourly billing that rewards slow work</li>
-                        <li class="flex gap-4"><span class="font-mono text-white/25 shrink-0" aria-hidden="true">&times;</span>Templated builds resold to every client</li>
-                        <li class="flex gap-4"><span class="font-mono text-white/25 shrink-0" aria-hidden="true">&times;</span>Black-box handover &mdash; you rent your own system</li>
-                        <li class="flex gap-4"><span class="font-mono text-white/25 shrink-0" aria-hidden="true">&times;</span>"AI magic" pitch decks, no numbers</li>
-                        <li class="flex gap-4"><span class="font-mono text-white/25 shrink-0" aria-hidden="true">&times;</span>Gone the week after launch</li>
-                    </ul>
-                </div>
-                <div class="rounded-2xl terminal-glow p-8 md:p-10 relative overflow-hidden reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out delay-150">
-                    <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(ellipse 480px 320px at 85% 0%, oklch(0.34 0.20 260 / 0.25), transparent 70%);" aria-hidden="true"></div>
-                    <p class="font-mono text-[10px] uppercase tracking-[0.25em] text-[#0071e3] font-bold mb-8 relative">The Azen way</p>
-                    <ul class="space-y-5 text-lg text-paper font-medium leading-snug relative">
-                        <li class="flex gap-4"><span class="font-mono text-[#0071e3] shrink-0" aria-hidden="true">&rarr;</span>Flat fee, quoted after the audit &mdash; never hourly</li>
-                        <li class="flex gap-4"><span class="font-mono text-[#0071e3] shrink-0" aria-hidden="true">&rarr;</span>Engineered around your exact stack and workflows</li>
-                        <li class="flex gap-4"><span class="font-mono text-[#0071e3] shrink-0" aria-hidden="true">&rarr;</span>You own the code, the prompts, the infrastructure</li>
-                        <li class="flex gap-4"><span class="font-mono text-[#0071e3] shrink-0" aria-hidden="true">&rarr;</span>Strategy before code &mdash; the math has to justify the build</li>
-                        <li class="flex gap-4"><span class="font-mono text-[#0071e3] shrink-0" aria-hidden="true">&rarr;</span>Monitored uptime, runbooks, 90-day support</li>
-                    </ul>
+            <div class="overflow-x-auto reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out">
+                <div class="cmp-table min-w-[680px]">
+                    <div class="cmp-row cmp-head">
+                        <div class="cmp-cell rowlabel"></div>
+                        <div class="cmp-cell cmp-col-azen">Azen<span class="text-[#0071e3]">.</span></div>
+                        <div class="cmp-cell text-apple-gray">Other agencies</div>
+                        <div class="cmp-cell text-apple-gray">Hire in-house</div>
+                    </div>
+                    <div class="cmp-row">
+                        <div class="cmp-cell rowlabel">Approach</div>
+                        <div class="cmp-cell cmp-col-azen text-paper">Map your bottlenecks first</div>
+                        <div class="cmp-cell text-apple-gray">Tool-first, templated</div>
+                        <div class="cmp-cell text-apple-gray">Depends on the hire</div>
+                    </div>
+                    <div class="cmp-row">
+                        <div class="cmp-cell rowlabel">Billing</div>
+                        <div class="cmp-cell cmp-col-azen text-paper">Flat fee, quoted after audit</div>
+                        <div class="cmp-cell text-apple-gray">Hourly &mdash; rewards slow work</div>
+                        <div class="cmp-cell text-apple-gray">Salary + overhead</div>
+                    </div>
+                    <div class="cmp-row">
+                        <div class="cmp-cell rowlabel">Ownership</div>
+                        <div class="cmp-cell cmp-col-azen text-paper">You own code, prompts, infra</div>
+                        <div class="cmp-cell text-apple-gray">Black-box &mdash; you rent it</div>
+                        <div class="cmp-cell text-apple-gray">In-house, if they stay</div>
+                    </div>
+                    <div class="cmp-row">
+                        <div class="cmp-cell rowlabel">Speed</div>
+                        <div class="cmp-cell cmp-col-azen text-paper">Weeks, not months</div>
+                        <div class="cmp-cell text-apple-gray">Often delayed</div>
+                        <div class="cmp-cell text-apple-gray">Hiring + onboarding</div>
+                    </div>
+                    <div class="cmp-row">
+                        <div class="cmp-cell rowlabel">After launch</div>
+                        <div class="cmp-cell cmp-col-azen text-paper">Monitored, runbooks, 90-day support</div>
+                        <div class="cmp-cell text-apple-gray">Set up &amp; disappear</div>
+                        <div class="cmp-cell text-apple-gray">Limited by bandwidth</div>
+                    </div>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- ────────────────────────────────────────────────────────────
+         TESTIMONIALS — quote cards (placeholders for real client
+         quotes), each with a "See full build" link. Client names and
+         quotes to be supplied.
+         ──────────────────────────────────────────────────────────── -->
+    <section class="py-24 md:py-36 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="mb-14 md:mb-16 max-w-2xl">
+                <p class="font-mono text-[11px] uppercase tracking-[0.3em] text-white/45 font-bold mb-6">/ Testimonials</p>
+                <h2 class="display text-[clamp(2.4rem,6vw,4.75rem)] leading-[0.95] text-paper reveal" data-words>
+                    In their words<span class="text-[#0071e3]">.</span>
+                </h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-4 md:gap-5">
+
+                <div class="tmn-card reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out">
+                    <div class="text-[#0071e3] text-4xl font-bold leading-none mb-6" aria-hidden="true">&ldquo;</div>
+                    <blockquote class="text-lg text-paper font-medium leading-snug mb-8 flex-1">Client quote to be added &mdash; a line on what changed after the build.</blockquote>
+                    <div class="flex items-center justify-between gap-4 pt-6 border-t border-white/10">
+                        <div>
+                            <div class="font-bold text-paper text-sm">[ Company name ]</div>
+                            <div class="font-mono text-[10px] uppercase tracking-[0.15em] text-apple-gray mt-1">Founder</div>
+                        </div>
+                        <a href="#work" class="font-mono text-[10px] uppercase tracking-[0.15em] text-apple-gray hover:text-[#0071e3] transition shrink-0">See full build &rarr;</a>
+                    </div>
+                </div>
+
+                <div class="tmn-card reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out delay-100">
+                    <div class="text-[#0071e3] text-4xl font-bold leading-none mb-6" aria-hidden="true">&ldquo;</div>
+                    <blockquote class="text-lg text-paper font-medium leading-snug mb-8 flex-1">Client quote to be added &mdash; a line on hours saved or errors removed.</blockquote>
+                    <div class="flex items-center justify-between gap-4 pt-6 border-t border-white/10">
+                        <div>
+                            <div class="font-bold text-paper text-sm">[ Company name ]</div>
+                            <div class="font-mono text-[10px] uppercase tracking-[0.15em] text-apple-gray mt-1">Operations Lead</div>
+                        </div>
+                        <a href="#work" class="font-mono text-[10px] uppercase tracking-[0.15em] text-apple-gray hover:text-[#0071e3] transition shrink-0">See full build &rarr;</a>
+                    </div>
+                </div>
+
+                <div class="tmn-card reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out delay-200">
+                    <div class="text-[#0071e3] text-4xl font-bold leading-none mb-6" aria-hidden="true">&ldquo;</div>
+                    <blockquote class="text-lg text-paper font-medium leading-snug mb-8 flex-1">Client quote to be added &mdash; a line on what it&rsquo;s like to work with Azen.</blockquote>
+                    <div class="flex items-center justify-between gap-4 pt-6 border-t border-white/10">
+                        <div>
+                            <div class="font-bold text-paper text-sm">[ Company name ]</div>
+                            <div class="font-mono text-[10px] uppercase tracking-[0.15em] text-apple-gray mt-1">Director</div>
+                        </div>
+                        <a href="#work" class="font-mono text-[10px] uppercase tracking-[0.15em] text-apple-gray hover:text-[#0071e3] transition shrink-0">See full build &rarr;</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ────────────────────────────────────────────────────────────
+         PRICING — three engagement tiers by scope, no hard numbers.
+         Every tier routes to the paid audit for a flat quote.
+         ──────────────────────────────────────────────────────────── -->
+    <section id="pricing" class="py-24 md:py-36 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="mb-14 md:mb-16 max-w-2xl">
+                <p class="font-mono text-[11px] uppercase tracking-[0.3em] text-white/45 font-bold mb-6">/ Pricing</p>
+                <h2 class="display text-[clamp(2.4rem,6vw,4.75rem)] leading-[0.95] text-paper reveal" data-words>
+                    Scoped to the work<span class="text-[#0071e3]">.</span>
+                </h2>
+                <p class="mt-6 text-apple-gray text-lg font-medium">Flat fees, never hourly. Every engagement starts with a paid audit &mdash; credited into the build. You get the number after we&rsquo;ve seen the work.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-4 md:gap-5 items-stretch">
+
+                <div class="price-card reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out">
+                    <p class="font-mono text-[11px] uppercase tracking-[0.25em] text-apple-gray mb-3">/ 01</p>
+                    <h3 class="text-2xl font-bold tracking-tight text-paper mb-2">Single Workflow</h3>
+                    <p class="text-apple-gray font-medium text-sm mb-8">For one clear bottleneck you want gone.</p>
+                    <ul class="space-y-3 text-sm text-apple-gray font-medium mb-10">
+                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>1&ndash;2 automation workflows</li>
+                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>Tool integration setup</li>
+                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>AI implementation</li>
+                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>2 weeks post-launch support</li>
+                    </ul>
+                    <a href="https://calendly.com/tayyib-azen/30min" target="_blank" rel="noopener" class="mt-auto block text-center border border-white/20 hover:bg-white/10 text-paper font-bold py-3.5 rounded-full transition">Book audit for a quote</a>
+                </div>
+
+                <div class="price-card is-featured reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out delay-100">
+                    <div class="flex items-center justify-between mb-3">
+                        <p class="font-mono text-[11px] uppercase tracking-[0.25em] text-[#0071e3]">/ 02</p>
+                        <span class="font-mono text-[9px] uppercase tracking-[0.2em] text-[#0071e3] border border-[#0071e3]/40 rounded-full px-3 py-1">Most common</span>
+                    </div>
+                    <h3 class="text-2xl font-bold tracking-tight text-paper mb-2">Multi-System</h3>
+                    <p class="text-apple-gray font-medium text-sm mb-8">For scaling teams ready to connect the stack.</p>
+                    <ul class="space-y-3 text-sm text-paper font-medium mb-10">
+                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>3&ndash;5 automation workflows</li>
+                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>CRM &amp; marketing stack integration</li>
+                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>Custom AI agents &amp; assistants</li>
+                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>Team onboarding session</li>
+                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>30 days optimization support</li>
+                    </ul>
+                    <a href="https://calendly.com/tayyib-azen/30min" target="_blank" rel="noopener" class="mt-auto block text-center bg-[#0071e3] hover:bg-[#005bb5] text-white font-bold py-3.5 rounded-full transition">Book audit for a quote</a>
+                </div>
+
+                <div class="price-card reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out delay-200">
+                    <p class="font-mono text-[11px] uppercase tracking-[0.25em] text-apple-gray mb-3">/ 03</p>
+                    <h3 class="text-2xl font-bold tracking-tight text-paper mb-2">Enterprise</h3>
+                    <p class="text-apple-gray font-medium text-sm mb-8">For full end-to-end orchestration across the business.</p>
+                    <ul class="space-y-3 text-sm text-apple-gray font-medium mb-10">
+                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>Full workflow audit</li>
+                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>End-to-end automation architecture</li>
+                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>Custom AI agent development</li>
+                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>Internal system documentation</li>
+                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>Ongoing optimization roadmap</li>
+                    </ul>
+                    <a href="https://calendly.com/tayyib-azen/30min" target="_blank" rel="noopener" class="mt-auto block text-center border border-white/20 hover:bg-white/10 text-paper font-bold py-3.5 rounded-full transition">Book audit for a quote</a>
+                </div>
+
+            </div>
+            <p class="text-center font-mono text-[10px] uppercase tracking-[0.25em] text-white/40 mt-10">Paid audit &middot; credited into any build &middot; flat quote, never hourly</p>
         </div>
     </section>
 
