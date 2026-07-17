@@ -17,6 +17,7 @@ import * as THREE from 'three';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 import {
   buildArmoredCore, buildEruption, buildGlowPool, buildPlumeLight,
+  buildLid, buildArcs,
   applyHDREnvironment, boostEnvIntensity,
 } from './chip/common.js';
 
@@ -71,6 +72,8 @@ if (mount) {
     const core = buildArmoredCore(rig, { maxAniso: renderer.capabilities.getMaxAnisotropy() });
     const eru = buildEruption(rig, { boardTop: core.boardTop });
     buildGlowPool(rig, { y: -0.8, size: 6.5 });
+    const lid = buildLid(rig, { boardTop: core.boardTop });
+    const arcs = buildArcs(rig, { boardTop: core.boardTop });
     const plume = buildPlumeLight(rig, { boardTop: core.boardTop });
 
     /* Lights — hero palette, no shadows. */
@@ -101,12 +104,14 @@ if (mount) {
       const pr = 0.5 - 0.5 * Math.cos((t * Math.PI * 2) / CYCLE);
       eru.uniforms.uTime.value = t;
       eru.uniforms.uProgress.value = pr;
-      eru.uniforms.uAmp.value = 1;
+      eru.uniforms.uAmp.value = pr;                    // closed → open → closed
       core.dieMat.emissiveIntensity = 0.45 + Math.sin(t * 1.1) * 0.2;
-      // the eruption lights the object (reference behaviour)
+      // the sequence: the chip OPENS in layers — lid rises, eruption pours
+      lid.group.position.y = pr * 0.9;
+      arcs.update(t, 0.45 + 0.4 * pr);
       plume.intensity = 36 * pr;
       plume.position.set(0.12, core.boardTop + 0.45 + 1.6 * pr, 0.05);
-      rig.rotation.y = 0.5 + t * (Math.PI * 2 / 40);   // slow ambient rotation
+      rig.rotation.y = 0.5 + Math.sin(t * 0.16) * 0.06; // berco stillness
       rig.position.y = Math.sin(t * 0.5) * 0.03;
     };
 

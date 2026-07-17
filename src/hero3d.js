@@ -30,6 +30,7 @@ import { BokehPass } from 'three/examples/jsm/postprocessing/BokehPass.js';
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
 import {
   mulberry32, buildArmoredCore, buildEruption, buildGlowPool, buildPlumeLight,
+  buildLid, buildArcs,
   GrainShader, applyHDREnvironment, boostEnvIntensity,
 } from './chip/common.js';
 
@@ -100,9 +101,13 @@ if (mount) {
     const core = buildArmoredCore(rig, { maxAniso: renderer.capabilities.getMaxAnisotropy() });
     const eru = buildEruption(rig, { boardTop: core.boardTop });
     buildGlowPool(rig, { y: -0.85, size: 7.5 });
-    // the plume IS the key light (reference: eruption bathes the board)
+    // berco resting hero: CLOSED chip — brushed engraved lid over the board,
+    // electric arcs crawling the seam. Lid lifts on scroll; eruption pours out.
+    const lid = buildLid(rig, { boardTop: core.boardTop });
+    const arcs = buildArcs(rig, { boardTop: core.boardTop });
+    // the plume IS the key light when the system opens
     const plume = buildPlumeLight(rig, { boardTop: core.boardTop });
-    if (reduceMotion) { plume.intensity = 4; }
+    if (reduceMotion) { plume.intensity = 2; arcs.update(1.7, 0.5); }
 
     /* ── 1b. Atmosphere — sparse blue dust in the void ──────── */
     const dotTex = (() => {
@@ -210,10 +215,11 @@ if (mount) {
       const e = easeOutCubic(introT / 1.4);
       const p = scrollP;
 
-      // idle: full slow ambient rotation (~40s/rev) + float + cursor parallax
-      rig.rotation.y = t * (Math.PI * 2 / 40) + smYaw + Math.sin(t * 0.22) * 0.052;
+      // idle: berco stillness — NO continuous spin, just a breathing drift
+      // (their loop barely moves; the arcs are the life) + cursor parallax
+      rig.rotation.y = 0.35 + smYaw + Math.sin(t * 0.22) * 0.05 + Math.sin(t * 0.13) * 0.03;
       rig.rotation.x = smPitch;
-      rig.position.y = Math.sin(t * 0.5) * 0.04;
+      rig.position.y = Math.sin(t * 0.5) * 0.035;
 
       // living materials
       core.dieMat.emissiveIntensity = 0.45 + Math.sin(t * 1.1) * 0.2;   // breathe
@@ -223,9 +229,13 @@ if (mount) {
       pendP = 0.5 - 0.5 * Math.cos(pendPhase * Math.PI * 2);
       eru.uniforms.uTime.value = t;
       eru.uniforms.uProgress.value = pendP;
-      eru.uniforms.uAmp.value = 0.7 + 0.3 * p;   // simmer bolder, rage on scroll
-      eru.uniforms.uOpacity.value = e;
-      // plume practical light — the eruption lights the object
+      // REST = closed chip, arcs only (berco hero). SCROLL = the system
+      // opens: lid lifts, the eruption pours out (berco sequence).
+      eru.uniforms.uAmp.value = 0.08 + 0.92 * p;
+      eru.uniforms.uOpacity.value = e * Math.min(1, 0.15 + p * 1.4);
+      lid.group.position.y = easeOutCubic(p) * 0.55;
+      arcs.update(t, (0.5 + 0.5 * p) * e);
+      // plume practical light — the eruption lights the object as it opens
       const pr = pendP * eru.uniforms.uAmp.value;
       plume.intensity = 36 * pr * e;
       plume.position.set(0.12, core.boardTop + 0.45 + 1.6 * pr, 0.05);

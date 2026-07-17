@@ -461,6 +461,138 @@ export const buildPlumeLight = (parent, { boardTop = 0.245 } = {}) => {
   return light;
 };
 
+/* ── The lid — brushed spun-steel, "azen." engraved ───────────
+   Berco's resting hero is a CLOSED chip: a big radial-brushed
+   metal lid on a stepped pedestal. Canvas texture: spun-brush
+   concentric arcs + engraved wordmark (dark inset + light lip). */
+const drawLidTexture = (size = 1024) => {
+  const c = document.createElement('canvas'); c.width = c.height = size;
+  const ctx = c.getContext('2d');
+  const cx = size / 2, cy = size / 2;
+  ctx.fillStyle = '#b9bfc7'; ctx.fillRect(0, 0, size, size);
+  // spun brush: hundreds of faint concentric arcs, alpha-noised
+  const rr = mulberry32(0x51D);
+  for (let i = 0; i < 900; i++) {
+    const rad = rr() * size * 0.72;
+    const a0 = rr() * Math.PI * 2, a1 = a0 + 0.25 + rr() * 1.6;
+    ctx.strokeStyle = `rgba(${rr() < 0.5 ? '255,255,255' : '40,46,56'},${0.02 + rr() * 0.05})`;
+    ctx.lineWidth = 0.6 + rr() * 1.4;
+    ctx.beginPath(); ctx.arc(cx, cy, rad, a0, a1); ctx.stroke();
+  }
+  // radial shading: bright ring at 1/3, darker rim
+  const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, size * 0.7);
+  g.addColorStop(0, 'rgba(255,255,255,0.10)');
+  g.addColorStop(0.33, 'rgba(255,255,255,0.16)');
+  g.addColorStop(0.7, 'rgba(30,34,42,0.18)');
+  g.addColorStop(1, 'rgba(10,12,16,0.32)');
+  ctx.fillStyle = g; ctx.fillRect(0, 0, size, size);
+  // engraved wordmark — dark inset with a light bottom lip
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.font = `600 ${size * 0.11}px 'Hanken Grotesk', Helvetica, sans-serif`;
+  ctx.fillStyle = 'rgba(235,240,246,0.5)';
+  ctx.fillText('azen.', cx, cy + size * 0.004);   // light lip below
+  ctx.fillStyle = 'rgba(24,28,36,0.78)';
+  ctx.fillText('azen.', cx, cy - size * 0.002);   // dark inset
+  const tex = new THREE.CanvasTexture(c);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  tex.anisotropy = 8;
+  return tex;
+};
+
+export const buildLid = (parent, { boardTop = 0.245 } = {}) => {
+  const lid = new THREE.Group();
+  const pedestal = new THREE.Mesh(
+    new RoundedBoxGeometry(2.05, 0.12, 2.05, 3, 0.03),
+    new THREE.MeshPhysicalMaterial({
+      color: new THREE.Color('#101318'), metalness: 0.8, roughness: 0.45,
+      clearcoat: 0.4, clearcoatRoughness: 0.3, envMapIntensity: 0.8,
+    })
+  );
+  pedestal.position.y = boardTop + 0.075;
+  lid.add(pedestal);
+  const plateMat = new THREE.MeshPhysicalMaterial({
+    map: drawLidTexture(), metalness: 1, roughness: 0.32,
+    clearcoat: 0.5, clearcoatRoughness: 0.2, envMapIntensity: 1.15,
+  });
+  const plate = new THREE.Mesh(new RoundedBoxGeometry(1.78, 0.1, 1.78, 4, 0.05), plateMat);
+  plate.position.y = boardTop + 0.185;
+  lid.add(plate);
+  parent.add(lid);
+  return { group: lid, plateMat, restY: 0 };
+};
+
+/* ── Seam arcs — the living electricity ───────────────────────
+   ~10 jagged polylines crawling the pedestal seam, regenerated
+   stochastically (each arc lives 60-200ms). Additive, blue-white.
+   update(t, intensity) each frame; a flickering point light rides
+   the most recent arc. CPU cost: occasional 12-point regen. */
+export const buildArcs = (parent, { boardTop = 0.245, half = 1.06 } = {}) => {
+  const group = new THREE.Group();
+  const N = 10;
+  const arcs = [];
+  const rnd = mulberry32(0xA2C);
+  const perim = (u) => {           // u∈[0,1) → xz on square path + outward normal
+    const s = Math.floor(u * 4), f = (u * 4) % 1, a = half;
+    if (s === 0) return { x: -a + 2 * a * f, z: a, nx: 0, nz: 1 };
+    if (s === 1) return { x: a, z: a - 2 * a * f, nx: 1, nz: 0 };
+    if (s === 2) return { x: a - 2 * a * f, z: -a, nx: 0, nz: -1 };
+    return { x: -a, z: -a + 2 * a * f, nx: -1, nz: 0 };
+  };
+  const seamY = boardTop + 0.1;
+  const light = new THREE.PointLight(new THREE.Color('#9fd0ff'), 0, 4, 2);
+  light.position.set(0, seamY, half);
+  group.add(light);
+  for (let i = 0; i < N; i++) {
+    const P = 12;
+    const pos = new Float32Array(P * 3);
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+    const mat = new THREE.LineBasicMaterial({
+      color: new THREE.Color(i % 3 === 0 ? '#e6f2ff' : '#4aa3ff'),
+      transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false,
+    });
+    const line = new THREE.Line(geo, mat);
+    group.add(line);
+    arcs.push({ line, pos, geo, age: 1e3, life: 0, P });
+  }
+  const regen = (a) => {
+    const u0 = rnd();
+    const span = 0.03 + rnd() * 0.09;        // fraction of perimeter
+    for (let j = 0; j < a.P; j++) {
+      const f = j / (a.P - 1);
+      const q = perim((u0 + span * f) % 1);
+      const wig = (j > 0 && j < a.P - 1) ? 1 : 0; // pinned ends
+      a.pos[j * 3]     = q.x + q.nx * (rnd() - 0.3) * 0.09 * wig;
+      a.pos[j * 3 + 1] = seamY + (rnd() - 0.5) * 0.11 * wig;
+      a.pos[j * 3 + 2] = q.z + q.nz * (rnd() - 0.3) * 0.09 * wig;
+    }
+    a.geo.attributes.position.needsUpdate = true;
+    a.age = 0;
+    a.life = 0.06 + rnd() * 0.14;
+    return a;
+  };
+  let dtAcc = 0, lastT = 0;
+  const update = (t, intensity) => {
+    const dt = Math.min(Math.max(t - lastT, 0), 0.1); lastT = t; dtAcc += dt;
+    let lit = 0;
+    for (const a of arcs) {
+      a.age += dt;
+      if (a.age > a.life) {
+        // stochastic rebirth — denser when intensity is high
+        if (rnd() < 0.28 + 0.5 * intensity) {
+          regen(a);
+          if (!lit) { light.position.set(a.pos[18], seamY, a.pos[20]); lit = 1; }
+        } else { a.line.material.opacity = 0; continue; }
+      }
+      const k = 1 - a.age / a.life;
+      a.line.material.opacity = intensity * (0.35 + 0.65 * k) * (0.7 + 0.3 * Math.sin(t * 60 + a.life * 97));
+    }
+    light.intensity = intensity * (2.2 + 2.4 * Math.abs(Math.sin(t * 23)));
+  };
+  parent.add(group);
+  return { group, update, light };
+};
+
 /* ── Void grounding (brief §B.1) — soft blue glow pool ──────── */
 export const buildGlowPool = (parent, { y = -0.85, size = 7.5 } = {}) => {
   const c = document.createElement('canvas'); c.width = c.height = 256;
