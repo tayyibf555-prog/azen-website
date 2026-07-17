@@ -1,12 +1,15 @@
 /* ==========================================================
-   Azen hero — "The Azen Core" (Three.js r0.185)
+   Azen hero — "The Armored Core" v2 (Three.js r0.185)
    ----------------------------------------------------------
-   A matte-black data chip seated on a navy PCB whose circuit
-   traces glow #0071e3. Data pulses travel the traces; the die
-   breathes. As you scroll, the camera dollies toward the die,
-   the traces brighten, and past 55% the package lid lifts —
-   revealing a glowing 6×6 die-grid underneath. Opening the
-   system.
+   A floating elongated-octagon package — gunmetal armor plate,
+   machined rim and screws, gold leadframe teeth, glossy blue
+   modules, iridescent die — alone in a black void over a soft
+   blue glow pool. From the die, a GPU-driven plume of 6144
+   tiny voxels erupts and settles on a ~10s sine pendulum:
+   white-hot at the base, cooling through #4aa3ff to #0071e3,
+   scattering and dissolving at the crown. Scroll feeds it —
+   the camera dollies in, the plume's amplitude and pendulum
+   speed rise. At rest it simmers; at scroll it rages.
 
    Procedural geometry + code-drawn CanvasTextures; the only
    file asset is a CC0 HDRI (/hdri/env.hdr) for lighting.
@@ -14,11 +17,10 @@
 
    Progressive + safe (unchanged gates):
    - No WebGL / context loss  → CSS glow-ground stays visible
-   - prefers-reduced-motion   → single static frame
+   - prefers-reduced-motion   → single frame, settled plume
    - scrolled past the hero   → render loop parks (battery)
    ========================================================== */
 import * as THREE from 'three';
-import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
@@ -27,21 +29,13 @@ import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js';
 import { BokehPass } from 'three/examples/jsm/postprocessing/BokehPass.js';
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
 import {
-  buildTraceTexture, buildAoMap, buildPackageDetail, buildSMDs,
+  mulberry32, buildArmoredCore, buildEruption, buildGlowPool,
   GrainShader, applyHDREnvironment, boostEnvIntensity,
 } from './chip/common.js';
 
 const mount = document.getElementById('hero-3d');
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const fail = () => { if (mount) mount.setAttribute('data-3d', 'off'); };
-
-// small seeded RNG so the routing is designed, not random each load
-const mulberry32 = (a) => () => {
-  a |= 0; a = a + 0x6D2B79F5 | 0;
-  let t = Math.imul(a ^ a >>> 15, 1 | a);
-  t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
-  return ((t ^ t >>> 14) >>> 0) / 4294967296;
-};
 
 if (mount) {
   let renderer;
@@ -57,13 +51,12 @@ if (mount) {
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 0.9;
     renderer.outputColorSpace = THREE.SRGBColorSpace;
-    renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    // no shadow map: the object floats in a void (no catcher plane) —
+    // the budget goes to the 6144-voxel eruption instead.
     mount.appendChild(renderer.domElement);
     mount.setAttribute('data-3d', 'on');
 
     const BLUE = new THREE.Color('#0071e3');
-    const BLUE_BRIGHT = new THREE.Color('#4aa3ff');
 
     const scene = new THREE.Scene();
     scene.background = (() => {
@@ -77,155 +70,36 @@ if (mount) {
     })();
     scene.fog = new THREE.Fog(new THREE.Color('#040609'), 11, 26);
 
-    // Camera — 3/4 low hero angle. The look target sits up-left of the
-    // chip in screen space so the chip carries the lower-right visual
-    // weight (hero copy is corner-anchored; centre-right stays clear).
+    // Camera — 3/4 hero angle on the floating core (brief §B.4:
+    // keep INTRO→HERO positions, look at object centre ~y0.3).
     const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
     const HERO_POS = new THREE.Vector3(3.4, 2.2, 5.6);
     const INTRO_POS = new THREE.Vector3(4.6, 3.2, 8);
-    const LOOK_BASE = new THREE.Vector3(-0.6, 0.7, 0.2);
+    const LOOK_BASE = new THREE.Vector3(0, 0.3, 0);
     const lookCur = LOOK_BASE.clone();
     camera.position.copy(reduceMotion ? HERO_POS : INTRO_POS);
     camera.lookAt(lookCur);
 
     const pmrem = new THREE.PMREMGenerator(renderer);
     scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
-    // (a) HDRI lighting — async swap; RoomEnvironment above is the instant
-    // first-paint fallback. Boosts hold the near-black + #0071e3 palette
-    // (the night HDRI is dimmer than RoomEnvironment). Runs post-load, so
-    // every const it references is initialised long before it fires.
+    // HDRI lighting — async swap; RoomEnvironment above is the instant
+    // first-paint fallback. Boosts hold the near-black + #0071e3 palette.
     applyHDREnvironment(renderer, scene, () => {
-      boostEnvIntensity([pinMat, dieMat, gridMat, pkgDetail.metalMat, smds.capMat], 3.2);
-      boostEnvIntensity([pcbMat, pkg.material, pad.material, pkgDetail.lipMat, smds.bodyMat, smds.indMat], 2.2);
+      boostEnvIntensity(core.metals, 3.2);
+      boostEnvIntensity(core.bodies, 2.2);
       if (reduceMotion) composer.render();       // refresh the single static frame
     });
 
-    // everything that floats / parallaxes lives on the rig
+    // everything that floats / yaws / parallaxes lives on the rig
     const rig = new THREE.Group();
     scene.add(rig);
 
-    /* ── 1. PCB plane + procedural circuit traces ─────────────
-       Manhattan-routed escape traces radiate from the chip
-       footprint. Drawn once into a 2048² canvas (emissiveMap);
-       a subset of the same polylines is kept for data pulses. */
-    const rng = mulberry32(20260716);
-    const PCB = 28;               // plane size; detailed region ≈ 24×24
-    const TEX = 2048;
-    const traces = [];
-    const EDGES = [[1, 0], [-1, 0], [0, 1], [0, -1]];
-    for (const [ox, oz] of EDGES) {
-      for (let i = 0; i < 22; i++) {
-        const lat = -1.08 + (i + 0.5) * (2.16 / 22) + (rng() - 0.5) * 0.03;
-        let x = ox !== 0 ? ox * 1.42 : lat;
-        let z = oz !== 0 ? oz * 1.42 : lat;
-        const pts = [x, z];
-        let outward = true;
-        const segs = 3 + Math.floor(rng() * 4);
-        for (let s = 0; s < segs; s++) {
-          if (outward) {
-            const len = 0.7 + rng() * 2.1;
-            x += ox * len; z += oz * len;
-          } else {
-            const len = (0.18 + rng() * 0.75) * (rng() < 0.5 ? -1 : 1);
-            if (ox !== 0) z += len; else x += len;
-          }
-          x = Math.max(-13, Math.min(13, x));
-          z = Math.max(-13, Math.min(13, z));
-          pts.push(x, z);
-          outward = !outward;
-        }
-        traces.push({ pts, bright: rng() < 0.16, wide: rng() < 0.14 });
-      }
-    }
-    // (d/f) trace texture v2 — same polylines in, so the 8 pulse lanes'
-    // world positions are untouched; adds fine routing, solder-mask dot
-    // grid, and the contact-AO punch under the package footprint.
-    const traceTex = buildTraceTexture(traces, {
-      size: 3072,
-      maxAniso: renderer.capabilities.getMaxAnisotropy(),
-    });
-    const pcbMat = new THREE.MeshStandardMaterial({
-      color: new THREE.Color('#060c1c'), roughness: 0.4, metalness: 0.55,
-      emissive: BLUE, emissiveMap: traceTex, emissiveIntensity: reduceMotion ? 1.4 : 0,
-      envMapIntensity: 0.5,
-    });
-    pcbMat.aoMap = buildAoMap();   // (f) contact AO — ambient falls off under the chip
-    const pcb = new THREE.Mesh(new THREE.PlaneGeometry(PCB, PCB), pcbMat);
-    pcb.rotation.x = -Math.PI / 2;
-    pcb.receiveShadow = true;
-    rig.add(pcb);
+    /* ── 1. The armored core + eruption + glow pool ─────────── */
+    const core = buildArmoredCore(rig, { maxAniso: renderer.capabilities.getMaxAnisotropy() });
+    const eru = buildEruption(rig, { boardTop: core.boardTop });
+    buildGlowPool(rig, { y: -0.85, size: 7.5 });
 
-    /* ── 1b. Package lid + die (the lid lifts on scroll) ────── */
-    const lid = new THREE.Group();
-    rig.add(lid);
-    const pkg = new THREE.Mesh(
-      new RoundedBoxGeometry(2.3, 0.28, 2.3, 4, 0.06),
-      new THREE.MeshPhysicalMaterial({
-        color: new THREE.Color('#0b0e15'), roughness: 0.42, metalness: 0.35,
-        clearcoat: 0.6, clearcoatRoughness: 0.25, envMapIntensity: 0.7,
-      })
-    );
-    pkg.position.y = 0.141;                    // bottom rests just above PCB
-    pkg.castShadow = true; pkg.receiveShadow = true;
-    lid.add(pkg);
-    const dieMat = new THREE.MeshPhysicalMaterial({
-      color: new THREE.Color('#151b28'), roughness: 0.12, metalness: 0.9,
-      iridescence: 1, iridescenceIOR: 1.6,
-      emissive: BLUE, emissiveIntensity: 0.45,
-    });
-    const die = new THREE.Mesh(new RoundedBoxGeometry(0.95, 0.06, 0.95, 3, 0.02), dieMat);
-    die.position.y = 0.285;                    // inset, sitting proud of the top
-    die.castShadow = true;
-    lid.add(die);
-    // (b) package detail — heat-spreader stack + substrate lip, added
-    // INSIDE the lid group so the lift animation carries them.
-    const pkgDetail = buildPackageDetail(lid, { shadows: true });
-
-    /* ── 1c. Pins — 4 edges × 26, instanced cool gold ───────── */
-    const pinMat = new THREE.MeshStandardMaterial({
-      color: new THREE.Color('#b9a06a'), metalness: 1, roughness: 0.35, envMapIntensity: 0.9,
-    });
-    const pins = new THREE.InstancedMesh(new THREE.BoxGeometry(0.045, 0.05, 0.14), pinMat, 104);
-    {
-      const m = new THREE.Matrix4();
-      let k = 0;
-      for (const [ox, oz] of EDGES) {
-        for (let i = 0; i < 26; i++) {
-          const lat = -1.125 + (i + 0.5) * (2.25 / 26);
-          m.makeRotationY(ox !== 0 ? Math.PI / 2 : 0);
-          m.setPosition(ox !== 0 ? ox * 1.205 : lat, 0.025, oz !== 0 ? oz * 1.205 : lat);
-          pins.setMatrixAt(k++, m);
-        }
-      }
-    }
-    pins.castShadow = true; pins.receiveShadow = true;
-    rig.add(pins);
-
-    /* ── 1d. Under the lid: substrate pad + 6×6 die-grid ────── */
-    const pad = new THREE.Mesh(
-      new THREE.BoxGeometry(2.2, 0.03, 2.2),
-      new THREE.MeshStandardMaterial({ color: new THREE.Color('#0a0f1a'), roughness: 0.5, metalness: 0.4 })
-    );
-    pad.position.y = 0.015;
-    rig.add(pad);
-    const gridMat = new THREE.MeshStandardMaterial({
-      color: new THREE.Color('#0a1224'), roughness: 0.3, metalness: 0.6,
-      emissive: BLUE_BRIGHT, emissiveIntensity: 0,
-    });
-    const grid = new THREE.InstancedMesh(new THREE.BoxGeometry(0.22, 0.035, 0.22), gridMat, 36);
-    {
-      const m = new THREE.Matrix4();
-      let k = 0;
-      for (let gx = 0; gx < 6; gx++) for (let gz = 0; gz < 6; gz++) {
-        m.makeTranslation(-0.7917 + gx * 0.3167, 0.0475, -0.7917 + gz * 0.3167);
-        grid.setMatrixAt(k++, m);
-      }
-    }
-    rig.add(grid);
-
-    /* ── 1e. Data pulses along the traces ─────────────────────
-       36 additive sprites on 8 of the routed polylines (2 per
-       edge), looping at varied speeds. Scroll accelerates them. */
+    /* ── 1b. Atmosphere — sparse blue dust in the void ──────── */
     const dotTex = (() => {
       const c = document.createElement('canvas'); c.width = c.height = 64;
       const ctx = c.getContext('2d');
@@ -236,66 +110,13 @@ if (mount) {
       ctx.fillStyle = g; ctx.fillRect(0, 0, 64, 64);
       const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace; return tex;
     })();
-    const lanes = [];
-    for (let e = 0; e < 4; e++) {
-      for (const off of [5, 16]) {
-        const src = traces[e * 22 + off].pts;
-        const pts = []; const cum = [0];
-        pts.push(src[0], src[1]);
-        for (let i = 2; i < src.length; i += 2) {
-          const dx = src[i] - pts[pts.length - 2], dz = src[i + 1] - pts[pts.length - 1];
-          const len = Math.hypot(dx, dz);
-          if (len < 0.01) continue;
-          pts.push(src[i], src[i + 1]);
-          cum.push(cum[cum.length - 1] + len);
-        }
-        lanes.push({ pts: new Float32Array(pts), cum: new Float32Array(cum), total: cum[cum.length - 1] });
-      }
-    }
-    // (c) board population — instanced SMDs + inductors, seeded, with a
-    // keep-out under the package/pins and clearance from the pulse lanes.
-    const smds = buildSMDs(rig, { lanes, maxR: 9, shadows: true });
-    const PULSES = 36;
-    const pulsePos = new Float32Array(PULSES * 3);
-    const pulsePhase = new Float32Array(PULSES);
-    const pulseSpeed = new Float32Array(PULSES);
-    const pulseLane = new Uint8Array(PULSES);
-    for (let i = 0; i < PULSES; i++) {
-      pulseLane[i] = i % lanes.length;
-      pulsePhase[i] = (i / PULSES + rng() * 0.3) % 1;
-      pulseSpeed[i] = 0.45 + rng() * 0.85;      // world units / s
-      pulsePos[i * 3 + 1] = 0.03;
-    }
-    const placePulses = () => {
-      for (let i = 0; i < PULSES; i++) {
-        const L = lanes[pulseLane[i]];
-        const d = pulsePhase[i] * L.total;
-        let j = 0;
-        while (j < L.cum.length - 2 && L.cum[j + 1] < d) j++;
-        const f = (d - L.cum[j]) / (L.cum[j + 1] - L.cum[j]);
-        const k = 2 * j;
-        pulsePos[i * 3] = L.pts[k] + (L.pts[k + 2] - L.pts[k]) * f;
-        pulsePos[i * 3 + 2] = L.pts[k + 1] + (L.pts[k + 3] - L.pts[k + 1]) * f;
-      }
-    };
-    placePulses();
-    const pulseGeo = new THREE.BufferGeometry();
-    const pulseAttr = new THREE.BufferAttribute(pulsePos, 3);
-    pulseGeo.setAttribute('position', pulseAttr);
-    const pulses = new THREE.Points(pulseGeo, new THREE.PointsMaterial({
-      color: BLUE_BRIGHT, map: dotTex, size: 0.14, sizeAttenuation: true,
-      transparent: true, opacity: 0.95, blending: THREE.AdditiveBlending, depthWrite: false,
-    }));
-    pulses.frustumCulled = false;
-    rig.add(pulses);
-
-    /* ── 1f. Atmosphere — sparse blue dust ──────────────────── */
+    const rng = mulberry32(20260716);
     const DUST = 700;
     const dustPos = new Float32Array(DUST * 3);
     for (let i = 0; i < DUST; i++) {
       const r = 3.2 + rng() * 10.5, a = rng() * Math.PI * 2;
       dustPos[i * 3] = Math.cos(a) * r;
-      dustPos[i * 3 + 1] = 0.15 + Math.pow(rng(), 1.7) * 5.2;
+      dustPos[i * 3 + 1] = -0.6 + Math.pow(rng(), 1.7) * 5.2;
       dustPos[i * 3 + 2] = Math.sin(a) * r;
     }
     const dustGeo = new THREE.BufferGeometry();
@@ -308,14 +129,8 @@ if (mount) {
 
     /* ── 2. Light & post ─────────────────────────────────────── */
     scene.add(new THREE.HemisphereLight(0x9ec8ff, 0x0a1428, 0.4));
-    const key = new THREE.DirectionalLight(0xeaf1ff, 1.4);
+    const key = new THREE.DirectionalLight(0xeaf1ff, 1.4);   // soft top key
     key.position.set(4.5, 7.5, 4.5);
-    key.castShadow = true;
-    key.shadow.mapSize.set(2048, 2048);
-    key.shadow.camera.near = 1; key.shadow.camera.far = 20;
-    key.shadow.camera.left = -3.4; key.shadow.camera.right = 3.4;
-    key.shadow.camera.top = 3.4; key.shadow.camera.bottom = -3.4;
-    key.shadow.bias = -0.0004;
     scene.add(key);
     const rim = new THREE.DirectionalLight(BLUE, 1.3);
     rim.position.set(-6, 2.5, -4);
@@ -323,15 +138,22 @@ if (mount) {
 
     const composer = new EffectComposer(renderer);
     composer.addPass(new RenderPass(scene, camera));
-    // (e) subtle DOF — focus is re-aimed at the die every frame in the loop;
-    // small aperture so only the far PCB edges soften. 6.8 ≈ rest distance.
+    // subtle DOF — focus is re-aimed at the die every frame in the loop.
     const bokeh = new BokehPass(scene, camera, { focus: 6.8, aperture: 0.00035, maxblur: 0.008 });
     composer.addPass(bokeh);
-    const bloom = new UnrealBloomPass(new THREE.Vector2(1, 1), 0.5, 0.6, 0.72);
+    const bloom = new UnrealBloomPass(new THREE.Vector2(1, 1), 0.65, 0.55, 0.7); // retuned for the plume
     composer.addPass(bloom);
-    const grain = new ShaderPass(GrainShader);   // (g) micro-grain, ≤0.035
+    const grain = new ShaderPass(GrainShader);   // micro-grain, ≤0.035
     composer.addPass(grain);
     composer.addPass(new OutputPass());
+
+    // reduced-motion designed still: settled plume at amp 0.4 (brief §B.5)
+    if (reduceMotion) {
+      eru.uniforms.uAmp.value = 0.4;
+      eru.uniforms.uProgress.value = 0.08;
+      eru.uniforms.uTime.value = 2.0;
+      eru.uniforms.uOpacity.value = 1;
+    }
 
     /* ── Sizing (unchanged guards) ───────────────────────────── */
     let zoomComp = 1; // narrow-aspect camera pull-back (QA: 390px cropped the chip)
@@ -363,83 +185,93 @@ if (mount) {
     let scrollP = 0;
     const onScroll = () => {
       const h = mount.clientHeight || window.innerHeight;
-      if (!h) { scrollP = 0; return; } // 0-height init guard (QA: NaN poisons pulse accumulators)
+      if (!h) { scrollP = 0; return; } // 0-height init guard (QA: NaN poisons accumulators)
       scrollP = reduceMotion ? 0 : Math.max(0, Math.min(1, window.scrollY / h));
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
 
-    // debug handle for QA — do not remove
-    window.__azenChip = {
-      get camZ() { return camera.position.z; },
-      get lidY() { return lid.position.y; },
-      get zoomComp() { return zoomComp; },
-      pulses: PULSES,
-    };
-
     const easeOutCubic = (x) => 1 - Math.pow(1 - x, 3);
     const clock = new THREE.Clock();
     const basePos = new THREE.Vector3();
-    const lookDie = new THREE.Vector3();
+    const lookPlume = new THREE.Vector3();
     const focusV = new THREE.Vector3();   // reused — no per-frame allocation
     let running = false, t = 0, introT = reduceMotion ? 1.4 : 0, smYaw = 0, smPitch = 0;
+    // pendulum state — phase accumulates so scroll speed-ups never pop
+    let pendPhase = 0, pendP = reduceMotion ? 0.08 : 0;
+
+    // one authored frame from current sim state (t/pendPhase/scrollP/…)
+    const applyFrame = () => {
+      const e = easeOutCubic(introT / 1.4);
+      const p = scrollP;
+
+      // idle: full slow ambient rotation (~40s/rev) + float + cursor parallax
+      rig.rotation.y = t * (Math.PI * 2 / 40) + smYaw + Math.sin(t * 0.22) * 0.052;
+      rig.rotation.x = smPitch;
+      rig.position.y = Math.sin(t * 0.5) * 0.04;
+
+      // living materials
+      core.dieMat.emissiveIntensity = 0.45 + Math.sin(t * 1.1) * 0.2;   // breathe
+
+      // THE ERUPTION — sine ping-pong (~10s); scroll raises amplitude
+      // ×(0.55+0.45p) and pendulum speed ×(1+0.6p). Simmer → rage.
+      pendP = 0.5 - 0.5 * Math.cos(pendPhase * Math.PI * 2);
+      eru.uniforms.uTime.value = t;
+      eru.uniforms.uProgress.value = pendP;
+      eru.uniforms.uAmp.value = 0.55 + 0.45 * p;
+      eru.uniforms.uOpacity.value = e;
+
+      dust.rotation.y = t * 0.008;
+
+      // camera: load-in ease, then scroll dolly toward the die
+      // (x/z scaled by zoomComp so portrait screens keep the core framed)
+      basePos.lerpVectors(INTRO_POS, HERO_POS, e);
+      camera.position.set(basePos.x * zoomComp, basePos.y - 0.6 * p, (basePos.z - 2.2 * p) * zoomComp);
+      lookPlume.set(0, 0.55, 0);           // gaze rises toward the plume base
+      lookCur.lerpVectors(LOOK_BASE, lookPlume, p);
+      camera.lookAt(lookCur);
+
+      bloom.strength = 0.65 + 0.2 * p;
+
+      // visual-only post updates — reads choreography state, never writes it
+      focusV.set(0, 0.3 + rig.position.y, 0);
+      bokeh.uniforms.focus.value = camera.position.distanceTo(focusV);
+      grain.uniforms.time.value = t;
+
+      composer.render();
+    };
 
     const loop = () => {
       if (!running) return;
       const dt = Math.min(clock.getDelta(), 0.05);
       t += dt;
       if (introT < 1.4) introT = Math.min(1.4, introT + dt);
-      const e = easeOutCubic(introT / 1.4);
-      const p = scrollP;
-
-      // idle: float, slow yaw sway, cursor parallax
       smYaw += (yawTarget - smYaw) * 0.05;
       smPitch += (pitchTarget - smPitch) * 0.05;
-      rig.rotation.y = smYaw + Math.sin(t * 0.22) * 0.052;  // ±3°
-      rig.rotation.x = smPitch;
-      rig.position.y = Math.sin(t * 0.5) * 0.04;
-
-      // living materials
-      dieMat.emissiveIntensity = 0.45 + Math.sin(t * 1.1) * 0.2;   // breathe .25→.65
-      pcbMat.emissiveIntensity = 1.4 * e * (1 + 0.4 * p);          // intro fade + scroll boost
-
-      // lid lift past p=0.55 — reveals the die-grid ("opening the system")
-      const lt = easeOutCubic(Math.max(0, Math.min(1, (p - 0.55) / 0.45)));
-      lid.position.y = lt * 0.18;
-      gridMat.emissiveIntensity = 2.4 * lt;
-
-      // data pulses (scroll accelerates)
-      const speedF = 1 + 1.5 * p;
-      for (let i = 0; i < PULSES; i++) {
-        const L = lanes[pulseLane[i]];
-        pulsePhase[i] = (pulsePhase[i] + dt * pulseSpeed[i] * speedF / L.total) % 1;
-      }
-      placePulses();
-      pulseAttr.needsUpdate = true;
-
-      dust.rotation.y = t * 0.008;
-
-      // camera: load-in ease, then scroll dolly toward the die
-      // (x/z scaled by zoomComp so portrait screens keep the chip framed)
-      basePos.lerpVectors(INTRO_POS, HERO_POS, e);
-      camera.position.set(basePos.x * zoomComp, basePos.y - 0.6 * p, (basePos.z - 2.2 * p) * zoomComp);
-      lookDie.set(0, 0.31 + lid.position.y, 0);
-      lookCur.lerpVectors(LOOK_BASE, lookDie, p);
-      camera.lookAt(lookCur);
-
-      bloom.strength = 0.5 + 0.25 * p;
-
-      // visual-only post updates (e/g) — reads choreography state, never writes it
-      focusV.set(0, 0.31 + lid.position.y + rig.position.y, 0);
-      bokeh.uniforms.focus.value = camera.position.distanceTo(focusV);
-      grain.uniforms.time.value = t;
-
-      composer.render();
+      pendPhase += dt * (1 + 0.6 * scrollP) / 10;
+      applyFrame();
       requestAnimationFrame(loop);
     };
 
+    // debug handle v2 for QA — do not remove
+    window.__azenChip = {
+      get camZ() { return camera.position.z; },
+      get plumeT() { return pendP; },
+      get amp() { return eru.uniforms.uAmp.value; },
+      get zoomComp() { return zoomComp; },
+      voxels: eru.count,
+      // QA scrub — advance the sim by s seconds and render one real frame
+      // (headless/hidden panes can't rely on rAF; state math is identical)
+      step(s = 0.1) {
+        t += s;
+        introT = Math.min(1.4, introT + s);
+        pendPhase += s * (1 + 0.6 * scrollP) / 10;
+        applyFrame();
+      },
+    };
+
     if (reduceMotion) {
-      // single designed still: hero framing, traces on, lid closed
+      // single designed still: hero framing, settled glowing lattice
       composer.render();
     } else {
       const play = () => { if (!running) { running = true; clock.getDelta(); requestAnimationFrame(loop); } };
