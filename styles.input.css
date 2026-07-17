@@ -1,7 +1,7 @@
 /* Hanken Grotesk + Geist — the production pairing the user tuned:
-   Hanken carries body + extrabold display, Geist Light carries the thin
-   display lines (Hanken ExtraLight read as too spindly). JetBrains Mono
-   for stamps and numerals. */
+   Geist Light carries the thin headline voice (berco's Helvetica Light role),
+   Hanken Grotesk 700 carries the bold spans + body 400/500. JetBrains Mono
+   stays for the case-study pages' stamps and numerals. */
 @import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=Geist:wght@300;400&family=JetBrains+Mono:wght@400;500&display=swap');
 
 @tailwind base;
@@ -9,12 +9,10 @@
 @tailwind utilities;
 
 /* ==========================================================
-   Tokens
+   Tokens (kept — case-study pages depend on these)
    ==========================================================*/
 :root {
-  /* Production palette restored — near-black indigo-tinted ground,
-     soft radial washes, paper text, one blue. */
-  --ground: oklch(0.06 0.012 260);         /* near-black, tinted indigo */
+  --ground: oklch(0.06 0.012 260);         /* near-black, tinted indigo (case pages) */
   --ground-soft: oklch(0.10 0.012 260);
   --ink-deep: oklch(0.985 0.003 260);      /* headline paper */
   --ink: oklch(0.96 0.005 260);            /* body paper */
@@ -26,6 +24,16 @@
   --indigo-deep-bg: oklch(0.30 0.18 260);
   --paper: oklch(0.985 0.005 260);
   --gray: #86868b;
+
+  /* berco system tokens */
+  --bg: #020202;
+  --card: #0f1011;
+  --card-hover: #151515;
+  --white: hsla(0, 0%, 100%, 0.975);
+  --grey: hsla(0, 0%, 100%, 0.5);
+  --hairline: hsla(0, 0%, 100%, 0.05);
+  --hairline-strong: hsla(0, 0%, 100%, 0.1);
+  --glass: hsla(0, 0%, 100%, 0.04);
 }
 
 /* ==========================================================
@@ -35,6 +43,11 @@ html {
   scroll-behavior: smooth;
   text-rendering: optimizeLegibility;
 }
+
+/* berco: hidden scrollbars — scoped to the marketing page only so the
+   case-study pages keep their native feel. */
+html:has(> body.page-main) { scrollbar-width: none; }
+html:has(> body.page-main)::-webkit-scrollbar { display: none; }
 
 /* Honor user OS preference: no animation, no smooth scroll, no transitions. */
 @media (prefers-reduced-motion: reduce) {
@@ -47,23 +60,14 @@ html {
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }
-  .typewriter-text::after,
-  .animate-marquee {
-    animation: none !important;
-  }
 }
 
-/* Global focus indicator. Every interactive element needs a visible focus.
-   The earlier code declared :focus-visible:ring-* on five elements but missed
-   the FAQ summary, the ROI slider, and the typing terminal-frame. This rule
-   is a global safety net; component-level rings still override. */
+/* Global focus indicator safety net; component rings override. */
 *:focus-visible {
   outline: 2px solid var(--indigo);
   outline-offset: 3px;
   border-radius: 4px;
 }
-/* For pill-shaped buttons and round controls, use a ring instead so we don't
-   get a square outline around a circle. */
 button:focus-visible,
 a:focus-visible.rounded-full,
 .rounded-full:focus-visible {
@@ -80,9 +84,13 @@ body {
   line-height: 1.5;
 }
 
-/* Display voice — Hanken extrabold, sentence case, tight tracking.
-   The production headline voice; thin lines pair via font-geist
-   font-light in markup. */
+/* Marketing page ground — pure berco black. */
+body.page-main {
+  background-color: var(--bg);
+  color: var(--white);
+}
+
+/* Display voice — Hanken extrabold (case-study pages use this). */
 .display {
   font-family: 'Hanken Grotesk', sans-serif;
   font-weight: 800;
@@ -95,43 +103,18 @@ body {
   color: white;
 }
 
-/* ==========================================================
-   Reusable utilities (kept from original)
-   ==========================================================*/
-.no-scrollbar::-webkit-scrollbar { display: none; }
-.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+details > summary { list-style: none; }
+details > summary::-webkit-details-marker { display: none; }
 
-/* Glass nav — light frosted paper (original name preserved) */
+/* ==========================================================
+   Case-study shared chrome (kept verbatim — 7 pages depend on it)
+   ==========================================================*/
 .glass-nav {
   background: oklch(0.06 0.012 260 / 0.7);
   backdrop-filter: saturate(180%) blur(20px);
   -webkit-backdrop-filter: saturate(180%) blur(20px);
 }
 
-/*
-   Panel frame — a drawing sheet: white card, hairline ink border,
-   soft paper shadow. Original class name kept so HTML doesn't rename.
-*/
-.terminal-glow {
-  border: 1px solid var(--line-strong);
-  background: oklch(0.10 0.012 260 / 0.7);
-  box-shadow:
-    0 1px 0 oklch(1 0 0 / 0.04) inset,
-    0 12px 40px -12px oklch(0 0 0 / 0.5);
-  backdrop-filter: blur(20px);
-}
-
-/* Display headlines — solid ink. Original class name kept. */
-.text-glow {
-  color: var(--ink-deep);
-  letter-spacing: -0.02em;
-  background: none;
-  -webkit-background-clip: initial;
-  -webkit-text-fill-color: currentColor;
-}
-
-/* Background field — the original tinted indigo washes on near-black.
-   No generated textures, no grids. */
 .bg-gradient-tr-fixed {
   background:
     radial-gradient(ellipse 1200px 800px at 80% 0%, oklch(0.30 0.18 260 / 0.20), transparent 60%),
@@ -140,8 +123,17 @@ body {
   background-attachment: fixed;
 }
 
-/* Indigo drench — the two committed-color moments (Founder, Final CTA,
-   case CTAs). Deep working blue; text inside stays paper. */
+/* Film-grain veil — case pages only (their body carries this class). */
+body.bg-gradient-tr-fixed::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  pointer-events: none;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
 .bg-indigo-drench {
   background:
     radial-gradient(ellipse 1400px 1000px at 50% 50%, oklch(0.34 0.20 260 / 0.45), transparent 70%),
@@ -149,122 +141,6 @@ body {
   color: var(--paper);
 }
 
-/* Typing sequence — preserved */
-@keyframes typingSequence {
-  0%,  15%  { content: "> Initializing Azen core agent..."; }
-  16%, 35%  { content: "> Securing API handshakes [256-bit encrypted]..."; }
-  36%, 60%  { content: "> Parsing 14,000 rows of unstructured CSV data..."; }
-  61%, 85%  { content: "> Injecting logic vectors into CRM pipeline..."; }
-  86%, 100% { content: "> Success. 42 hours of manual labor automated."; }
-}
-.typewriter-text::after {
-  content: "";
-  animation: typingSequence 10s infinite;
-}
-
-/* details summary — chevron only */
-details > summary { list-style: none; }
-details > summary::-webkit-details-marker { display: none; }
-
-/* Range slider — softer thumb, no colored glow */
-input[type=range] {
-  -webkit-appearance: none;
-  appearance: none;
-  background: transparent;
-  height: 24px;
-}
-input[type=range]::-webkit-slider-runnable-track {
-  height: 2px;
-  background: var(--line-strong);
-  border-radius: 9999px;
-}
-input[type=range]::-moz-range-track {
-  height: 2px;
-  background: var(--line-strong);
-  border-radius: 9999px;
-}
-input[type=range]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: var(--paper);
-  cursor: pointer;
-  margin-top: -11px;
-  box-shadow: 0 1px 4px oklch(0 0 0 / 0.4);
-  border: 1px solid oklch(0 0 0 / 0.2);
-}
-input[type=range]::-moz-range-thumb {
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: var(--paper);
-  cursor: pointer;
-  border: 1px solid oklch(0 0 0 / 0.2);
-}
-
-/* Subtle scroll-line accent (kept; thinner) */
-.scroll-line-fill {
-  background: var(--indigo);
-}
-
-/* Mobile drawer */
-.mobile-drawer { transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
-.mobile-drawer[data-open="false"] { transform: translateY(-100%); }
-.mobile-drawer[data-open="true"]  { transform: translateY(0); }
-
-/* Reveal on scroll */
-.reveal { transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1); }
-
-/* ==========================================================
-   Redesign v2 — process pin, case chrome, selection, FAQ
-   ==========================================================*/
-
-/* Selection carries the one blue */
-::selection { background: var(--indigo); color: var(--paper); }
-
-/* --- Signature scroll moment: the process pin ------------- */
-/* Wrapper is 3 viewports tall; the sticky child holds one. The
-   scroll distance across the wrapper drives phase index + rail
-   fill (set from JS via transform, cheap to animate). */
-.process-pin { height: 320vh; }
-.process-sticky {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  overflow: hidden;
-}
-.process-panel {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  opacity: 0;
-  transform: translateY(32px);
-  transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
-              transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
-  pointer-events: none;
-}
-.process-panel.is-active { opacity: 1; transform: none; pointer-events: auto; }
-.process-panel.is-past   { opacity: 0; transform: translateY(-32px); }
-#process-fill {
-  transition: transform 0.15s linear;
-  will-change: transform;
-}
-[data-process-step].is-on { color: var(--ink-deep); font-weight: 700; }
-
-/* Reduced motion: kill the pin entirely, show the static stack
-   at every viewport width. */
-@media (prefers-reduced-motion: reduce) {
-  .process-pin { display: none !important; }
-  .process-static { display: block !important; }
-}
-
-/* --- Case study cards: uniform browser chrome -------------- */
 .case-chrome {
   display: flex;
   align-items: center;
@@ -290,597 +166,917 @@ input[type=range]::-moz-range-thumb {
   text-overflow: ellipsis;
 }
 
-/* --- FAQ micro-interaction --------------------------------- */
-/* The +→× marker rotation already lives in the markup
-   (group-open:rotate-45); this adds a soft settle on the answer. */
-details[open] > *:not(summary) { animation: faqIn 0.45s cubic-bezier(0.22, 1, 0.36, 1); }
-@keyframes faqIn {
-  from { opacity: 0; transform: translateY(-6px); }
-  to   { opacity: 1; transform: none; }
+/* ==========================================================
+   BERCO SYSTEM — type scale (spec §0.2, exact)
+   ==========================================================*/
+.headline {
+  font-family: 'Geist', 'Hanken Grotesk', sans-serif;
+  font-weight: 300;
+  font-size: 3.5vw;
+  line-height: 100%;
+  letter-spacing: 0;
+}
+.headline-bold {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-weight: 700;
+}
+.subheadline {
+  font-family: 'Geist', 'Hanken Grotesk', sans-serif;
+  font-weight: 300;
+  font-size: 2vw;
+  line-height: 100%;
+}
+.big-description {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-weight: 400;
+  font-size: 1.5vw;
+  line-height: 100%;
+}
+.description {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-weight: 400;
+  font-size: 1vw;
+  line-height: normal;
+}
+.small-description {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-weight: 400;
+  font-size: 0.9vw;
+  line-height: normal;
+}
+@media (max-width: 768px) {
+  .headline { font-size: 7.5vw; }
+  .subheadline { font-size: 5.5vw; }
+  .big-description { font-size: 4.5vw; }
+  .description { font-size: 3.5vw; }
+  .small-description { font-size: 3.5vw; }
+}
+
+/* Color ladder (spec §0.3) */
+.white { color: var(--white); }
+.grey { color: var(--grey); }
+
+/* ==========================================================
+   Section rhythm (spec §0.4) + card material (spec §4 recipe)
+   ==========================================================*/
+.sec { padding: 10vh 10vw; }
+.sec-bleed { padding: 10vh 0; } /* carousels: headers stay in 80vw via .sec-inner */
+.sec-inner { padding: 0 10vw; }
+@media (max-width: 768px) {
+  .sec { padding: 10vw; }
+  .sec-inner { padding: 0 10vw; }
+}
+
+.panel {
+  background-color: var(--card);
+  border-radius: 30px;
+  box-shadow: inset 0 0 0 1px var(--hairline);
+  background-image: radial-gradient(140% 107% at 50% 10%,
+    transparent 40%, hsla(0, 0%, 100%, 0.05) 75%, hsla(0, 0%, 100%, 0.075) 100%);
+}
+@media (max-width: 768px) {
+  .panel { border-radius: 20px; }
+}
+
+/* Masked 4vw grid — flip-card backs + founder note (spec §4 back face). */
+.grid-back::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(hsla(0, 0%, 100%, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, hsla(0, 0%, 100%, 0.05) 1px, transparent 1px);
+  background-size: 4vw 4vw;
+  -webkit-mask-image:
+    linear-gradient(90deg, transparent, black 18%, black 82%, transparent),
+    linear-gradient(180deg, transparent, black 18%, black 82%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(90deg, transparent, black 18%, black 82%, transparent),
+    linear-gradient(180deg, transparent, black 18%, black 82%, transparent);
+  mask-composite: intersect;
+}
+
+/* Shared textbox header (spec §0.6) */
+.textbox {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 5vw;
+}
+.textbox-column {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5vh;
+}
+.textbox-desc { max-width: 22vw; }
+@media (max-width: 768px) {
+  .textbox { flex-direction: column; align-items: flex-start; gap: 2.5vh; }
+  .textbox-column { width: 100%; }
+  .textbox-desc { max-width: 100%; }
+}
+
+/* Eyebrow: #0071e3 pill 1vw×1vh + grey label — the only colour on the page. */
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.5vw;
+}
+.eyebrow .pill {
+  width: 1vw;
+  height: 1vh;
+  border-radius: 2px;
+  background: var(--indigo);
+  flex: none;
+}
+@media (max-width: 768px) {
+  .eyebrow { gap: 2vw; }
+  .eyebrow .pill { width: 4vw; }
+}
+
+/* Circle buttons (hero CTA, carousel arrows, plus buttons) */
+.btn-circle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5vw;
+  height: 2.5vw;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--hairline-strong);
+  background: transparent;
+  color: var(--white);
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+.btn-circle svg { width: 40%; height: 40%; }
+.btn-circle:hover { background: #fff; color: #111; }
+
+/* White pill (nav CTA + contact submit) */
+.btn-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #111;
+  border: 0;
+  border-radius: 999px;
+  padding: 0.9vh 1.4vw;
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-weight: 500;
+  font-size: 0.9vw;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+  white-space: nowrap;
+}
+.btn-pill:hover { opacity: 0.85; }
+@media (max-width: 768px) {
+  .btn-pill { font-size: 3.5vw; padding: 2vw 5vw; }
 }
 
 /* ==========================================================
-   Redesign v2 — boot intro, hero stagger, work gallery, film
+   Nav (glass pill, drop-in) + scroll-top pill (spec §0.7)
    ==========================================================*/
-
-/* --- Boot intro -------------------------------------------- */
-.boot-intro {
+.navigation {
   position: fixed;
-  inset: 0;
+  top: 2.5vh;
+  left: 10vw;
+  right: 10vw;
   z-index: 100;
   display: flex;
   align-items: center;
-  justify-content: center;
-  background: var(--ground);
-  transition: transform 0.65s cubic-bezier(0.76, 0, 0.24, 1);
+  justify-content: space-between;
+  gap: 2vw;
+  padding: 1.1vh 1.1vw;
+  border-radius: 25px;
+  background: var(--glass);
+  border: 1px solid var(--hairline);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: transform 0.75s cubic-bezier(0.37, 0, 0.63, 1), opacity 0.75s cubic-bezier(0.37, 0, 0.63, 1);
 }
-.boot-intro.is-done { transform: translateY(-100%); }
-.boot-word {
-  font-size: clamp(3rem, 10vw, 7rem);
-  color: var(--ink-deep);
+html.js .navigation { transform: translateY(-150%); opacity: 0; }
+html.js .navigation.nav-in { transform: translateY(0); opacity: 1; }
+.nav-wordmark {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.15rem, 1.25vw, 1.5rem);
+  letter-spacing: -0.02em;
+  color: var(--white);
   line-height: 1;
-  text-transform: lowercase; /* the wordmark is lowercase */
-}
-.boot-caret {
-  display: inline-block;
-  width: 0.09em;
-  height: 0.82em;
-  margin-left: 0.06em;
-  background: var(--indigo);
-  vertical-align: baseline;
-  animation: bootBlink 0.55s step-end infinite alternate;
-  transition: opacity 0.2s;
-}
-@keyframes bootBlink { from { opacity: 1; } to { opacity: 0.15; } }
-@media (prefers-reduced-motion: reduce) {
-  .boot-intro { display: none !important; }
-}
-
-/* Hero lines hold until the boot lifts, then stagger in. When there is
-   no boot (repeat visit / reduced motion), body.is-live is set
-   immediately and the stagger plays from load. */
-.hero-line {
-  opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
-              transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
-  transition-delay: var(--d, 0ms);
-}
-body.is-live .hero-line { opacity: 1; transform: none; }
-@media (prefers-reduced-motion: reduce) {
-  .hero-line { opacity: 1 !important; transform: none !important; }
-}
-
-/* --- Work gallery: pinned horizontal scroll-jack ------------ */
-/* Default (mobile / no-JS / reduced motion): native horizontal
-   snap scroll. When JS activates the pin on md+, .is-pinned turns
-   the sticky + transform behaviour on. */
-.work-pin { padding: 7rem 0; }
-.work-viewport { overflow: hidden; }
-.work-track {
-  display: flex;
-  gap: clamp(1.25rem, 3vw, 2.5rem);
-  padding: 0 max(1.5rem, calc((100vw - 80rem) / 2 + 1.5rem));
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-}
-.work-track::-webkit-scrollbar { display: none; }
-.work-panel {
-  flex: 0 0 auto;
-  width: min(85vw, 780px);
-  scroll-snap-align: center;
+  padding-left: 0.5vw;
   text-decoration: none;
 }
-.work-frame {
-  display: flex;
-  flex-direction: column;
-  aspect-ratio: 16 / 9.6;
-  border-radius: 1rem;
-  overflow: hidden;
-  border: 1px solid var(--line);
-  background: oklch(0.09 0.012 260);
-  box-shadow: 0 24px 60px -30px oklch(0 0 0 / 0.6);
-  transition: border-color 0.4s, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+.nav-wordmark .dot-accent { color: var(--indigo); }
+.nav-links { display: flex; gap: 2vw; }
+.nav-links a {
+  color: var(--grey);
+  text-decoration: none;
+  transition: color 0.3s ease;
+  padding: 0.5vh 0;
 }
-.work-panel:hover .work-frame { border-color: var(--line-strong); transform: translateY(-4px); }
-.work-shot {
-  width: 100%;
-  flex: 1;
-  min-height: 0;
-  object-fit: cover;
-  object-position: top;
+.nav-links a:hover { color: var(--white); }
+@media (max-width: 768px) {
+  .navigation { left: 5vw; right: 5vw; border-radius: 15px; padding: 2.5vw 3vw; }
+  .nav-links { display: none; }
 }
-/* Pinned mode (set by JS on md+ with motion allowed) */
-.work-pin.is-pinned { padding: 0; }
-.work-pin.is-pinned .work-sticky {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  overflow: hidden;
-}
-.work-pin.is-pinned .work-track {
-  overflow-x: visible;
-  scroll-snap-type: none;
-  will-change: transform;
-}
-.work-pin.is-pinned .work-panel { width: min(70vw, 900px); }
-#work-fill { transition: transform 0.15s linear; will-change: transform; }
 
-/* --- Brand film scale --------------------------------------- */
-.film-scale {
-  transform: scale(0.86);
-  transform-origin: center center;
-  will-change: transform;
+.navigation-bottom {
+  position: fixed;
+  bottom: 2.5vh;
+  right: 2.5vw;
+  z-index: 100;
+  width: 3vw;
+  height: 3vw;
+  min-width: 48px;
+  min-height: 48px;
+  border-radius: 50%;
+  border: 1px solid var(--hairline-strong);
+  background: var(--glass);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+.navigation-bottom.is-on { opacity: 1; pointer-events: auto; }
+.navigation-bottom svg { width: 38%; height: 38%; }
+
+/* ==========================================================
+   Loader — "azen." gradient shimmer (spec §0.7 loader)
+   ==========================================================*/
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: var(--bg);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.25s ease-in-out;
+}
+html.js .loading-screen { display: flex; }
+.loading-screen.is-out { opacity: 0; }
+.loader-word {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: clamp(3rem, 6vw, 6rem);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.gradient-text {
+  background: linear-gradient(90deg,
+    hsla(0, 0%, 100%, 0.25) 0%, #fff 50%, hsla(0, 0%, 100%, 0.25) 100%);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: loaderShimmer 2s ease-in-out infinite alternate;
+}
+.loader-word .dot-accent { color: var(--indigo); }
+@keyframes loaderShimmer {
+  from { background-position: 100% 0; }
+  to { background-position: 0% 0; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .film-scale { transform: none !important; }
+  .loading-screen { display: none !important; }
 }
 
 /* ==========================================================
-   Redesign v2.1 — reference-driven pass (Mobbin board)
+   Entrance gating — progressive. Elements hide ONLY once
+   enhance.js adds html.fx; no-JS/failed-JS users see everything.
    ==========================================================*/
-
-/* --- Hero light beam (Grok company-page register) -----------
-   A single directional blade of indigo light entering from the
-   right edge. Pure CSS conic gradient + blur — no imagery. */
-.hero-beam {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: conic-gradient(from 262deg at 112% 34%,
-    transparent 42%,
-    oklch(0.62 0.17 256 / 0.10) 48.5%,
-    oklch(0.82 0.11 256 / 0.20) 50%,
-    oklch(0.62 0.17 256 / 0.10) 51.5%,
-    transparent 58%);
-  filter: blur(22px);
-  animation: beamBreathe 9s ease-in-out infinite alternate;
-}
-@keyframes beamBreathe {
-  from { opacity: 0.55; }
-  to   { opacity: 1; }
+html.fx [data-fx="fade"],
+html.fx [data-fx="fade-slow"],
+html.fx [data-hero] {
+  opacity: 0;
+  will-change: opacity;
 }
 @media (prefers-reduced-motion: reduce) {
-  .hero-beam { animation: none; opacity: 0.7; }
+  html.fx [data-fx="fade"],
+  html.fx [data-fx="fade-slow"],
+  html.fx [data-hero] { opacity: 1 !important; }
 }
 
-/* --- Stat cards (Spade register) -----------------------------
-   Hairline corner ticks drawn with background gradients; mono
-   label up top, display numeral at the bottom. */
-.stat-card {
+/* ==========================================================
+   1. Hero (spec §1 layout, live 3D)
+   ==========================================================*/
+.hero {
   position: relative;
-  min-height: 10.5rem;
-  padding: 1.5rem 1.4rem 1.3rem;
+  height: 100vh;
+  margin-bottom: 10vh;
+  overflow: hidden;
+}
+.hero-visual {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60%;
+  height: 60%;
+  z-index: 0;
+}
+.hero-3d {
+  position: absolute;
+  inset: 0;
+  /* no-WebGL fallback glow, tuned to the #020202 ground */
+  background:
+    radial-gradient(ellipse 62% 58% at 50% 48%, oklch(0.28 0.16 260 / 0.30), transparent 72%),
+    var(--bg);
+}
+.hero-3d canvas { display: block; width: 100%; height: 100%; }
+
+/* 4-way gradient vignette — melts the render into #020202 (spec §1).
+   Two-stop easing so the fade terminus never reads as a band. */
+.fade-edge { position: absolute; pointer-events: none; z-index: 1; }
+.fade-t { top: 0; left: 0; right: 0; height: 42%; background: linear-gradient(to bottom, #020202 0%, rgba(2, 2, 2, 0.6) 38%, rgba(2, 2, 2, 0) 100%); }
+.fade-b { bottom: 0; left: 0; right: 0; height: 34%; background: linear-gradient(to top, #020202 0%, rgba(2, 2, 2, 0.55) 45%, rgba(2, 2, 2, 0) 100%); }
+.fade-l { top: 0; bottom: 0; left: 0; width: 30%; background: linear-gradient(to right, #020202 0%, rgba(2, 2, 2, 0.55) 45%, rgba(2, 2, 2, 0) 100%); }
+.fade-r { top: 0; bottom: 0; right: 0; width: 30%; background: linear-gradient(to left, #020202 0%, rgba(2, 2, 2, 0.55) 45%, rgba(2, 2, 2, 0) 100%); }
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  padding: 25vh 10vw 5vh;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+}
+.hero-content a, .hero-content button { pointer-events: auto; }
+.hero-left {
+  width: 57.5%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background-image:
-    linear-gradient(var(--line-strong), var(--line-strong)),
-    linear-gradient(var(--line-strong), var(--line-strong)),
-    linear-gradient(var(--line-strong), var(--line-strong)),
-    linear-gradient(var(--line-strong), var(--line-strong)),
-    linear-gradient(var(--line-strong), var(--line-strong)),
-    linear-gradient(var(--line-strong), var(--line-strong)),
-    linear-gradient(var(--line-strong), var(--line-strong)),
-    linear-gradient(var(--line-strong), var(--line-strong));
-  background-repeat: no-repeat;
-  background-size:
-    16px 1px, 1px 16px,   /* top-left */
-    16px 1px, 1px 16px,   /* top-right */
-    16px 1px, 1px 16px,   /* bottom-left */
-    16px 1px, 1px 16px;   /* bottom-right */
-  background-position:
-    top left, top left,
-    top right, top right,
-    bottom left, bottom left,
-    bottom right, bottom right;
 }
-
-/* --- Process ghost numeral (FLORA register) ------------------
-   Outlined, transparent-filled phase number. */
-.ghost-num {
-  color: transparent;
-  -webkit-text-stroke: 1.5px oklch(0.985 0.003 260 / 0.30);
-  transition: -webkit-text-stroke-color 0.4s;
-}
-
-/* --- Work gallery: shot zoom on hover (Koto register) ------- */
-.work-shot {
-  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.work-panel:hover .work-shot { transform: scale(1.03); }
-@media (prefers-reduced-motion: reduce) {
-  .work-panel:hover .work-shot { transform: none; }
-}
-
-/* --- Final CTA glow (Antimetal register) ---------------------
-   The one full-commitment blue moment: a centred radial glow
-   haloing the headline. Both ellipses reach full transparency
-   well inside the section, so the footer continues seamlessly —
-   no hard edge. CSS only. */
-.bg-cta-glow {
-  background:
-    radial-gradient(ellipse 900px 560px at 50% 55%, oklch(0.52 0.22 258 / 0.60), transparent 64%),
-    radial-gradient(ellipse 1500px 880px at 50% 58%, oklch(0.36 0.20 258 / 0.32), transparent 70%),
-    var(--ground);
-  color: var(--paper);
-}
-
-/* --- Client marquee ------------------------------------------
-   Track holds two identical copies of the name run; translating
-   the track by exactly -50% loops seamlessly. */
-.marquee-mask {
-  overflow: hidden;
-  -webkit-mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
-  mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
-}
-.marquee-track {
+.hero-cta-row {
   display: flex;
-  width: max-content;
-  animation: marqueeHalf 55s linear infinite;
+  align-items: center;
+  gap: 1vw;
+  margin-top: 5vh;
 }
-@keyframes marqueeHalf { to { transform: translateX(-50%); } }
-/* Scroll-linked glide takes over from the auto-marquee (JS drives translateX). */
-.marquee-track[data-glide] { animation: none; will-change: transform; }
-@media (prefers-reduced-motion: reduce) {
-  .marquee-track { animation: none; }
+.hero-label { display: flex; flex-direction: column; gap: 1vh; }
+.hero-right {
+  width: 42.5%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2.5vh;
+  padding-top: 40vh;
+  text-align: right;
 }
-
-/* --- Footer ghost wordmark (Koto register) ------------------- */
-.footer-word {
-  color: transparent;
-  -webkit-text-stroke: 1px oklch(0.985 0.003 260 / 0.10);
-  line-height: 0.78;
-  user-select: none;
+.pill-outline {
+  display: inline-flex;
+  align-items: center;
+  border: 2px solid var(--hairline-strong);
+  border-radius: 999px;
+  padding: 0.9vh 1.3vw;
+  color: var(--white);
 }
-
-/* --- Hero scroll cue ------------------------------------------ */
-.scroll-cue-arrow {
-  display: inline-block;
-  animation: cueBob 2.2s cubic-bezier(0.45, 0, 0.55, 1) infinite;
-}
-@keyframes cueBob {
-  0%, 100% { transform: translateY(0); opacity: 0.5; }
-  50%      { transform: translateY(6px); opacity: 1; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .scroll-cue-arrow { animation: none; }
+@media (max-width: 768px) {
+  .hero { height: 100svh; }
+  .hero-visual {
+    width: 100%;
+    height: 45%;
+    top: auto;
+    left: 0;
+    bottom: 2.5vh;
+    transform: none;
+  }
+  .hero-content { padding: 18vh 10vw 5vh; }
+  .hero-left { width: 100%; }
+  .hero-right { display: none; }
+  .hero-cta-row { margin-top: 4vh; }
 }
 
 /* ==========================================================
-   Redesign v2.3 — atmosphere + system visuals
+   2. About + metrics (spec §2)
    ==========================================================*/
+.stats {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  margin-top: 10vh;
+}
+.stat {
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5vh;
+}
+.stat-inner { display: flex; flex-direction: column; gap: 2.5vh; align-items: flex-start; }
+.stat-head { display: flex; align-items: center; gap: 0.5vw; }
+.stat-ico {
+  width: 2.5vw;
+  height: 2.5vw;
+  min-width: 40px;
+  min-height: 40px;
+  border-radius: 50%;
+  background: var(--card);
+  box-shadow: inset 0 0 0 1px var(--hairline);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  flex: none;
+}
+.stat-ico svg { width: 1vw; height: 1vw; min-width: 16px; min-height: 16px; }
+.stat-divider {
+  width: 1px;
+  height: 15vh;
+  background: var(--hairline-strong);
+  align-self: center;
+  flex: none;
+}
+@media (max-width: 768px) {
+  .stats { flex-direction: column; gap: 5vw; margin-top: 7.5vh; }
+  .stat {
+    width: 100%;
+    background: var(--card);
+    border-radius: 10px;
+    box-shadow: inset 0 0 0 1px var(--hairline);
+    padding: 5vw;
+    align-items: flex-start;
+  }
+  .stat .headline { font-size: 12.5vw; }
+  .stat-ico { width: 10vw; height: 10vw; }
+  .stat-head { gap: 2.5vw; }
+  .stat-divider { display: none; }
+}
 
-/* --- Film grain ------------------------------------------------
-   Fixed SVG-noise veil over the whole page. Pointer-transparent,
-   barely-there — it kills the "flat digital black" and reads as
-   material. */
-body::after {
-  content: '';
-  position: fixed;
+/* ==========================================================
+   3+6. Carousel system (spec §3) — case studies + integrations
+   ==========================================================*/
+.carousel-viewport { overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.carousel-viewport::-webkit-scrollbar { display: none; }
+.carousel-viewport.is-embla { overflow: hidden; }
+.carousel-container { display: flex; gap: 0.5vw; margin-top: 5vh; }
+.carousel-spacer { flex: 0 0 9.5vw; min-width: 9.5vw; }
+.carousel-nav {
+  display: flex;
+  justify-content: center;
+  gap: 0.5vw;
+  margin-top: 5vh;
+}
+.carousel-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25vw;
+  height: 2.25vw;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 50%;
+  border: 0;
+  background: var(--card);
+  box-shadow: inset 0 0 0 1px var(--hairline);
+  color: var(--white);
+  cursor: pointer;
+  transition: opacity 0.3s ease, background 0.3s ease;
+}
+.carousel-btn svg { width: 40%; height: 40%; }
+.carousel-btn:disabled { opacity: 0.5; cursor: default; }
+.carousel-btn:not(:disabled):hover { background: var(--card-hover); }
+@media (max-width: 768px) {
+  .carousel-spacer { flex-basis: 7.5vw; min-width: 7.5vw; }
+  .carousel-nav { gap: 2.5vw; }
+}
+
+/* Case-study flip cards (spec §3 geometry + §4 flip mechanics) */
+.case-card {
+  position: relative;
+  flex: 0 0 20vw;
+  height: 52.5vh;
+  perspective: 5000px;
+  cursor: pointer;
+  outline-offset: 4px;
+}
+.case-flip {
+  position: absolute;
   inset: 0;
-  z-index: 90;
-  pointer-events: none;
-  opacity: 0.045;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  transform-style: preserve-3d;
+  transition: transform 1s ease;
 }
-
-/* --- Mouse spotlight -------------------------------------------
-   A soft indigo pool that trails the pointer. JS feeds --mx/--my;
-   hidden on touch / reduced motion. */
-.spotlight {
-  position: fixed;
+.case-card.flipped .case-flip { transform: rotateX(180deg); }
+.case-face {
+  position: absolute;
   inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  background: radial-gradient(560px circle at var(--mx, 50%) var(--my, 35%),
-    oklch(0.45 0.19 258 / 0.09), transparent 65%);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  overflow: hidden;
+  padding: 2vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  transition: filter 0.3s ease;
 }
-@media (hover: none), (prefers-reduced-motion: reduce) {
-  .spotlight { display: none; }
+.case-card:hover .case-face { filter: brightness(1.1); }
+.case-back {
+  transform: rotateX(180deg);
+  justify-content: space-between;
 }
-
-/* --- Scroll progress bar -------------------------------------- */
-.scroll-progress {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  z-index: 95;
-  background: var(--indigo);
-  transform-origin: left;
-  transform: scaleX(0);
-  pointer-events: none;
+.case-metric {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Geist', 'Hanken Grotesk', sans-serif;
+  font-weight: 300;
+  font-size: 5.5vw;
+  line-height: 1;
+  color: var(--white);
+  white-space: nowrap;
 }
-
-/* --- Hero: stronger beam + counter-glow ------------------------ */
-.hero-beam {
-  background: conic-gradient(from 262deg at 112% 34%,
-    transparent 42%,
-    oklch(0.62 0.17 256 / 0.15) 48.5%,
-    oklch(0.82 0.11 256 / 0.28) 50%,
-    oklch(0.62 0.17 256 / 0.15) 51.5%,
-    transparent 58%);
-}
-.hero-glow-bl {
+/* 4-direction vignette melting the visual into the card (spec §3). */
+.card-vignette {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: radial-gradient(ellipse 620px 420px at 4% 96%,
-    oklch(0.32 0.18 260 / 0.28), transparent 70%);
+  background:
+    linear-gradient(to bottom, rgba(15, 16, 17, 0) 70%, #0f1011 100%),
+    linear-gradient(to top, rgba(15, 16, 17, 0) 70%, #0f1011 100%),
+    linear-gradient(to right, rgba(15, 16, 17, 0) 70%, #0f1011 100%),
+    linear-gradient(to left, rgba(15, 16, 17, 0) 70%, #0f1011 100%);
+}
+.case-foot {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1vw;
+}
+.case-foot-copy { display: flex; flex-direction: column; gap: 0.5vh; }
+.case-plus {
+  width: 2.25vw;
+  height: 2.25vw;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--hairline-strong);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  flex: none;
+  transition: background 0.3s ease;
+}
+.case-plus svg { width: 40%; height: 40%; transition: transform 0.3s ease; }
+.case-card:hover .case-plus { background: hsla(0, 0%, 100%, 0.025); }
+.case-card:hover .case-plus svg { transform: rotate(45deg); }
+.case-quote { position: relative; z-index: 2; }
+.case-see {
+  position: relative;
+  z-index: 2;
+  color: var(--grey);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+.case-see:hover { color: var(--white); }
+@media (max-width: 768px) {
+  .case-card { flex: 0 0 77.5vw; height: 100vw; }
+  .case-face { padding: 5vw; }
+  .case-metric { font-size: 17.5vw; }
+  .case-plus { width: 11vw; height: 11vw; }
+  .case-card:hover .case-face { filter: none; }
 }
 
-/* --- Capability system diagrams --------------------------------
-   Small engineered visuals: pulsing agent node, traveling sync
-   pulse, scanning retrieval stack. */
-.cap-viz { width: 240px; }
-.viz-dash {
-  stroke-dasharray: 4 4;
-  animation: vizDash 1.1s linear infinite;
+/* Integration cards — same geometry, text wordmark as the visual */
+.int-wordmark {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 1.9vw;
+  letter-spacing: -0.01em;
+  color: var(--grey);
+  white-space: nowrap;
 }
-@keyframes vizDash { to { stroke-dashoffset: -8; } }
-.viz-pulse {
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: vizPulse 2.2s ease-in-out infinite;
-}
-@keyframes vizPulse {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50%      { transform: scale(1.5); opacity: 0.55; }
-}
-.viz-scan {
-  animation: vizScan 3.2s cubic-bezier(0.45, 0, 0.55, 1) infinite;
-}
-@keyframes vizScan {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(58px); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .viz-dash, .viz-pulse, .viz-scan { animation: none; }
+.int-card { cursor: default; }
+@media (max-width: 768px) {
+  .int-wordmark { font-size: 7vw; }
 }
 
 /* ==========================================================
-   Redesign v2.4 — showpiece pass
+   4. Founder (spec §4 — flip squares, single person)
    ==========================================================*/
-
-/* --- Word-mask headline reveals ---------------------------------
-   JS splits [data-words] headlines into masked word spans; the
-   reveal observer adds .words-in and each word slides up from
-   behind its mask with a stagger (--wd set per word by JS). */
-[data-words] .w {
-  display: inline-block;
+.founder-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1vw;
+  margin-top: 5vh;
+}
+.founder-card {
+  position: relative;
+  width: 39.5vw;
+  height: 39.5vw;
+  perspective: 5000px;
+}
+.founder-card[data-flip] { cursor: pointer; }
+.founder-flip {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transition: transform 1s ease;
+}
+.founder-card.flipped .founder-flip { transform: rotateX(180deg); }
+.founder-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
   overflow: hidden;
-  vertical-align: bottom;
-  padding-bottom: 0.08em;
-  margin-bottom: -0.08em;
-}
-[data-words] .w > span {
-  display: inline-block;
-  transform: translateY(115%);
-  transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
-  transition-delay: var(--wd, 0ms);
-}
-[data-words].words-in .w > span { transform: none; }
-@media (prefers-reduced-motion: reduce) {
-  [data-words] .w > span { transform: none !important; transition: none !important; }
-}
-
-/* --- Our Works cards (sanjaya vertical case cards) ------------- */
-.work-card {
-  display: grid;
-  grid-template-columns: 1fr;
-  border: 1px solid var(--line);
-  border-radius: 1.25rem;
-  overflow: hidden;
-  background: oklch(0.09 0.012 260 / 0.5);
-  text-decoration: none;
-  transition: border-color 0.4s, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-}
-@media (min-width: 768px) {
-  .work-card { grid-template-columns: 1.15fr 1fr; }
-}
-.work-card:hover { border-color: var(--line-strong); transform: translateY(-4px); }
-.work-card-media { overflow: hidden; aspect-ratio: 16 / 10; background: oklch(0.06 0.012 260); }
-.work-card-media img {
-  width: 100%; height: 100%; object-fit: cover; object-position: top;
-  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.work-card:hover .work-card-media img { transform: scale(1.04); }
-.work-card-body { padding: 1.75rem 1.75rem 1.6rem; display: flex; flex-direction: column; }
-@media (min-width: 768px) { .work-card-body { padding: 2.5rem; } }
-@media (prefers-reduced-motion: reduce) {
-  .work-card:hover { transform: none; }
-  .work-card:hover .work-card-media img { transform: none; }
-}
-
-/* --- Service cards (sanjaya numbered /01-/04) ------------------ */
-.svc-card {
+  padding: 5vw;
   display: flex;
   flex-direction: column;
-  min-height: 20rem;
-  padding: 2rem 1.9rem 2rem;
-  border: 1px solid var(--line);
-  border-radius: 1.25rem;
-  background: oklch(0.09 0.012 260 / 0.5);
-  transition: border-color 0.4s, background 0.4s;
+  justify-content: flex-end;
+  transition: filter 0.3s ease;
 }
-.svc-card:hover { border-color: var(--line-strong); background: oklch(0.11 0.012 260 / 0.6); }
-@media (min-width: 768px) { .svc-card { padding: 2.75rem 2.5rem; } }
-
-/* --- Why-us comparison table (sanjaya 3-column) ---------------- */
-.cmp-table { border: 1px solid var(--line); border-radius: 1.25rem; overflow: hidden; }
-.cmp-row { display: grid; grid-template-columns: 1.2fr 1fr 1fr 1fr; align-items: stretch; }
-.cmp-row + .cmp-row { border-top: 1px solid var(--line); }
-.cmp-cell { padding: 1.1rem 1rem; font-size: 0.9rem; display: flex; align-items: center; }
-.cmp-cell.rowlabel { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--gray); }
-.cmp-col-azen { background: oklch(0.30 0.18 260 / 0.14); border-left: 1px solid oklch(0.60 0.18 258 / 0.35); border-right: 1px solid oklch(0.60 0.18 258 / 0.35); }
-.cmp-head .cmp-cell { padding-top: 1.4rem; padding-bottom: 1.4rem; font-family: 'Hanken Grotesk', sans-serif; font-weight: 700; font-size: 1rem; text-transform: none; letter-spacing: -0.01em; color: var(--ink-deep); }
-@media (max-width: 767px) {
-  .cmp-cell { padding: 0.9rem 0.8rem; font-size: 0.82rem; }
-  .cmp-head .cmp-cell { font-size: 0.9rem; }
+.founder-card[data-flip]:hover .founder-face { filter: brightness(1.1); }
+.founder-back {
+  transform: rotateX(180deg);
+  justify-content: flex-start;
+  gap: 2.5vh;
 }
-
-/* --- Pricing tiers (sanjaya, scope-based, no numbers) --------- */
-.price-card {
-  display: flex; flex-direction: column;
-  padding: 2rem 1.9rem 2rem;
-  border: 1px solid var(--line);
-  border-radius: 1.5rem;
-  background: oklch(0.09 0.012 260 / 0.5);
-  transition: border-color 0.4s, transform 0.5s cubic-bezier(0.22,1,0.36,1);
-}
-.price-card:hover { transform: translateY(-4px); border-color: var(--line-strong); }
-.price-card.is-featured {
-  background: oklch(0.30 0.18 260 / 0.16);
-  border-color: oklch(0.60 0.18 258 / 0.5);
-}
-@media (min-width: 768px) { .price-card { padding: 2.75rem 2.4rem; } }
-@media (prefers-reduced-motion: reduce){ .price-card:hover { transform: none; } }
-
-/* --- Testimonial cards (quote + See full build) --------------- */
-.tmn-card {
-  display: flex; flex-direction: column;
-  padding: 2rem;
-  border: 1px solid var(--line);
-  border-radius: 1.25rem;
-  background: oklch(0.09 0.012 260 / 0.5);
-}
-
-/* --- Trusted-by row ------------------------------------------- */
-.trust-name { color: oklch(0.985 0.003 260 / 0.4); transition: color 0.3s; }
-.trust-name:hover { color: oklch(0.985 0.003 260 / 0.75); }
-
-/* --- Cinematic full-bleed video hero (sanjaya-style, our spin) ---
-   One video covers the first screen; a dark scrim keeps type legible
-   and melts to --ground at the base so there's no hard section edge. */
-.hero-cinematic { min-height: 100svh; }
-.hero-video {
+.founder-photo {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  z-index: 0;
+  object-position: top;
 }
-/* Real-time WebGL hero mount. The gradient is the no-WebGL fallback —
-   an on-theme indigo glow on the ground; the <canvas> paints over it. */
-.hero-3d {
+.founder-photo-fade {
   position: absolute;
   inset: 0;
-  z-index: 0;
-  background:
-    radial-gradient(ellipse 62% 58% at 50% 48%, oklch(0.30 0.18 260 / 0.32), transparent 72%),
-    radial-gradient(ellipse 120% 80% at 50% 120%, oklch(0.24 0.14 260 / 0.30), transparent 70%),
-    var(--ground);
-}
-.hero-3d canvas { display: block; width: 100%; height: 100%; }
-.hero-scrim {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
+  background: linear-gradient(to top, #0f1011 10%, rgba(15, 16, 17, 0) 55%);
   pointer-events: none;
-  background:
-    /* edge vignette — darkens the corners so pinned text stays legible
-       while the centre stays clear for the 3D scene */
-    radial-gradient(ellipse 78% 78% at 50% 46%, transparent 45%, oklch(0.03 0.012 260 / 0.62) 100%),
-    /* top band for the nav + bottom melt into the page ground */
-    linear-gradient(180deg,
-      oklch(0.03 0.012 260 / 0.55) 0%,
-      transparent 22%,
-      transparent 68%,
-      oklch(0.04 0.012 260 / 0.55) 88%,
-      var(--ground) 100%);
+}
+.founder-id { position: relative; z-index: 2; display: flex; align-items: flex-end; justify-content: space-between; gap: 1vw; }
+.founder-id-copy { display: flex; flex-direction: column; gap: 1vh; }
+.founder-plus {
+  width: 3.5vw;
+  height: 3.5vw;
+  min-width: 48px;
+  min-height: 48px;
+  border-radius: 50%;
+  background: var(--glass);
+  border: 1px solid var(--hairline-strong);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  flex: none;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+.founder-plus svg { width: 38%; height: 38%; transition: transform 0.5s ease; }
+.founder-card[data-flip]:hover .founder-plus { background: #fff; color: #111; }
+.founder-card[data-flip]:hover .founder-plus svg { transform: rotate(90deg); }
+.founder-note {
+  justify-content: space-between;
+  gap: 2.5vh;
+}
+@media (max-width: 768px) {
+  .founder-row { flex-direction: column; gap: 5vw; }
+  .founder-card { width: 100%; height: 100vw; }
+  .founder-face { padding: 7.5vw; }
+  .founder-plus { width: 12vw; height: 12vw; }
 }
 
-/* Floating nav: hidden while in the hero (corner wordmark stands in),
-   fades in as a sticky bar once you scroll into the content. */
-.floating-nav { transition: opacity 0.45s ease, transform 0.45s ease; }
-.floating-nav.at-top { opacity: 0; transform: translateY(-12px); pointer-events: none !important; }
-@media (prefers-reduced-motion: reduce) {
-  .hero-video { display: none; }
-  .hero-cinematic { background: var(--ground); }
+/* ==========================================================
+   5. Services (spec §5 — 2×2 per brief, hover swell verbatim)
+   ==========================================================*/
+.services-wrap { margin-top: 5vh; }
+.services-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1vw;
 }
-
-/* --- Hero core object -------------------------------------------
-   Generated render floats slowly; JS adds pointer parallax on the
-   wrapper. The halo sits behind the image. */
-.core-wrap { position: relative; }
-.core-halo {
-  position: absolute;
-  inset: -18%;
-  pointer-events: none;
-  background: radial-gradient(ellipse closest-side, oklch(0.40 0.20 258 / 0.40), transparent 72%);
-  filter: blur(10px);
-}
-.core-float {
+.service-card {
+  width: 39.5vw;
+  height: 30vh;
+  padding: 2vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: background 0.5s ease, transform 0.5s ease, box-shadow 0.5s ease;
   position: relative;
-  animation: coreFloat 7s ease-in-out infinite alternate;
-  will-change: transform;
-  /* melt the render's square edges into the page ground */
-  -webkit-mask-image: radial-gradient(ellipse 72% 72% at 50% 48%, black 52%, transparent 76%);
-  mask-image: radial-gradient(ellipse 72% 72% at 50% 48%, black 52%, transparent 76%);
 }
-@keyframes coreFloat {
-  from { transform: translateY(-8px); }
-  to   { transform: translateY(10px); }
+.service-card:hover {
+  background-color: var(--card-hover);
+  transform: scale(1.05);
+  box-shadow: 0 0 5vw hsla(0, 0%, 100%, 0.1), inset 0 0 0 1px var(--hairline);
+  z-index: 2;
 }
-.core-parallax {
-  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: transform;
+.service-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1vw;
 }
-@media (prefers-reduced-motion: reduce) {
-  .core-float { animation: none; }
-  .core-parallax { transform: none !important; }
+.service-row svg {
+  width: 1.25vw;
+  height: 1.25vw;
+  min-width: 20px;
+  min-height: 20px;
+  color: var(--grey);
+  flex: none;
+}
+.services-nav { display: none; }
+@media (max-width: 768px) {
+  .services-grid { flex-wrap: nowrap; gap: 2.5vw; }
+  .services-wrap .carousel-viewport { overflow-x: auto; }
+  .services-wrap .carousel-viewport.is-embla { overflow: hidden; }
+  .service-card { width: 70vw; flex: 0 0 70vw; height: 65vw; padding: 5vw; }
+  .service-card:hover { transform: none; background-color: var(--card); box-shadow: inset 0 0 0 1px var(--hairline); }
+  .services-nav { display: flex; }
+}
+@media (min-width: 769px) {
+  /* Embla stays mounted but inactive ≥769px; the grid must lay out
+     as a plain 2×2 wrap with no clipping. */
+  .services-wrap .carousel-viewport,
+  .services-wrap .carousel-viewport.is-embla { overflow: visible; }
 }
 
-/* --- System map --------------------------------------------------
-   Full-width animated orchestration diagram. Hairline paths,
-   travelling blue pulses (SMIL), soft core glow. */
-.sysmap-glow { filter: drop-shadow(0 0 18px oklch(0.55 0.22 258 / 0.55)); }
-/* anime.js scales the core group — origin at its own centre, not the SVG origin */
-.smap-core { transform-box: fill-box; transform-origin: center; }
-.sysmap text {
-  font-family: 'JetBrains Mono', monospace;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+/* ==========================================================
+   7. Mindset sequence (spec §7 — framed split panel, live 3D)
+   ==========================================================*/
+.sequence-frame {
+  position: relative;
+  border: 1px solid var(--hairline);
+  border-radius: 30px;
+  padding: 0 5vw;
+  display: flex;
+  align-items: center;
+  gap: 5vw;
 }
-
-/* --- CTA horizon image -------------------------------------------
-   Generated arc sits at the section base, masked so it melts into
-   the ground on every edge. */
-.cta-horizon {
+.sequence-glow {
   position: absolute;
-  inset-inline: 0;
-  bottom: 0;
+  inset: 0;
+  border-radius: 30px;
+  box-shadow: inset 0 0 2.5vw hsla(0, 0%, 100%, 0.05);
+  pointer-events: none;
+}
+.sequence-text {
+  width: 45%;
+  padding: 7.5vh 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5vh;
+}
+.sequence-visual {
+  width: 55%;
+  aspect-ratio: 1 / 1;
+  position: relative;
+  align-self: center;
+}
+#chip-panel { position: absolute; inset: 0; }
+#chip-panel canvas { display: block; width: 100%; height: 100%; }
+.sequence-visual .fade-t,
+.sequence-visual .fade-b { background: linear-gradient(to bottom, #020202, rgba(2, 2, 2, 0)); }
+.sequence-visual .fade-b { background: linear-gradient(to top, #020202, rgba(2, 2, 2, 0)); }
+.sequence-visual .fade-l { background: linear-gradient(to right, #020202, rgba(2, 2, 2, 0)); }
+.sequence-visual .fade-r { background: linear-gradient(to left, #020202, rgba(2, 2, 2, 0)); }
+@media (max-width: 768px) {
+  .sequence-frame { flex-direction: column; padding: 7.5vw 7.5vw 0; border-radius: 20px; gap: 5vw; }
+  .sequence-glow { border-radius: 20px; }
+  .sequence-text { width: 100%; padding: 0; }
+  .sequence-visual { width: 100%; }
+}
+
+/* ==========================================================
+   8. FAQ (spec §9 new-section table)
+   ==========================================================*/
+.faq-list { margin-top: 5vh; border-top: 1px solid var(--hairline-strong); }
+.faq-row { border-bottom: 1px solid var(--hairline-strong); }
+.faq-row summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2vw;
+  padding: 3.5vh 0;
+  cursor: pointer;
+}
+.faq-plus {
+  width: 2.25vw;
+  height: 2.25vw;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--hairline-strong);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--grey);
+  flex: none;
+  transition: transform 0.3s ease;
+}
+.faq-plus svg { width: 40%; height: 40%; }
+.faq-row[open] .faq-plus { transform: rotate(45deg); }
+.faq-answer {
+  max-width: 55vw;
+  padding: 0 0 3.5vh;
+}
+.faq-row[open] .faq-answer { animation: faqFade 1.25s cubic-bezier(0.37, 0, 0.63, 1); }
+@keyframes faqFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@media (max-width: 768px) {
+  .faq-answer { max-width: 100%; }
+  .faq-plus { width: 11vw; height: 11vw; }
+}
+
+/* ==========================================================
+   9. Contact / footer (spec §8)
+   ==========================================================*/
+.contact-wrap {
+  display: flex;
+  gap: 5vw;
+  min-height: 80vh;
+  margin-top: 5vh;
+}
+.contact-left {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 5vh;
+}
+.contact-items { display: flex; flex-direction: column; gap: 5vh; }
+.contact-item { display: flex; gap: 1vw; }
+.contact-ico {
+  width: 3.5vw;
+  height: 3.5vw;
+  min-width: 48px;
+  min-height: 48px;
+  border-radius: 10px;
+  background: var(--card);
+  box-shadow: inset 0 0 0 1px var(--hairline);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  flex: none;
+}
+.contact-ico svg { width: 35%; height: 35%; }
+.contact-item-copy { display: flex; flex-direction: column; gap: 1vh; }
+.contact-item-copy a { color: var(--white); text-decoration: none; }
+.contact-item-copy a:hover { text-decoration: underline; }
+.contact-card {
+  width: 70%;
+  padding: 10vh 5vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 5vh;
+}
+.contact-form { display: flex; flex-direction: column; gap: 4vh; }
+.contact-input {
   width: 100%;
-  height: 72%;
-  object-fit: cover;
-  object-position: center bottom;
-  pointer-events: none;
-  opacity: 0.85;
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 45%);
-  mask-image: linear-gradient(to bottom, transparent 0%, black 45%);
-}
-
-/* --- Ghost section numerals ------------------------------------
-   Huge outlined index floating behind section headers. */
-.section-ghost {
-  position: absolute;
-  top: -1rem;
-  right: -0.5rem;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid hsla(0, 0%, 100%, 0.5);
+  border-radius: 0;
+  padding: 1.5vh 0;
+  color: var(--white);
   font-family: 'Hanken Grotesk', sans-serif;
-  font-weight: 800;
-  font-size: clamp(8rem, 18vw, 16rem);
-  line-height: 1;
-  letter-spacing: -0.04em;
-  color: transparent;
-  -webkit-text-stroke: 1px oklch(0.985 0.003 260 / 0.07);
-  pointer-events: none;
-  user-select: none;
+  font-weight: 400;
+  font-size: 1vw;
+}
+.contact-input::placeholder { color: var(--grey); }
+.contact-input:focus { outline: none; border-bottom-color: hsla(0, 0%, 100%, 0.8); }
+.contact-submit { width: 100%; padding: 1.9vh 0; font-size: 1vw; }
+.contact-alt {
+  color: var(--grey);
+  text-decoration: none;
+  text-align: center;
+  transition: color 0.3s ease;
+}
+.contact-alt:hover { color: var(--white); }
+@media (max-width: 768px) {
+  .contact-wrap { flex-direction: column-reverse; gap: 10vw; min-height: 0; }
+  .contact-left, .contact-card { width: 100%; }
+  .contact-card { padding: 10vw 7.5vw; }
+  .contact-input { font-size: 3.5vw; border-bottom-color: hsla(0, 0%, 100%, 0.25); }
+  .contact-submit { font-size: 3.5vw; padding: 4vw 0; }
+  .contact-ico { width: 12vw; height: 12vw; }
+  .contact-item { gap: 4vw; }
 }

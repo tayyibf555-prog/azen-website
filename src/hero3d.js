@@ -63,11 +63,12 @@ if (mount) {
       const c = document.createElement('canvas'); c.width = 2; c.height = 256;
       const ctx = c.getContext('2d');
       const g = ctx.createLinearGradient(0, 0, 0, 256);
-      g.addColorStop(0, '#0c1424'); g.addColorStop(0.55, '#081020'); g.addColorStop(1, '#04060e');
+      // retuned to the #020202 page family so the 4-way vignette blends seamlessly
+      g.addColorStop(0, '#06080d'); g.addColorStop(0.55, '#040507'); g.addColorStop(1, '#020202');
       ctx.fillStyle = g; ctx.fillRect(0, 0, 2, 256);
       const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace; return tex;
     })();
-    scene.fog = new THREE.Fog(new THREE.Color('#06102a'), 11, 26);
+    scene.fog = new THREE.Fog(new THREE.Color('#040609'), 11, 26);
 
     // Camera — 3/4 low hero angle. The look target sits up-left of the
     // chip in screen space so the chip carries the lower-right visual
@@ -425,8 +426,15 @@ if (mount) {
     } else {
       const play = () => { if (!running) { running = true; clock.getDelta(); requestAnimationFrame(loop); } };
       const pause = () => { running = false; };
-      new IntersectionObserver((es) => { es[0].isIntersecting ? play() : pause(); }, { threshold: 0 }).observe(mount);
-      play();
+      // camera intro starts on the loader's reveal event (fallback: 2s)
+      let armed = false;
+      const begin = () => { if (!armed) { armed = true; play(); } };
+      new IntersectionObserver((es) => { es[0].isIntersecting ? (armed && play()) : pause(); }, { threshold: 0 }).observe(mount);
+      if (window.__azenRevealed) begin();
+      else {
+        window.addEventListener('azen:reveal', begin, { once: true });
+        setTimeout(begin, 2000);
+      }
     }
   }
 }

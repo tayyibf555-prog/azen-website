@@ -52,729 +52,342 @@
     }
     </script>
 
-    <!-- Preconnect (Archivo variable + JetBrains Mono via Google Fonts) -->
+    <!-- Preconnect (Geist + Hanken Grotesk + JetBrains Mono via Google Fonts) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <!-- Built Tailwind CSS. Cache-bust via ?v= on each rebuild. -->
-    <link rel="stylesheet" href="styles.css?v=20260717a">
+    <link rel="stylesheet" href="styles.css?v=20260718e">
 </head>
 
-<body class="bg-gradient-tr-fixed min-h-screen text-paper relative">
+<body class="page-main">
 
-    <!-- Boot intro — mono cursor, wordmark types in, blue period lands,
-         overlay wipes up. Runs once per session; skipped entirely under
-         prefers-reduced-motion (CSS) and for repeat in-session visits (JS). -->
-    <div class="boot-intro" id="boot-intro" aria-hidden="true">
-        <span class="boot-word display" id="boot-word"><span id="boot-chars"></span><span class="boot-caret" id="boot-caret"></span></span>
-    </div>
+    <!-- js flag ASAP so the loader can show before first paint.
+         Entrances gate on a separate html.fx class added by enhance.js,
+         so a failed module never hides content. -->
+    <script>document.documentElement.classList.add('js');</script>
 
     <!-- Skip link (a11y) -->
     <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[60] focus:bg-white focus:text-black focus:px-4 focus:py-2 focus:rounded">Skip to content</a>
 
-    <!-- Atmosphere: cursor spotlight + scroll progress -->
-    <div class="spotlight" id="spotlight" aria-hidden="true"></div>
-    <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+    <!-- Loader — "azen." gradient shimmer, once per session (spec §0.7) -->
+    <div class="loading-screen" id="loader" aria-hidden="true">
+        <span class="loader-word"><span class="gradient-text">azen</span><span class="dot-accent">.</span></span>
+    </div>
 
-    <!-- Floating Pill Nav -->
-    <div id="floating-nav" class="floating-nav at-top fixed top-6 inset-x-0 z-50 flex justify-center pointer-events-none px-6">
-        <nav aria-label="Primary"
-            class="pointer-events-auto py-2.5 px-3 flex justify-between items-center glass-nav rounded-full border border-white/10 shadow-2xl gap-4 sm:gap-8 md:gap-16 w-full max-w-fit">
-            <a href="#" aria-label="Azen home" class="text-xl font-bold tracking-tighter pl-3 text-paper">azen.</a>
-            <div class="hidden md:flex gap-8 text-[11px] uppercase text-apple-gray font-bold tracking-widest">
-                <a href="#work" class="inline-block py-3 -my-3 hover:text-paper transition">Systems</a>
-                <a href="#solutions" class="inline-block py-3 -my-3 hover:text-paper transition">Capabilities</a>
-                <a href="#how" class="inline-block py-3 -my-3 hover:text-paper transition">Process</a>
-                <a href="#faq" class="inline-block py-3 -my-3 hover:text-paper transition">FAQ</a>
-            </div>
-            <a href="https://calendly.com/tayyib-azen/30min" target="_blank" rel="noopener"
-                class="hidden sm:inline-block bg-[#0071e3] text-white px-5 py-2 rounded-full text-[11px] font-bold uppercase tracking-widest hover:bg-[#005bb5] transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0071e3]/60">
-                Book Audit
-            </a>
-            <!-- Mobile menu button -->
-            <button id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="mobile-drawer"
-                class="md:hidden inline-flex items-center justify-center w-11 h-11 rounded-full text-paper hover:bg-white/10 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0071e3]/60">
-                <svg id="nav-icon-open" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-                    <path d="M4 7h16M4 12h16M4 17h16"/>
-                </svg>
-                <svg id="nav-icon-close" class="w-5 h-5 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-                    <path d="M6 6l12 12M18 6L6 18"/>
-                </svg>
-            </button>
+    <!-- Nav — glass pill, drops in at t=0.5s (spec §0.7) -->
+    <header class="navigation" id="site-nav">
+        <a href="#home" class="nav-wordmark" aria-label="Azen home">azen<span class="dot-accent">.</span></a>
+        <nav class="nav-links small-description" aria-label="Primary">
+            <a href="#work">Work</a>
+            <a href="#services">Services</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
         </nav>
-    </div>
+        <a href="https://calendly.com/tayyib-azen/30min" target="_blank" rel="noopener" class="btn-pill">Book a call</a>
+    </header>
 
-    <!-- Mobile drawer — inert when closed. Toggled by JS. -->
-    <div id="mobile-drawer" data-open="false" aria-hidden="true" inert
-        class="mobile-drawer fixed inset-x-0 top-0 z-40 md:hidden glass-nav border-b border-white/10 px-6 pt-28 pb-10">
-        <ul class="flex flex-col gap-2 text-2xl font-bold tracking-tight text-paper">
-            <li><a href="#work" class="block py-3 border-b border-white/10 hover:text-[#0071e3] transition" data-nav-link>Systems</a></li>
-            <li><a href="#solutions" class="block py-3 border-b border-white/10 hover:text-[#0071e3] transition" data-nav-link>Capabilities</a></li>
-            <li><a href="#how" class="block py-3 border-b border-white/10 hover:text-[#0071e3] transition" data-nav-link>Process</a></li>
-            <li><a href="#faq" class="block py-3 border-b border-white/10 hover:text-[#0071e3] transition" data-nav-link>FAQ</a></li>
-        </ul>
-        <a href="https://calendly.com/tayyib-azen/30min" target="_blank" rel="noopener"
-            class="mt-8 inline-flex items-center justify-center w-full bg-[#0071e3] text-white px-6 py-4 rounded-full font-bold hover:bg-[#005bb5] transition">
-            Book Audit
-        </a>
-    </div>
+    <!-- Scroll-top pill — hidden until past the hero (spec §0.7) -->
+    <button class="navigation-bottom" id="scroll-top" aria-label="Back to top">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg>
+    </button>
 
     <main id="main">
 
     <!-- ────────────────────────────────────────────────────────────
-         HERO — igloo-style: the live Three.js chip scene is the star;
-         copy is corner-anchored (wordmark top-left, mission top-right,
-         scroll cue + CTA at the base). No centered headline here.
+         1. HERO (spec §1 layout, live Three.js instead of video)
          ──────────────────────────────────────────────────────────── -->
-    <section class="hero-cinematic relative overflow-hidden">
-        <!-- Real-time WebGL 3D "AI core" (Three.js, src/hero3d.js).
-             If WebGL is unavailable the CSS glow-ground shows instead. -->
-        <div id="hero-3d" class="hero-3d" aria-hidden="true"></div>
-        <div class="hero-scrim" aria-hidden="true"></div>
-
-        <!-- Corner-anchored UI: the 3D scene is the star; text is pinned
-             to the edges. Top-left wordmark, top-right mission, and small
-             controls at the base. -->
-        <div class="absolute top-6 left-6 md:top-9 md:left-10 z-10 hero-line" style="--d:160ms">
-            <div class="text-3xl md:text-[2.4rem] font-extrabold tracking-tighter text-white leading-none">azen<span class="text-[#0071e3]">.</span></div>
-            <p class="mt-3 font-mono text-[9px] md:text-[10px] uppercase tracking-[0.18em] text-white/45 leading-relaxed">
-                &copy; 2026 Azen Digital<br>Custom AI infrastructure &middot; London
-            </p>
+    <section class="hero" id="home">
+        <div class="hero-visual">
+            <div id="hero-3d" class="hero-3d" aria-hidden="true"></div>
+            <div class="fade-edge fade-t" aria-hidden="true"></div>
+            <div class="fade-edge fade-b" aria-hidden="true"></div>
+            <div class="fade-edge fade-l" aria-hidden="true"></div>
+            <div class="fade-edge fade-r" aria-hidden="true"></div>
         </div>
 
-        <div class="absolute top-28 right-6 md:top-9 md:right-10 z-10 max-w-[13rem] md:max-w-[17rem] text-right hero-line" style="--d:300ms">
-            <p class="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.28em] text-[#0071e3] mb-3">//////// Mission</p>
-            <p class="text-white/70 text-[12px] md:text-sm leading-snug font-medium">
-                We map your exact bottlenecks and deploy custom AI infrastructure that automates the manual work bleeding your team.
-            </p>
-        </div>
-
-        <div class="absolute bottom-6 left-6 md:bottom-9 md:left-10 z-10 font-mono text-[9px] md:text-[10px] uppercase tracking-[0.28em] text-white/50 hero-line" style="--d:440ms" aria-hidden="true">
-            [ Scroll to explore <span class="scroll-cue-arrow">&darr;</span> ]
-        </div>
-
-        <a href="https://calendly.com/tayyib-azen/30min" target="_blank" rel="noopener"
-           class="absolute bottom-6 right-6 md:bottom-9 md:right-10 z-10 font-mono text-[9px] md:text-[10px] uppercase tracking-[0.28em] text-white hover:text-[#0071e3] transition hero-line focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0071e3]/60 rounded" style="--d:440ms">
-            Book a free audit &rarr;
-        </a>
-    </section>
-
-    <!-- ────────────────────────────────────────────────────────────
-         PROOF BAND — evidence before pitch. Real portfolio aggregates,
-         count-up on entry. The only "live" element is the status dot.
-         ──────────────────────────────────────────────────────────── -->
-    <section class="relative">
-        <div class="max-w-7xl mx-auto px-6 py-14">
-            <div class="flex items-center justify-between gap-6 mb-10">
-                <div class="flex items-center gap-3">
-                    <span class="relative flex w-2.5 h-2.5">
-                        <span class="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60 animate-ping"></span>
-                        <span class="relative inline-flex w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
-                    </span>
-                    <span class="font-mono text-[11px] uppercase tracking-[0.25em] text-apple-gray font-bold">Operational state</span>
-                </div>
-                <div class="hidden md:block font-mono text-[10px] text-apple-gray">
-                    <span class="text-emerald-400">●</span> Last deploy <time datetime="2026-04-28">28 Apr 2026</time>
-                </div>
-            </div>
-            <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
-                <div class="stat-card">
-                    <div class="font-mono text-[10px] uppercase tracking-[0.2em] text-apple-gray font-bold leading-relaxed"><span class="text-[#0071e3]">&rarr; stat</span><br>Live deployments</div>
-                    <div class="display text-5xl md:text-6xl tabular-nums leading-none" data-countup="7">0</div>
-                </div>
-                <div class="stat-card">
-                    <div class="font-mono text-[10px] uppercase tracking-[0.2em] text-apple-gray font-bold leading-relaxed"><span class="text-[#0071e3]">&rarr; stat</span><br>Hours automated</div>
-                    <div class="display text-5xl md:text-6xl tabular-nums leading-none"><span data-countup="142">0</span><span class="text-2xl text-apple-gray font-bold">/wk</span></div>
-                </div>
-                <div class="stat-card">
-                    <div class="font-mono text-[10px] uppercase tracking-[0.2em] text-apple-gray font-bold leading-relaxed"><span class="text-[#0071e3]">&rarr; stat</span><br>Integrations</div>
-                    <div class="display text-5xl md:text-6xl tabular-nums leading-none" data-countup="12">0</div>
-                </div>
-                <div class="stat-card">
-                    <div class="font-mono text-[10px] uppercase tracking-[0.2em] text-apple-gray font-bold leading-relaxed"><span class="text-[#0071e3]">&rarr; stat</span><br>90-day uptime</div>
-                    <div class="display text-5xl md:text-6xl tabular-nums leading-none"><span data-countup="99.7" data-decimals="1">0</span><span class="text-2xl text-apple-gray font-bold">%</span></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ────────────────────────────────────────────────────────────
-         OUR WORKS — vertical case cards, each a framed shot with a
-         real headline metric and a link into the full case study.
-         (sanjaya "Structured. Automated. Delivered." layout, our data)
-         ──────────────────────────────────────────────────────────── -->
-    <section id="work" class="py-24 md:py-36 px-6">
-        <div class="max-w-6xl mx-auto">
-            <div class="mb-16 md:mb-20">
-                <p class="font-mono text-[11px] uppercase tracking-[0.3em] text-white/45 font-bold mb-6" data-parallax="26">/ Our works</p>
-                <h2 class="display text-[clamp(2.4rem,6vw,4.75rem)] leading-[0.95] text-paper reveal max-w-3xl" data-words>
-                    Structured. Automated. Delivered<span class="text-[#0071e3]">.</span>
-                </h2>
-                <p class="mt-6 text-apple-gray text-lg font-medium max-w-xl">Selected workflow builds across logistics, accounting, education and community operations.</p>
-            </div>
-
-            <div class="flex flex-col gap-5 md:gap-6">
-
-                <a href="case-study-prep-point.html" class="work-card group/card">
-                    <div class="work-card-media">
-                        <img src="case%20study%20images%20/Prep%20point%20case%20study.webp" alt="Prep Point automated order-processing dashboard" width="1400" height="766" loading="lazy">
-                    </div>
-                    <div class="work-card-body">
-                        <div class="flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.2em] text-white/40 mb-6">
-                            <span>2025</span><span class="text-white/20">/</span><span>Logistics &middot; 3PL</span>
-                        </div>
-                        <h3 class="text-2xl md:text-3xl font-bold tracking-tight text-paper mb-8 leading-tight">Automating order processing at Prep Point</h3>
-                        <div class="mt-auto flex items-end justify-between gap-6">
-                            <div>
-                                <div class="display text-4xl md:text-5xl text-paper leading-none">85<span class="text-[#0071e3]">%</span></div>
-                                <div class="font-mono text-[10px] uppercase tracking-[0.2em] text-apple-gray mt-2">fewer order errors</div>
-                            </div>
-                            <span class="font-mono text-[11px] uppercase tracking-[0.15em] text-apple-gray group-hover/card:text-[#0071e3] transition shrink-0">View case study &rarr;</span>
-                        </div>
-                    </div>
-                </a>
-
-                <a href="case-study-superior-accounting.html" class="work-card group/card">
-                    <div class="work-card-media">
-                        <img src="case%20study%20images%20/Superior%20Accounting%20case%20study.webp" alt="Superior Accounting AI call-handling portal" width="1400" height="766" loading="lazy">
-                    </div>
-                    <div class="work-card-body">
-                        <div class="flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.2em] text-white/40 mb-6">
-                            <span>2025</span><span class="text-white/20">/</span><span>Accounting</span>
-                        </div>
-                        <h3 class="text-2xl md:text-3xl font-bold tracking-tight text-paper mb-8 leading-tight">AI call handling for Superior Accounting</h3>
-                        <div class="mt-auto flex items-end justify-between gap-6">
-                            <div>
-                                <div class="display text-4xl md:text-5xl text-paper leading-none">78<span class="text-[#0071e3]">%</span></div>
-                                <div class="font-mono text-[10px] uppercase tracking-[0.2em] text-apple-gray mt-2">calls resolved by AI</div>
-                            </div>
-                            <span class="font-mono text-[11px] uppercase tracking-[0.15em] text-apple-gray group-hover/card:text-[#0071e3] transition shrink-0">View case study &rarr;</span>
-                        </div>
-                    </div>
-                </a>
-
-                <a href="case-study-ttt.html" class="work-card group/card">
-                    <div class="work-card-media">
-                        <img src="case%20study%20images%20/TTT%20case%20study.webp" alt="TTT Departmentals procurement automation dashboard" width="1400" height="766" loading="lazy">
-                    </div>
-                    <div class="work-card-body">
-                        <div class="flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.2em] text-white/40 mb-6">
-                            <span>2025</span><span class="text-white/20">/</span><span>Procurement</span>
-                        </div>
-                        <h3 class="text-2xl md:text-3xl font-bold tracking-tight text-paper mb-8 leading-tight">Procurement automation for TTT Departmentals</h3>
-                        <div class="mt-auto flex items-end justify-between gap-6">
-                            <div>
-                                <div class="display text-4xl md:text-5xl text-paper leading-none">90<span class="text-[#0071e3]">%</span></div>
-                                <div class="font-mono text-[10px] uppercase tracking-[0.2em] text-apple-gray mt-2">faster sourcing</div>
-                            </div>
-                            <span class="font-mono text-[11px] uppercase tracking-[0.15em] text-apple-gray group-hover/card:text-[#0071e3] transition shrink-0">View case study &rarr;</span>
-                        </div>
-                    </div>
-                </a>
-
-                <a href="case-study-little-oaks.html" class="work-card group/card">
-                    <div class="work-card-media">
-                        <img src="case%20study%20images%20/little%20oaks%20crm%20case%20study.webp" alt="Little Oaks nursery CRM dashboard" width="1400" height="766" loading="lazy">
-                    </div>
-                    <div class="work-card-body">
-                        <div class="flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.2em] text-white/40 mb-6">
-                            <span>2025</span><span class="text-white/20">/</span><span>Nurseries</span>
-                        </div>
-                        <h3 class="text-2xl md:text-3xl font-bold tracking-tight text-paper mb-8 leading-tight">A 24/7 operations CRM for Little Oaks</h3>
-                        <div class="mt-auto flex items-end justify-between gap-6">
-                            <div>
-                                <div class="display text-4xl md:text-5xl text-paper leading-none">24/7</div>
-                                <div class="font-mono text-[10px] uppercase tracking-[0.2em] text-apple-gray mt-2">operations coverage</div>
-                            </div>
-                            <span class="font-mono text-[11px] uppercase tracking-[0.15em] text-apple-gray group-hover/card:text-[#0071e3] transition shrink-0">View case study &rarr;</span>
-                        </div>
-                    </div>
-                </a>
-
-                <a href="case-study-zia-ul-ummah.html" class="work-card group/card">
-                    <div class="work-card-media">
-                        <img src="case%20study%20images%20/zia%20ul%20ummah%20case%20study.webp" alt="Zia Ul Ummah Foundation operations dashboard" width="1400" height="766" loading="lazy">
-                    </div>
-                    <div class="work-card-body">
-                        <div class="flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.2em] text-white/40 mb-6">
-                            <span>2025</span><span class="text-white/20">/</span><span>Non-profit ops</span>
-                        </div>
-                        <h3 class="text-2xl md:text-3xl font-bold tracking-tight text-paper mb-8 leading-tight">Zero-touch data entry for Zia Ul Ummah</h3>
-                        <div class="mt-auto flex items-end justify-between gap-6">
-                            <div>
-                                <div class="display text-4xl md:text-5xl text-paper leading-none">Automated</div>
-                                <div class="font-mono text-[10px] uppercase tracking-[0.2em] text-apple-gray mt-2">data-entry pipeline</div>
-                            </div>
-                            <span class="font-mono text-[11px] uppercase tracking-[0.15em] text-apple-gray group-hover/card:text-[#0071e3] transition shrink-0">View case study &rarr;</span>
-                        </div>
-                    </div>
-                </a>
-
-                <a href="case-study-eyos.html" class="work-card group/card">
-                    <div class="work-card-media">
-                        <img src="case%20study%20images%20/Azen%20EYOS%20Case%20study.webp" alt="Azen EYOS early-years operating system" width="1400" height="766" loading="lazy">
-                    </div>
-                    <div class="work-card-body">
-                        <div class="flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.2em] text-white/40 mb-6">
-                            <span>2026</span><span class="text-white/20">/</span><span>Early-years platform</span>
-                        </div>
-                        <h3 class="text-2xl md:text-3xl font-bold tracking-tight text-paper mb-8 leading-tight">Azen EYOS &mdash; an operating system for nurseries</h3>
-                        <div class="mt-auto flex items-end justify-between gap-6">
-                            <div>
-                                <div class="display text-4xl md:text-5xl text-paper leading-none">Automated</div>
-                                <div class="font-mono text-[10px] uppercase tracking-[0.2em] text-apple-gray mt-2">data infrastructure</div>
-                            </div>
-                            <span class="font-mono text-[11px] uppercase tracking-[0.15em] text-apple-gray group-hover/card:text-[#0071e3] transition shrink-0">View case study &rarr;</span>
-                        </div>
-                    </div>
-                </a>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- ────────────────────────────────────────────────────────────
-         CLIENT MARQUEE — the seven live builds, by name. Honest
-         social proof; edges fade via mask, no borders.
-         ──────────────────────────────────────────────────────────── -->
-    <section class="py-20 md:py-24" aria-label="Clients in production">
-        <p class="font-mono text-[10px] uppercase tracking-[0.3em] text-apple-gray font-bold text-center mb-10">[ In production for ]</p>
-        <div class="marquee-mask">
-            <div class="marquee-track gap-16 md:gap-24 pr-16 md:pr-24" data-glide>
-                <div class="flex shrink-0 items-baseline gap-16 md:gap-24">
-                    <span class="display text-3xl md:text-5xl whitespace-nowrap text-white/[0.16]">Prep Point<span class="text-[#0071e3]/40">.</span></span>
-                    <span class="display text-3xl md:text-5xl whitespace-nowrap text-white/[0.16]">Superior Accounting<span class="text-[#0071e3]/40">.</span></span>
-                    <span class="display text-3xl md:text-5xl whitespace-nowrap text-white/[0.16]">TTT Departmentals<span class="text-[#0071e3]/40">.</span></span>
-                    <span class="display text-3xl md:text-5xl whitespace-nowrap text-white/[0.16]">Little Oaks<span class="text-[#0071e3]/40">.</span></span>
-                    <span class="display text-3xl md:text-5xl whitespace-nowrap text-white/[0.16]">Zia Ul Ummah<span class="text-[#0071e3]/40">.</span></span>
-                    <span class="display text-3xl md:text-5xl whitespace-nowrap text-white/[0.16]">Azen EYOS<span class="text-[#0071e3]/40">.</span></span>
-                </div>
-                <div class="flex shrink-0 items-baseline gap-16 md:gap-24" aria-hidden="true">
-                    <span class="display text-3xl md:text-5xl whitespace-nowrap text-white/[0.16]">Prep Point<span class="text-[#0071e3]/40">.</span></span>
-                    <span class="display text-3xl md:text-5xl whitespace-nowrap text-white/[0.16]">Superior Accounting<span class="text-[#0071e3]/40">.</span></span>
-                    <span class="display text-3xl md:text-5xl whitespace-nowrap text-white/[0.16]">TTT Departmentals<span class="text-[#0071e3]/40">.</span></span>
-                    <span class="display text-3xl md:text-5xl whitespace-nowrap text-white/[0.16]">Little Oaks<span class="text-[#0071e3]/40">.</span></span>
-                    <span class="display text-3xl md:text-5xl whitespace-nowrap text-white/[0.16]">Zia Ul Ummah<span class="text-[#0071e3]/40">.</span></span>
-                    <span class="display text-3xl md:text-5xl whitespace-nowrap text-white/[0.16]">Azen EYOS<span class="text-[#0071e3]/40">.</span></span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ────────────────────────────────────────────────────────────
-         SERVICES — four numbered capability blocks (sanjaya "Built to
-         Simplify Operations"), our real stack. Clean bordered cards.
-         ──────────────────────────────────────────────────────────── -->
-    <section id="solutions" class="py-24 md:py-36 px-6">
-        <div class="max-w-6xl mx-auto">
-            <div class="mb-16 md:mb-20 max-w-2xl">
-                <p class="font-mono text-[11px] uppercase tracking-[0.3em] text-white/45 font-bold mb-6">/ Services</p>
-                <h2 class="display text-[clamp(2.4rem,6vw,4.75rem)] leading-[0.95] text-paper reveal" data-words>
-                    Built to simplify operations<span class="text-[#0071e3]">.</span>
-                </h2>
-                <p class="mt-6 text-apple-gray text-lg font-medium">Four systems that streamline workflows, connect your tools, and put intelligence where the manual work is.</p>
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-4 md:gap-5">
-
-                <div class="svc-card reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out">
-                    <p class="font-mono text-[11px] uppercase tracking-[0.25em] text-[#0071e3] mb-8">/ 01</p>
-                    <h3 class="text-2xl md:text-3xl font-bold tracking-tight text-paper mb-3">Autonomous Agents</h3>
-                    <p class="text-apple-gray font-medium leading-snug mb-8">Systems that reason through problems, call your APIs, and execute multi-step logic &mdash; not basic chatbots.</p>
-                    <ul class="mt-auto space-y-3 font-mono text-[13px] text-apple-gray">
-                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>Dynamic decision logic</li>
-                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>API-native execution</li>
-                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>Self-correcting protocols</li>
-                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>Human-in-the-loop controls</li>
-                    </ul>
-                </div>
-
-                <div class="svc-card reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out delay-100">
-                    <p class="font-mono text-[11px] uppercase tracking-[0.25em] text-[#0071e3] mb-8">/ 02</p>
-                    <h3 class="text-2xl md:text-3xl font-bold tracking-tight text-paper mb-3">System Orchestration</h3>
-                    <p class="text-apple-gray font-medium leading-snug mb-8">Your disjointed platforms, weaving into one workflow that talks to itself in real time.</p>
-                    <ul class="mt-auto space-y-3 font-mono text-[13px] text-apple-gray">
-                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>CRM &amp; ERP unification</li>
-                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>Webhook intercepts</li>
-                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>Real-time continuous sync</li>
-                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>Cross-platform automation</li>
-                    </ul>
-                </div>
-
-                <div class="svc-card reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out">
-                    <p class="font-mono text-[11px] uppercase tracking-[0.25em] text-[#0071e3] mb-8">/ 03</p>
-                    <h3 class="text-2xl md:text-3xl font-bold tracking-tight text-paper mb-3">Enterprise Retrieval</h3>
-                    <p class="text-apple-gray font-medium leading-snug mb-8">Thousands of disorganised documents turned into instantly queryable corporate memory.</p>
-                    <ul class="mt-auto space-y-3 font-mono text-[13px] text-apple-gray">
-                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>Vector memory banks</li>
-                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>Source-grounded answers</li>
-                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>Permission-aware search</li>
-                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>Private &mdash; never trains external models</li>
-                    </ul>
-                </div>
-
-                <div class="svc-card reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out delay-100">
-                    <p class="font-mono text-[11px] uppercase tracking-[0.25em] text-[#0071e3] mb-8">/ 04</p>
-                    <h3 class="text-2xl md:text-3xl font-bold tracking-tight text-paper mb-3">Optimization &amp; Integration</h3>
-                    <p class="text-apple-gray font-medium leading-snug mb-8">Connect, refine and scale the stack you already run &mdash; then keep it healthy.</p>
-                    <ul class="mt-auto space-y-3 font-mono text-[13px] text-apple-gray">
-                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>Tech-stack audit &amp; restructuring</li>
-                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>API &amp; platform integrations</li>
-                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>Workflow optimization</li>
-                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>Uptime monitoring &amp; runbooks</li>
-                    </ul>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- Security — one candid mono line, not a whole section. -->
-    <section class="py-6">
-        <div class="max-w-7xl mx-auto px-6 text-center font-mono text-[11px] uppercase tracking-[0.2em] text-apple-gray/90 leading-relaxed">
-            Zero public training <span class="text-[#0071e3]/60 mx-2">/</span> end-to-end encrypted <span class="text-[#0071e3]/60 mx-2">/</span> GDPR ready <span class="text-[#0071e3]/60 mx-2">/</span> SOC 2 <span class="text-[#0071e3]/60 mx-2">/</span> client data never trains external models
-        </div>
-    </section>
-
-    <!-- ────────────────────────────────────────────────────────────
-         03 / THE PROCESS — pinned three-phase sequence on md+;
-         static stack on mobile and reduced motion.
-         ──────────────────────────────────────────────────────────── -->
-    <section id="how" class="relative">
-
-        <div class="process-pin hidden md:block" id="process-pin">
-            <div class="process-sticky">
-
-                <div class="max-w-7xl mx-auto px-6 w-full relative z-10">
-                    <p class="font-mono text-[11px] uppercase tracking-[0.3em] text-indigo-bright font-bold mb-5">[ 03 / The process ]</p>
-                    <h2 class="display text-[clamp(2.2rem,4.5vw,4.5rem)] leading-[0.95] text-paper mb-16 reveal" data-words>No fluff. Just execution<span class="text-[#0071e3]">.</span></h2>
-
-                    <div class="grid grid-cols-12 gap-8 items-center">
-                        <div class="col-span-4 lg:col-span-3">
-                            <div class="display ghost-num text-[9rem] lg:text-[12rem] leading-none tabular-nums select-none" id="process-num" aria-hidden="true">01</div>
-                            <div class="mt-8 h-px w-full bg-white/10 relative overflow-hidden">
-                                <div class="absolute inset-y-0 left-0 w-full bg-[#0071e3] origin-left scale-x-0" id="process-fill"></div>
-                            </div>
-                            <div class="mt-4 flex justify-between font-mono text-[11px] text-apple-gray">
-                                <span data-process-step="0" class="transition-colors duration-300">Audit</span>
-                                <span data-process-step="1" class="transition-colors duration-300">Code</span>
-                                <span data-process-step="2" class="transition-colors duration-300">Run</span>
-                            </div>
-                        </div>
-
-                        <div class="col-span-8 lg:col-span-8 lg:col-start-5 relative min-h-[22rem]">
-                            <div class="process-panel is-active" data-process-panel>
-                                <p class="font-mono text-[11px] uppercase tracking-[0.25em] text-apple-gray mb-6">Phase 01 / Discovery</p>
-                                <h3 class="display text-4xl lg:text-6xl text-paper mb-8">The Audit</h3>
-                                <p class="text-2xl lg:text-3xl text-apple-gray leading-tight font-medium max-w-2xl">
-                                    We map your entire architecture. We find the exact bottlenecks bleeding time and
-                                    money. We lay out the orchestration blueprint before writing a single line of code.</p>
-                            </div>
-                            <div class="process-panel" data-process-panel>
-                                <p class="font-mono text-[11px] uppercase tracking-[0.25em] text-apple-gray mb-6">Phase 02 / Build</p>
-                                <h3 class="display text-4xl lg:text-6xl text-paper mb-8">The Code</h3>
-                                <p class="text-2xl lg:text-3xl text-apple-gray leading-tight font-medium max-w-2xl">
-                                    We engineer the native integrations, build the custom LLM wrappers, and write the
-                                    backend scripts. Everything is deployed directly to your secure stack.</p>
-                            </div>
-                            <div class="process-panel" data-process-panel>
-                                <p class="font-mono text-[11px] uppercase tracking-[0.25em] text-apple-gray mb-6">Phase 03 / Autonomous</p>
-                                <h3 class="display text-4xl lg:text-6xl text-paper mb-8">The Run</h3>
-                                <p class="text-2xl lg:text-3xl text-apple-gray leading-tight font-medium max-w-2xl">
-                                    We flip the switch. Your massive manual workloads evaporate. The system runs
-                                    autonomously in the background 24/7. We monitor the uptime.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Static stack (mobile + prefers-reduced-motion) -->
-        <div class="process-static md:hidden py-32 px-6 max-w-7xl mx-auto">
-            <div class="mb-20 reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out">
-                <p class="font-mono text-[11px] uppercase tracking-[0.3em] text-indigo-bright font-bold mb-5">[ 03 / The process ]</p>
-                <h2 class="display text-4xl leading-[0.95] text-paper">No fluff. Just execution<span class="text-[#0071e3]">.</span></h2>
-            </div>
-
-            <div class="flex flex-col gap-12">
-                <div class="border-t border-white/10 pt-8 reveal opacity-0 translate-y-10 delay-100">
-                    <p class="font-mono text-[11px] uppercase tracking-[0.25em] text-apple-gray mb-4">Phase 01 / Discovery</p>
-                    <h3 class="display text-3xl text-paper mb-5">The Audit</h3>
-                    <p class="text-xl text-apple-gray leading-tight font-medium">
-                        We map your entire architecture. We find the exact bottlenecks bleeding time and money. We lay
-                        out the orchestration blueprint before writing a single line of code.</p>
-                </div>
-                <div class="border-t border-white/10 pt-8 reveal opacity-0 translate-y-10 delay-200">
-                    <p class="font-mono text-[11px] uppercase tracking-[0.25em] text-apple-gray mb-4">Phase 02 / Build</p>
-                    <h3 class="display text-3xl text-paper mb-5">The Code</h3>
-                    <p class="text-xl text-apple-gray leading-tight font-medium">
-                        We engineer the native integrations, build the custom LLM wrappers, and write the backend
-                        scripts. Everything is deployed directly to your secure stack.</p>
-                </div>
-                <div class="border-t border-white/10 pt-8 reveal opacity-0 translate-y-10 delay-300">
-                    <p class="font-mono text-[11px] uppercase tracking-[0.25em] text-apple-gray mb-4">Phase 03 / Autonomous</p>
-                    <h3 class="display text-3xl text-paper mb-5">The Run</h3>
-                    <p class="text-xl text-apple-gray leading-tight font-medium">
-                        We flip the switch. Your massive manual workloads evaporate. The system runs autonomously in
-                        the background 24/7. We monitor the uptime.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ────────────────────────────────────────────────────────────
-         BRAND FILM — the logo-reveal loop, scaling up as it enters.
-         ──────────────────────────────────────────────────────────── -->
-    <section class="py-24 md:py-36 px-6">
-        <div class="max-w-6xl mx-auto">
-            <div class="rounded-2xl terminal-glow relative overflow-hidden bg-black film-scale" id="film-panel" data-scale="0.86">
-                <video
-                    class="block w-full h-auto"
-                    src="/videos/hero-loop.mp4"
-                    poster="/videos/hero-loop.webp"
-                    autoplay muted loop playsinline preload="metadata"
-                    aria-label="Azen brand reveal animation">
-                </video>
-            </div>
-        </div>
-    </section>
-
-    <!-- ────────────────────────────────────────────────────────────
-         04 / THE MATH — ROI calculator, left-anchored industrial.
-         ──────────────────────────────────────────────────────────── -->
-    <section class="py-24 md:py-32 px-6 relative overflow-hidden">
-        <div class="section-ghost" aria-hidden="true">04</div>
-        <div class="max-w-7xl mx-auto grid md:grid-cols-[1fr_1.4fr] gap-14 md:gap-24 items-center relative">
-            <div>
-                <p class="font-mono text-[11px] uppercase tracking-[0.3em] text-indigo-bright font-bold mb-5">[ 04 / The math ]</p>
-                <h2 class="display text-[clamp(2.2rem,4.5vw,4rem)] leading-[0.95] text-paper mb-6 reveal" data-words>What is manual work costing you<span class="text-[#0071e3]">?</span></h2>
-                <p class="text-apple-gray text-lg font-medium leading-snug max-w-md">
-                    Drag the hours your team spends on repeatable manual work. Based on a £45/hr average execution
-                    cost over 52 weeks.
-                </p>
-            </div>
-            <div class="rounded-2xl terminal-glow p-8 md:p-12">
-                <div class="mb-10">
-                    <div class="font-mono text-[3.4rem] sm:text-[4.5rem] md:text-[5.5rem] font-bold tracking-tighter leading-none text-paper tabular-nums mb-3" id="roi-output">£23,400</div>
-                    <div class="text-lg text-apple-gray font-medium">Yearly capital recovered</div>
-                </div>
+        <div class="hero-content">
+            <div class="hero-left">
                 <div>
-                    <div class="flex justify-between font-mono text-[11px] font-bold text-apple-gray mb-4 uppercase tracking-widest">
-                        <span>10 hrs/wk</span>
-                        <span id="hours-display" class="text-paper">10 Hrs</span>
-                        <span>500+ hrs</span>
+                    <h1 class="headline white" data-hero="chars">Autonomous <span class="headline-bold">AI&nbsp;systems</span><br>built for<br>operations.</h1>
+                    <div class="hero-cta-row" data-hero="fade" data-hero-delay="0.3">
+                        <span class="description white">Explore the systems</span>
+                        <a href="#services" class="btn-circle" aria-label="Scroll to services">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                        </a>
                     </div>
-                    <input type="range" min="10" max="500" value="10"
-                        class="w-full h-1.5 bg-white/15 rounded-lg appearance-none cursor-pointer outline-none relative z-20"
-                        id="roi-slider" aria-label="Hours per week of manual work">
+                </div>
+                <div class="hero-label" data-hero="fade" data-hero-delay="0.4">
+                    <p class="description white">Products &amp; Services</p>
+                    <p class="description grey">Strategy before code. Custom over generic.<br>Deployed into your stack, not ours.</p>
+                </div>
+            </div>
+            <div class="hero-right">
+                <span class="pill-outline description" data-hero="fade-slow" data-hero-delay="0.5">AI Infrastructure</span>
+                <p class="big-description white" data-hero="fade-slow" data-hero-delay="0.6">Custom automation,<br>deployed in weeks.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ────────────────────────────────────────────────────────────
+         2. ABOUT + METRICS (spec §2 — statement + 4-stat band)
+         ──────────────────────────────────────────────────────────── -->
+    <section class="sec" id="about">
+        <h2 class="headline white" data-fx="words">We build <span class="headline-bold">autonomous</span> systems for ops-heavy businesses &mdash; custom <span class="headline-bold">infrastructure</span> that turns manual workflows into measured <span class="headline-bold">outcomes</span>.</h2>
+
+        <div class="stats">
+            <div class="stat" data-fx="fade-slow">
+                <div class="stat-inner">
+                    <div class="stat-head">
+                        <span class="stat-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg></span>
+                        <span class="description grey">Fewer order errors</span>
+                    </div>
+                    <h3 class="headline white">85%</h3>
+                </div>
+            </div>
+            <div class="stat-divider" aria-hidden="true"></div>
+            <div class="stat" data-fx="fade-slow" data-fx-delay="0.1">
+                <div class="stat-inner">
+                    <div class="stat-head">
+                        <span class="stat-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+                        <span class="description grey">Calls resolved by AI</span>
+                    </div>
+                    <h3 class="headline white">78%</h3>
+                </div>
+            </div>
+            <div class="stat-divider" aria-hidden="true"></div>
+            <div class="stat" data-fx="fade-slow" data-fx-delay="0.2">
+                <div class="stat-inner">
+                    <div class="stat-head">
+                        <span class="stat-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span>
+                        <span class="description grey">Faster sourcing</span>
+                    </div>
+                    <h3 class="headline white">90%</h3>
+                </div>
+            </div>
+            <div class="stat-divider" aria-hidden="true"></div>
+            <div class="stat" data-fx="fade-slow" data-fx-delay="0.3">
+                <div class="stat-inner">
+                    <div class="stat-head">
+                        <span class="stat-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
+                        <span class="description grey">Autonomous operations</span>
+                    </div>
+                    <h3 class="headline white">24/7</h3>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- ────────────────────────────────────────────────────────────
-         WHY US — three-column comparison (sanjaya "Built for Real
-         Business Impact"). Azen column highlighted in blue.
+         3. CASE-STUDY CAROUSEL (spec §3 geometry + §4 flip)
+         Cards flip to a quote placeholder; the plus is a real link.
          ──────────────────────────────────────────────────────────── -->
-    <section class="py-24 md:py-36 px-6">
-        <div class="max-w-6xl mx-auto">
-            <div class="mb-14 md:mb-16 max-w-2xl">
-                <p class="font-mono text-[11px] uppercase tracking-[0.3em] text-white/45 font-bold mb-6" data-parallax="26">/ Why us</p>
-                <h2 class="display text-[clamp(2.4rem,6vw,4.75rem)] leading-[0.95] text-paper reveal" data-words>
-                    Built for real business impact<span class="text-[#0071e3]">.</span>
-                </h2>
-                <p class="mt-6 text-apple-gray text-lg font-medium">Most agencies talk about AI. We build systems that cut manual work, hold up in production, and stay yours.</p>
-            </div>
-
-            <div class="overflow-x-auto reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out">
-                <div class="cmp-table min-w-[680px]">
-                    <div class="cmp-row cmp-head">
-                        <div class="cmp-cell rowlabel"></div>
-                        <div class="cmp-cell cmp-col-azen">Azen<span class="text-[#0071e3]">.</span></div>
-                        <div class="cmp-cell text-apple-gray">Other agencies</div>
-                        <div class="cmp-cell text-apple-gray">Hire in-house</div>
-                    </div>
-                    <div class="cmp-row">
-                        <div class="cmp-cell rowlabel">Approach</div>
-                        <div class="cmp-cell cmp-col-azen text-paper">Map your bottlenecks first</div>
-                        <div class="cmp-cell text-apple-gray">Tool-first, templated</div>
-                        <div class="cmp-cell text-apple-gray">Depends on the hire</div>
-                    </div>
-                    <div class="cmp-row">
-                        <div class="cmp-cell rowlabel">Billing</div>
-                        <div class="cmp-cell cmp-col-azen text-paper">Flat fee, quoted after audit</div>
-                        <div class="cmp-cell text-apple-gray">Hourly &mdash; rewards slow work</div>
-                        <div class="cmp-cell text-apple-gray">Salary + overhead</div>
-                    </div>
-                    <div class="cmp-row">
-                        <div class="cmp-cell rowlabel">Ownership</div>
-                        <div class="cmp-cell cmp-col-azen text-paper">You own code, prompts, infra</div>
-                        <div class="cmp-cell text-apple-gray">Black-box &mdash; you rent it</div>
-                        <div class="cmp-cell text-apple-gray">In-house, if they stay</div>
-                    </div>
-                    <div class="cmp-row">
-                        <div class="cmp-cell rowlabel">Speed</div>
-                        <div class="cmp-cell cmp-col-azen text-paper">Weeks, not months</div>
-                        <div class="cmp-cell text-apple-gray">Often delayed</div>
-                        <div class="cmp-cell text-apple-gray">Hiring + onboarding</div>
-                    </div>
-                    <div class="cmp-row">
-                        <div class="cmp-cell rowlabel">After launch</div>
-                        <div class="cmp-cell cmp-col-azen text-paper">Monitored, runbooks, 90-day support</div>
-                        <div class="cmp-cell text-apple-gray">Set up &amp; disappear</div>
-                        <div class="cmp-cell text-apple-gray">Limited by bandwidth</div>
-                    </div>
+    <section class="sec-bleed" id="work">
+        <div class="sec-inner">
+            <div class="textbox">
+                <div class="textbox-column">
+                    <div class="eyebrow"><span class="pill" aria-hidden="true"></span><span class="description grey" data-fx="fade">Our Work</span></div>
+                    <h2 class="headline white" data-fx="chars">Real clients.<br>Real <span class="headline-bold">numbers</span>.</h2>
                 </div>
+                <p class="description grey textbox-desc" data-fx="desc">Six systems in production across logistics, accounting, education and community ops &mdash; each with a result we can point at.</p>
             </div>
         </div>
-    </section>
 
-    <!-- ────────────────────────────────────────────────────────────
-         TESTIMONIALS — quote cards (placeholders for real client
-         quotes), each with a "See full build" link. Client names and
-         quotes to be supplied.
-         ──────────────────────────────────────────────────────────── -->
-    <section class="py-24 md:py-36 px-6">
-        <div class="max-w-6xl mx-auto">
-            <div class="mb-14 md:mb-16 max-w-2xl">
-                <p class="font-mono text-[11px] uppercase tracking-[0.3em] text-white/45 font-bold mb-6">/ Testimonials</p>
-                <h2 class="display text-[clamp(2.4rem,6vw,4.75rem)] leading-[0.95] text-paper reveal" data-words>
-                    In their words<span class="text-[#0071e3]">.</span>
-                </h2>
-            </div>
+        <div data-fx="fade">
+            <div class="carousel-viewport">
+                <div class="carousel-container">
+                    <div class="carousel-spacer" aria-hidden="true"></div>
 
-            <div class="grid md:grid-cols-3 gap-4 md:gap-5">
-
-                <div class="tmn-card reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out">
-                    <div class="text-[#0071e3] text-4xl font-bold leading-none mb-6" aria-hidden="true">&ldquo;</div>
-                    <blockquote class="text-lg text-paper font-medium leading-snug mb-8 flex-1">Client quote to be added &mdash; a line on what changed after the build.</blockquote>
-                    <div class="flex items-center justify-between gap-4 pt-6 border-t border-white/10">
-                        <div>
-                            <div class="font-bold text-paper text-sm">[ Company name ]</div>
-                            <div class="font-mono text-[10px] uppercase tracking-[0.15em] text-apple-gray mt-1">Founder</div>
+                    <div class="case-card" data-flip role="button" tabindex="0" aria-pressed="false" aria-label="Prep Point — flip for client quote">
+                        <div class="case-flip">
+                            <div class="case-face panel">
+                                <span class="case-metric" aria-hidden="true">85%</span>
+                                <div class="card-vignette" aria-hidden="true"></div>
+                                <div class="case-foot">
+                                    <div class="case-foot-copy">
+                                        <span class="small-description grey">Prep Point</span>
+                                        <span class="small-description white">85% fewer order errors.</span>
+                                    </div>
+                                    <a href="case-study-prep-point.html" class="case-plus" aria-label="Open the Prep Point case study">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="case-face case-back panel grid-back">
+                                <p class="case-quote description white">&ldquo;Client quote to be added &mdash; a line on what changed after the build.&rdquo;</p>
+                                <a href="case-study-prep-point.html" class="case-see small-description">See full build &rarr;</a>
+                            </div>
                         </div>
-                        <a href="#work" class="font-mono text-[10px] uppercase tracking-[0.15em] text-apple-gray hover:text-[#0071e3] transition shrink-0">See full build &rarr;</a>
                     </div>
-                </div>
 
-                <div class="tmn-card reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out delay-100">
-                    <div class="text-[#0071e3] text-4xl font-bold leading-none mb-6" aria-hidden="true">&ldquo;</div>
-                    <blockquote class="text-lg text-paper font-medium leading-snug mb-8 flex-1">Client quote to be added &mdash; a line on hours saved or errors removed.</blockquote>
-                    <div class="flex items-center justify-between gap-4 pt-6 border-t border-white/10">
-                        <div>
-                            <div class="font-bold text-paper text-sm">[ Company name ]</div>
-                            <div class="font-mono text-[10px] uppercase tracking-[0.15em] text-apple-gray mt-1">Operations Lead</div>
+                    <div class="case-card" data-flip role="button" tabindex="0" aria-pressed="false" aria-label="Superior Accounting — flip for client quote">
+                        <div class="case-flip">
+                            <div class="case-face panel">
+                                <span class="case-metric" aria-hidden="true">78%</span>
+                                <div class="card-vignette" aria-hidden="true"></div>
+                                <div class="case-foot">
+                                    <div class="case-foot-copy">
+                                        <span class="small-description grey">Superior Accounting</span>
+                                        <span class="small-description white">78% of calls resolved by AI.</span>
+                                    </div>
+                                    <a href="case-study-superior-accounting.html" class="case-plus" aria-label="Open the Superior Accounting case study">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="case-face case-back panel grid-back">
+                                <p class="case-quote description white">&ldquo;Client quote to be added &mdash; a line on hours saved or errors removed.&rdquo;</p>
+                                <a href="case-study-superior-accounting.html" class="case-see small-description">See full build &rarr;</a>
+                            </div>
                         </div>
-                        <a href="#work" class="font-mono text-[10px] uppercase tracking-[0.15em] text-apple-gray hover:text-[#0071e3] transition shrink-0">See full build &rarr;</a>
                     </div>
-                </div>
 
-                <div class="tmn-card reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out delay-200">
-                    <div class="text-[#0071e3] text-4xl font-bold leading-none mb-6" aria-hidden="true">&ldquo;</div>
-                    <blockquote class="text-lg text-paper font-medium leading-snug mb-8 flex-1">Client quote to be added &mdash; a line on what it&rsquo;s like to work with Azen.</blockquote>
-                    <div class="flex items-center justify-between gap-4 pt-6 border-t border-white/10">
-                        <div>
-                            <div class="font-bold text-paper text-sm">[ Company name ]</div>
-                            <div class="font-mono text-[10px] uppercase tracking-[0.15em] text-apple-gray mt-1">Director</div>
+                    <div class="case-card" data-flip role="button" tabindex="0" aria-pressed="false" aria-label="TTT Departmentals — flip for client quote">
+                        <div class="case-flip">
+                            <div class="case-face panel">
+                                <span class="case-metric" aria-hidden="true">90%</span>
+                                <div class="card-vignette" aria-hidden="true"></div>
+                                <div class="case-foot">
+                                    <div class="case-foot-copy">
+                                        <span class="small-description grey">TTT Departmentals</span>
+                                        <span class="small-description white">90% faster sourcing.</span>
+                                    </div>
+                                    <a href="case-study-ttt.html" class="case-plus" aria-label="Open the TTT Departmentals case study">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="case-face case-back panel grid-back">
+                                <p class="case-quote description white">&ldquo;Client quote to be added &mdash; a line on what it&rsquo;s like to work with Azen.&rdquo;</p>
+                                <a href="case-study-ttt.html" class="case-see small-description">See full build &rarr;</a>
+                            </div>
                         </div>
-                        <a href="#work" class="font-mono text-[10px] uppercase tracking-[0.15em] text-apple-gray hover:text-[#0071e3] transition shrink-0">See full build &rarr;</a>
                     </div>
-                </div>
 
+                    <div class="case-card" data-flip role="button" tabindex="0" aria-pressed="false" aria-label="Little Oaks — flip for client quote">
+                        <div class="case-flip">
+                            <div class="case-face panel">
+                                <span class="case-metric" aria-hidden="true">24/7</span>
+                                <div class="card-vignette" aria-hidden="true"></div>
+                                <div class="case-foot">
+                                    <div class="case-foot-copy">
+                                        <span class="small-description grey">Little Oaks</span>
+                                        <span class="small-description white">24/7 operations coverage.</span>
+                                    </div>
+                                    <a href="case-study-little-oaks.html" class="case-plus" aria-label="Open the Little Oaks case study">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="case-face case-back panel grid-back">
+                                <p class="case-quote description white">&ldquo;Client quote to be added &mdash; a line on what changed after the build.&rdquo;</p>
+                                <a href="case-study-little-oaks.html" class="case-see small-description">See full build &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="case-card" data-flip role="button" tabindex="0" aria-pressed="false" aria-label="Zia Ul Ummah — flip for client quote">
+                        <div class="case-flip">
+                            <div class="case-face panel">
+                                <span class="case-metric" aria-hidden="true">Zero</span>
+                                <div class="card-vignette" aria-hidden="true"></div>
+                                <div class="case-foot">
+                                    <div class="case-foot-copy">
+                                        <span class="small-description grey">Zia Ul Ummah</span>
+                                        <span class="small-description white">Zero-touch data entry.</span>
+                                    </div>
+                                    <a href="case-study-zia-ul-ummah.html" class="case-plus" aria-label="Open the Zia Ul Ummah case study">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="case-face case-back panel grid-back">
+                                <p class="case-quote description white">&ldquo;Client quote to be added &mdash; a line on hours saved or errors removed.&rdquo;</p>
+                                <a href="case-study-zia-ul-ummah.html" class="case-see small-description">See full build &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="case-card" data-flip role="button" tabindex="0" aria-pressed="false" aria-label="Azen EYOS — flip for client quote">
+                        <div class="case-flip">
+                            <div class="case-face panel">
+                                <span class="case-metric" aria-hidden="true">OS</span>
+                                <div class="card-vignette" aria-hidden="true"></div>
+                                <div class="case-foot">
+                                    <div class="case-foot-copy">
+                                        <span class="small-description grey">Azen EYOS</span>
+                                        <span class="small-description white">An operating system for nurseries.</span>
+                                    </div>
+                                    <a href="case-study-eyos.html" class="case-plus" aria-label="Open the Azen EYOS case study">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="case-face case-back panel grid-back">
+                                <p class="case-quote description white">&ldquo;Client quote to be added &mdash; a line on what changed after the build.&rdquo;</p>
+                                <a href="case-study-eyos.html" class="case-see small-description">See full build &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="carousel-spacer" aria-hidden="true"></div>
+                </div>
+            </div>
+            <div class="carousel-nav">
+                <button class="carousel-btn carousel-prev" aria-label="Previous case studies" disabled>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+                </button>
+                <button class="carousel-btn carousel-next" aria-label="Next case studies">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+                </button>
             </div>
         </div>
     </section>
 
     <!-- ────────────────────────────────────────────────────────────
-         PRICING — three engagement tiers by scope, no hard numbers.
-         Every tier routes to the paid audit for a flat quote.
+         4. FOUNDER (spec §4 — flip squares adapted for one person)
          ──────────────────────────────────────────────────────────── -->
-    <section id="pricing" class="py-24 md:py-36 px-6">
-        <div class="max-w-6xl mx-auto">
-            <div class="mb-14 md:mb-16 max-w-2xl">
-                <p class="font-mono text-[11px] uppercase tracking-[0.3em] text-white/45 font-bold mb-6">/ Pricing</p>
-                <h2 class="display text-[clamp(2.4rem,6vw,4.75rem)] leading-[0.95] text-paper reveal" data-words>
-                    Scoped to the work<span class="text-[#0071e3]">.</span>
-                </h2>
-                <p class="mt-6 text-apple-gray text-lg font-medium">Flat fees, never hourly. Every engagement starts with a paid audit &mdash; credited into the build. You get the number after we&rsquo;ve seen the work.</p>
+    <section class="sec" id="founder">
+        <div class="textbox">
+            <div class="textbox-column">
+                <div class="eyebrow"><span class="pill" aria-hidden="true"></span><span class="description grey" data-fx="fade">Founder</span></div>
+                <h2 class="headline white" data-fx="words">Meet the <span class="headline-bold">founder</span>.</h2>
             </div>
-
-            <div class="grid md:grid-cols-3 gap-4 md:gap-5 items-stretch">
-
-                <div class="price-card reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out">
-                    <p class="font-mono text-[11px] uppercase tracking-[0.25em] text-apple-gray mb-3">/ 01</p>
-                    <h3 class="text-2xl font-bold tracking-tight text-paper mb-2">Single Workflow</h3>
-                    <p class="text-apple-gray font-medium text-sm mb-8">For one clear bottleneck you want gone.</p>
-                    <ul class="space-y-3 text-sm text-apple-gray font-medium mb-10">
-                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>1&ndash;2 automation workflows</li>
-                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>Tool integration setup</li>
-                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>AI implementation</li>
-                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>2 weeks post-launch support</li>
-                    </ul>
-                    <a href="https://calendly.com/tayyib-azen/30min" target="_blank" rel="noopener" class="mt-auto block text-center border border-white/20 hover:bg-white/10 text-paper font-bold py-3.5 rounded-full transition">Book audit for a quote</a>
-                </div>
-
-                <div class="price-card is-featured reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out delay-100">
-                    <div class="flex items-center justify-between mb-3">
-                        <p class="font-mono text-[11px] uppercase tracking-[0.25em] text-[#0071e3]">/ 02</p>
-                        <span class="font-mono text-[9px] uppercase tracking-[0.2em] text-[#0071e3] border border-[#0071e3]/40 rounded-full px-3 py-1">Most common</span>
-                    </div>
-                    <h3 class="text-2xl font-bold tracking-tight text-paper mb-2">Multi-System</h3>
-                    <p class="text-apple-gray font-medium text-sm mb-8">For scaling teams ready to connect the stack.</p>
-                    <ul class="space-y-3 text-sm text-paper font-medium mb-10">
-                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>3&ndash;5 automation workflows</li>
-                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>CRM &amp; marketing stack integration</li>
-                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>Custom AI agents &amp; assistants</li>
-                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>Team onboarding session</li>
-                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>30 days optimization support</li>
-                    </ul>
-                    <a href="https://calendly.com/tayyib-azen/30min" target="_blank" rel="noopener" class="mt-auto block text-center bg-[#0071e3] hover:bg-[#005bb5] text-white font-bold py-3.5 rounded-full transition">Book audit for a quote</a>
-                </div>
-
-                <div class="price-card reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out delay-200">
-                    <p class="font-mono text-[11px] uppercase tracking-[0.25em] text-apple-gray mb-3">/ 03</p>
-                    <h3 class="text-2xl font-bold tracking-tight text-paper mb-2">Enterprise</h3>
-                    <p class="text-apple-gray font-medium text-sm mb-8">For full end-to-end orchestration across the business.</p>
-                    <ul class="space-y-3 text-sm text-apple-gray font-medium mb-10">
-                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>Full workflow audit</li>
-                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>End-to-end automation architecture</li>
-                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>Custom AI agent development</li>
-                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>Internal system documentation</li>
-                        <li class="flex gap-3"><span class="text-[#0071e3]">&rarr;</span>Ongoing optimization roadmap</li>
-                    </ul>
-                    <a href="https://calendly.com/tayyib-azen/30min" target="_blank" rel="noopener" class="mt-auto block text-center border border-white/20 hover:bg-white/10 text-paper font-bold py-3.5 rounded-full transition">Book audit for a quote</a>
-                </div>
-
-            </div>
-            <p class="text-center font-mono text-[10px] uppercase tracking-[0.25em] text-white/40 mt-10">Paid audit &middot; credited into any build &middot; flat quote, never hourly</p>
+            <p class="description grey textbox-desc" data-fx="desc">The engineer who scopes your system is the engineer who builds it &mdash; no handoffs, no account managers.</p>
         </div>
-    </section>
 
-    <!-- ────────────────────────────────────────────────────────────
-         FOUNDER — dark split, colour photo in hairline frame.
-         ──────────────────────────────────────────────────────────── -->
-    <section class="py-32 md:py-40 px-6 relative">
-        <div class="max-w-7xl mx-auto grid md:grid-cols-[1.35fr_1fr] gap-14 md:gap-24 items-center">
-            <div class="reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out">
-                <p class="font-mono text-[11px] uppercase tracking-[0.3em] text-indigo-bright font-bold mb-8">[ Founder's note ]</p>
-                <blockquote class="text-2xl md:text-[2.1rem] font-bold tracking-tight leading-snug md:leading-snug text-paper mb-10">
-                    "Most agencies sell you overpriced solutions you don't need. At Azen, we build solutions tailored
-                    to your needs. Strategy before code. Custom over generic. Built around how your business actually
-                    runs, not what's easiest to sell<span class="text-[#0071e3]">.</span>"
-                </blockquote>
-                <p class="font-bold text-xl text-paper tracking-tight">Tayyib Arbab</p>
-                <p class="text-apple-gray mt-1">Founder, Systems Engineer</p>
-            </div>
-            <div class="reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out delay-150 max-w-sm md:max-w-none mx-auto w-full">
-                <div class="rounded-2xl overflow-hidden border border-white/10 bg-[#0d1020] shadow-[0_24px_60px_-30px_rgba(0,0,0,0.6)]">
-                    <div class="aspect-[4/5] overflow-hidden">
-                        <img src="founder.webp" width="1400" height="1272" alt="Tayyib Arbab, founder of Azen Digital"
-                            class="w-full h-full object-cover object-top">
+        <div class="founder-row">
+            <div class="founder-card" data-flip data-fx="fade" role="button" tabindex="0" aria-pressed="false" aria-label="Tayyib Arbab — flip for bio">
+                <div class="founder-flip">
+                    <div class="founder-face panel">
+                        <img src="founder.webp" alt="Tayyib Arbab, founder of Azen Digital" class="founder-photo" width="1400" height="1272" loading="lazy">
+                        <div class="founder-photo-fade" aria-hidden="true"></div>
+                        <div class="founder-id">
+                            <div class="founder-id-copy">
+                                <span class="subheadline white">Tayyib Arbab</span>
+                                <span class="description grey">Founder, Systems Engineer</span>
+                            </div>
+                            <span class="founder-plus" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+                            </span>
+                        </div>
                     </div>
-                    <div class="flex items-center justify-between px-5 py-3.5 border-t border-white/10 font-mono text-[10px] uppercase tracking-[0.2em] text-apple-gray">
-                        <span>Tayyib Arbab</span>
-                        <span class="text-[#0071e3]">London, UK</span>
+                    <div class="founder-face founder-back panel grid-back">
+                        <div class="founder-id-copy">
+                            <span class="subheadline white">Tayyib Arbab</span>
+                            <span class="description grey">Founder, Systems Engineer</span>
+                        </div>
+                        <p class="description white">I&rsquo;m Tayyib &mdash; a systems engineer based in London. I&rsquo;ve spent the last years building autonomous infrastructure for ops-heavy businesses: order pipelines, AI call handling, procurement automation, CRMs that run themselves. I scope every build personally, write the code that ships, and stay on the hook for it after launch.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="founder-card" data-fx="fade" data-fx-delay="0.2">
+                <div class="founder-face founder-note panel grid-back">
+                    <p class="big-description white">&ldquo;Most agencies sell you overpriced solutions you don&rsquo;t need. At Azen, we build solutions tailored to your needs. Strategy before code. Custom over generic. Built around how your business actually runs, not what&rsquo;s easiest to sell.&rdquo;</p>
+                    <div class="founder-id-copy">
+                        <span class="subheadline white">Tayyib Arbab</span>
+                        <span class="description grey">Founder, Systems Engineer</span>
                     </div>
                 </div>
             </div>
@@ -782,493 +395,430 @@
     </section>
 
     <!-- ────────────────────────────────────────────────────────────
-         05 / STRAIGHT ANSWERS — sticky headline left, details right.
+         5. SERVICES (spec §5 — 2×2 per brief §2.6, hover swell kept)
          ──────────────────────────────────────────────────────────── -->
-    <section id="faq" class="py-32 md:py-40 px-6 relative overflow-hidden">
-        <div class="section-ghost" aria-hidden="true">06</div>
-        <div class="max-w-7xl mx-auto grid md:grid-cols-[1fr_1.6fr] gap-14 md:gap-24 items-start relative">
-            <div class="md:sticky md:top-32">
-                <p class="font-mono text-[11px] uppercase tracking-[0.3em] text-indigo-bright font-bold mb-5">[ 06 / Details ]</p>
-                <h2 class="display text-[clamp(2.4rem,5vw,4.5rem)] leading-[0.95] text-paper reveal" data-words>Straight answers<span class="text-[#0071e3]">.</span></h2>
+    <section class="sec" id="services">
+        <div class="textbox">
+            <div class="textbox-column">
+                <div class="eyebrow"><span class="pill" aria-hidden="true"></span><span class="description grey" data-fx="fade">Services</span></div>
+                <h2 class="headline white" data-fx="chars">Four systems.<br>One <span class="headline-bold">operations</span> layer.</h2>
             </div>
+            <p class="description grey textbox-desc" data-fx="desc">Systems that streamline workflows, connect your tools, and put intelligence where the manual work is.</p>
+        </div>
 
-            <div class="space-y-0 border-t border-white/10">
-                <details class="group cursor-pointer py-8 border-b border-white/10">
-                    <summary class="text-xl md:text-2xl font-bold tracking-tight leading-snug flex justify-between items-center gap-6 focus:outline-none text-white/90 group-hover:text-white transition">
-                        Does this actually work with legacy systems?
-                        <span class="text-apple-gray text-3xl font-light group-open:rotate-45 transition-transform duration-300 pointer-events-none shrink-0" aria-hidden="true">+</span>
-                    </summary>
-                    <p class="mt-6 text-apple-gray text-lg leading-relaxed font-medium">Yes. If your software has
-                        an API, webhooks, or allows basic database access, we can orchestrate it. We routinely integrate
-                        with clunky CRMs, outdated ERPs, and bespoke internal tools.</p>
-                </details>
-
-                <details class="group cursor-pointer py-8 border-b border-white/10">
-                    <summary class="text-xl md:text-2xl font-bold tracking-tight leading-snug flex justify-between items-center gap-6 focus:outline-none text-white/90 group-hover:text-white transition">
-                        How much will this cost?
-                        <span class="text-apple-gray text-3xl font-light group-open:rotate-45 transition-transform duration-300 pointer-events-none shrink-0" aria-hidden="true">+</span>
-                    </summary>
-                    <p class="mt-6 text-apple-gray text-lg leading-relaxed font-medium">We don't charge hourly. We
-                        charge for the infrastructure deployed. After the Discovery Audit, you receive a flat, transparent
-                        quote for the entire build. Typical engagements range from £8k for a single workflow to £40k+ for
-                        full multi-system orchestration. Most implementations net a 300% ROI within the first year on
-                        saved labor alone.</p>
-                </details>
-
-                <details class="group cursor-pointer py-8 border-b border-white/10">
-                    <summary class="text-xl md:text-2xl font-bold tracking-tight leading-snug flex justify-between items-center gap-6 focus:outline-none text-white/90 group-hover:text-white transition">
-                        How long does a typical build take?
-                        <span class="text-apple-gray text-3xl font-light group-open:rotate-45 transition-transform duration-300 pointer-events-none shrink-0" aria-hidden="true">+</span>
-                    </summary>
-                    <p class="mt-6 text-apple-gray text-lg leading-relaxed font-medium">Discovery Audit: 1 to 2 weeks.
-                        Single-workflow build: 3 to 6 weeks. Multi-system orchestration: 8 to 14 weeks. We never quote a
-                        build until the audit is done. You get phase-by-phase milestones with checkpoint demos so the work
-                        is visible the whole way through.</p>
-                </details>
-
-                <details class="group cursor-pointer py-8 border-b border-white/10">
-                    <summary class="text-xl md:text-2xl font-bold tracking-tight leading-snug flex justify-between items-center gap-6 focus:outline-none text-white/90 group-hover:text-white transition">
-                        Who owns the code and the IP?
-                        <span class="text-apple-gray text-3xl font-light group-open:rotate-45 transition-transform duration-300 pointer-events-none shrink-0" aria-hidden="true">+</span>
-                    </summary>
-                    <p class="mt-6 text-apple-gray text-lg leading-relaxed font-medium">You do. Source code, prompts,
-                        schemas, and any custom models we train on your data are yours. Everything ships into your
-                        infrastructure: your cloud account, your secrets manager, your repo. We retain no client data
-                        after handover beyond what's required for ongoing support agreements.</p>
-                </details>
-
-                <details class="group cursor-pointer py-8 border-b border-white/10">
-                    <summary class="text-xl md:text-2xl font-bold tracking-tight leading-snug flex justify-between items-center gap-6 focus:outline-none text-white/90 group-hover:text-white transition">
-                        What about vendor lock-in if a model provider changes?
-                        <span class="text-apple-gray text-3xl font-light group-open:rotate-45 transition-transform duration-300 pointer-events-none shrink-0" aria-hidden="true">+</span>
-                    </summary>
-                    <p class="mt-6 text-apple-gray text-lg leading-relaxed font-medium">Every system we build abstracts
-                        the model layer behind a provider-agnostic interface. Swapping from one foundation model to
-                        another is a config change, not a rebuild. We routinely deploy systems that fail over between
-                        providers automatically based on cost, latency, or availability.</p>
-                </details>
-
-                <details class="group cursor-pointer py-8 border-b border-white/10">
-                    <summary class="text-xl md:text-2xl font-bold tracking-tight leading-snug flex justify-between items-center gap-6 focus:outline-none text-white/90 group-hover:text-white transition">
-                        Can my team operate the system after handover?
-                        <span class="text-apple-gray text-3xl font-light group-open:rotate-45 transition-transform duration-300 pointer-events-none shrink-0" aria-hidden="true">+</span>
-                    </summary>
-                    <p class="mt-6 text-apple-gray text-lg leading-relaxed font-medium">Yes. Every build ships with a
-                        runbook, an admin dashboard for non-technical operators, and a recorded handover session covering
-                        monitoring, retraining, and common failure modes. We offer optional retainer support for the
-                        first 90 days, after which most clients self-manage.</p>
-                </details>
-
-                <details class="group cursor-pointer py-8 border-b border-white/10">
-                    <summary class="text-xl md:text-2xl font-bold tracking-tight leading-snug flex justify-between items-center gap-6 focus:outline-none text-white/90 group-hover:text-white transition">
-                        What does the Discovery Audit actually output?
-                        <span class="text-apple-gray text-3xl font-light group-open:rotate-45 transition-transform duration-300 pointer-events-none shrink-0" aria-hidden="true">+</span>
-                    </summary>
-                    <p class="mt-6 text-apple-gray text-lg leading-relaxed font-medium">A written architecture document
-                        mapping every manual workflow, the systems they touch, the labor cost in hours per week, and a
-                        prioritized build sequence with effort estimates. If the math doesn't justify a build, we'll
-                        tell you. The audit is paid; if you proceed with a build, the cost is credited.</p>
-                </details>
-
-                <details class="group cursor-pointer py-8 border-b border-white/10">
-                    <summary class="text-xl md:text-2xl font-bold tracking-tight leading-snug flex justify-between items-center gap-6 focus:outline-none text-white/90 group-hover:text-white transition">
-                        Will this ever break?
-                        <span class="text-apple-gray text-3xl font-light group-open:rotate-45 transition-transform duration-300 pointer-events-none shrink-0" aria-hidden="true">+</span>
-                    </summary>
-                    <p class="mt-6 text-apple-gray text-lg leading-relaxed font-medium">Any system can face API
-                        downtime. We build robust error handling and fallback protocols into every script. If an
-                        integration fails, the system safely queues the task and alerts us automatically before it
-                        enters a fail state. Every build ships with uptime monitoring and an incident runbook.</p>
-                </details>
+        <div class="services-wrap">
+            <div class="carousel-viewport">
+                <div class="services-grid carousel-track">
+                    <div class="service-card panel" data-fx="fade">
+                        <div class="service-row">
+                            <h3 class="big-description white">Autonomous Agents</h3>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>
+                        </div>
+                        <p class="description grey">Systems that reason through problems, call your APIs, and execute multi-step logic &mdash; not basic chatbots.</p>
+                    </div>
+                    <div class="service-card panel" data-fx="fade" data-fx-delay="0.1">
+                        <div class="service-row">
+                            <h3 class="big-description white">System Orchestration</h3>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="8" height="8" x="3" y="3" rx="2"/><path d="M7 11v4a2 2 0 0 0 2 2h4"/><rect width="8" height="8" x="13" y="13" rx="2"/></svg>
+                        </div>
+                        <p class="description grey">Your disjointed platforms, woven into one workflow that talks to itself in real time.</p>
+                    </div>
+                    <div class="service-card panel" data-fx="fade" data-fx-delay="0.1">
+                        <div class="service-row">
+                            <h3 class="big-description white">Enterprise Retrieval</h3>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg>
+                        </div>
+                        <p class="description grey">Thousands of disorganised documents turned into instantly queryable corporate memory &mdash; private, never training external models.</p>
+                    </div>
+                    <div class="service-card panel" data-fx="fade" data-fx-delay="0.2">
+                        <div class="service-row">
+                            <h3 class="big-description white">Optimization &amp; Integration</h3>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="21" x2="14" y1="4" y2="4"/><line x1="10" x2="3" y1="4" y2="4"/><line x1="21" x2="12" y1="12" y2="12"/><line x1="8" x2="3" y1="12" y2="12"/><line x1="21" x2="16" y1="20" y2="20"/><line x1="12" x2="3" y1="20" y2="20"/><line x1="14" x2="14" y1="2" y2="6"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="16" x2="16" y1="18" y2="22"/></svg>
+                        </div>
+                        <p class="description grey">Connect, refine and scale the stack you already run &mdash; then keep it healthy with monitoring and runbooks.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-nav services-nav">
+                <button class="carousel-btn carousel-prev" aria-label="Previous services" disabled>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+                </button>
+                <button class="carousel-btn carousel-next" aria-label="Next services">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+                </button>
             </div>
         </div>
     </section>
 
     <!-- ────────────────────────────────────────────────────────────
-         FINAL CTA — the original couplet closes the page as the
-         drenched climax.
+         6. INTEGRATIONS (spec §6 — text wordmarks, own id per spec)
          ──────────────────────────────────────────────────────────── -->
-    <section class="py-40 md:py-48 px-6 bg-cta-glow text-center relative overflow-hidden flex flex-col items-center">
-        <img src="/core/cta-horizon.webp" alt="" aria-hidden="true" class="cta-horizon" width="1376" height="768" loading="lazy">
-        <h2 class="display text-[clamp(3rem,7vw,7rem)] leading-[0.92] text-center mb-10 relative z-10 max-w-6xl mx-auto reveal" data-words>
-            <span class="block text-paper">The leverage is</span>
-            <span class="block text-paper">in the systems<span class="text-[#0071e3]">.</span></span>
-        </h2>
-        <p class="text-xl md:text-2xl text-white/70 mb-12 relative z-10 font-medium max-w-2xl mx-auto px-4 reveal opacity-0 translate-y-10 transition-all duration-1000 ease-out delay-300">
-            Book a free audit. We'll find yours.</p>
-        <a href="https://calendly.com/tayyib-azen/30min" target="_blank" rel="noopener"
-            class="inline-block bg-white text-[#005bb5] px-12 py-5 rounded-full font-bold text-xl hover:bg-white/90 transition-all relative z-10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60">
-            Book Audit
-        </a>
-        <a href="mailto:hello@azen.io?subject=Brief%3A%20%5BCompany%20name%5D&body=Where%20you%20are%20now%3A%0A%0A%0AThe%20manual%20work%20costing%20you%20most%3A%0A%0A%0ASystems%20that%20touch%20it%3A%0A%0A%0ATimeline%2C%20if%20any%3A%0A%0A%0AAnything%20else%20we%20should%20know%3A%0A%0A"
-            class="mt-8 inline-block text-sm text-white/60 hover:text-paper transition tracking-tight relative z-10 focus:outline-none rounded">
-            Or send a brief in writing →
-        </a>
-        <p class="mt-12 font-mono text-[10px] uppercase tracking-[0.25em] text-white/45 relative z-10 max-w-xl mx-auto leading-loose">
-            Paid audit &middot; credited into any build &middot; if the math doesn't justify it, we tell you
-        </p>
+    <section class="sec-bleed" id="stack">
+        <div class="sec-inner">
+            <div class="textbox">
+                <div class="textbox-column">
+                    <div class="eyebrow"><span class="pill" aria-hidden="true"></span><span class="description grey" data-fx="fade">Integrations</span></div>
+                    <h2 class="headline white" data-fx="chars">The stack<br>we deploy <span class="headline-bold">every day</span>.</h2>
+                </div>
+                <p class="description grey textbox-desc" data-fx="desc">No exotic tooling &mdash; we wire the platforms you already run into one system that talks to itself.</p>
+            </div>
+        </div>
+
+        <div data-fx="fade">
+            <div class="carousel-viewport">
+                <div class="carousel-container">
+                    <div class="carousel-spacer" aria-hidden="true"></div>
+
+                    <div class="case-card int-card">
+                        <div class="case-face panel">
+                            <span class="int-wordmark" aria-hidden="true">Shopify</span>
+                            <div class="card-vignette" aria-hidden="true"></div>
+                            <div class="case-foot">
+                                <div class="case-foot-copy">
+                                    <span class="small-description grey">Shopify</span>
+                                    <span class="small-description white">Order flows, inventory and fulfilment wired into your ops.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="case-card int-card">
+                        <div class="case-face panel">
+                            <span class="int-wordmark" aria-hidden="true">Meta</span>
+                            <div class="card-vignette" aria-hidden="true"></div>
+                            <div class="case-foot">
+                                <div class="case-foot-copy">
+                                    <span class="small-description grey">Meta</span>
+                                    <span class="small-description white">Lead capture and messaging routed straight into your CRM.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="case-card int-card">
+                        <div class="case-face panel">
+                            <span class="int-wordmark" aria-hidden="true">Slack</span>
+                            <div class="card-vignette" aria-hidden="true"></div>
+                            <div class="case-foot">
+                                <div class="case-foot-copy">
+                                    <span class="small-description grey">Slack</span>
+                                    <span class="small-description white">Where your systems report in and ask for approval.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="case-card int-card">
+                        <div class="case-face panel">
+                            <span class="int-wordmark" aria-hidden="true">Monday.com</span>
+                            <div class="card-vignette" aria-hidden="true"></div>
+                            <div class="case-foot">
+                                <div class="case-foot-copy">
+                                    <span class="small-description grey">Monday.com</span>
+                                    <span class="small-description white">Boards that update themselves from live workflow data.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="case-card int-card">
+                        <div class="case-face panel">
+                            <span class="int-wordmark" aria-hidden="true">Figma</span>
+                            <div class="card-vignette" aria-hidden="true"></div>
+                            <div class="case-foot">
+                                <div class="case-foot-copy">
+                                    <span class="small-description grey">Figma</span>
+                                    <span class="small-description white">Where we design the dashboards your team actually uses.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="case-card int-card">
+                        <div class="case-face panel">
+                            <span class="int-wordmark" aria-hidden="true">Fireflies.ai</span>
+                            <div class="card-vignette" aria-hidden="true"></div>
+                            <div class="case-foot">
+                                <div class="case-foot-copy">
+                                    <span class="small-description grey">Fireflies.ai</span>
+                                    <span class="small-description white">Meeting transcripts parsed into tasks and CRM records.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="case-card int-card">
+                        <div class="case-face panel">
+                            <span class="int-wordmark" aria-hidden="true">GitHub</span>
+                            <div class="card-vignette" aria-hidden="true"></div>
+                            <div class="case-foot">
+                                <div class="case-foot-copy">
+                                    <span class="small-description grey">GitHub</span>
+                                    <span class="small-description white">Every build versioned, documented and handed over.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="carousel-spacer" aria-hidden="true"></div>
+                </div>
+            </div>
+            <div class="carousel-nav">
+                <button class="carousel-btn carousel-prev" aria-label="Previous integrations" disabled>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+                </button>
+                <button class="carousel-btn carousel-next" aria-label="Next integrations">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+                </button>
+            </div>
+        </div>
     </section>
+
+    <!-- ────────────────────────────────────────────────────────────
+         7. MINDSET SEQUENCE (spec §7 — framed split panel, live 3D
+         ping-pong instead of berco's video pair)
+         ──────────────────────────────────────────────────────────── -->
+    <section class="sec" id="mindset">
+        <div class="sequence-frame">
+            <div class="sequence-glow" aria-hidden="true"></div>
+            <div class="sequence-text">
+                <div class="eyebrow"><span class="pill" aria-hidden="true"></span><span class="description grey" data-fx="fade">Our Mindset</span></div>
+                <h2 class="headline white" data-fx="chars">Systems that <span class="headline-bold">run themselves</span><br>while you build.</h2>
+                <p class="description grey" data-fx="desc">From order pipelines to AI call handling, we engineer infrastructure that watches itself, retries itself, and reports back &mdash; so operations stop being your job and start being a system&rsquo;s.</p>
+            </div>
+            <div class="sequence-visual" data-fx="fade">
+                <div id="chip-panel" aria-hidden="true"></div>
+                <div class="fade-edge fade-t" aria-hidden="true"></div>
+                <div class="fade-edge fade-b" aria-hidden="true"></div>
+                <div class="fade-edge fade-l" aria-hidden="true"></div>
+                <div class="fade-edge fade-r" aria-hidden="true"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ────────────────────────────────────────────────────────────
+         8. FAQ (spec §9 new-section table — existing 8 Q/As verbatim)
+         ──────────────────────────────────────────────────────────── -->
+    <section class="sec" id="faq">
+        <div class="textbox">
+            <div class="textbox-column">
+                <div class="eyebrow"><span class="pill" aria-hidden="true"></span><span class="description grey" data-fx="fade">FAQ</span></div>
+                <h2 class="headline white" data-fx="chars">Straight <span class="headline-bold">answers</span>.</h2>
+            </div>
+            <p class="description grey textbox-desc" data-fx="desc">The questions every ops lead asks before a build &mdash; answered the way we&rsquo;d answer on a call.</p>
+        </div>
+
+        <div class="faq-list" data-fx="fade">
+            <details class="faq-row">
+                <summary>
+                    <span class="big-description white">Does this actually work with legacy systems?</span>
+                    <span class="faq-plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg></span>
+                </summary>
+                <p class="faq-answer description grey">Yes. If your software has an API, webhooks, or allows basic database access, we can orchestrate it. We routinely integrate with clunky CRMs, outdated ERPs, and bespoke internal tools.</p>
+            </details>
+            <details class="faq-row">
+                <summary>
+                    <span class="big-description white">How much will this cost?</span>
+                    <span class="faq-plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg></span>
+                </summary>
+                <p class="faq-answer description grey">We don't charge hourly. We charge for the infrastructure deployed. After the Discovery Audit, you receive a flat, transparent quote for the entire build. Typical engagements range from &pound;8k for a single workflow to &pound;40k+ for full multi-system orchestration. Most implementations net a 300% ROI within the first year on saved labor alone.</p>
+            </details>
+            <details class="faq-row">
+                <summary>
+                    <span class="big-description white">How long does a typical build take?</span>
+                    <span class="faq-plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg></span>
+                </summary>
+                <p class="faq-answer description grey">Discovery Audit: 1 to 2 weeks. Single-workflow build: 3 to 6 weeks. Multi-system orchestration: 8 to 14 weeks. We never quote a build until the audit is done. You get phase-by-phase milestones with checkpoint demos so the work is visible the whole way through.</p>
+            </details>
+            <details class="faq-row">
+                <summary>
+                    <span class="big-description white">Who owns the code and the IP?</span>
+                    <span class="faq-plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg></span>
+                </summary>
+                <p class="faq-answer description grey">You do. Source code, prompts, schemas, and any custom models we train on your data are yours. Everything ships into your infrastructure: your cloud account, your secrets manager, your repo. We retain no client data after handover beyond what's required for ongoing support agreements.</p>
+            </details>
+            <details class="faq-row">
+                <summary>
+                    <span class="big-description white">What about vendor lock-in if a model provider changes?</span>
+                    <span class="faq-plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg></span>
+                </summary>
+                <p class="faq-answer description grey">Every system we build abstracts the model layer behind a provider-agnostic interface. Swapping from one foundation model to another is a config change, not a rebuild. We routinely deploy systems that fail over between providers automatically based on cost, latency, or availability.</p>
+            </details>
+            <details class="faq-row">
+                <summary>
+                    <span class="big-description white">Can my team operate the system after handover?</span>
+                    <span class="faq-plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg></span>
+                </summary>
+                <p class="faq-answer description grey">Yes. Every build ships with a runbook, an admin dashboard for non-technical operators, and a recorded handover session covering monitoring, retraining, and common failure modes. We offer optional retainer support for the first 90 days, after which most clients self-manage.</p>
+            </details>
+            <details class="faq-row">
+                <summary>
+                    <span class="big-description white">What does the Discovery Audit actually output?</span>
+                    <span class="faq-plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg></span>
+                </summary>
+                <p class="faq-answer description grey">A written architecture document mapping every manual workflow, the systems they touch, the labor cost in hours per week, and a prioritized build sequence with effort estimates. If the math doesn't justify a build, we'll tell you. The audit is paid; if you proceed with a build, the cost is credited.</p>
+            </details>
+            <details class="faq-row">
+                <summary>
+                    <span class="big-description white">Will this ever break?</span>
+                    <span class="faq-plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg></span>
+                </summary>
+                <p class="faq-answer description grey">Any system can face API downtime. We build robust error handling and fallback protocols into every script. If an integration fails, the system safely queues the task and alerts us automatically before it enters a fail state. Every build ships with uptime monitoring and an incident runbook.</p>
+            </details>
+        </div>
+    </section>
+
+    <!-- ────────────────────────────────────────────────────────────
+         9. CONTACT — doubles as the footer (spec §8)
+         ──────────────────────────────────────────────────────────── -->
+    <section class="sec" id="contact">
+        <div class="contact-wrap">
+            <div class="contact-left">
+                <div class="contact-items">
+                    <div class="contact-item" data-fx="fade">
+                        <span class="contact-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg></span>
+                        <div class="contact-item-copy">
+                            <span class="big-description white">Chat to us</span>
+                            <span class="description grey">Tell us what's eating your week.</span>
+                            <a href="mailto:hello@azen.io" class="description">hello@azen.io</a>
+                        </div>
+                    </div>
+                    <div class="contact-item" data-fx="fade" data-fx-delay="0.1">
+                        <span class="contact-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg></span>
+                        <div class="contact-item-copy">
+                            <span class="big-description white">Based in London</span>
+                            <span class="description grey">Building for teams anywhere.</span>
+                            <span class="description white">London, United Kingdom</span>
+                        </div>
+                    </div>
+                    <div class="contact-item" data-fx="fade" data-fx-delay="0.2">
+                        <span class="contact-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg></span>
+                        <div class="contact-item-copy">
+                            <span class="big-description white">Book a call</span>
+                            <span class="description grey">30 minutes. No pitch deck.</span>
+                            <a href="https://calendly.com/tayyib-azen/30min" target="_blank" rel="noopener" class="description">calendly.com/tayyib-azen</a>
+                        </div>
+                    </div>
+                </div>
+                <p class="small-description grey">&copy; 2026 Azen Digital. All Rights Reserved</p>
+            </div>
+
+            <div class="contact-card panel" data-fx="fade">
+                <div>
+                    <h2 class="headline white" data-fx="chars">Got bottlenecks?<br>We've got <span class="headline-bold">systems</span>.</h2>
+                    <p class="description grey" style="margin-top:2.5vh">Tell us about the manual work and we'll map the system that removes it.</p>
+                </div>
+                <form class="contact-form" id="contact-form" action="https://calendly.com/tayyib-azen/30min" method="get" target="_blank">
+                    <input type="text" class="contact-input" id="cf-name" name="name" placeholder="Your Name" autocomplete="name">
+                    <input type="email" class="contact-input" id="cf-email" name="email" placeholder="Your Email" autocomplete="email">
+                    <input type="text" class="contact-input" id="cf-company" name="company" placeholder="Position at Company" autocomplete="organization">
+                    <input type="text" class="contact-input" id="cf-project" name="project" placeholder="Tell Us a Little About The Project">
+                    <button type="submit" class="btn-pill contact-submit">Book a call</button>
+                    <a href="mailto:hello@azen.io?subject=Project%20brief" class="contact-alt small-description" id="contact-mailto">Or email your brief instead &rarr;</a>
+                </form>
+            </div>
+        </div>
+    </section>
+
     </main>
 
-    <!-- Footer — borderless; the CTA glow above fades to ground
-         before this begins, so the surface reads continuous. -->
-    <footer class="pt-8 pb-0 px-6 overflow-hidden">
-        <div class="max-w-7xl mx-auto flex flex-col gap-10">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
-                <div class="text-2xl font-bold tracking-tighter text-paper">azen.</div>
-                <nav aria-label="Social" class="flex gap-2">
-                    <a href="https://www.linkedin.com/REPLACE_ME_LINKEDIN" target="_blank" rel="noopener" aria-label="Azen on LinkedIn"
-                        class="inline-flex items-center justify-center w-11 h-11 rounded-full text-apple-gray hover:text-white hover:bg-white/10 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0071e3]/60">
-                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                            <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/>
-                        </svg>
-                    </a>
-                    <a href="https://x.com/REPLACE_ME_X" target="_blank" rel="noopener" aria-label="Azen on X"
-                        class="inline-flex items-center justify-center w-11 h-11 rounded-full text-apple-gray hover:text-white hover:bg-white/10 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0071e3]/60">
-                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/>
-                        </svg>
-                    </a>
-                    <a href="https://www.instagram.com/REPLACE_ME_INSTAGRAM" target="_blank" rel="noopener" aria-label="Azen on Instagram"
-                        class="inline-flex items-center justify-center w-11 h-11 rounded-full text-apple-gray hover:text-white hover:bg-white/10 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0071e3]/60">
-                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <rect x="2.5" y="2.5" width="19" height="19" rx="5"/>
-                            <circle cx="12" cy="12" r="4"/>
-                            <circle cx="17.5" cy="6.5" r="1.1" fill="currentColor" stroke="none"/>
-                        </svg>
-                    </a>
-                    <a href="https://www.youtube.com/REPLACE_ME_YOUTUBE" target="_blank" rel="noopener" aria-label="Azen on YouTube"
-                        class="inline-flex items-center justify-center w-11 h-11 rounded-full text-apple-gray hover:text-white hover:bg-white/10 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0071e3]/60">
-                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                        </svg>
-                    </a>
-                </nav>
-            </div>
-
-            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
-                <div class="text-sm text-apple-gray font-medium">&copy; 2026 Azen Digital. All rights reserved.</div>
-                <nav aria-label="Legal" class="flex gap-8 text-sm text-apple-gray font-medium">
-                    <a href="privacy.html" class="inline-block py-3 -my-3 hover:text-paper transition">Privacy Policy</a>
-                    <a href="terms.html" class="inline-block py-3 -my-3 hover:text-paper transition">Terms of Service</a>
-                    <a href="mailto:hello@azen.io" class="inline-block py-3 -my-3 hover:text-paper transition">Contact</a>
-                </nav>
-            </div>
-
-            <div class="footer-word display text-center text-[clamp(6rem,21vw,19rem)] tracking-tighter translate-y-[16%] -mb-4" aria-hidden="true" data-parallax="46">azen.</div>
-        </div>
-    </footer>
-
-    <!-- anime.js (v4) enhancement layer — bundled by Vite. Powers the
-         system-map draw-in and hero halo; degrades to the static SVG
-         if the module fails to load. -->
+    <!-- Entrances (anime.js v4) + Embla carousels — bundled by Vite. -->
     <script type="module" src="/src/enhance.js"></script>
 
-    <!-- Real-time WebGL hero (Three.js). Progressive: degrades to the
-         CSS glow-ground if WebGL is unavailable. -->
+    <!-- Real-time WebGL hero (Three.js). Degrades to the CSS glow. -->
     <script type="module" src="/src/hero3d.js"></script>
 
-    <!-- Behaviour: boot intro, reveals, work gallery pin, process pin,
-         count-ups, film scale, ROI, drawer. Zero dependencies. -->
+    <!-- Mindset panel — simplified auto ping-pong chip scene. -->
+    <script type="module" src="/src/chip-panel.js"></script>
+
+    <!-- Behaviour: loader, nav drop-in, smooth scroll, flips, scroll-top,
+         contact submit. Zero dependencies — guaranteed to run. -->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const motionOK = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    (() => {
+        const motionOK = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-            // ── Boot intro ────────────────────────────────────────
-            const boot = document.getElementById('boot-intro');
-            const bootChars = document.getElementById('boot-chars');
-            const bootCaret = document.getElementById('boot-caret');
-            const bootDone = () => {
-                if (!boot) return;
-                boot.classList.add('is-done');
-                document.body.classList.add('is-live');
-                setTimeout(() => boot.remove(), 900);
-            };
-            if (boot && bootChars && motionOK && !sessionStorage.getItem('azen-booted')) {
-                sessionStorage.setItem('azen-booted', '1');
-                document.body.classList.add('is-booting');
-                const word = 'azen';
-                let i = 0;
-                const type = () => {
-                    if (i < word.length) {
-                        bootChars.textContent = word.slice(0, ++i);
-                        setTimeout(type, 110 + Math.random() * 40);
-                    } else {
-                        setTimeout(() => {
-                            const dot = document.createElement('span');
-                            dot.style.color = '#0071e3';
-                            dot.textContent = '.';
-                            bootChars.appendChild(dot);
-                            if (bootCaret) bootCaret.style.opacity = '0';
-                            setTimeout(() => {
-                                document.body.classList.remove('is-booting');
-                                bootDone();
-                            }, 480);
-                        }, 200);
-                    }
-                };
-                setTimeout(type, 260);
-            } else {
-                if (boot) boot.remove();
-                document.body.classList.add('is-live');
-            }
+        /* ── Loader + reveal handshake ─────────────────────────── */
+        const reveal = () => {
+            if (window.__azenRevealed) return;
+            window.__azenRevealed = true;
+            window.dispatchEvent(new CustomEvent('azen:reveal'));
+        };
+        const nav = document.getElementById('site-nav');
+        const navIn = (ms) => setTimeout(() => { if (nav) nav.classList.add('nav-in'); }, ms);
+        const loader = document.getElementById('loader');
+        if (loader && motionOK && !sessionStorage.getItem('azen-booted')) {
+            sessionStorage.setItem('azen-booted', '1');
+            setTimeout(() => { loader.classList.add('is-out'); reveal(); }, 500);
+            setTimeout(() => loader.remove(), 1400);
+            navIn(500);
+        } else {
+            if (loader) loader.remove();
+            reveal();
+            navIn(motionOK ? 150 : 0);
+        }
 
-            // ── Word-mask splitter (data-words headlines) ────────
-            document.querySelectorAll('[data-words]').forEach(el => {
-                let wi = 0;
-                const wrap = (content, delayIndex) => {
-                    const w = document.createElement('span');
-                    w.className = 'w';
-                    const inner = document.createElement('span');
-                    inner.style.setProperty('--wd', `${delayIndex * 60}ms`);
-                    inner.appendChild(content);
-                    w.appendChild(inner);
-                    return w;
-                };
-                const split = (node) => {
-                    [...node.childNodes].forEach(child => {
-                        if (child.nodeType === 3) {
-                            if (!child.textContent.trim()) return;
-                            const frag = document.createDocumentFragment();
-                            child.textContent.split(/(\s+)/).forEach(part => {
-                                if (!part) return;
-                                if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(part)); return; }
-                                frag.appendChild(wrap(document.createTextNode(part), wi++));
-                            });
-                            node.replaceChild(frag, child);
-                        } else if (child.nodeType === 1 && child.tagName !== 'BR') {
-                            if (child.childElementCount === 0 && child.textContent.length <= 3) {
-                                // leaf accents (the blue period) ride with the previous word
-                                const w = wrap(document.createTextNode(''), Math.max(0, wi - 1));
-                                node.replaceChild(w, child);
-                                w.firstChild.appendChild(child);
-                            } else {
-                                split(child);
-                            }
-                        }
-                    });
-                };
-                if (motionOK) split(el);
+        /* ── Smooth-scroll for in-page links (native, no Lenis) ── */
+        document.querySelectorAll('a[href^="#"]').forEach((a) => {
+            a.addEventListener('click', (e) => {
+                const id = a.getAttribute('href');
+                if (!id || id.length < 2) return;
+                const target = document.querySelector(id);
+                if (!target) return;
+                e.preventDefault();
+                target.scrollIntoView({ behavior: motionOK ? 'smooth' : 'auto' });
             });
-
-            // ── Reveal on scroll ─────────────────────────────────
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.replace('opacity-0', 'opacity-100');
-                        entry.target.classList.replace('translate-y-10', 'translate-y-0');
-                        entry.target.classList.replace('translate-y-5', 'translate-y-0');
-                        entry.target.classList.add('words-in');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.15 });
-            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-            // ── Work gallery: pinned horizontal scroll-jack (md+) ─
-            const workPin = document.getElementById('work-pin');
-            const workTrack = document.getElementById('work-track');
-            const workFill = document.getElementById('work-fill');
-            const workCounter = document.getElementById('work-counter');
-            const mdUp = window.matchMedia('(min-width: 768px)');
-            let workActive = false;
-
-            const sizeWorkPin = () => {
-                if (!workPin || !workTrack) return;
-                if (mdUp.matches && motionOK) {
-                    const span = workTrack.scrollWidth - window.innerWidth;
-                    if (span > 0) {
-                        workPin.classList.add('is-pinned');
-                        workPin.style.height = `${span + window.innerHeight}px`;
-                        workActive = true;
-                        onWorkScroll();
-                        return;
-                    }
-                }
-                workPin.classList.remove('is-pinned');
-                workPin.style.height = '';
-                workTrack.style.transform = '';
-                workActive = false;
-            };
-
-            const onWorkScroll = () => {
-                if (!workActive) return;
-                const rect = workPin.getBoundingClientRect();
-                const total = rect.height - window.innerHeight;
-                if (total <= 0) return;
-                const p = Math.max(0, Math.min(1, -rect.top / total));
-                const span = workTrack.scrollWidth - window.innerWidth;
-                workTrack.style.transform = `translate3d(${-p * span}px, 0, 0)`;
-                if (workFill) workFill.style.transform = `scaleX(${p})`;
-                if (workCounter) {
-                    const n = Math.min(7, 1 + Math.floor(p * 7));
-                    const label = `[ 0${n} / 07 ]`;
-                    if (workCounter.textContent !== label) workCounter.textContent = label;
-                }
-            };
-
-            sizeWorkPin();
-            window.addEventListener('resize', sizeWorkPin);
-            window.addEventListener('load', sizeWorkPin); // re-measure after late layout
-            window.addEventListener('scroll', onWorkScroll, { passive: true });
-
-            // ── Process pin ──────────────────────────────────────
-            const processPin = document.getElementById('process-pin');
-            if (processPin && motionOK) {
-                const panels = processPin.querySelectorAll('[data-process-panel]');
-                const steps = processPin.querySelectorAll('[data-process-step]');
-                const fill = document.getElementById('process-fill');
-                const numEl = document.getElementById('process-num');
-                let lastIdx = -1;
-                const onProcessScroll = () => {
-                    const rect = processPin.getBoundingClientRect();
-                    const total = rect.height - window.innerHeight;
-                    if (total <= 0) return;
-                    const p = Math.max(0, Math.min(1, -rect.top / total));
-                    if (fill) fill.style.transform = `scaleX(${p})`;
-                    const idx = Math.min(2, Math.floor(p * 3));
-                    if (idx !== lastIdx) {
-                        lastIdx = idx;
-                        panels.forEach((el, i) => {
-                            el.classList.toggle('is-active', i === idx);
-                            el.classList.toggle('is-past', i < idx);
-                        });
-                        steps.forEach((el, i) => el.classList.toggle('is-on', i <= idx));
-                        if (numEl) numEl.textContent = String(idx + 1).padStart(2, '0');
-                    }
-                };
-                window.addEventListener('scroll', onProcessScroll, { passive: true });
-                onProcessScroll();
-            }
-
-            // ── Count-ups (proof band) ───────────────────────────
-            const countEls = document.querySelectorAll('[data-countup]');
-            if (countEls.length) {
-                const easeOut = t => 1 - Math.pow(2, -10 * t);
-                const runCount = (el) => {
-                    const target = parseFloat(el.dataset.countup);
-                    const decimals = parseInt(el.dataset.decimals || '0', 10);
-                    if (!motionOK) { el.textContent = target.toFixed(decimals); return; }
-                    const t0 = performance.now();
-                    const dur = 1100;
-                    const tick = (now) => {
-                        const t = Math.min(1, (now - t0) / dur);
-                        el.textContent = (target * easeOut(t)).toFixed(decimals);
-                        if (t < 1) requestAnimationFrame(tick);
-                        else el.textContent = target.toFixed(decimals);
-                    };
-                    requestAnimationFrame(tick);
-                };
-                const countObserver = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            runCount(entry.target);
-                            countObserver.unobserve(entry.target);
-                        }
-                    });
-                }, { threshold: 0.5 });
-                countEls.forEach(el => countObserver.observe(el));
-            }
-
-            // ── Brand film scale-on-scroll now handled by the anime.js
-            //    scroll choreography (enhance.js, [data-scale]) for the
-            //    smoothed Quantara-style feel. ──────────────────────
-
-            // ── Hero core parallax ───────────────────────────────
-            const coreP = document.getElementById('core-parallax');
-            if (coreP && motionOK && window.matchMedia('(hover: hover)').matches) {
-                const heroSec = coreP.closest('section');
-                heroSec.addEventListener('pointermove', (e) => {
-                    const r = heroSec.getBoundingClientRect();
-                    const dx = (e.clientX - r.left) / r.width - 0.5;
-                    const dy = (e.clientY - r.top) / r.height - 0.5;
-                    coreP.style.transform = `translate3d(${(dx * 20).toFixed(1)}px, ${(dy * 16).toFixed(1)}px, 0) rotate(${(dx * 2.5).toFixed(2)}deg)`;
-                }, { passive: true });
-                heroSec.addEventListener('pointerleave', () => { coreP.style.transform = ''; });
-            }
-
-            // ── Cursor spotlight ─────────────────────────────────
-            const spotlight = document.getElementById('spotlight');
-            if (spotlight && motionOK && window.matchMedia('(hover: hover)').matches) {
-                let sx = 0, sy = 0, queued = false;
-                window.addEventListener('pointermove', (e) => {
-                    sx = e.clientX; sy = e.clientY;
-                    if (!queued) {
-                        queued = true;
-                        requestAnimationFrame(() => {
-                            spotlight.style.setProperty('--mx', sx + 'px');
-                            spotlight.style.setProperty('--my', sy + 'px');
-                            queued = false;
-                        });
-                    }
-                }, { passive: true });
-            }
-
-            // ── Scroll progress bar ──────────────────────────────
-            const progress = document.getElementById('scroll-progress');
-            if (progress) {
-                const onProgress = () => {
-                    const max = document.documentElement.scrollHeight - window.innerHeight;
-                    const p = max > 0 ? window.scrollY / max : 0;
-                    progress.style.transform = `scaleX(${p})`;
-                };
-                window.addEventListener('scroll', onProgress, { passive: true });
-                onProgress();
-            }
-
-            // ── Floating nav: hidden over the hero, sticky in content ─
-            const floatNav = document.getElementById('floating-nav');
-            if (floatNav) {
-                const onNav = () => {
-                    floatNav.classList.toggle('at-top', window.scrollY < window.innerHeight * 0.7);
-                };
-                window.addEventListener('scroll', onNav, { passive: true });
-                onNav();
-            }
-
-            // ── ROI calculator ───────────────────────────────────
-            const slider = document.getElementById('roi-slider');
-            const output = document.getElementById('roi-output');
-            const hoursDisplay = document.getElementById('hours-display');
-            if (slider && output && hoursDisplay) {
-                const formatter = new Intl.NumberFormat('en-GB', {
-                    style: 'currency', currency: 'GBP', maximumFractionDigits: 0,
-                });
-                const updateSlider = () => {
-                    const hours = parseInt(slider.value);
-                    hoursDisplay.innerText = hours + " Hrs";
-                    output.innerText = formatter.format(hours * 45 * 52);
-                };
-                slider.addEventListener('input', updateSlider);
-                updateSlider();
-            }
-
-            // ── Mobile nav drawer ────────────────────────────────
-            const toggle = document.getElementById('nav-toggle');
-            const drawer = document.getElementById('mobile-drawer');
-            const iconOpen = document.getElementById('nav-icon-open');
-            const iconClose = document.getElementById('nav-icon-close');
-            if (toggle && drawer) {
-                const setOpen = (open) => {
-                    drawer.dataset.open = String(open);
-                    drawer.setAttribute('aria-hidden', String(!open));
-                    if (open) { drawer.removeAttribute('inert'); } else { drawer.setAttribute('inert', ''); }
-                    toggle.setAttribute('aria-expanded', String(open));
-                    if (iconOpen && iconClose) {
-                        iconOpen.classList.toggle('hidden', open);
-                        iconClose.classList.toggle('hidden', !open);
-                    }
-                    document.body.style.overflow = open ? 'hidden' : '';
-                };
-                toggle.addEventListener('click', () => setOpen(drawer.dataset.open !== 'true'));
-                drawer.querySelectorAll('[data-nav-link]').forEach(link => {
-                    link.addEventListener('click', () => setOpen(false));
-                });
-                document.addEventListener('keydown', (e) => {
-                    if (e.key === 'Escape' && drawer.dataset.open === 'true') setOpen(false);
-                });
-            }
         });
+
+        /* ── Flip cards (case studies + founder) ───────────────── */
+        document.querySelectorAll('[data-flip]').forEach((card) => {
+            let px = 0, py = 0;
+            card.addEventListener('pointerdown', (e) => { px = e.clientX; py = e.clientY; });
+            const toggle = () => {
+                card.classList.toggle('flipped');
+                card.setAttribute('aria-pressed', String(card.classList.contains('flipped')));
+            };
+            card.addEventListener('click', (e) => {
+                if (e.target.closest('a')) return;                          // plus = real link
+                if (Math.hypot(e.clientX - px, e.clientY - py) > 12) return; // was a carousel drag
+                toggle();
+            });
+            card.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+            });
+        });
+
+        /* ── Scroll-top pill (shows past the hero) ─────────────── */
+        const topBtn = document.getElementById('scroll-top');
+        const hero = document.getElementById('home');
+        if (topBtn && hero) {
+            const onS = () => topBtn.classList.toggle('is-on', window.scrollY > hero.offsetHeight * 0.5);
+            window.addEventListener('scroll', onS, { passive: true });
+            onS();
+            topBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: motionOK ? 'smooth' : 'auto' }));
+        }
+
+        /* ── Contact: Calendly primary, mailto fallback with a real
+               email field (fixes berco's missing-input bug, spec §8) ── */
+        const form = document.getElementById('contact-form');
+        if (form) {
+            const val = (id) => { const el = document.getElementById(id); return el ? el.value.trim() : ''; };
+            const mailto = document.getElementById('contact-mailto');
+            const buildMailto = () => {
+                const body = 'Name: ' + val('cf-name') + '\r\nEmail: ' + val('cf-email') +
+                    '\r\nCompany: ' + val('cf-company') + '\r\nProject: ' + val('cf-project') + '\r\n';
+                return 'mailto:hello@azen.io?subject=' + encodeURIComponent('Project brief — azen.io') +
+                    '&body=' + encodeURIComponent(body);
+            };
+            if (mailto) {
+                form.addEventListener('input', () => { mailto.href = buildMailto(); });
+                mailto.href = buildMailto();
+            }
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                window.open('https://calendly.com/tayyib-azen/30min', '_blank', 'noopener');
+            });
+        }
+    })();
     </script>
 </body>
 
