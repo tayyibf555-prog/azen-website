@@ -76,9 +76,9 @@ if (mount) {
     const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
     // reference framing: the core fills the frame, the plume towers —
     // closer + lower than v2, gaze lifted to the curtain's mass centre.
-    const HERO_POS = new THREE.Vector3(3.05, 1.85, 4.75);
-    const INTRO_POS = new THREE.Vector3(4.2, 2.8, 6.9);
-    const LOOK_BASE = new THREE.Vector3(0, 0.62, 0);
+    const HERO_POS = new THREE.Vector3(2.9, 1.5, 4.3);   // low, close (berco)
+    const INTRO_POS = new THREE.Vector3(4.2, 2.6, 6.6);
+    const LOOK_BASE = new THREE.Vector3(0, 0.5, 0);
     const lookCur = LOOK_BASE.clone();
     camera.position.copy(reduceMotion ? HERO_POS : INTRO_POS);
     camera.lookAt(lookCur);
@@ -139,11 +139,11 @@ if (mount) {
 
     /* ── 2. Light & post ─────────────────────────────────────── */
     scene.add(new THREE.HemisphereLight(0x9ec8ff, 0x0a1428, 0.4));
-    const key = new THREE.DirectionalLight(0xeaf1ff, 1.4);   // soft top key
-    key.position.set(4.5, 7.5, 4.5);
+    const key = new THREE.DirectionalLight(0xeaf1ff, 2.3);   // raking upper-left
+    key.position.set(-3.5, 6.5, 3.5);                        // (berco: right falls dark)
     scene.add(key);
-    const rim = new THREE.DirectionalLight(BLUE, 1.3);
-    rim.position.set(-6, 2.5, -4);
+    const rim = new THREE.DirectionalLight(BLUE, 1.1);
+    rim.position.set(5, 2, -4);
     scene.add(rim);
 
     const composer = new EffectComposer(renderer);

@@ -137,7 +137,7 @@ export const buildArmoredCore = (parent, { maxAniso = 8 } = {}) => {
     color: new THREE.Color('#05070a'), metalness: 0.3, roughness: 0.8, envMapIntensity: 0.4,
   });
   const pinMat = new THREE.MeshStandardMaterial({
-    color: new THREE.Color('#d2b678'), metalness: 1, roughness: 0.28, envMapIntensity: 1.0,
+    color: new THREE.Color('#e8cd92'), metalness: 1, roughness: 0.26, envMapIntensity: 1.4,
   });
   const boardTex = drawTraceBoard({ maxAniso });
   const boardMat = new THREE.MeshStandardMaterial({
@@ -222,8 +222,8 @@ export const buildArmoredCore = (parent, { maxAniso = 8 } = {}) => {
   group.add(board);
   const BOARD_TOP = 0.245;
 
-  /* perimeter leadframe teeth — 116 gold pins along the rim window */
-  const pins = new THREE.InstancedMesh(new THREE.BoxGeometry(0.026, 0.024, 0.055), pinMat, 116);
+  /* perimeter leadframe teeth — chunky DOUBLE gold ladders (berco) */
+  const pins = new THREE.InstancedMesh(new THREE.BoxGeometry(0.048, 0.06, 0.07), pinMat, 116);
   {
     const m = new THREE.Matrix4(); const q = new THREE.Quaternion(); const e = new THREE.Euler();
     const v = new THREE.Vector3(); const one = new THREE.Vector3(1, 1, 1);
@@ -501,24 +501,29 @@ const drawLidTexture = (size = 1024) => {
 
 export const buildLid = (parent, { boardTop = 0.245 } = {}) => {
   const lid = new THREE.Group();
-  const pedestal = new THREE.Mesh(
-    new RoundedBoxGeometry(2.05, 0.12, 2.05, 3, 0.03),
-    new THREE.MeshPhysicalMaterial({
-      color: new THREE.Color('#101318'), metalness: 0.8, roughness: 0.45,
-      clearcoat: 0.4, clearcoatRoughness: 0.3, envMapIntensity: 0.8,
-    })
-  );
-  pedestal.position.y = boardTop + 0.075;
-  lid.add(pedestal);
-  const plateMat = new THREE.MeshPhysicalMaterial({
-    map: drawLidTexture(), metalness: 1, roughness: 0.32,
-    clearcoat: 0.5, clearcoatRoughness: 0.2, envMapIntensity: 1.15,
+  // TALL layered stack (berco: armor → deck → pedestal steps → thick lid)
+  const pedMat = new THREE.MeshPhysicalMaterial({
+    color: new THREE.Color('#12161d'), metalness: 0.85, roughness: 0.4,
+    clearcoat: 0.4, clearcoatRoughness: 0.3, envMapIntensity: 2.0,
   });
-  const plate = new THREE.Mesh(new RoundedBoxGeometry(1.78, 0.1, 1.78, 4, 0.05), plateMat);
-  plate.position.y = boardTop + 0.185;
+  const step1 = new THREE.Mesh(new RoundedBoxGeometry(2.15, 0.1, 2.15, 3, 0.03), pedMat);
+  step1.position.y = boardTop + 0.06;
+  const step2 = new THREE.Mesh(new RoundedBoxGeometry(2.0, 0.14, 2.0, 3, 0.03), pedMat);
+  step2.position.y = boardTop + 0.17;
+  lid.add(step1, step2);
+  const lidTex = drawLidTexture();
+  const plateMat = new THREE.MeshPhysicalMaterial({
+    map: lidTex, metalness: 1, roughness: 0.22,
+    clearcoat: 0.6, clearcoatRoughness: 0.15, envMapIntensity: 3.4,
+    // faint self-read: brush pattern + engraving stay visible at grazing
+    // angles under the dim night HDRI (berco's lid always reads bright)
+    emissive: new THREE.Color('#9aa4b2'), emissiveMap: lidTex, emissiveIntensity: 0.16,
+  });
+  const plate = new THREE.Mesh(new RoundedBoxGeometry(1.86, 0.14, 1.86, 4, 0.06), plateMat);
+  plate.position.y = boardTop + 0.31;
   lid.add(plate);
   parent.add(lid);
-  return { group: lid, plateMat, restY: 0 };
+  return { group: lid, plateMat, mats: [pedMat, plateMat], restY: 0 };
 };
 
 /* ── Seam arcs — the living electricity ───────────────────────
@@ -556,7 +561,8 @@ export const buildArcs = (parent, { boardTop = 0.245, half = 1.06 } = {}) => {
     arcs.push({ line, pos, geo, age: 1e3, life: 0, P });
   }
   const regen = (a) => {
-    const u0 = rnd();
+    // cluster at a hot corner (berco: arcs concentrate front-left) — 70%
+    const u0 = rnd() < 0.7 ? 0.58 + rnd() * 0.2 : rnd();
     const span = 0.03 + rnd() * 0.09;        // fraction of perimeter
     for (let j = 0; j < a.P; j++) {
       const f = j / (a.P - 1);
