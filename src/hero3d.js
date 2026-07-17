@@ -8,8 +8,9 @@
    revealing a glowing 6×6 die-grid underneath. Opening the
    system.
 
-   100% procedural — geometry + CanvasTexture drawn in code.
-   No models, no images, no video. The pipeline is ours.
+   Procedural geometry + code-drawn CanvasTextures; the only
+   file asset is a CC0 HDRI (/hdri/env.hdr) for lighting.
+   No models, no video. The pipeline is ours.
 
    Progressive + safe (unchanged gates):
    - No WebGL / context loss  → CSS glow-ground stays visible
@@ -23,6 +24,12 @@ import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
 import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js';
+import { BokehPass } from 'three/examples/jsm/postprocessing/BokehPass.js';
+import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
+import {
+  buildTraceTexture, buildAoMap, buildPackageDetail, buildSMDs,
+  GrainShader, applyHDREnvironment, boostEnvIntensity,
+} from './chip/common.js';
 
 const mount = document.getElementById('hero-3d');
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -83,6 +90,15 @@ if (mount) {
 
     const pmrem = new THREE.PMREMGenerator(renderer);
     scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+    // (a) HDRI lighting — async swap; RoomEnvironment above is the instant
+    // first-paint fallback. Boosts hold the near-black + #0071e3 palette
+    // (the night HDRI is dimmer than RoomEnvironment). Runs post-load, so
+    // every const it references is initialised long before it fires.
+    applyHDREnvironment(renderer, scene, () => {
+      boostEnvIntensity([pinMat, dieMat, gridMat, pkgDetail.metalMat, smds.capMat], 3.2);
+      boostEnvIntensity([pcbMat, pkg.material, pad.material, pkgDetail.lipMat, smds.bodyMat, smds.indMat], 2.2);
+      if (reduceMotion) composer.render();       // refresh the single static frame
+    });
 
     // everything that floats / parallaxes lives on the rig
     const rig = new THREE.Group();
@@ -121,35 +137,19 @@ if (mount) {
         traces.push({ pts, bright: rng() < 0.16, wide: rng() < 0.14 });
       }
     }
-    const traceTex = (() => {
-      const c = document.createElement('canvas'); c.width = c.height = TEX;
-      const ctx = c.getContext('2d');
-      ctx.fillStyle = '#000'; ctx.fillRect(0, 0, TEX, TEX);
-      const px = (w) => (w / PCB + 0.5) * TEX;      // world x/z → canvas px
-      ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-      for (const tr of traces) {
-        const col = tr.bright ? '#4aa3ff' : '#0071e3';
-        ctx.strokeStyle = col; ctx.fillStyle = col;
-        ctx.lineWidth = tr.wide ? 5 : 3;
-        ctx.beginPath();
-        ctx.moveTo(px(tr.pts[0]), px(tr.pts[1]));
-        for (let i = 2; i < tr.pts.length; i += 2) ctx.lineTo(px(tr.pts[i]), px(tr.pts[i + 1]));
-        ctx.stroke();
-        const n = tr.pts.length;
-        ctx.beginPath();
-        ctx.arc(px(tr.pts[n - 2]), px(tr.pts[n - 1]), tr.wide ? 7 : 4.5, 0, Math.PI * 2);
-        ctx.fill();
-      }
-      const tex = new THREE.CanvasTexture(c);
-      tex.colorSpace = THREE.SRGBColorSpace;
-      tex.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
-      return tex;
-    })();
+    // (d/f) trace texture v2 — same polylines in, so the 8 pulse lanes'
+    // world positions are untouched; adds fine routing, solder-mask dot
+    // grid, and the contact-AO punch under the package footprint.
+    const traceTex = buildTraceTexture(traces, {
+      size: 3072,
+      maxAniso: renderer.capabilities.getMaxAnisotropy(),
+    });
     const pcbMat = new THREE.MeshStandardMaterial({
       color: new THREE.Color('#060c1c'), roughness: 0.4, metalness: 0.55,
       emissive: BLUE, emissiveMap: traceTex, emissiveIntensity: reduceMotion ? 1.4 : 0,
       envMapIntensity: 0.5,
     });
+    pcbMat.aoMap = buildAoMap();   // (f) contact AO — ambient falls off under the chip
     const pcb = new THREE.Mesh(new THREE.PlaneGeometry(PCB, PCB), pcbMat);
     pcb.rotation.x = -Math.PI / 2;
     pcb.receiveShadow = true;
@@ -177,6 +177,9 @@ if (mount) {
     die.position.y = 0.285;                    // inset, sitting proud of the top
     die.castShadow = true;
     lid.add(die);
+    // (b) package detail — heat-spreader stack + substrate lip, added
+    // INSIDE the lid group so the lift animation carries them.
+    const pkgDetail = buildPackageDetail(lid, { shadows: true });
 
     /* ── 1c. Pins — 4 edges × 26, instanced cool gold ───────── */
     const pinMat = new THREE.MeshStandardMaterial({
@@ -249,6 +252,9 @@ if (mount) {
         lanes.push({ pts: new Float32Array(pts), cum: new Float32Array(cum), total: cum[cum.length - 1] });
       }
     }
+    // (c) board population — instanced SMDs + inductors, seeded, with a
+    // keep-out under the package/pins and clearance from the pulse lanes.
+    const smds = buildSMDs(rig, { lanes, maxR: 9, shadows: true });
     const PULSES = 36;
     const pulsePos = new Float32Array(PULSES * 3);
     const pulsePhase = new Float32Array(PULSES);
@@ -317,8 +323,14 @@ if (mount) {
 
     const composer = new EffectComposer(renderer);
     composer.addPass(new RenderPass(scene, camera));
+    // (e) subtle DOF — focus is re-aimed at the die every frame in the loop;
+    // small aperture so only the far PCB edges soften. 6.8 ≈ rest distance.
+    const bokeh = new BokehPass(scene, camera, { focus: 6.8, aperture: 0.00035, maxblur: 0.008 });
+    composer.addPass(bokeh);
     const bloom = new UnrealBloomPass(new THREE.Vector2(1, 1), 0.5, 0.6, 0.72);
     composer.addPass(bloom);
+    const grain = new ShaderPass(GrainShader);   // (g) micro-grain, ≤0.035
+    composer.addPass(grain);
     composer.addPass(new OutputPass());
 
     /* ── Sizing (unchanged guards) ───────────────────────────── */
@@ -369,6 +381,7 @@ if (mount) {
     const clock = new THREE.Clock();
     const basePos = new THREE.Vector3();
     const lookDie = new THREE.Vector3();
+    const focusV = new THREE.Vector3();   // reused — no per-frame allocation
     let running = false, t = 0, introT = reduceMotion ? 1.4 : 0, smYaw = 0, smPitch = 0;
 
     const loop = () => {
@@ -415,6 +428,11 @@ if (mount) {
       camera.lookAt(lookCur);
 
       bloom.strength = 0.5 + 0.25 * p;
+
+      // visual-only post updates (e/g) — reads choreography state, never writes it
+      focusV.set(0, 0.31 + lid.position.y + rig.position.y, 0);
+      bokeh.uniforms.focus.value = camera.position.distanceTo(focusV);
+      grain.uniforms.time.value = t;
 
       composer.render();
       requestAnimationFrame(loop);

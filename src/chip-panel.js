@@ -6,7 +6,9 @@
    ping-pong of the lid-lift/reassemble cycle (~8s pendulum,
    sine). No scroll or pointer dependencies. Parked by an
    IntersectionObserver when off-screen. DPR ≤ 2. Own tiny
-   renderer, < 20 draw calls (7 meshes, no post, no shadows).
+   renderer, < 20 draw calls (12 meshes, no post, no shadows).
+   Detail pass: shares the hero's package/SMD/trace builders
+   (src/chip/common.js) and the async HDRI environment.
 
    Progressive: no WebGL → mount keeps the CSS ground.
    Reduced motion → one static mid-lift frame.
@@ -14,6 +16,10 @@
 import * as THREE from 'three';
 import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
+import {
+  generateTraces, buildTraceTexture, buildPackageDetail, buildSMDs,
+  applyHDREnvironment, boostEnvIntensity,
+} from './chip/common.js';
 
 const mount = document.getElementById('chip-panel');
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -51,18 +57,32 @@ if (mount) {
 
     const pmrem = new THREE.PMREMGenerator(renderer);
     scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+    // HDRI env — async swap, RoomEnvironment above is the instant fallback.
+    // Same boosts as the hero so both scenes read as one material world.
+    applyHDREnvironment(renderer, scene, () => {
+      boostEnvIntensity([pins.material, dieMat, gridMat, pkgDetail.metalMat, smds.capMat], 3.2);
+      boostEnvIntensity([pcbMat, pkg.material, pad.material, pkgDetail.lipMat, smds.bodyMat, smds.indMat], 2.2);
+      if (reduceMotion) renderer.render(scene, camera);   // refresh the static frame
+    });
 
     const rig = new THREE.Group();
     rig.rotation.y = 0.5; // designed 3/4 yaw
     scene.add(rig);
 
-    /* Ground plane — plain dark PCB (no trace texture; keep it tiny). */
-    const pcb = new THREE.Mesh(
-      new THREE.PlaneGeometry(16, 16),
-      new THREE.MeshStandardMaterial({
-        color: new THREE.Color('#07090f'), roughness: 0.4, metalness: 0.55, envMapIntensity: 0.5,
-      })
-    );
+    /* Ground plane — trace texture v2, same designed routing as the hero
+       (detail pass d/h). The 28-world canvas is center-cropped to this
+       16-world plane via the emissiveMap's own repeat/offset transform. */
+    const traceTex = buildTraceTexture(generateTraces(20260716), {
+      size: 2048,
+      maxAniso: renderer.capabilities.getMaxAnisotropy(),
+    });
+    traceTex.repeat.set(16 / 28, 16 / 28);
+    traceTex.offset.set(6 / 28, 6 / 28);
+    const pcbMat = new THREE.MeshStandardMaterial({
+      color: new THREE.Color('#07090f'), roughness: 0.4, metalness: 0.55, envMapIntensity: 0.5,
+      emissive: BLUE, emissiveMap: traceTex, emissiveIntensity: 1.15,
+    });
+    const pcb = new THREE.Mesh(new THREE.PlaneGeometry(16, 16), pcbMat);
     pcb.rotation.x = -Math.PI / 2;
     rig.add(pcb);
 
@@ -86,6 +106,8 @@ if (mount) {
     const die = new THREE.Mesh(new RoundedBoxGeometry(0.95, 0.06, 0.95, 3, 0.02), dieMat);
     die.position.y = 0.285;
     lid.add(die);
+    /* Detail pass (b/h): heat-spreader stack + substrate lip, inside lid. */
+    const pkgDetail = buildPackageDetail(lid, { shadows: false });
 
     /* Pins — 4 edges × 26, instanced cool gold (hero recipe). */
     const pins = new THREE.InstancedMesh(
@@ -130,6 +152,10 @@ if (mount) {
       }
     }
     rig.add(grid);
+
+    /* Detail pass (c/h): instanced SMDs + inductors, no lane constraint
+       here (no pulses in this scene), radius fitted to the 16-world plane. */
+    const smds = buildSMDs(rig, { lanes: null, maxR: 6.5, shadows: false });
 
     /* Lights — hero palette, no shadows. */
     scene.add(new THREE.HemisphereLight(0x9ec8ff, 0x0a1428, 0.4));
