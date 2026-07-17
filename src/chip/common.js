@@ -297,36 +297,61 @@ export const buildArmoredCore = (parent, { maxAniso = 8 } = {}) => {
    a +X-biased curved sheet, scatter, shrink and dissolve.
    Colour ramps white-hot → #4aa3ff → #0071e3 by path height.  */
 export const buildEruption = (parent, { boardTop = 0.245, seed = 0xE59 } = {}) => {
-  const NX = 48, NZ = 32, NL = 4;           // 6144 voxels
-  const COUNT = NX * NZ * NL;
+  /* v3 — "the wave curtain" (overseer hand-build, reference-matched):
+     256 CLUSTERS × 48 voxels = 12288. Clusters ride a diagonal RIDGE
+     across the die and rise as a dense curtain whose crest FOLDS OVER
+     like a breaking wave; voxels cluster into chunky clumps that break
+     apart near the crown. A hot CORE column (center clusters) reads as
+     a solid white-hot mass. Everything is still a pure function of
+     (uProgress, seeds) — the pendulum reverses as true settling. */
+  const NC = 256, PER = 48;
+  const COUNT = NC * PER;
   const rng = mulberry32(seed);
-  const origins = new Float32Array(COUNT * 3);
-  const rands = new Float32Array(COUNT * 3);
+
+  // ridge frame (matches the reference's diagonal sheet)
+  const AX = 0.9435, AZ = 0.3314;           // ridge dir  A = norm(1, .35)
+  const NXd = -0.3314, NZd = 0.9435;        // ridge norm N
+
+  const beds = new Float32Array(COUNT * 3);   // resting-bed position
+  const clus = new Float32Array(COUNT * 4);   // cluSeed, u, cluH, coreW
+  const locs = new Float32Array(COUNT * 4);   // along, up, normal, sizeVar
+  const rnds = new Float32Array(COUNT * 2);   // voxelSeed, stagger
+  const g2 = () => (rng() + rng() - 1);       // cheap gaussian-ish
   let k = 0;
-  for (let ly = 0; ly < NL; ly++) {
-    for (let ix = 0; ix < NX; ix++) {
-      for (let iz = 0; iz < NZ; iz++) {
-        const x = -0.8 + (ix + 0.5) * (1.6 / NX) + (rng() - 0.5) * 0.012;
-        const z = -0.55 + (iz + 0.5) * (1.1 / NZ) + (rng() - 0.5) * 0.012;
-        origins[k * 3] = x;
-        origins[k * 3 + 1] = boardTop + 0.045 + ly * 0.03 + (rng() - 0.5) * 0.012;
-        origins[k * 3 + 2] = z;
-        const dN = Math.min(1, Math.hypot(x / 0.8, z / 0.55) / 1.42);
-        rands[k * 3] = rng();                                    // seed
-        rands[k * 3 + 1] = Math.max(0, Math.min(1, 0.55 * dN + 0.45 * rng() - ly * 0.02)) * 0.96; // stagger (centre first)
-        rands[k * 3 + 2] = 0.75 + rng() * 0.7;                   // size variance
-        k++;
-      }
+  for (let c = 0; c < NC; c++) {
+    const cs = rng();
+    const r = rng() * 2 - 1;
+    const u = Math.sign(r) * Math.pow(Math.abs(r), 1.8) * 0.9;   // dense CENTRE (pow>1 pulls in)
+    const coreW = Math.max(0, 1 - Math.abs(u) / 0.32);           // hot core band
+    const cluH = 0.5 + 0.5 * rng();
+    // stagger is NOISE-driven (not |u|): the base stays fed across the whole
+    // ridge at peak — one contiguous glowing seam, not end-feet
+    const baseStag = Math.min(0.9, Math.max(0, 0.08 + rng() * 0.66 - coreW * 0.06));
+    for (let i = 0; i < PER; i++) {
+      const la = g2() * 0.30, lu = (rng() + rng()) * 0.5, ln = g2() * 0.13;
+      beds[k * 3]     = AX * u * 0.95 + AX * la * 0.9 + NXd * ln * 1.7;
+      beds[k * 3 + 1] = boardTop + 0.04 + lu * (0.09 + 0.11 * coreW);
+      beds[k * 3 + 2] = AZ * u * 0.95 + AZ * la * 0.9 + NZd * ln * 1.7;
+      clus[k * 4] = cs; clus[k * 4 + 1] = u; clus[k * 4 + 2] = cluH; clus[k * 4 + 3] = coreW;
+      locs[k * 4] = la; locs[k * 4 + 1] = lu * 0.34; locs[k * 4 + 2] = ln;
+      locs[k * 4 + 3] = (0.55 + rng() * 1.75) * (1 + coreW * 0.45);
+      rnds[k * 2] = rng();
+      // wide stagger → the column stays FED at peak (standing curtain,
+      // not a hollow middle): late starters are still mid-flight at p=1.
+      rnds[k * 2 + 1] = Math.max(0, Math.min(0.97, baseStag + (rng() - 0.35) * 0.3));
+      k++;
     }
   }
 
-  const base = new THREE.BoxGeometry(0.022, 0.022, 0.022);
+  const base = new THREE.BoxGeometry(0.032, 0.032, 0.032);
   const geo = new THREE.InstancedBufferGeometry();
   geo.index = base.index;
   geo.setAttribute('position', base.getAttribute('position'));
   geo.instanceCount = COUNT;
-  geo.setAttribute('aOrigin', new THREE.InstancedBufferAttribute(origins, 3));
-  geo.setAttribute('aRand', new THREE.InstancedBufferAttribute(rands, 3));
+  geo.setAttribute('aBed', new THREE.InstancedBufferAttribute(beds, 3));
+  geo.setAttribute('aClu', new THREE.InstancedBufferAttribute(clus, 4));
+  geo.setAttribute('aLoc', new THREE.InstancedBufferAttribute(locs, 4));
+  geo.setAttribute('aRnd', new THREE.InstancedBufferAttribute(rnds, 2));
 
   const uniforms = {
     uTime: { value: 0 },
@@ -338,53 +363,76 @@ export const buildEruption = (parent, { boardTop = 0.245, seed = 0xE59 } = {}) =
     uniforms,
     vertexShader: /* glsl */`
       uniform float uTime, uProgress, uAmp;
-      attribute vec3 aOrigin;
-      attribute vec3 aRand;
+      attribute vec3 aBed;
+      attribute vec4 aClu;   // cluSeed, u, cluH, coreW
+      attribute vec4 aLoc;   // along, up, normal, sizeVar
+      attribute vec2 aRnd;   // voxelSeed, stagger
       varying float vLp;
+      varying float vCore;
+      varying float vFlake;
       varying float vFlick;
+      const vec3 A = vec3(0.9435, 0.0, 0.3314);
+      const vec3 N = vec3(-0.3314, 0.0, 0.9435);
       float h1(float n) { return fract(sin(n) * 43758.5453123); }
       void main() {
-        float seed = aRand.x, s = aRand.y, szr = aRand.z;
-        // staggered local progress — pure function of uProgress (reversible).
-        // 0.82 remap: at pendulum peak a full column still stands (the
-        // earliest voxels have dissolved, the perimeter still feeds it).
-        float lp = smoothstep(s, s + 0.25, uProgress * 0.82);
-        float hMax = (1.05 + 1.95 * seed) * uAmp;
-        float rise = lp * (0.5 + 0.5 * lp);                    // accelerating ascent
-        float a1 = h1(seed * 17.31) - 0.5;
-        float a2 = h1(seed * 29.7) - 0.5;
-        vec3 p = vec3(
-          aOrigin.x * (1.0 + lp * 0.35)
-            + (0.5 + 0.8 * seed) * lp * lp * 1.15 * uAmp        // +X curved-sheet drift
-            + a1 * lp * lp * 1.9 * uAmp,                        // top scatter
-          aOrigin.y + rise * hMax,
-          aOrigin.z * (1.0 + lp * 0.55) + a2 * lp * lp * 1.5 * uAmp);
-        // turbulence — time-forward, zero in the resting lattice
-        float w = uTime * (1.4 + 2.2 * seed) + seed * 271.0;
+        float cs = aClu.x, u = aClu.y, cluH = aClu.z, coreW = aClu.w;
+        float seed = aRnd.x, s = aRnd.y, szr = aLoc.w;
+        // staggered local progress — reversible pure function of uProgress
+        float lp = smoothstep(s, s + 0.22, uProgress * 0.8);
+        // ascent: fast rise, easing off as the crest folds
+        float cf = smoothstep(0.55, 1.0, lp);                 // crest factor
+        float rise = (lp * lp * (3.0 - 2.0 * lp)) * (1.0 - 0.22 * cf);
+        float H = (1.7 + 1.5 * cluH) * uAmp;                  // up to ~3.2 world
+        // the wave: cluster path = ridge seat + fold-over + slight widen
+        // ONE fold direction — a single breaking crest, not two torn sheets
+        float fold = cf * cf * (0.8 + 0.6 * cs) * 1.0 * uAmp;
+        // CONVERGE toward ridge-centre as it climbs — one curtain, not twin
+        // towers (the old +u "widen" split the ends apart)
+        float widen = -u * lp * 0.32 * uAmp;   // converge, but keep body texture
+        vec3 p = aBed
+          + A * widen
+          + N * fold
+          + vec3(0.0, rise * H, 0.0);
+        // clumps break apart near the crown (local offsets grow)
+        float breakK = 1.0 + lp * lp * (1.7 + 1.4 * h1(cs * 13.7));
+        vec3 loc = A * aLoc.x * 0.9 + vec3(0.0, aLoc.y, 0.0) + N * aLoc.z * 1.7;
+        p += loc * (breakK - 1.0);
+        // crown scatter — flakes leave the sheet (core stays coherent)
+        float scat = cf * cf * (1.0 - coreW * 0.7) * 1.5 * uAmp;
+        p += vec3(h1(seed * 17.31) - 0.5, (h1(seed * 23.9) - 0.5) * 0.6, h1(seed * 29.7) - 0.5) * scat;
+        // turbulence — time-forward churn, calm in the bed, calmer in core
+        float w = uTime * (1.3 + 2.1 * seed) + seed * 271.0;
         p += vec3(sin(w), sin(w * 1.31 + 1.7), cos(w * 0.83 + 4.2))
-             * (lp * (0.05 + 0.10 * lp)) * uAmp;
-        float sc = szr * (1.0 - 0.62 * lp * lp * lp);           // shrink near the top
-        vLp = lp;
-        vFlick = 0.8 + 0.25 * sin(uTime * (1.5 + 3.0 * seed) + seed * 40.0);
+             * (lp * (0.05 + 0.11 * lp)) * uAmp * (1.0 - 0.55 * coreW);
+        float sc = szr * (1.0 - 0.5 * lp * lp * lp);
+        vLp = lp; vCore = coreW;
+        vFlake = step(0.55, h1(seed * 7.7));   // flakes dissolve; body persists
+        vFlick = 0.82 + 0.22 * sin(uTime * (1.5 + 3.0 * seed) + seed * 40.0);
         gl_Position = projectionMatrix * modelViewMatrix * vec4(position * sc + p, 1.0);
       }`,
     fragmentShader: /* glsl */`
       uniform float uOpacity;
       varying float vLp;
+      varying float vCore;
+      varying float vFlake;
       varying float vFlick;
       void main() {
-        // resting lattice: calm dim #0071e3 family. In flight: white-hot
-        // at the base -> #4aa3ff -> #0071e3 by height (linear-space).
+        // bed: calm dim blue. Flight: white-hot base -> #4aa3ff -> #0071e3.
+        // The core column stays hotter for longer (the solid glowing mass).
         vec3 bed  = vec3(0.03, 0.21, 0.85);
-        vec3 hot  = vec3(1.5, 1.7, 2.1);
-        vec3 mid  = vec3(0.069, 0.366, 1.0) * 1.4;
-        vec3 core = vec3(0.0, 0.165, 0.768);
-        float e = smoothstep(0.01, 0.14, vLp);                  // bed -> flight energy
-        vec3 col = mix(hot, mid, smoothstep(0.06, 0.45, vLp));
-        col = mix(col, core, smoothstep(0.4, 0.95, vLp));
+        vec3 hot  = vec3(1.25, 1.55, 1.95);   // white-hot, leaning cool
+        vec3 mid  = vec3(0.069, 0.366, 1.0) * 1.5;
+        vec3 outr = vec3(0.0, 0.165, 0.768) * 1.35;
+        float e = smoothstep(0.01, 0.12, vLp);
+        vec3 col = mix(hot, mid, smoothstep(0.05, 0.5, vLp * (1.0 - 0.35 * vCore)));
+        col = mix(col, outr, smoothstep(0.55, 1.0, vLp * (1.0 - 0.3 * vCore)));
         col = mix(bed, col, e);
-        float glow = mix(0.16, 1.0, e) * vFlick;                // 4 additive layers: keep the bed quiet
-        float fade = 1.0 - smoothstep(0.72, 1.0, vLp);          // dissolve at the crown
+        // additive stack discipline: the standing body must SUM to bright,
+        // not each voxel alone (v3.1 blowout fix)
+        float glow = mix(0.15, 0.5, e) * vFlick * (1.0 + 0.45 * vCore);
+        // only FLAKES dissolve at the crown; the curtain body + core stand
+        float dis = smoothstep(0.7, 1.0, vLp) * mix(0.22, 1.0, vFlake) * (1.0 - 0.6 * vCore);
+        float fade = 1.0 - dis;
         gl_FragColor = vec4(col * glow * fade * uOpacity, 1.0);
         #include <tonemapping_fragment>
         #include <colorspace_fragment>
@@ -399,6 +447,18 @@ export const buildEruption = (parent, { boardTop = 0.245, seed = 0xE59 } = {}) =
   mesh.renderOrder = 10;
   parent.add(mesh);
   return { mesh, uniforms, count: COUNT };
+};
+
+/* ── Plume practical light ─────────────────────────────────────
+   The reference's eruption ILLUMINATES the object — the plume is
+   the key light. Callers drive intensity/height from pendulum
+   progress each frame: intensity ≈ 55·progress·amp, y rises
+   with the column. Cheap fake GI, huge realism return. */
+export const buildPlumeLight = (parent, { boardTop = 0.245 } = {}) => {
+  const light = new THREE.PointLight(new THREE.Color('#4aa3ff'), 0, 12, 2);
+  light.position.set(0.12, boardTop + 0.5, 0.05);
+  parent.add(light);
+  return light;
 };
 
 /* ── Void grounding (brief §B.1) — soft blue glow pool ──────── */

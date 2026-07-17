@@ -29,7 +29,7 @@ import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js';
 import { BokehPass } from 'three/examples/jsm/postprocessing/BokehPass.js';
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
 import {
-  mulberry32, buildArmoredCore, buildEruption, buildGlowPool,
+  mulberry32, buildArmoredCore, buildEruption, buildGlowPool, buildPlumeLight,
   GrainShader, applyHDREnvironment, boostEnvIntensity,
 } from './chip/common.js';
 
@@ -73,9 +73,11 @@ if (mount) {
     // Camera — 3/4 hero angle on the floating core (brief §B.4:
     // keep INTRO→HERO positions, look at object centre ~y0.3).
     const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
-    const HERO_POS = new THREE.Vector3(3.4, 2.2, 5.6);
-    const INTRO_POS = new THREE.Vector3(4.6, 3.2, 8);
-    const LOOK_BASE = new THREE.Vector3(0, 0.3, 0);
+    // reference framing: the core fills the frame, the plume towers —
+    // closer + lower than v2, gaze lifted to the curtain's mass centre.
+    const HERO_POS = new THREE.Vector3(3.05, 1.85, 4.75);
+    const INTRO_POS = new THREE.Vector3(4.2, 2.8, 6.9);
+    const LOOK_BASE = new THREE.Vector3(0, 0.62, 0);
     const lookCur = LOOK_BASE.clone();
     camera.position.copy(reduceMotion ? HERO_POS : INTRO_POS);
     camera.lookAt(lookCur);
@@ -98,6 +100,9 @@ if (mount) {
     const core = buildArmoredCore(rig, { maxAniso: renderer.capabilities.getMaxAnisotropy() });
     const eru = buildEruption(rig, { boardTop: core.boardTop });
     buildGlowPool(rig, { y: -0.85, size: 7.5 });
+    // the plume IS the key light (reference: eruption bathes the board)
+    const plume = buildPlumeLight(rig, { boardTop: core.boardTop });
+    if (reduceMotion) { plume.intensity = 4; }
 
     /* ── 1b. Atmosphere — sparse blue dust in the void ──────── */
     const dotTex = (() => {
@@ -218,8 +223,12 @@ if (mount) {
       pendP = 0.5 - 0.5 * Math.cos(pendPhase * Math.PI * 2);
       eru.uniforms.uTime.value = t;
       eru.uniforms.uProgress.value = pendP;
-      eru.uniforms.uAmp.value = 0.55 + 0.45 * p;
+      eru.uniforms.uAmp.value = 0.7 + 0.3 * p;   // simmer bolder, rage on scroll
       eru.uniforms.uOpacity.value = e;
+      // plume practical light — the eruption lights the object
+      const pr = pendP * eru.uniforms.uAmp.value;
+      plume.intensity = 36 * pr * e;
+      plume.position.set(0.12, core.boardTop + 0.45 + 1.6 * pr, 0.05);
 
       dust.rotation.y = t * 0.008;
 
@@ -227,7 +236,7 @@ if (mount) {
       // (x/z scaled by zoomComp so portrait screens keep the core framed)
       basePos.lerpVectors(INTRO_POS, HERO_POS, e);
       camera.position.set(basePos.x * zoomComp, basePos.y - 0.6 * p, (basePos.z - 2.2 * p) * zoomComp);
-      lookPlume.set(0, 0.55, 0);           // gaze rises toward the plume base
+      lookPlume.set(0, 0.95, 0);           // gaze rises toward the plume mass
       lookCur.lerpVectors(LOOK_BASE, lookPlume, p);
       camera.lookAt(lookCur);
 
@@ -259,6 +268,7 @@ if (mount) {
       get plumeT() { return pendP; },
       get amp() { return eru.uniforms.uAmp.value; },
       get zoomComp() { return zoomComp; },
+      get lightI() { return plume.intensity; },
       voxels: eru.count,
       // QA scrub — advance the sim by s seconds and render one real frame
       // (headless/hidden panes can't rely on rAF; state math is identical)

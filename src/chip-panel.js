@@ -16,7 +16,7 @@
 import * as THREE from 'three';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 import {
-  buildArmoredCore, buildEruption, buildGlowPool,
+  buildArmoredCore, buildEruption, buildGlowPool, buildPlumeLight,
   applyHDREnvironment, boostEnvIntensity,
 } from './chip/common.js';
 
@@ -49,10 +49,10 @@ if (mount) {
     })();
     scene.fog = new THREE.Fog(new THREE.Color('#040609'), 9, 20);
 
-    // frames the full pendulum: lattice at rest → plume crown at peak
+    // frames the full pendulum: lattice at rest → wave-curtain crest at peak
     const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 60);
-    camera.position.set(3.6, 2.5, 5.5);
-    camera.lookAt(0, 0.85, 0);
+    camera.position.set(3.9, 2.75, 6.2);
+    camera.lookAt(0, 1.0, 0);
 
     const pmrem = new THREE.PMREMGenerator(renderer);
     scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
@@ -71,6 +71,7 @@ if (mount) {
     const core = buildArmoredCore(rig, { maxAniso: renderer.capabilities.getMaxAnisotropy() });
     const eru = buildEruption(rig, { boardTop: core.boardTop });
     buildGlowPool(rig, { y: -0.8, size: 6.5 });
+    const plume = buildPlumeLight(rig, { boardTop: core.boardTop });
 
     /* Lights — hero palette, no shadows. */
     scene.add(new THREE.HemisphereLight(0x9ec8ff, 0x0a1428, 0.4));
@@ -97,10 +98,14 @@ if (mount) {
     /* The pendulum: sine erupt → settle, ~10s per full cycle, amp 1. */
     const CYCLE = 10;
     const applyPhase = (t) => {
+      const pr = 0.5 - 0.5 * Math.cos((t * Math.PI * 2) / CYCLE);
       eru.uniforms.uTime.value = t;
-      eru.uniforms.uProgress.value = 0.5 - 0.5 * Math.cos((t * Math.PI * 2) / CYCLE);
+      eru.uniforms.uProgress.value = pr;
       eru.uniforms.uAmp.value = 1;
       core.dieMat.emissiveIntensity = 0.45 + Math.sin(t * 1.1) * 0.2;
+      // the eruption lights the object (reference behaviour)
+      plume.intensity = 36 * pr;
+      plume.position.set(0.12, core.boardTop + 0.45 + 1.6 * pr, 0.05);
       rig.rotation.y = 0.5 + t * (Math.PI * 2 / 40);   // slow ambient rotation
       rig.position.y = Math.sin(t * 0.5) * 0.03;
     };
