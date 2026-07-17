@@ -632,7 +632,7 @@ export const GrainShader = {
   uniforms: {
     tDiffuse: { value: null },
     time: { value: 0 },
-    amount: { value: 0.03 },
+    amount: { value: 0.018 },
   },
   vertexShader: /* glsl */`
     varying vec2 vUv;

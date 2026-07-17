@@ -57,7 +57,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <!-- Built Tailwind CSS. Cache-bust via ?v= on each rebuild. -->
-    <link rel="stylesheet" href="styles.css?v=20260718e">
+    <link rel="stylesheet" href="styles.css?v=20260718h">
 </head>
 
 <body class="page-main">
@@ -99,7 +99,17 @@
          ──────────────────────────────────────────────────────────── -->
     <section class="hero" id="home">
         <div class="hero-visual">
-            <div id="hero-3d" class="hero-3d" aria-hidden="true"></div>
+            <!-- berco architecture: pre-rendered intro (plays once) crossfades
+                 into a seamless ambient loop. Slight rotation = the reference's
+                 angled composition (black-on-black, seams invisible). -->
+            <div class="hero-3d hero-media" aria-hidden="true">
+                <video id="hero-intro" class="hero-clip" muted playsinline preload="auto" poster="/videos/chip-master.webp">
+                    <source src="/videos/chip-intro.mp4" type="video/mp4">
+                </video>
+                <video id="hero-loop" class="hero-clip is-hidden" muted loop playsinline preload="auto">
+                    <source src="/videos/chip-loop.mp4" type="video/mp4">
+                </video>
+            </div>
             <div class="fade-edge fade-t" aria-hidden="true"></div>
             <div class="fade-edge fade-b" aria-hidden="true"></div>
             <div class="fade-edge fade-l" aria-hidden="true"></div>
@@ -725,8 +735,8 @@
     <!-- Entrances (anime.js v4) + Embla carousels — bundled by Vite. -->
     <script type="module" src="/src/enhance.js"></script>
 
-    <!-- Real-time WebGL hero (Three.js). Degrades to the CSS glow. -->
-    <script type="module" src="/src/hero3d.js"></script>
+    <!-- Hero is pre-rendered video (berco architecture); hero3d.js no-ops
+         without its #hero-3d mount. Live 3D remains in the mindset panel. -->
 
     <!-- Mindset panel — simplified auto ping-pong chip scene. -->
     <script type="module" src="/src/chip-panel.js"></script>
@@ -742,6 +752,24 @@
             if (window.__azenRevealed) return;
             window.__azenRevealed = true;
             window.dispatchEvent(new CustomEvent('azen:reveal'));
+            playHeroClips();
+        };
+
+        /* ── Hero clips: intro plays once → 0.12s swap to the loop
+           (berco's clip.webm → clip4.webm choreography, but keyed on
+           `ended` instead of their fragile wall-clock). ───────────── */
+        const playHeroClips = () => {
+            const intro = document.getElementById('hero-intro');
+            const loop = document.getElementById('hero-loop');
+            if (!intro || !loop || !motionOK) return;
+            const toLoop = () => {
+                loop.classList.remove('is-hidden');
+                intro.classList.add('is-hidden');
+            };
+            loop.play().catch(() => {});           // warm + running behind intro
+            intro.addEventListener('ended', toLoop, { once: true });
+            intro.play().catch(toLoop);            // autoplay blocked → loop only
+            setTimeout(() => { if (!intro.ended && intro.currentTime === 0) toLoop(); }, 1200);
         };
         const nav = document.getElementById('site-nav');
         const navIn = (ms) => setTimeout(() => { if (nav) nav.classList.add('nav-in'); }, ms);

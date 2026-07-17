@@ -76,11 +76,10 @@ if (mount) {
     const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
     // reference framing: the core fills the frame, the plume towers —
     // closer + lower than v2, gaze lifted to the curtain's mass centre.
-    const HERO_POS = new THREE.Vector3(2.9, 1.3, 4.3);   // low 3/4 (berco)
-    const INTRO_POS = new THREE.Vector3(4.2, 2.4, 6.6);
-    // target = the object's visual mass centre, nudged +x so the chip sits
-    // dead-centre of the 60% wrapper with the H1 overlapping its left edge
-    const LOOK_BASE = new THREE.Vector3(0.15, 0.42, 0);
+    const HERO_POS = new THREE.Vector3(2.35, 2.55, 3.85); // elevated 3/4 — lid face dominant (berco)
+    const INTRO_POS = new THREE.Vector3(3.6, 3.6, 5.8);
+    // slight -x target → object sits a touch right of centre like their shot
+    const LOOK_BASE = new THREE.Vector3(-0.12, 0.3, 0);
     const lookCur = LOOK_BASE.clone();
     camera.position.copy(reduceMotion ? HERO_POS : INTRO_POS);
     camera.lookAt(lookCur);
@@ -151,9 +150,11 @@ if (mount) {
     const composer = new EffectComposer(renderer);
     composer.addPass(new RenderPass(scene, camera));
     // subtle DOF — focus is re-aimed at the die every frame in the loop.
-    const bokeh = new BokehPass(scene, camera, { focus: 6.8, aperture: 0.00035, maxblur: 0.008 });
+    // sharpness discipline: whisper DOF, bloom gated ABOVE the lid specular
+    // (berco's metal is razor-sharp; only arcs/glow bloom)
+    const bokeh = new BokehPass(scene, camera, { focus: 5.2, aperture: 0.00016, maxblur: 0.0035 });
     composer.addPass(bokeh);
-    const bloom = new UnrealBloomPass(new THREE.Vector2(1, 1), 0.65, 0.55, 0.7); // retuned for the plume
+    const bloom = new UnrealBloomPass(new THREE.Vector2(1, 1), 0.5, 0.45, 0.78);
     composer.addPass(bloom);
     const grain = new ShaderPass(GrainShader);   // micro-grain, ≤0.035
     composer.addPass(grain);
@@ -255,7 +256,7 @@ if (mount) {
       bloom.strength = 0.65 + 0.2 * p;
 
       // visual-only post updates — reads choreography state, never writes it
-      focusV.set(0, 0.3 + rig.position.y, 0);
+      focusV.set(-0.12, 0.42 + rig.position.y, 0);   // focus plane on the lid
       bokeh.uniforms.focus.value = camera.position.distanceTo(focusV);
       grain.uniforms.time.value = t;
 
