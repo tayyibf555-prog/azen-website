@@ -511,6 +511,9 @@ html.fx [data-hero] {
   object-fit: contain;
   transform: rotate(-8deg) scale(0.82);
   transition: opacity 0.12s linear;   /* berco's 0.1s swap */
+  /* screen-blend: the clip's black ground becomes the page itself —
+     no visible video rectangle, only the chip + glow exist */
+  mix-blend-mode: screen;
 }
 .hero-clip.is-hidden { opacity: 0; }
 @media (prefers-reduced-motion: reduce) {
