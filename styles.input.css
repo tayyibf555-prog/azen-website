@@ -509,7 +509,7 @@ html.fx [data-hero] {
      margins; cover blew ours up giant + cropped. The clip's own black
      ground disappears into the page, so contained edges are invisible. */
   object-fit: contain;
-  transform: rotate(-8deg) scale(0.82);
+  transform: translateX(3.5vw) rotate(-8deg) scale(0.82);
   transition: opacity 0.12s linear;   /* berco's 0.1s swap */
   /* screen-blend: the clip's black ground becomes the page itself —
      no visible video rectangle, only the chip + glow exist */
