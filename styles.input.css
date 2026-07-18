@@ -986,6 +986,71 @@ html.fx [data-hero] {
 }
 
 /* ==========================================================
+   7b. Mindset explode — sticky scroll stage + callout labels
+   ==========================================================*/
+.explode-scroll {
+  height: 320vh;
+  padding: 0;
+}
+.explode-stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  /* soft pedestal glow under the stack, tuned to #020202 */
+  background: radial-gradient(ellipse 46% 34% at 50% 62%, oklch(0.24 0.13 260 / 0.22), transparent 70%);
+}
+#chip-explode { position: absolute; inset: 0; }
+#chip-explode canvas { display: block; width: 100%; height: 100%; }
+.explode-copy {
+  position: absolute;
+  top: 10vh;
+  left: 10vw;
+  z-index: 2;
+  max-width: 38vw;
+  display: flex;
+  flex-direction: column;
+  gap: 2vh;
+  pointer-events: none;
+}
+.explode-lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+.explode-label {
+  position: absolute;
+  z-index: 3;
+  opacity: 0;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 0.3vh;
+  max-width: 16vw;
+  pointer-events: none;
+}
+.explode-label.is-left { transform: translate(-100%, -50%); text-align: right; }
+.xl-title {
+  color: var(--white);
+  font-family: 'Geist', 'Hanken Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 0.95vw;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+@media (max-width: 768px) {
+  .explode-scroll { height: 260vh; }
+  .explode-copy { max-width: 80vw; left: 7.5vw; top: 8vh; }
+  .explode-label { max-width: 34vw; }
+  .xl-title { font-size: 3.4vw; white-space: normal; }
+  .explode-label .xl-sub { display: none; }
+}
+
+/* ==========================================================
    8. FAQ (spec §9 new-section table)
    ==========================================================*/
 .faq-list { margin-top: 5vh; border-top: 1px solid var(--hairline-strong); }

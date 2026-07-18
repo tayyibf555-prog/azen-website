@@ -57,7 +57,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <!-- Built Tailwind CSS. Cache-bust via ?v= on each rebuild. -->
-    <link rel="stylesheet" href="styles.css?v=20260718k">
+    <link rel="stylesheet" href="styles.css?v=20260718l">
 </head>
 
 <body class="page-main">
@@ -585,24 +585,23 @@
     </section>
 
     <!-- ────────────────────────────────────────────────────────────
-         7. MINDSET SEQUENCE (spec §7 — framed split panel, live 3D
-         ping-pong instead of berco's video pair)
+         7. MINDSET — exploded operating stack (berco explode moment,
+         custom Three.js, scroll-driven; labels name azen's layers)
          ──────────────────────────────────────────────────────────── -->
-    <section class="sec" id="mindset">
-        <div class="sequence-frame">
-            <div class="sequence-glow" aria-hidden="true"></div>
-            <div class="sequence-text">
+    <section class="sec explode-scroll" id="mindset">
+        <div class="explode-stage">
+            <div class="explode-copy">
                 <div class="eyebrow"><span class="pill" aria-hidden="true"></span><span class="description grey" data-fx="fade">Our Mindset</span></div>
                 <h2 class="headline white" data-fx="chars">Systems that <span class="headline-bold">run themselves</span><br>while you build.</h2>
-                <p class="description grey" data-fx="desc">From order pipelines to AI call handling, we engineer infrastructure that watches itself, retries itself, and reports back &mdash; so operations stop being your job and start being a system&rsquo;s.</p>
+                <p class="description grey" data-fx="desc">Scroll &mdash; every layer of the stack we build, pulled apart.</p>
             </div>
-            <div class="sequence-visual" data-fx="fade">
-                <div id="chip-panel" aria-hidden="true"></div>
-                <div class="fade-edge fade-t" aria-hidden="true"></div>
-                <div class="fade-edge fade-b" aria-hidden="true"></div>
-                <div class="fade-edge fade-l" aria-hidden="true"></div>
-                <div class="fade-edge fade-r" aria-hidden="true"></div>
-            </div>
+            <div id="chip-explode" aria-hidden="true"></div>
+            <svg class="explode-lines" aria-hidden="true"></svg>
+            <div class="explode-label"><span class="xl-title">Autonomous Agents</span><span class="xl-sub small-description grey">Reason, decide, execute</span></div>
+            <div class="explode-label"><span class="xl-title">System Orchestration</span><span class="xl-sub small-description grey">One workflow across your platforms</span></div>
+            <div class="explode-label"><span class="xl-title">Enterprise Retrieval</span><span class="xl-sub small-description grey">Corporate memory, instantly queryable</span></div>
+            <div class="explode-label"><span class="xl-title">Optimization &amp; Integration</span><span class="xl-sub small-description grey">Woven into the stack you run</span></div>
+            <div class="explode-label"><span class="xl-title">Your Operation</span><span class="xl-sub small-description grey">The business it all runs on</span></div>
         </div>
     </section>
 
@@ -739,7 +738,7 @@
          without its #hero-3d mount. Live 3D remains in the mindset panel. -->
 
     <!-- Mindset panel — simplified auto ping-pong chip scene. -->
-    <script type="module" src="/src/chip-panel.js"></script>
+    <script type="module" src="/src/chip-explode.js"></script>
 
     <!-- Behaviour: loader, nav drop-in, smooth scroll, flips, scroll-top,
          contact submit. Zero dependencies — guaranteed to run. -->
