@@ -22,6 +22,7 @@ const mount = document.getElementById('chip-explode');
 const linesSvg = wrapper && wrapper.querySelector('.explode-lines');
 const labelEls = wrapper ? Array.from(wrapper.querySelectorAll('.explode-label')) : [];
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const mobileMQ = window.matchMedia('(max-width: 768px)');   // same breakpoint that top-pins .explode-copy in CSS
 
 const clamp01 = (v) => Math.min(1, Math.max(0, v));
 const smooth = (v) => { const t = clamp01(v); return t * t * (3 - 2 * t); };
@@ -153,16 +154,20 @@ if (mount && stage) {
        from phones to ultrawide. The vertical budget is generous (3.1)
        because the risen lid sits nearer the elevated camera and projects
        larger than its at-lookAt size. A frustum offset then parks the
-       object right-of-centre and slightly low, clear of the copy + nav. */
+       object right-of-centre and slightly low, clear of the copy + nav.
+       Portrait aspects take a bigger budget (4.5, shrinking the object);
+       on phones (≤768px, where the copy pins to the top of the stage) it
+       also drops into the lower zone (offset 0.17h) so the stack never
+       rises into the copy. */
     const fitCamera = () => {
       const vHalf = THREE.MathUtils.degToRad(camera.fov / 2);
       const hHalf = Math.atan(Math.tan(vHalf) * camera.aspect);
-      const dist = Math.max(3.1 / Math.tan(vHalf), 2.3 / Math.tan(hHalf));
+      const wide = camera.aspect > 1;
+      const dist = Math.max((wide ? 3.1 : 4.5) / Math.tan(vHalf), 2.3 / Math.tan(hHalf));
       camera.position.copy(camDir).multiplyScalar(dist);
       camera.lookAt(0, 0.15, 0);
-      const wide = camera.aspect > 1;
       const w = renderer.domElement.width, h = renderer.domElement.height;
-      camera.setViewOffset(w, h, wide ? -w * 0.16 : -w * 0.02, wide ? -h * 0.015 : -h * 0.05, w, h);
+      camera.setViewOffset(w, h, wide ? -w * 0.16 : -w * 0.02, (!wide && mobileMQ.matches) ? -h * 0.17 : -h * 0.015, w, h);
     };
     fitCamera();
 
@@ -312,7 +317,14 @@ if (mount && stage) {
     });
 
     const anchor = new THREE.Vector3();
+    const copyEl = wrapper.querySelector('.explode-copy');
     const placeCallouts = (p, w, h) => {
+      // phones: labels clamp below the live-measured copy block (h*0.34 if missing).
+      // Valid because the sticky stage pins at viewport top:0 while progress runs,
+      // so the viewport rect == stage-local space.
+      const topSafe = mobileMQ.matches
+        ? (copyEl ? copyEl.getBoundingClientRect().bottom + 14 : h * 0.34)
+        : 96;
       callouts.forEach((c, i) => {
         const L = layers[i];
         if (!L) return;
@@ -331,8 +343,6 @@ if (mount && stage) {
         // keep the label fully on-stage: inside the edges, below the nav
         const lw = c.el.offsetWidth || 0;
         lx = c.side === 1 ? Math.min(lx, w - lw - 10) : Math.max(lx, lw + 10);
-        // portrait: keep labels out of the copy block at the top
-        const topSafe = w < h ? h * 0.34 : 96;
         const ly = Math.min(Math.max(ay, topSafe), h - 44);
         c.el.style.left = `${lx}px`;
         c.el.style.top = `${ly}px`;

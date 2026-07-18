@@ -1048,7 +1048,7 @@ html.fx [data-hero] {
 }
 @media (max-width: 768px) {
   .explode-scroll { height: 260vh; height: 260svh; }
-  .explode-copy { max-width: 80vw; left: 7.5vw; top: 8vh; transform: none; }
+  .explode-copy { max-width: 80vw; left: 7.5vw; top: 13vh; transform: none; }
   .explode-label { max-width: 34vw; }
   .xl-title { font-size: 3.4vw; white-space: normal; }
   .explode-label .xl-sub { display: none; }
