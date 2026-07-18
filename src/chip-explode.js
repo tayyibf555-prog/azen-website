@@ -126,14 +126,20 @@ if (mount && stage) {
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 60);
     const camDir = new THREE.Vector3(2.9, 4.6, 3.9).normalize();
-    /* distance fitted per-aspect so the full exploded stack (±2.2 tall,
-       ~2.2 half-wide in plan) stays framed from phones to ultrawide */
+    /* distance fitted per-aspect so the full exploded stack stays framed
+       from phones to ultrawide. The vertical budget is generous (3.1)
+       because the risen lid sits nearer the elevated camera and projects
+       larger than its at-lookAt size. A frustum offset then parks the
+       object right-of-centre and slightly low, clear of the copy + nav. */
     const fitCamera = () => {
       const vHalf = THREE.MathUtils.degToRad(camera.fov / 2);
       const hHalf = Math.atan(Math.tan(vHalf) * camera.aspect);
-      const dist = Math.max(2.35 / Math.tan(vHalf), 2.2 / Math.tan(hHalf));
+      const dist = Math.max(3.1 / Math.tan(vHalf), 2.3 / Math.tan(hHalf));
       camera.position.copy(camDir).multiplyScalar(dist);
       camera.lookAt(0, 0.15, 0);
+      const wide = camera.aspect > 1;
+      const w = renderer.domElement.width, h = renderer.domElement.height;
+      camera.setViewOffset(w, h, wide ? -w * 0.13 : -w * 0.02, -h * 0.055, w, h);
     };
     fitCamera();
 
@@ -165,7 +171,7 @@ if (mount && stage) {
       emissiveMap: fitShapeUV(engravingTex('azen.'), 2.6),
     });
     metals.push(lidMat);
-    addLayer(new THREE.Mesh(slabGeo(2.6, 0.15, 0.52), lidMat), 0.62, 1.5);
+    addLayer(new THREE.Mesh(slabGeo(2.6, 0.15, 0.52), lidMat), 0.62, 1.32);
 
     // 2 · glass grid — clear pane + perforation dots
     const glassMat = new THREE.MeshPhysicalMaterial({
@@ -219,7 +225,7 @@ if (mount && stage) {
       map: fitShapeUV(brushedTex('#1b1e23', '#3a3f47'), 2.95),
     });
     metals.push(baseMat);
-    addLayer(new THREE.Mesh(slabGeo(2.95, 0.17, 0.58), baseMat), -0.46, -1.18);
+    addLayer(new THREE.Mesh(slabGeo(2.95, 0.17, 0.58), baseMat), -0.46, -1.02);
 
     applyHDREnvironment(renderer, scene, () => {
       boostEnvIntensity(metals, 2.6);
@@ -266,14 +272,15 @@ if (mount && stage) {
         const ax = (anchor.x * 0.5 + 0.5) * w;
         const ay = (-anchor.y * 0.5 + 0.5) * h;
         let lx = ax + c.side * Math.max(w * 0.055, 46);
-        // keep the label fully on-stage at narrow widths
+        // keep the label fully on-stage: inside the edges, below the nav
         const lw = c.el.offsetWidth || 0;
         lx = c.side === 1 ? Math.min(lx, w - lw - 10) : Math.max(lx, lw + 10);
+        const ly = Math.min(Math.max(ay, 96), h - 44);
         c.el.style.left = `${lx}px`;
-        c.el.style.top = `${ay}px`;
+        c.el.style.top = `${ly}px`;
         c.el.classList.toggle('is-left', c.side === -1);
         c.line.setAttribute('x1', ax); c.line.setAttribute('y1', ay);
-        c.line.setAttribute('x2', lx + (c.side === -1 ? 2 : -2)); c.line.setAttribute('y2', ay);
+        c.line.setAttribute('x2', lx + (c.side === -1 ? 2 : -2)); c.line.setAttribute('y2', ly);
         c.dot.setAttribute('cx', ax); c.dot.setAttribute('cy', ay);
       });
     };
@@ -286,8 +293,8 @@ if (mount && stage) {
       if (W < 2 || H < 2) return;
       camera.aspect = W / H;
       camera.updateProjectionMatrix();
-      fitCamera();
       renderer.setSize(W, H, false);
+      fitCamera();
       if (linesSvg) linesSvg.setAttribute('viewBox', `0 0 ${W} ${H}`);
       if (reduceMotion) renderOnce();
     };
