@@ -590,10 +590,13 @@
          ──────────────────────────────────────────────────────────── -->
     <section class="sec explode-scroll" id="mindset">
         <div class="explode-stage">
+            <!-- copy is intentionally NOT entrance-gated: inside the sticky
+                 stage the scroll-trigger math is unreliable, and this title
+                 must never be missing. It is simply always visible. -->
             <div class="explode-copy">
-                <div class="eyebrow"><span class="pill" aria-hidden="true"></span><span class="description grey" data-fx="fade">Our Mindset</span></div>
-                <h2 class="headline white" data-fx="chars">Systems that <span class="headline-bold">run themselves</span><br>while you build.</h2>
-                <p class="description grey" data-fx="desc">From order pipelines to AI call handling, we engineer infrastructure that watches itself, retries itself, and reports back &mdash; every layer of the stack, pulled apart.</p>
+                <div class="eyebrow"><span class="pill" aria-hidden="true"></span><span class="description grey">Our Mindset</span></div>
+                <h2 class="headline white">Systems that <span class="headline-bold">run themselves</span><br>while you build.</h2>
+                <p class="description grey">From order pipelines to AI call handling, we engineer infrastructure that watches itself, retries itself, and reports back &mdash; every layer of the stack, pulled apart.</p>
             </div>
             <div id="chip-explode" aria-hidden="true"></div>
             <svg class="explode-lines" aria-hidden="true"></svg>
