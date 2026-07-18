@@ -1004,13 +1004,14 @@ html.fx [data-hero] {
 #chip-explode canvas { display: block; width: 100%; height: 100%; }
 .explode-copy {
   position: absolute;
-  top: 10vh;
+  top: 50%;
+  transform: translateY(-50%);
   left: 10vw;
   z-index: 2;
-  max-width: 38vw;
+  max-width: 34vw;
   display: flex;
   flex-direction: column;
-  gap: 2vh;
+  gap: 2.5vh;
   pointer-events: none;
 }
 .explode-lines {
@@ -1044,7 +1045,7 @@ html.fx [data-hero] {
 }
 @media (max-width: 768px) {
   .explode-scroll { height: 260vh; }
-  .explode-copy { max-width: 80vw; left: 7.5vw; top: 8vh; }
+  .explode-copy { max-width: 80vw; left: 7.5vw; top: 8vh; transform: none; }
   .explode-label { max-width: 34vw; }
   .xl-title { font-size: 3.4vw; white-space: normal; }
   .explode-label .xl-sub { display: none; }

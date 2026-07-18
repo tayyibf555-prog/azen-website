@@ -57,6 +57,22 @@ const engravingTex = (text, px = 150) => {
   return t;
 };
 
+const spunTex = (base, streak, dark) => {
+  const c = document.createElement('canvas'); c.width = c.height = 1024;
+  const ctx = c.getContext('2d');
+  ctx.fillStyle = base; ctx.fillRect(0, 0, 1024, 1024);
+  ctx.globalAlpha = 0.15;
+  for (let i = 0; i < 1500; i++) {
+    const r = 24 + Math.random() * 690;
+    const a0 = Math.random() * Math.PI * 2;
+    ctx.strokeStyle = Math.random() > 0.5 ? streak : dark;
+    ctx.beginPath(); ctx.arc(512, 512, r, a0, a0 + 0.25 + Math.random() * 1.4); ctx.stroke();
+  }
+  const t = new THREE.CanvasTexture(c);
+  t.colorSpace = THREE.SRGBColorSpace;
+  return t;
+};
+
 const glowPoolTex = () => {
   const c = document.createElement('canvas'); c.width = c.height = 256;
   const ctx = c.getContext('2d');
@@ -98,6 +114,16 @@ const slabGeo = (w, t, r, hole = 0) => {
   return geo;
 };
 
+const glassSlab = (w, t, r, order) => {
+  const m = new THREE.Mesh(slabGeo(w, t, r), new THREE.MeshPhysicalMaterial({
+    color: 0xd6e9f8, transparent: true, opacity: 0.13, roughness: 0.05,
+    metalness: 0, clearcoat: 1, clearcoatRoughness: 0.05,
+    side: THREE.DoubleSide, depthWrite: false, envMapIntensity: 2.4,
+  }));
+  m.renderOrder = order;
+  return m;
+};
+
 /* map a 0-1 canvas texture onto extrude-geometry shape units */
 const fitShapeUV = (tex, w) => {
   tex.repeat.set(1 / w, 1 / w);
@@ -136,7 +162,7 @@ if (mount && stage) {
       camera.lookAt(0, 0.15, 0);
       const wide = camera.aspect > 1;
       const w = renderer.domElement.width, h = renderer.domElement.height;
-      camera.setViewOffset(w, h, wide ? -w * 0.13 : -w * 0.02, -h * 0.055, w, h);
+      camera.setViewOffset(w, h, wide ? -w * 0.16 : -w * 0.02, wide ? -h * 0.015 : -h * 0.05, w, h);
     };
     fitCamera();
 
@@ -162,8 +188,8 @@ if (mount && stage) {
 
     // 1 · lid — brushed graphite, glowing azen. engraving
     const lidMat = new THREE.MeshStandardMaterial({
-      color: 0xffffff, metalness: 0.92, roughness: 0.36,
-      map: fitShapeUV(brushedTex('#575c66', '#9aa1ac'), 2.6),
+      color: 0xffffff, metalness: 0.9, roughness: 0.3,
+      map: fitShapeUV(spunTex('#a9afba', '#e2e7ef', '#565b64'), 2.6),
       emissive: 0xdcecff, emissiveIntensity: 1.35,
       emissiveMap: fitShapeUV(engravingTex('azen.'), 2.6),
     });
@@ -203,26 +229,30 @@ if (mount && stage) {
       }
       dotField.instanceMatrix.needsUpdate = true;
     };
-    addLayer(dotField, 0.34, 0.78, 1.12);
+    const orchGroup = new THREE.Group();
+    orchGroup.add(glassSlab(2.42, 0.15, 0.5, 4));
+    orchGroup.add(dotField);
+    addLayer(orchGroup, 0.34, 0.78, 1.24);
 
     // 3 · core — ice-blue glass block + dark badge disc
     const coreMat = new THREE.MeshPhysicalMaterial({
-      color: 0x2f8fff, roughness: 0.16, metalness: 0.1,
-      clearcoat: 1, clearcoatRoughness: 0.08,
-      emissive: 0x0a58c8, emissiveIntensity: 0.5,
+      color: 0x2f9df0, roughness: 0.14, metalness: 0.05,
+      clearcoat: 1, clearcoatRoughness: 0.07,
+      emissive: 0x0f6fe0, emissiveIntensity: 0.85,
     });
-    const core = new THREE.Mesh(slabGeo(1.9, 0.24, 0.4), coreMat);
+    const core = new THREE.Mesh(slabGeo(1.78, 0.17, 0.38), coreMat);
+    core.add(glassSlab(2.3, 0.3, 0.48, 2));
     const badge = new THREE.Mesh(
       new THREE.CylinderGeometry(0.58, 0.58, 0.05, 48),
       new THREE.MeshStandardMaterial({ color: 0x14171c, metalness: 0.85, roughness: 0.32 }),
     );
-    badge.position.y = 0.14;
+    badge.position.y = 0.18;
     const badgeText = new THREE.Mesh(
       new THREE.CircleGeometry(0.5, 48),
       new THREE.MeshBasicMaterial({ map: engravingTex('azen.', 118), transparent: true, opacity: 0.9, depthWrite: false }),
     );
     badgeText.rotation.x = -Math.PI / 2;
-    badgeText.position.y = 0.17;
+    badgeText.position.y = 0.21;
     core.add(badge, badgeText);
     addLayer(core, 0.06, 0.08, 1.0);
 
@@ -235,8 +265,8 @@ if (mount && stage) {
 
     // 5 · base — brushed dark slab
     const baseMat = new THREE.MeshStandardMaterial({
-      color: 0xffffff, metalness: 0.92, roughness: 0.34,
-      map: fitShapeUV(brushedTex('#2c313a', '#575f6b'), 2.95),
+      color: 0xffffff, metalness: 0.9, roughness: 0.33,
+      map: fitShapeUV(brushedTex('#878d99', '#c6ccd7'), 2.95),
     });
     metals.push(baseMat);
     addLayer(new THREE.Mesh(slabGeo(2.95, 0.17, 0.58), baseMat), -0.46, -1.02, 1.52);
