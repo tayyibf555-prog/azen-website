@@ -387,7 +387,7 @@
                             <span class="subheadline white">Tayyib Arbab</span>
                             <span class="description grey">Founder, Systems Engineer</span>
                         </div>
-                        <p class="description white">I&rsquo;m Tayyib &mdash; a systems engineer based in London. I&rsquo;ve spent the last years building autonomous infrastructure for ops-heavy businesses: order pipelines, AI call handling, procurement automation, CRMs that run themselves. I scope every build personally, write the code that ships, and stay on the hook for it after launch.</p>
+                        <p class="description white">I&rsquo;m Tayyib &mdash; a systems engineer based in Glasgow. I&rsquo;ve spent the last years building autonomous infrastructure for ops-heavy businesses: order pipelines, AI call handling, procurement automation, CRMs that run themselves. I scope every build personally, write the code that ships, and stay on the hook for it after launch.</p>
                     </div>
                 </div>
             </div>
@@ -698,9 +698,9 @@
                     <div class="contact-item" data-fx="fade" data-fx-delay="0.1">
                         <span class="contact-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg></span>
                         <div class="contact-item-copy">
-                            <span class="big-description white">Based in London</span>
+                            <span class="big-description white">Based in Glasgow</span>
                             <span class="description grey">Building for teams anywhere.</span>
-                            <span class="description white">London, United Kingdom</span>
+                            <span class="description white">Glasgow, United Kingdom</span>
                         </div>
                     </div>
                     <div class="contact-item" data-fx="fade" data-fx-delay="0.2">
@@ -720,14 +720,10 @@
                     <h2 class="headline white" data-fx="chars">Got bottlenecks?<br>We've got <span class="headline-bold">systems</span>.</h2>
                     <p class="description grey" style="margin-top:2.5vh">Tell us about the manual work and we'll map the system that removes it.</p>
                 </div>
-                <form class="contact-form" id="contact-form" action="https://calendly.com/tayyib-azen/30min" method="get" target="_blank">
-                    <input type="text" class="contact-input" id="cf-name" name="name" placeholder="Your Name" autocomplete="name">
-                    <input type="email" class="contact-input" id="cf-email" name="email" placeholder="Your Email" autocomplete="email">
-                    <input type="text" class="contact-input" id="cf-company" name="company" placeholder="Position at Company" autocomplete="organization">
-                    <input type="text" class="contact-input" id="cf-project" name="project" placeholder="Tell Us a Little About The Project">
-                    <button type="submit" class="btn-pill contact-submit">Book a call</button>
-                    <a href="mailto:hello@azen.io?subject=Project%20brief" class="contact-alt small-description" id="contact-mailto">Or email your brief instead &rarr;</a>
-                </form>
+                <div class="contact-form">
+                    <a href="https://calendly.com/tayyib-azen/30min" target="_blank" rel="noopener" class="btn-pill contact-submit">Book a call</a>
+                    <a href="mailto:hello@azen.io?subject=Project%20brief" class="contact-alt small-description">Or email your brief instead &rarr;</a>
+                </div>
             </div>
         </div>
     </section>
@@ -827,27 +823,6 @@
             topBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: motionOK ? 'smooth' : 'auto' }));
         }
 
-        /* ── Contact: Calendly primary, mailto fallback with a real
-               email field (fixes berco's missing-input bug, spec §8) ── */
-        const form = document.getElementById('contact-form');
-        if (form) {
-            const val = (id) => { const el = document.getElementById(id); return el ? el.value.trim() : ''; };
-            const mailto = document.getElementById('contact-mailto');
-            const buildMailto = () => {
-                const body = 'Name: ' + val('cf-name') + '\r\nEmail: ' + val('cf-email') +
-                    '\r\nCompany: ' + val('cf-company') + '\r\nProject: ' + val('cf-project') + '\r\n';
-                return 'mailto:hello@azen.io?subject=' + encodeURIComponent('Project brief — azen.io') +
-                    '&body=' + encodeURIComponent(body);
-            };
-            if (mailto) {
-                form.addEventListener('input', () => { mailto.href = buildMailto(); });
-                mailto.href = buildMailto();
-            }
-            form.addEventListener('submit', (e) => {
-                e.preventDefault();
-                window.open('https://calendly.com/tayyib-azen/30min', '_blank', 'noopener');
-            });
-        }
     })();
     </script>
 </body>
