@@ -57,17 +57,14 @@ const engravingTex = (text, px = 150) => {
   return t;
 };
 
-const dotGridTex = () => {
-  const c = document.createElement('canvas'); c.width = c.height = 512;
+const glowPoolTex = () => {
+  const c = document.createElement('canvas'); c.width = c.height = 256;
   const ctx = c.getContext('2d');
-  ctx.clearRect(0, 0, 512, 512);
-  ctx.fillStyle = 'rgba(240,248,255,0.92)';
-  const step = 512 / 26;
-  for (let y = step / 2; y < 512; y += step) {
-    for (let x = step / 2; x < 512; x += step) {
-      ctx.beginPath(); ctx.arc(x, y, 1.7, 0, Math.PI * 2); ctx.fill();
-    }
-  }
+  const g = ctx.createRadialGradient(128, 128, 6, 128, 128, 126);
+  g.addColorStop(0, 'rgba(58,124,224,0.5)');
+  g.addColorStop(0.55, 'rgba(28,70,150,0.18)');
+  g.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.fillStyle = g; ctx.fillRect(0, 0, 256, 256);
   const t = new THREE.CanvasTexture(c);
   t.colorSpace = THREE.SRGBColorSpace;
   return t;
@@ -154,12 +151,12 @@ if (mount && stage) {
     const metals = [];
     const layers = [];   // { group, rest, spread }
 
-    const addLayer = (mesh, rest, spread) => {
+    const addLayer = (mesh, rest, spread, halfW) => {
       const g = new THREE.Group();
       g.add(mesh);
       g.position.y = rest;
       rig.add(g);
-      layers.push({ group: g, rest, spread });
+      layers.push({ group: g, rest, spread, halfW });
       return g;
     };
 
@@ -171,25 +168,42 @@ if (mount && stage) {
       emissiveMap: fitShapeUV(engravingTex('azen.'), 2.6),
     });
     metals.push(lidMat);
-    addLayer(new THREE.Mesh(slabGeo(2.6, 0.15, 0.52), lidMat), 0.62, 1.32);
+    addLayer(new THREE.Mesh(slabGeo(2.6, 0.15, 0.52), lidMat), 0.62, 1.32, 1.36);
 
-    // 2 · glass grid — clear pane + perforation dots
-    const glassMat = new THREE.MeshPhysicalMaterial({
-      color: 0xa8cde8, transparent: true, opacity: 0.22,
-      roughness: 0.05, metalness: 0, clearcoat: 1,
-      side: THREE.DoubleSide, depthWrite: false,
-    });
-    const glass = new THREE.Mesh(slabGeo(2.45, 0.07, 0.48), glassMat);
-    glass.renderOrder = 3;
-    const dots = new THREE.Mesh(
-      new THREE.PlaneGeometry(2.1, 2.1),
-      new THREE.MeshBasicMaterial({ map: dotGridTex(), transparent: true, opacity: 0.85, depthWrite: false }),
+    // 2 · orchestration — borderless dot field with a travelling wave
+    const DOT_N = 24;
+    const dotField = new THREE.InstancedMesh(
+      new THREE.SphereGeometry(0.017, 6, 6),
+      new THREE.MeshBasicMaterial({ color: 0xdfeaf5, transparent: true, opacity: 0.88, depthWrite: false }),
+      DOT_N * DOT_N,
     );
-    dots.rotation.x = -Math.PI / 2;
-    dots.position.y = 0.05;
-    dots.renderOrder = 4;
-    glass.add(dots);
-    addLayer(glass, 0.34, 0.78);
+    dotField.renderOrder = 3;
+    const dotHome = new Float32Array(DOT_N * DOT_N * 2);
+    {
+      const span = 2.15, m4 = new THREE.Matrix4();
+      let i = 0;
+      for (let gz = 0; gz < DOT_N; gz++) {
+        for (let gx = 0; gx < DOT_N; gx++) {
+          const x = (gx / (DOT_N - 1) - 0.5) * span;
+          const z = (gz / (DOT_N - 1) - 0.5) * span;
+          dotHome[i * 2] = x; dotHome[i * 2 + 1] = z;
+          m4.setPosition(x, 0, z);
+          dotField.setMatrixAt(i++, m4);
+        }
+      }
+    }
+    const dotM4 = new THREE.Matrix4();
+    const waveDots = (p, t) => {
+      // a wave-front rolling diagonally through the field; swells as it separates
+      const amp = 0.02 + p * 0.085;
+      for (let i = 0; i < dotField.count; i++) {
+        const x = dotHome[i * 2], z = dotHome[i * 2 + 1];
+        dotM4.setPosition(x, amp * Math.sin(3.4 * x + 2.3 * z - t * 2.3), z);
+        dotField.setMatrixAt(i, dotM4);
+      }
+      dotField.instanceMatrix.needsUpdate = true;
+    };
+    addLayer(dotField, 0.34, 0.78, 1.12);
 
     // 3 · core — ice-blue glass block + dark badge disc
     const coreMat = new THREE.MeshPhysicalMaterial({
@@ -210,27 +224,36 @@ if (mount && stage) {
     badgeText.rotation.x = -Math.PI / 2;
     badgeText.position.y = 0.17;
     core.add(badge, badgeText);
-    addLayer(core, 0.06, 0.08);
+    addLayer(core, 0.06, 0.08, 1.0);
 
     // 4 · frame — dark graphite ring
     const frameMat = new THREE.MeshStandardMaterial({
-      color: 0x1c1f24, metalness: 0.82, roughness: 0.5,
+      color: 0x2a2f37, metalness: 0.85, roughness: 0.44,
     });
     metals.push(frameMat);
-    addLayer(new THREE.Mesh(slabGeo(2.75, 0.12, 0.55, 2.05), frameMat), -0.22, -0.62);
+    addLayer(new THREE.Mesh(slabGeo(2.75, 0.12, 0.55, 2.05), frameMat), -0.22, -0.62, 1.42);
 
     // 5 · base — brushed dark slab
     const baseMat = new THREE.MeshStandardMaterial({
       color: 0xffffff, metalness: 0.92, roughness: 0.34,
-      map: fitShapeUV(brushedTex('#1b1e23', '#3a3f47'), 2.95),
+      map: fitShapeUV(brushedTex('#2c313a', '#575f6b'), 2.95),
     });
     metals.push(baseMat);
-    addLayer(new THREE.Mesh(slabGeo(2.95, 0.17, 0.58), baseMat), -0.46, -1.02);
+    addLayer(new THREE.Mesh(slabGeo(2.95, 0.17, 0.58), baseMat), -0.46, -1.02, 1.52);
 
     applyHDREnvironment(renderer, scene, () => {
       boostEnvIntensity(metals, 2.6);
       if (reduceMotion) renderOnce();
     });
+
+    /* under-glow pool — silhouettes the dark base against the void */
+    const glow = new THREE.Mesh(
+      new THREE.PlaneGeometry(7.5, 7.5),
+      new THREE.MeshBasicMaterial({ map: glowPoolTex(), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending }),
+    );
+    glow.rotation.x = -Math.PI / 2;
+    glow.position.y = -2.0;
+    rig.add(glow);
 
     /* lights — hero palette */
     scene.add(new THREE.HemisphereLight(0x9ec8ff, 0x0a1428, 0.42));
@@ -240,6 +263,9 @@ if (mount && stage) {
     const rim = new THREE.DirectionalLight(new THREE.Color('#0071e3'), 1.15);
     rim.position.set(-6, 2.5, -4);
     scene.add(rim);
+    const under = new THREE.PointLight(new THREE.Color('#3f7fd9'), 20, 11, 2);
+    under.position.set(0.6, -2.2, 1.6);
+    scene.add(under);
 
     /* ── labels: anchors on alternating edges, staggered reveal ── */
     const NS = 'http://www.w3.org/2000/svg';
@@ -266,7 +292,7 @@ if (mount && stage) {
         c.dot.setAttribute('opacity', o);
         if (o <= 0.01) return;
         // edge point of this layer, world → screen
-        anchor.set(c.side * 1.28, 0, c.side * -0.4);
+        anchor.set(c.side * (L.halfW || 1.28), 0, c.side * -0.35);
         L.group.localToWorld(anchor);
         anchor.project(camera);
         const ax = (anchor.x * 0.5 + 0.5) * w;
@@ -307,6 +333,7 @@ if (mount && stage) {
         const e = smooth((p - i * 0.055) / 0.72);
         L.group.position.y = L.rest + e * L.spread;
       });
+      waveDots(p, t);
       rig.rotation.y = 0.64 + p * 0.32;
       rig.position.y = Math.sin(t * 0.6) * 0.02;
       placeCallouts(p, W, H);
@@ -338,6 +365,11 @@ if (mount && stage) {
       new IntersectionObserver((es) => { es[0].isIntersecting ? play() : pause(); }, { threshold: 0 }).observe(wrapper);
     }
 
-    window.__azenExplode = { layers: layers.length, progress };
+    window.__azenExplode = {
+      layers: layers.length,
+      progress,
+      /* debug: force one frame at a given progress/time (headless verify) */
+      tick: (p, t = 0) => { applyProgress(p, t); renderer.render(scene, camera); },
+    };
   }
 }
