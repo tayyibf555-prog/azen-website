@@ -474,6 +474,7 @@ html.fx [data-hero] {
 .hero {
   position: relative;
   height: 100vh;
+  height: 100svh;
   margin-bottom: 10vh;
   overflow: hidden;
 }
@@ -990,12 +991,14 @@ html.fx [data-hero] {
    ==========================================================*/
 .explode-scroll {
   height: 320vh;
+  height: 320svh;
   padding: 0;
 }
 .explode-stage {
   position: sticky;
   top: 0;
   height: 100vh;
+  height: 100svh;
   overflow: hidden;
   /* soft pedestal glow under the stack, tuned to #020202 */
   background: radial-gradient(ellipse 46% 34% at 50% 62%, oklch(0.24 0.13 260 / 0.22), transparent 70%);
@@ -1044,7 +1047,7 @@ html.fx [data-hero] {
   white-space: nowrap;
 }
 @media (max-width: 768px) {
-  .explode-scroll { height: 260vh; }
+  .explode-scroll { height: 260vh; height: 260svh; }
   .explode-copy { max-width: 80vw; left: 7.5vw; top: 8vh; transform: none; }
   .explode-label { max-width: 34vw; }
   .xl-title { font-size: 3.4vw; white-space: normal; }

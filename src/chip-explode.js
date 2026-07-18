@@ -331,7 +331,9 @@ if (mount && stage) {
         // keep the label fully on-stage: inside the edges, below the nav
         const lw = c.el.offsetWidth || 0;
         lx = c.side === 1 ? Math.min(lx, w - lw - 10) : Math.max(lx, lw + 10);
-        const ly = Math.min(Math.max(ay, 96), h - 44);
+        // portrait: keep labels out of the copy block at the top
+        const topSafe = w < h ? h * 0.34 : 96;
+        const ly = Math.min(Math.max(ay, topSafe), h - 44);
         c.el.style.left = `${lx}px`;
         c.el.style.top = `${ly}px`;
         c.el.classList.toggle('is-left', c.side === -1);
