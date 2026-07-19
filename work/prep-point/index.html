@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Prep Point software architecture | Azen case study</title>
+    <meta name="description" content="How Azen built a unified AI operating system for a high-volume 3PL logistics provider, replacing disconnected legacy tracking with a single dashboard and an autonomous shipment copilot.">
+    <meta name="author" content="Azen Digital">
+    <meta name="theme-color" content="#0a0e1f">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://www.azen.io/work/prep-point/">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="apple-touch-icon" href="/favicon.svg">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Azen Digital">
+    <meta property="og:title" content="Prep Point software architecture">
+    <meta property="og:description" content="How Azen built a unified AI operating system for a high-volume 3PL logistics provider, replacing disconnected legacy tracking with a single dashboard and an autonomous shipment copilot.">
+    <meta property="og:url" content="https://www.azen.io/work/prep-point/">
+    <meta property="og:image" content="https://www.azen.io/og-image.png">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Prep Point software architecture">
+    <meta name="twitter:description" content="How Azen built a unified AI operating system for a high-volume 3PL logistics provider, replacing disconnected legacy tracking with a single dashboard and an autonomous shipment copilot.">
+
+    <!-- Preconnect (Geist + Hanken Grotesk + JetBrains Mono via Google Fonts) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Built Tailwind CSS. Cache-bust via ?v= on each rebuild. -->
+    <link rel="stylesheet" href="/styles.css?v=20260719b">
+</head>
+
+<body class="page-main">
+
+    <header class="navigation" id="site-nav">
+        <a href="/" class="nav-wordmark" aria-label="Azen home">azen<span class="dot-accent">.</span></a>
+        <nav class="nav-links small-description" aria-label="Primary">
+            <a href="/#work">Work</a>
+            <a href="/#services">Services</a>
+            <a href="/#about">About</a>
+            <a href="/#contact">Contact</a>
+        </nav>
+        <a href="https://calendly.com/tayyib-azen/30min" target="_blank" rel="noopener" class="btn-pill">Book a call</a>
+    </header>
+
+    <!-- Case hero -->
+    <section class="sec case-hero">
+        <div class="eyebrow"><span class="pill" aria-hidden="true"></span><span class="description grey">Case Study &mdash; Prep Point</span></div>
+        <h1 class="headline white" data-fx="chars">Prep Point Software Architecture.</h1>
+        <p class="subheadline grey">Deploying a unified AI infrastructure and specialized copilot for a high-volume 3PL logistics provider to autonomously track and orchestrate global shipments.</p>
+    </section>
+
+    <!-- Metrics -->
+    <section class="sec">
+        <div class="stats stats-3">
+            <div class="stat" data-fx="fade">
+                <div class="stat-inner">
+                    <div class="stat-head"><span class="description grey">Tracking Visibility</span></div>
+                    <h3 class="headline white">100%</h3>
+                </div>
+            </div>
+            <div class="stat-divider" aria-hidden="true"></div>
+            <div class="stat" data-fx="fade" data-fx-delay="0.1">
+                <div class="stat-inner">
+                    <div class="stat-head"><span class="description grey">3PL Platform Engine</span></div>
+                    <h3 class="headline white">Unified</h3>
+                </div>
+            </div>
+            <div class="stat-divider" aria-hidden="true"></div>
+            <div class="stat" data-fx="fade" data-fx-delay="0.2">
+                <div class="stat-inner">
+                    <div class="stat-head"><span class="description grey">Copilot Execution</span></div>
+                    <h3 class="headline white">Instant</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screenshot showcase -->
+    <section class="sec">
+        <div class="panel case-shot" data-fx="fade">
+            <div class="case-chrome">
+                <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                <span class="addr">prep-point / azen build</span>
+            </div>
+            <img src="/case%20study%20images%20/Prep%20point%20case%20study.webp" style="width:100%;height:auto;display:block" loading="lazy" decoding="async" alt="Prep Point software architecture dashboard screenshot">
+        </div>
+    </section>
+
+    <!-- Editorial Deep Dive — extended template.
+         Each [REPLACE: ...] placeholder marks a spot for Tayyib to fill in
+         the real client-specific detail. The structure below is the case
+         study skeleton recommended in the impeccable audit:
+           1. Problem (current state, costs, why now)
+           2. The Audit (what discovery uncovered, prioritization)
+           3. Architecture (model layer, integrations, data flow)
+           4. The Build (timeline, decisions, failure mode hit)
+           5. Result (numbers + methodology + caveats)
+           6. Lessons / What we'd do again
+         When real numbers and architecture details land, the placeholders
+         drop out and what remains reads as a credible engineering write-up,
+         not a marketing page. -->
+    <section class="sec case-editorial">
+
+        <!-- 1. The Problem -->
+        <div class="case-block">
+            <div class="eyebrow"><span class="pill" aria-hidden="true"></span><span class="description grey">Problem</span></div>
+            <h2 class="subheadline white" data-fx="words">Manual tracking loops, every day.</h2>
+            <p class="description grey" data-fx="desc">The logistics company was bottlenecked on disconnected legacy platforms for shipment tracking, warehouse inventory, and fulfillment data. Internal staff spent <strong class="white">[REPLACE: hours/week]</strong> navigating manual tracking loops, with severe latency when answering complex shipping queries from clients.</p>
+            <dl class="case-meta">
+                <div>
+                    <dt class="small-description grey">Operating cost</dt>
+                    <dd class="description white">[REPLACE: £/year manual labour]</dd>
+                </div>
+                <div>
+                    <dt class="small-description grey">Systems involved</dt>
+                    <dd class="description white">[REPLACE: e.g. legacy WMS, freight portal, Excel exports]</dd>
+                </div>
+                <div>
+                    <dt class="small-description grey">Team size</dt>
+                    <dd class="description white">[REPLACE: # ops staff affected]</dd>
+                </div>
+            </dl>
+        </div>
+
+        <!-- 2. The Audit -->
+        <div class="case-block case-block-rule">
+            <div class="eyebrow"><span class="pill" aria-hidden="true"></span><span class="description grey">The Audit</span></div>
+            <h2 class="subheadline white" data-fx="words">What we found in two weeks.</h2>
+            <p class="description grey" data-fx="desc">Discovery mapped every manual workflow across the operations team and ranked them by hours bled per week versus integration risk. The top three workflows accounted for <strong class="white">[REPLACE: % of total manual labour]</strong>, and all three touched the same legacy WMS via webhook. That convergence determined the build sequence.</p>
+            <ul class="case-findings description grey">
+                <li><span class="case-arrow" aria-hidden="true">&rarr;</span>[REPLACE: Top finding 1 — what surprised us]</li>
+                <li><span class="case-arrow" aria-hidden="true">&rarr;</span>[REPLACE: Top finding 2 — the system we ruled out]</li>
+                <li><span class="case-arrow" aria-hidden="true">&rarr;</span>[REPLACE: Top finding 3 — the integration constraint]</li>
+            </ul>
+        </div>
+
+        <!-- 3. Architecture -->
+        <div class="case-block case-block-rule">
+            <div class="eyebrow"><span class="pill" aria-hidden="true"></span><span class="description grey">Architecture</span></div>
+            <h2 class="subheadline white" data-fx="words">Platform architecture.</h2>
+            <p class="description grey" data-fx="desc">An end-to-end AI operating system. A unified dashboard consolidates fragmented shipping and tracking metrics; a domain-specific copilot tracks freight autonomously and surfaces exceptions before they escalate. Internal staff query the logistics matrix in natural language.</p>
+            <div class="case-arch-grid">
+                <div>
+                    <div class="small-description grey">Model layer</div>
+                    <p class="description white">[REPLACE: e.g. Claude Sonnet 4.6 for reasoning, Haiku for routing, fallback to GPT-4o]</p>
+                </div>
+                <div>
+                    <div class="small-description grey">Integrations</div>
+                    <p class="description white">[REPLACE: e.g. Webhook bridge into legacy WMS, Stripe, EDI freight feed]</p>
+                </div>
+                <div>
+                    <div class="small-description grey">Hosting</div>
+                    <p class="description white">[REPLACE: e.g. Client AWS account, Postgres + pgvector, Vercel edge]</p>
+                </div>
+                <div>
+                    <div class="small-description grey">Failover</div>
+                    <p class="description white">[REPLACE: e.g. Provider-agnostic adapter, queue + alert on third retry]</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. The Build -->
+        <div class="case-block case-block-rule">
+            <div class="eyebrow"><span class="pill" aria-hidden="true"></span><span class="description grey">The Build</span></div>
+            <h2 class="subheadline white" data-fx="words">What broke, and what we fixed.</h2>
+            <p class="description grey" data-fx="desc">[REPLACE: Honest one-paragraph account of the failure mode hit during build — the integration that didn't work the first time, the prompt that hallucinated, the retry storm we saw in week two, what we changed.]</p>
+            <p class="description grey" data-fx="desc">[REPLACE: One paragraph on the timeline and key decisions — when the audit shipped, when phase 1 went live, when the copilot took over and human review stopped.]</p>
+        </div>
+
+        <!-- 5. Result -->
+        <div class="case-block case-block-rule">
+            <div class="eyebrow"><span class="pill" aria-hidden="true"></span><span class="description grey">Result</span></div>
+            <h2 class="subheadline white" data-fx="words">85% error reduction, measured.</h2>
+            <p class="description grey" data-fx="desc">[REPLACE: Methodology paragraph — how the 85% was measured, over what window, what counts as an &quot;error&quot;, what doesn't. Anyone reading this should be able to reproduce the calculation.]</p>
+            <dl class="case-meta case-meta-flip">
+                <div>
+                    <dt class="small-description grey">Error reduction</dt>
+                    <dd class="headline white">85%</dd>
+                </div>
+                <div>
+                    <dt class="small-description grey">Hours/wk recovered</dt>
+                    <dd class="headline white">[REPLACE]</dd>
+                </div>
+                <div>
+                    <dt class="small-description grey">Days to production</dt>
+                    <dd class="headline white">[REPLACE]</dd>
+                </div>
+                <div>
+                    <dt class="small-description grey">Months in production</dt>
+                    <dd class="headline white">[REPLACE]</dd>
+                </div>
+            </dl>
+        </div>
+
+        <!-- 6. Lessons -->
+        <div class="case-block case-block-rule">
+            <div class="eyebrow"><span class="pill" aria-hidden="true"></span><span class="description grey">What we'd do again</span></div>
+            <h2 class="subheadline white" data-fx="words">Lessons.</h2>
+            <p class="description grey" data-fx="desc">[REPLACE: Two or three sentences on what generalises beyond Prep Point — the architectural choice or audit pattern we now apply to every new build.]</p>
+        </div>
+
+    </section>
+
+    <!-- CTA -->
+    <section class="sec">
+        <div class="panel case-cta" data-fx="fade">
+            <h2 class="headline white">Have a similar bottleneck?</h2>
+            <p class="description grey">Book a free audit. We'll map yours the same way.</p>
+            <div class="contact-form">
+                <a href="https://calendly.com/tayyib-azen/30min" target="_blank" rel="noopener" class="btn-pill">Book a call</a>
+                <a href="/#work" class="contact-alt small-description">Back to systems &rarr;</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="sec">
+        <p class="small-description grey">&copy; 2026 Azen Digital. All Rights Reserved</p>
+    </footer>
+
+    <script type="module" src="/src/enhance.js"></script>
+</body>
+
+</html>

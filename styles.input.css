@@ -1173,3 +1173,100 @@ html.fx [data-hero] {
   .contact-ico { width: 12vw; height: 12vw; }
   .contact-item { gap: 4vw; }
 }
+
+/* ==== case pages (berco skin) ====
+   Small, page-specific additions for the 7 work/<slug>/ case studies —
+   layered on top of the berco system above. Nothing here duplicates or
+   overrides an existing rule; existing rules are untouched. */
+
+/* Case hero — .sec needs extra top clearance so copy doesn't sit under
+   the fixed pill nav (the homepage hero solves this with a dedicated
+   100vh section; case pages don't have one). */
+.case-hero { padding-top: 18vh; }
+@media (max-width: 768px) {
+  .case-hero { padding-top: 24vw; }
+}
+
+/* 3-stat variant of the spec §2 stats band (case pages show 3 metrics,
+   not 4) — widen cells so space-between doesn't leave an awkward gap
+   either side. Desktop only; mobile stacking already works unchanged. */
+@media (min-width: 769px) {
+  .stats-3 .stat { width: 28%; }
+}
+
+/* Screenshot showcase — .panel doesn't clip its children by default;
+   the case-chrome bar's own 12px top corners need clipping to the
+   panel's 30px radius or they poke past it. */
+.case-shot { overflow: hidden; }
+
+/* Editorial column — narrows case-study prose to a reading measure and
+   spaces stacked h2+p blocks; the hairline echoes dividers used
+   elsewhere between stacked .panel content. */
+.case-editorial {
+  max-width: 55vw;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8vh;
+}
+.case-block { display: flex; flex-direction: column; gap: 2.5vh; }
+.case-block-rule { border-top: 1px solid var(--hairline-strong); padding-top: 6vh; }
+@media (max-width: 768px) {
+  .case-editorial { max-width: 100%; gap: 12vw; }
+  .case-block-rule { padding-top: 8vw; }
+}
+
+/* Final CTA — centred variant of the card recipe; reuses .contact-form
+   for the button+link stack (spec §8) but centres it instead of
+   stretching, since this panel isn't the wide two-column contact card. */
+.case-cta {
+  max-width: 55vw;
+  margin: 0 auto;
+  padding: 8vh 5vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 2.5vh;
+}
+.case-cta .contact-form { align-items: center; }
+@media (max-width: 768px) {
+  .case-cta { max-width: 100%; padding: 12vw 7.5vw; }
+}
+
+/* Prep Point only — the one case study with an extended, audit-style
+   breakdown (dl meta grids, a findings list, a 2x2 architecture grid)
+   instead of a plain h2+p. Generic enough to reuse if another case
+   study grows the same shape. */
+.case-meta { display: flex; flex-wrap: wrap; gap: 2.5vw; margin-top: 1vh; }
+.case-meta > div {
+  flex: 1 1 200px;
+  border-top: 1px solid var(--hairline-strong);
+  padding-top: 2vh;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5vh;
+}
+/* Result-figures variant — markup stays valid dt-then-dd; the value (dd)
+   is hoisted above its label visually, matching the stats-band order.
+   Scoped to the modifier so the Problem dl keeps label-above-value. */
+.case-meta-flip > div > dd { order: -1; }
+.case-findings { list-style: none; display: flex; flex-direction: column; gap: 1.5vh; margin-top: 1vh; }
+.case-findings li { display: flex; gap: 1vw; }
+.case-arrow { color: var(--indigo); font-family: 'JetBrains Mono', monospace; flex: none; }
+.case-arch-grid { display: flex; flex-wrap: wrap; gap: 1.5vw; margin-top: 1vh; }
+.case-arch-grid > div {
+  flex: 1 1 40%;
+  min-width: 220px;
+  border: 1px solid var(--hairline-strong);
+  border-radius: 12px;
+  padding: 1.5vw;
+  display: flex;
+  flex-direction: column;
+  gap: 1vh;
+}
+@media (max-width: 768px) {
+  .case-meta, .case-arch-grid { gap: 5vw; }
+  .case-meta > div { flex: 1 1 100%; }
+  .case-arch-grid > div { flex: 1 1 100%; }
+}
