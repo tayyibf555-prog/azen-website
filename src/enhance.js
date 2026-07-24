@@ -48,7 +48,9 @@ const makeCarousel = (root, opts) => {
 };
 
 const setupCarousels = () => {
-  makeCarousel(document.getElementById('work'));
+  // SANCTIONED exposure (work-board-spec v4): work-filter.js needs the
+  // Embla api to reInit() after it toggles [hidden] on filtered slides.
+  window.__azenWork = makeCarousel(document.getElementById('work'));
   makeCarousel(document.getElementById('stack'));
   // Services: one data source; Embla is active on mobile only (brief §2.6).
   // Embla's own breakpoint watcher handles activation across resizes.

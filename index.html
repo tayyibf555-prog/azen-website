@@ -57,7 +57,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <!-- Built Tailwind CSS. Cache-bust via ?v= on each rebuild. -->
-    <link rel="stylesheet" href="styles.css?v=20260719b">
+    <link rel="stylesheet" href="styles.css?v=20260719e">
 </head>
 
 <body class="page-main">
@@ -201,6 +201,24 @@
                 </div>
                 <p class="description grey textbox-desc" data-fx="desc">Six systems in production across logistics, accounting, education and community ops &mdash; each with a result we can point at.</p>
             </div>
+
+            <div class="work-filter" role="search">
+                <input class="wf-input description" type="search" id="wf-q"
+                       placeholder="Search systems…" aria-label="Search case studies">
+                <div class="wf-chips" role="group" aria-label="Filter by category">
+                    <button class="wf-chip small-description is-active" type="button"
+                            data-cat="all" aria-pressed="true">All</button>
+                    <button class="wf-chip small-description" type="button" data-cat="operations" aria-pressed="false">Operations</button>
+                    <button class="wf-chip small-description" type="button" data-cat="accounting" aria-pressed="false">Accounting</button>
+                    <button class="wf-chip small-description" type="button" data-cat="education" aria-pressed="false">Education</button>
+                    <button class="wf-chip small-description" type="button" data-cat="community" aria-pressed="false">Community</button>
+                    <button class="wf-chip small-description" type="button" data-cat="product" aria-pressed="false">Product</button>
+                </div>
+                <span class="wf-count small-description grey" aria-live="polite"></span>
+            </div>
+            <div class="wf-empty description grey" hidden>
+                No systems match. <button class="wf-clear small-description white" type="button">Clear filters</button>
+            </div>
         </div>
 
         <div data-fx="fade">
@@ -208,7 +226,7 @@
                 <div class="carousel-container">
                     <div class="carousel-spacer" aria-hidden="true"></div>
 
-                    <div class="case-card" data-flip role="button" tabindex="0" aria-pressed="false" aria-label="Prep Point — flip for client quote">
+                    <div class="case-card" data-tags="operations" data-flip role="button" tabindex="0" aria-pressed="false" aria-label="Prep Point — flip for client quote">
                         <div class="case-flip">
                             <div class="case-face panel">
                                 <span class="case-metric" aria-hidden="true">85%</span>
@@ -230,7 +248,7 @@
                         </div>
                     </div>
 
-                    <div class="case-card" data-flip role="button" tabindex="0" aria-pressed="false" aria-label="Superior Accounting — flip for client quote">
+                    <div class="case-card" data-tags="accounting" data-flip role="button" tabindex="0" aria-pressed="false" aria-label="Superior Accounting — flip for client quote">
                         <div class="case-flip">
                             <div class="case-face panel">
                                 <span class="case-metric" aria-hidden="true">78%</span>
@@ -252,7 +270,7 @@
                         </div>
                     </div>
 
-                    <div class="case-card" data-flip role="button" tabindex="0" aria-pressed="false" aria-label="TTT Departmentals — flip for client quote">
+                    <div class="case-card" data-tags="operations" data-flip role="button" tabindex="0" aria-pressed="false" aria-label="TTT Departmentals — flip for client quote">
                         <div class="case-flip">
                             <div class="case-face panel">
                                 <span class="case-metric" aria-hidden="true">90%</span>
@@ -274,7 +292,7 @@
                         </div>
                     </div>
 
-                    <div class="case-card" data-flip role="button" tabindex="0" aria-pressed="false" aria-label="Little Oaks — flip for client quote">
+                    <div class="case-card" data-tags="education" data-flip role="button" tabindex="0" aria-pressed="false" aria-label="Little Oaks — flip for client quote">
                         <div class="case-flip">
                             <div class="case-face panel">
                                 <span class="case-metric" aria-hidden="true">24/7</span>
@@ -296,7 +314,7 @@
                         </div>
                     </div>
 
-                    <div class="case-card" data-flip role="button" tabindex="0" aria-pressed="false" aria-label="Zia Ul Ummah — flip for client quote">
+                    <div class="case-card" data-tags="community" data-flip role="button" tabindex="0" aria-pressed="false" aria-label="Zia Ul Ummah — flip for client quote">
                         <div class="case-flip">
                             <div class="case-face panel">
                                 <span class="case-metric" aria-hidden="true">Zero</span>
@@ -318,7 +336,7 @@
                         </div>
                     </div>
 
-                    <div class="case-card" data-flip role="button" tabindex="0" aria-pressed="false" aria-label="Azen EYOS — flip for client quote">
+                    <div class="case-card" data-tags="education product" data-flip role="button" tabindex="0" aria-pressed="false" aria-label="Azen EYOS — flip for client quote">
                         <div class="case-flip">
                             <div class="case-face panel">
                                 <span class="case-metric" aria-hidden="true">OS</span>
@@ -738,6 +756,9 @@
 
     <!-- Mindset panel — simplified auto ping-pong chip scene. -->
     <script type="module" src="/src/chip-explode.js"></script>
+
+    <!-- Work section search + category filter (additive; contract v4). -->
+    <script type="module" src="/src/work-filter.js"></script>
 
     <!-- Behaviour: loader, nav drop-in, smooth scroll, flips, scroll-top,
          contact submit. Zero dependencies — guaranteed to run. -->
