@@ -95,119 +95,16 @@
         </div>
     </section>
 
-    <!-- Editorial Deep Dive — extended template.
-         Each [REPLACE: ...] placeholder marks a spot for Tayyib to fill in
-         the real client-specific detail. The structure below is the case
-         study skeleton recommended in the impeccable audit:
-           1. Problem (current state, costs, why now)
-           2. The Audit (what discovery uncovered, prioritization)
-           3. Architecture (model layer, integrations, data flow)
-           4. The Build (timeline, decisions, failure mode hit)
-           5. Result (numbers + methodology + caveats)
-           6. Lessons / What we'd do again
-         When real numbers and architecture details land, the placeholders
-         drop out and what remains reads as a credible engineering write-up,
-         not a marketing page. -->
+    <!-- Editorial -->
     <section class="sec case-editorial">
-
-        <!-- 1. The Problem -->
         <div class="case-block">
-            <div class="eyebrow"><span class="pill" aria-hidden="true"></span><span class="description grey">Problem</span></div>
-            <h2 class="subheadline white" data-fx="words">Manual tracking loops, every day.</h2>
-            <p class="description grey" data-fx="desc">The logistics company was bottlenecked on disconnected legacy platforms for shipment tracking, warehouse inventory, and fulfillment data. Internal staff spent <strong class="white">[REPLACE: hours/week]</strong> navigating manual tracking loops, with severe latency when answering complex shipping queries from clients.</p>
-            <dl class="case-meta">
-                <div>
-                    <dt class="small-description grey">Operating cost</dt>
-                    <dd class="description white">[REPLACE: £/year manual labour]</dd>
-                </div>
-                <div>
-                    <dt class="small-description grey">Systems involved</dt>
-                    <dd class="description white">[REPLACE: e.g. legacy WMS, freight portal, Excel exports]</dd>
-                </div>
-                <div>
-                    <dt class="small-description grey">Team size</dt>
-                    <dd class="description white">[REPLACE: # ops staff affected]</dd>
-                </div>
-            </dl>
+            <h2 class="subheadline white" data-fx="words">The Problem.</h2>
+            <p class="description grey" data-fx="desc">The logistics company was bottlenecked on disconnected legacy platforms for shipment tracking, warehouse inventory, and fulfillment data. Internal staff spent significant time navigating manual tracking loops, with severe latency when answering complex shipping queries from clients.</p>
         </div>
-
-        <!-- 2. The Audit -->
         <div class="case-block case-block-rule">
-            <div class="eyebrow"><span class="pill" aria-hidden="true"></span><span class="description grey">The Audit</span></div>
-            <h2 class="subheadline white" data-fx="words">What we found in two weeks.</h2>
-            <p class="description grey" data-fx="desc">Discovery mapped every manual workflow across the operations team and ranked them by hours bled per week versus integration risk. The top three workflows accounted for <strong class="white">[REPLACE: % of total manual labour]</strong>, and all three touched the same legacy WMS via webhook. That convergence determined the build sequence.</p>
-            <ul class="case-findings description grey">
-                <li><span class="case-arrow" aria-hidden="true">&rarr;</span>[REPLACE: Top finding 1 — what surprised us]</li>
-                <li><span class="case-arrow" aria-hidden="true">&rarr;</span>[REPLACE: Top finding 2 — the system we ruled out]</li>
-                <li><span class="case-arrow" aria-hidden="true">&rarr;</span>[REPLACE: Top finding 3 — the integration constraint]</li>
-            </ul>
-        </div>
-
-        <!-- 3. Architecture -->
-        <div class="case-block case-block-rule">
-            <div class="eyebrow"><span class="pill" aria-hidden="true"></span><span class="description grey">Architecture</span></div>
-            <h2 class="subheadline white" data-fx="words">Platform architecture.</h2>
+            <h2 class="subheadline white" data-fx="words">Platform Architecture.</h2>
             <p class="description grey" data-fx="desc">An end-to-end AI operating system. A unified dashboard consolidates fragmented shipping and tracking metrics; a domain-specific copilot tracks freight autonomously and surfaces exceptions before they escalate. Internal staff query the logistics matrix in natural language.</p>
-            <div class="case-arch-grid">
-                <div>
-                    <div class="small-description grey">Model layer</div>
-                    <p class="description white">[REPLACE: e.g. Claude Sonnet 4.6 for reasoning, Haiku for routing, fallback to GPT-4o]</p>
-                </div>
-                <div>
-                    <div class="small-description grey">Integrations</div>
-                    <p class="description white">[REPLACE: e.g. Webhook bridge into legacy WMS, Stripe, EDI freight feed]</p>
-                </div>
-                <div>
-                    <div class="small-description grey">Hosting</div>
-                    <p class="description white">[REPLACE: e.g. Client AWS account, Postgres + pgvector, Vercel edge]</p>
-                </div>
-                <div>
-                    <div class="small-description grey">Failover</div>
-                    <p class="description white">[REPLACE: e.g. Provider-agnostic adapter, queue + alert on third retry]</p>
-                </div>
-            </div>
         </div>
-
-        <!-- 4. The Build -->
-        <div class="case-block case-block-rule">
-            <div class="eyebrow"><span class="pill" aria-hidden="true"></span><span class="description grey">The Build</span></div>
-            <h2 class="subheadline white" data-fx="words">What broke, and what we fixed.</h2>
-            <p class="description grey" data-fx="desc">[REPLACE: Honest one-paragraph account of the failure mode hit during build — the integration that didn't work the first time, the prompt that hallucinated, the retry storm we saw in week two, what we changed.]</p>
-            <p class="description grey" data-fx="desc">[REPLACE: One paragraph on the timeline and key decisions — when the audit shipped, when phase 1 went live, when the copilot took over and human review stopped.]</p>
-        </div>
-
-        <!-- 5. Result -->
-        <div class="case-block case-block-rule">
-            <div class="eyebrow"><span class="pill" aria-hidden="true"></span><span class="description grey">Result</span></div>
-            <h2 class="subheadline white" data-fx="words">85% error reduction, measured.</h2>
-            <p class="description grey" data-fx="desc">[REPLACE: Methodology paragraph — how the 85% was measured, over what window, what counts as an &quot;error&quot;, what doesn't. Anyone reading this should be able to reproduce the calculation.]</p>
-            <dl class="case-meta case-meta-flip">
-                <div>
-                    <dt class="small-description grey">Error reduction</dt>
-                    <dd class="headline white">85%</dd>
-                </div>
-                <div>
-                    <dt class="small-description grey">Hours/wk recovered</dt>
-                    <dd class="headline white">[REPLACE]</dd>
-                </div>
-                <div>
-                    <dt class="small-description grey">Days to production</dt>
-                    <dd class="headline white">[REPLACE]</dd>
-                </div>
-                <div>
-                    <dt class="small-description grey">Months in production</dt>
-                    <dd class="headline white">[REPLACE]</dd>
-                </div>
-            </dl>
-        </div>
-
-        <!-- 6. Lessons -->
-        <div class="case-block case-block-rule">
-            <div class="eyebrow"><span class="pill" aria-hidden="true"></span><span class="description grey">What we'd do again</span></div>
-            <h2 class="subheadline white" data-fx="words">Lessons.</h2>
-            <p class="description grey" data-fx="desc">[REPLACE: Two or three sentences on what generalises beyond Prep Point — the architectural choice or audit pattern we now apply to every new build.]</p>
-        </div>
-
     </section>
 
     <!-- CTA -->
