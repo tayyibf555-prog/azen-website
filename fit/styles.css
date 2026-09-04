@@ -695,3 +695,6 @@ form .button {
     margin-bottom: 0.75rem;
   }
 }
+
+.hero-aftersix{max-width:540px;font-size:18px;font-weight:600;color:var(--ink);margin:18px 0 0;line-height:1.45}
+.hero-sub{margin-top:14px}
