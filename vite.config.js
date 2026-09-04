@@ -26,6 +26,7 @@ export default defineConfig(({ mode }) => {
           ziaUlQuran: resolve(__dirname, 'work/zia-ul-quran/index.html'),
           ziaUlUmmah: resolve(__dirname, 'work/zia-ul-ummah/index.html'),
           eyos:       resolve(__dirname, 'work/eyos/index.html'),
+          fit:        resolve(__dirname, 'fit/index.html'),
         },
       },
     },

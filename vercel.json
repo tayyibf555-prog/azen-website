@@ -2,12 +2,51 @@
   "cleanUrls": true,
   "trailingSlash": true,
   "redirects": [
-    { "source": "/case-study-prep-point.html", "destination": "/work/prep-point/", "permanent": true },
-    { "source": "/case-study-superior-accounting.html", "destination": "/work/superior-accounting/", "permanent": true },
-    { "source": "/case-study-ttt.html", "destination": "/work/ttt/", "permanent": true },
-    { "source": "/case-study-little-oaks.html", "destination": "/work/little-oaks/", "permanent": true },
-    { "source": "/case-study-zia-ul-ummah.html", "destination": "/work/zia-ul-ummah/", "permanent": true },
-    { "source": "/case-study-zia-ul-quran.html", "destination": "/work/zia-ul-quran/", "permanent": true },
-    { "source": "/case-study-eyos.html", "destination": "/work/eyos/", "permanent": true }
+    {
+      "source": "/case-study-prep-point.html",
+      "destination": "/work/prep-point/",
+      "permanent": true
+    },
+    {
+      "source": "/case-study-superior-accounting.html",
+      "destination": "/work/superior-accounting/",
+      "permanent": true
+    },
+    {
+      "source": "/case-study-ttt.html",
+      "destination": "/work/ttt/",
+      "permanent": true
+    },
+    {
+      "source": "/case-study-little-oaks.html",
+      "destination": "/work/little-oaks/",
+      "permanent": true
+    },
+    {
+      "source": "/case-study-zia-ul-ummah.html",
+      "destination": "/work/zia-ul-ummah/",
+      "permanent": true
+    },
+    {
+      "source": "/case-study-zia-ul-quran.html",
+      "destination": "/work/zia-ul-quran/",
+      "permanent": true
+    },
+    {
+      "source": "/case-study-eyos.html",
+      "destination": "/work/eyos/",
+      "permanent": true
+    }
+  ],
+  "headers": [
+    {
+      "source": "/fit/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    }
   ]
 }
