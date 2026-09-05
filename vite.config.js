@@ -27,6 +27,7 @@ export default defineConfig(({ mode }) => {
           ziaUlUmmah: resolve(__dirname, 'work/zia-ul-ummah/index.html'),
           eyos:       resolve(__dirname, 'work/eyos/index.html'),
           fit:        resolve(__dirname, 'fit/index.html'),
+          thankYou:   resolve(__dirname, 'thank-you/index.html'),
         },
       },
     },
