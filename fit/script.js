@@ -13,6 +13,14 @@
     // TODO: send confirm email / booking handoff (do not invent backend).
 
     // Successful client-side validation → thank-you (stepped post-booking).
-    window.location.assign('/thank-you/');
+    var nameInput = form.querySelector('[name="name"], #name');
+    var firstName = nameInput && nameInput.value ? nameInput.value.trim().split(/\s+/)[0] : '';
+    try {
+      if (firstName) sessionStorage.setItem('azenFitFirstName', firstName);
+      else sessionStorage.removeItem('azenFitFirstName');
+    } catch (e) {}
+    var thankYou = '/thank-you/';
+    if (firstName) thankYou += '?firstname=' + encodeURIComponent(firstName);
+    window.location.assign(thankYou);
   });
 })();
