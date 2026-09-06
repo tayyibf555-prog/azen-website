@@ -104,16 +104,28 @@
     // TODO: send confirm email (do not invent backend).
     // Pass path books via thank-you calendar CTA: https://calendly.com/tayyib-azen/30min
 
-    var nameInput = form.querySelector('[name="name"]');
-    var companyInput = form.querySelector('[name="company"]');
-    var firstName = firstNameFrom(nameInput && nameInput.value);
-    var business = companyInput && companyInput.value ? companyInput.value.trim() : '';
-
-    var result = qualify({
+    var payload = {
+      name: (form.elements.name && form.elements.name.value) || '',
+      email: (form.elements.email && form.elements.email.value) || '',
+      mobile: (form.elements.mobile && form.elements.mobile.value) || '',
+      company: (form.elements.company && form.elements.company.value) || '',
       team: (form.elements.team && form.elements.team.value) || '',
+      breaking: (form.elements.breaking && form.elements.breaking.value) || '',
+      tools: (form.elements.tools && form.elements.tools.value) || '',
       budget: (form.elements.budget && form.elements.budget.value) || '',
+      timeline: (form.elements.timeline && form.elements.timeline.value) || '',
       dm: (form.elements.dm && form.elements.dm.value) || '',
       intent: (form.elements.intent && form.elements.intent.value) || ''
+    };
+
+    var firstName = firstNameFrom(payload.name);
+    var business = payload.company.trim();
+
+    var result = qualify({
+      team: payload.team,
+      budget: payload.budget,
+      dm: payload.dm,
+      intent: payload.intent
     });
 
     try {
