@@ -103,6 +103,6 @@
     guestInitial.textContent = (first || 'Y').charAt(0).toUpperCase();
   }
 
-  // TODO: when calendar/ICS URL exists, swap the calendar placeholder for a real link.
+  // Calendar CTA is wired to Calendly on pass (see #calendar-cta in index.html).
   // TODO: WhatsApp speed-to-lead + confirm email are owned by the fit form submit path, not here.
 })();

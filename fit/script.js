@@ -101,7 +101,8 @@
     }
 
     // TODO: WhatsApp speed-to-lead ping on successful submit (do not invent backend).
-    // TODO: send confirm email / booking handoff (do not invent backend).
+    // TODO: send confirm email (do not invent backend).
+    // Pass path books via thank-you calendar CTA: https://calendly.com/tayyib-azen/30min
 
     var nameInput = form.querySelector('[name="name"]');
     var companyInput = form.querySelector('[name="company"]');
