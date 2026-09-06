@@ -1,27 +1,42 @@
 (function () {
-  // Shared firstname resolution for H1 + calendar invite mock.
-  function resolveFirstName() {
-    var params = new URLSearchParams(window.location.search);
-    var first = (params.get('firstname') || params.get('name') || '').trim();
-    if (!first) {
-      try {
-        first = (sessionStorage.getItem('azenFitFirstName') || '').trim();
-      } catch (e) {}
-    }
-    if (first) {
-      first = first.split(/\s+/)[0].replace(/[^\p{L}\p{N}'-]/gu, '');
-    }
-    return first || '';
+  function cleanToken(value, firstWordOnly) {
+    var v = (value || '').trim();
+    if (!v) return '';
+    if (firstWordOnly) v = v.split(/\s+/)[0];
+    return v.replace(/[^\p{L}\p{N}\s'.&+-]/gu, '').trim();
   }
 
-  var first = resolveFirstName();
+  function resolveField(paramKeys, storageKey, firstWordOnly) {
+    var params = new URLSearchParams(window.location.search);
+    var value = '';
+    for (var i = 0; i < paramKeys.length; i++) {
+      value = (params.get(paramKeys[i]) || '').trim();
+      if (value) break;
+    }
+    if (!value) {
+      try {
+        value = (sessionStorage.getItem(storageKey) || '').trim();
+      } catch (e) {}
+    }
+    return cleanToken(value, firstWordOnly);
+  }
 
-  // Thank-you H1: with name → "Wait, {{firstname}} — you’re not done yet."
-  // Blank fallback → "You’re not done yet."
+  var first = resolveField(['firstname', 'name'], 'azenFitFirstName', true);
+  var business = resolveField(['business', 'company'], 'azenFitBusiness', false);
+
+  // Thank-you H1 fallbacks (Copywriter lock):
+  // both → Wait, {{firstname}} — for {{business}} you’re not done yet.
+  // name only → Wait, {{firstname}} — you’re not done yet.
+  // business only → For {{business}} you’re not done yet.
+  // neither → You’re not done yet.
   var h1 = document.getElementById('confirm-h1');
   if (h1) {
-    if (first) {
+    if (first && business) {
+      h1.textContent = 'Wait, ' + first + ' — for ' + business + ' you’re not done yet.';
+    } else if (first) {
       h1.textContent = 'Wait, ' + first + ' — you’re not done yet.';
+    } else if (business) {
+      h1.textContent = 'For ' + business + ' you’re not done yet.';
     } else {
       h1.textContent = 'You’re not done yet.';
     }
