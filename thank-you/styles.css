@@ -1,4 +1,4 @@
-/* Thank-you page — extends fit design tokens (black/blue, Hanken + JetBrains). */
+/* Thank-you page , extends fit design tokens (black/blue, Hanken + JetBrains). */
 @import url("../fit/styles.css");
 
 /* ── Confirmed / success ───────────────────────────────── */
@@ -234,7 +234,7 @@
 .call-points li{font-size:17px;color:var(--muted);padding:0 0 16px 28px;border-bottom:1px solid var(--line);margin-bottom:16px;position:relative}
 .call-points li:before{content:'↗';color:var(--accent);position:absolute;left:0;font-weight:700}
 
-/* ── Calendar invite mock (format only — Azen details, blue Yes) ── */
+/* ── Calendar invite mock (format only , Azen details, blue Yes) ── */
 .invite-mock{margin:1.75rem 0 1.5rem;max-width:28rem}
 .invite-card{
   background:#fff;
