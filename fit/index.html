@@ -109,13 +109,70 @@
         <p class="trust-line">Azen Ai Ltd · SC878410 · Glasgow, United Kingdom · VAT at 20% when we quote.</p>
       </div>
       <form id="fit-form" novalidate>
-        <label for="name">Name<input id="name" name="name" autocomplete="name" required></label>
-        <label for="email">Work email<input id="email" name="email" type="email" autocomplete="email" required></label>
-        <label for="company">Company<input id="company" name="company" autocomplete="organization" required></label>
-        <label for="breaking">What’s breaking<textarea id="breaking" name="breaking" rows="4" required></textarea></label>
-        <button class="button" type="submit">Book a fit call <span aria-hidden="true">↗</span></button>
-        <p class="form-note">No calendar embed or real URL. Endpoint TODO.</p>
-        <p class="form-success" role="status" hidden>You’re in. Pick a time with Tayyib. → [CALENDAR URL TODO]</p>
+        <div class="form-progress" aria-hidden="true">
+          <span class="form-progress-step is-active" data-progress="1">01</span>
+          <span class="form-progress-rule"></span>
+          <span class="form-progress-step" data-progress="2">02</span>
+        </div>
+
+        <div class="form-step is-active" data-step="1" role="group" aria-labelledby="step1-title">
+          <p class="form-step-title" id="step1-title">About you</p>
+          <label for="name">Name<input id="name" name="name" autocomplete="name" required></label>
+          <label for="email">Work email<input id="email" name="email" type="email" autocomplete="email" required></label>
+          <label for="company">Company<input id="company" name="company" autocomplete="organization" required></label>
+          <label for="team">Team size
+            <select id="team" name="team" required>
+              <option value="" disabled selected>Select team size</option>
+              <option value="solo">Solo</option>
+              <option value="1-2">1–2</option>
+              <option value="3-8">3–8</option>
+              <option value="9-20">9–20</option>
+              <option value="21plus">21+</option>
+            </select>
+          </label>
+          <button class="button" type="button" id="fit-next">Continue <span aria-hidden="true">↗</span></button>
+        </div>
+
+        <div class="form-step" data-step="2" role="group" aria-labelledby="step2-title" hidden>
+          <p class="form-step-title" id="step2-title">The work</p>
+          <label for="breaking">What’s breaking<textarea id="breaking" name="breaking" rows="4" required></textarea></label>
+          <label for="tools">Tools you already use<input id="tools" name="tools" autocomplete="off" required></label>
+          <label for="budget">Budget
+            <select id="budget" name="budget" required>
+              <option value="" disabled selected>Select budget</option>
+              <option value="none">None / exploring</option>
+              <option value="under-1.5k">Under £1.5k</option>
+              <option value="1.5-3k">£1.5k–£3k</option>
+              <option value="3-10k">£3k–£10k</option>
+              <option value="10-25k">£10k–£25k</option>
+              <option value="25kplus">£25k+</option>
+            </select>
+          </label>
+          <label for="timeline">Timeline<input id="timeline" name="timeline" autocomplete="off" required placeholder="e.g. this month, this quarter"></label>
+          <label for="dm">Decision maker
+            <select id="dm" name="dm" required>
+              <option value="" disabled selected>Select</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+              <option value="group">Part of a group</option>
+            </select>
+          </label>
+          <label for="intent">Intent
+            <select id="intent" name="intent" required>
+              <option value="" disabled selected>Select intent</option>
+              <option value="custom-ai">Custom AI on our stack</option>
+              <option value="chatbot">Chatbot only</option>
+              <option value="free-audit">Free audit</option>
+              <option value="not-sure">Not sure</option>
+            </select>
+          </label>
+          <div class="form-actions">
+            <button class="button button-ghost" type="button" id="fit-back">Back</button>
+            <button class="button" type="submit">Submit application <span aria-hidden="true">↗</span></button>
+          </div>
+        </div>
+
+        <p class="form-note">Two steps. We review before a call. Endpoint TODO.</p>
       </form>
     </section>
   </main>

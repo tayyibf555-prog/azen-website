@@ -17,15 +17,16 @@
   </header>
 
   <main id="top">
-    <section class="confirm shell">
-      <p class="eyebrow">Confirmed</p>
-      <div class="confirm-badge" aria-hidden="true"><span class="confirm-check">✓</span></div>
+    <section class="confirm shell" id="confirm-block">
+      <p class="eyebrow" id="confirm-eyebrow">Confirmed</p>
+      <div class="confirm-badge" id="confirm-badge" aria-hidden="true" data-pass-only><span class="confirm-check">✓</span></div>
       <h1 id="confirm-h1">You’re not done yet.</h1>
-      <p class="confirm-sub">Your fit call with Tayyib is confirmed. Check your email for the time and calendar link.</p>
-      <p class="confirm-meta">Confirm email now · reminder about an hour before · calendar link to reschedule.</p>
+      <p class="confirm-sub" id="confirm-sub">Your fit call with Tayyib is confirmed. Check your email for the time and calendar link.</p>
+      <p class="confirm-sub confirm-second" id="confirm-second" hidden>That can change later if the work gets clearer. No need to follow up.</p>
+      <p class="confirm-meta" id="confirm-meta" data-pass-only>Confirm email now · reminder about an hour before · calendar link to reschedule.</p>
     </section>
 
-    <section class="section shell ruled">
+    <section class="section shell ruled" data-pass-only>
       <p class="eyebrow">The call</p>
       <h2>What happens on the call</h2>
       <ul class="call-points">
@@ -42,7 +43,7 @@
       </aside>
     </section>
 
-    <section class="section shell ruled">
+    <section class="section shell ruled" data-pass-only id="calendar-section">
       <p class="eyebrow">Calendar</p>
       <h2>Add it to your calendar</h2>
       <p class="section-lead">Hit <strong>Yes</strong> on the invite, then it lands on your calendar.</p>
@@ -92,7 +93,7 @@
       <p class="section-lead">Reschedule from the same link, or reply to your confirm email.</p>
     </section>
 
-    <section class="section shell faq ruled">
+    <section class="section shell faq ruled" data-pass-only id="faq-section">
       <p class="eyebrow">FAQ</p>
       <h2>FAQ</h2>
       <div class="faq-list">
@@ -111,7 +112,7 @@
       </div>
     </section>
 
-    <section class="section shell ruled">
+    <section class="section shell ruled" data-pass-only id="proof-section">
       <p class="eyebrow">Proof</p>
       <h2>Proof</h2>
       <aside class="hard-proof proof-solo" aria-label="Proof placeholder">

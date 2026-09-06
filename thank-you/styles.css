@@ -283,3 +283,16 @@
   font:11px/1.4 "JetBrains Mono",monospace;color:#80868b;
 }
 .section-lead strong{color:var(--ink);font-weight:600}
+
+/* ── Fail path ─────────────────────────────────────────── */
+body.is-fail .confirm-badge { display: none; }
+.confirm-second {
+  max-width: 34rem;
+  font-size: 1.0625rem;
+  color: var(--muted);
+  margin: 1rem 0 0;
+  line-height: 1.6;
+}
+body.is-fail [data-pass-only][hidden] {
+  display: none !important;
+}
