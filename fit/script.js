@@ -119,7 +119,8 @@
     };
 
     var firstName = firstNameFrom(payload.name);
-    var business = payload.company.trim();
+    var businessName = payload.company.trim();
+    var mobile = (payload.mobile || '').trim();
 
     var result = qualify({
       team: payload.team,
@@ -128,20 +129,32 @@
       intent: payload.intent
     });
 
+    var flags = result.flag ? [result.flag] : [];
+    var handoff = {
+      firstName: firstName,
+      businessName: businessName,
+      mobile: mobile,
+      calendar: 'https://calendly.com/tayyib-azen/30min',
+      flags: flags,
+      status: result.status
+    };
+
     try {
-      if (firstName) sessionStorage.setItem('azenFitFirstName', firstName);
+      if (handoff.firstName) sessionStorage.setItem('azenFitFirstName', handoff.firstName);
       else sessionStorage.removeItem('azenFitFirstName');
-      if (business) sessionStorage.setItem('azenFitBusiness', business);
+      if (handoff.businessName) sessionStorage.setItem('azenFitBusiness', handoff.businessName);
       else sessionStorage.removeItem('azenFitBusiness');
-      sessionStorage.setItem('azenFitStatus', result.status);
+      if (handoff.mobile) sessionStorage.setItem('azenFitMobile', handoff.mobile);
+      else sessionStorage.removeItem('azenFitMobile');
+      sessionStorage.setItem('azenFitStatus', handoff.status);
       if (result.flag) sessionStorage.setItem('azenFitFlag', result.flag);
       else sessionStorage.removeItem('azenFitFlag');
     } catch (e) {}
 
-    var q = ['status=' + encodeURIComponent(result.status)];
-    if (firstName) q.push('firstname=' + encodeURIComponent(firstName));
-    if (result.status === 'pass' && business) {
-      q.push('business=' + encodeURIComponent(business));
+    var q = ['status=' + encodeURIComponent(handoff.status)];
+    if (handoff.firstName) q.push('firstname=' + encodeURIComponent(handoff.firstName));
+    if (handoff.status === 'pass' && handoff.businessName) {
+      q.push('business=' + encodeURIComponent(handoff.businessName));
     }
     if (result.flag) q.push('flag=' + encodeURIComponent(result.flag));
 

@@ -630,6 +630,18 @@ form .button {
   margin-top: 0.25rem;
 }
 
+
+.field-hint {
+  color: var(--muted);
+  font-family: "Geist", -apple-system, sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 300;
+  letter-spacing: 0;
+  text-transform: none;
+  margin: -0.65rem 0 1.1rem;
+  line-height: 1.45;
+}
+
 .form-note {
   color: var(--muted);
   font-family: "JetBrains Mono", ui-monospace, monospace;
