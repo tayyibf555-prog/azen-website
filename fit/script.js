@@ -64,6 +64,11 @@
     return (name || '').trim().split(/\s+/)[0] || '';
   }
 
+  function generateApplicationId() {
+    var rand = Math.random().toString(36).slice(2, 10);
+    return 'fit_' + Date.now().toString(36) + '_' + rand;
+  }
+
   // Kill if: team solo or 1–2 OR budget none/exploring or under £1.5k
   // OR DM=No OR intent chatbot/free-audit
   // Pass + small-ticket if budget £1.5–3k (and not killed)
@@ -100,7 +105,7 @@
       return;
     }
 
-    // TODO: WhatsApp speed-to-lead ping on successful submit (do not invent backend).
+    // Cole/Growth lock: HOLD WhatsApp webhook. No fake send. Do not call any webhook.
     // TODO: send confirm email (do not invent backend).
     // Pass path books via thank-you calendar CTA: https://calendly.com/tayyib-azen/30min
 
@@ -121,6 +126,7 @@
     var firstName = firstNameFrom(payload.name);
     var businessName = payload.company.trim();
     var mobile = (payload.mobile || '').trim();
+    var email = (payload.email || '').trim();
 
     var result = qualify({
       team: payload.team,
@@ -130,6 +136,7 @@
     });
 
     var flags = result.flag ? [result.flag] : [];
+    var smallTicket = result.flag === 'small-ticket';
     var handoff = {
       firstName: firstName,
       businessName: businessName,
@@ -138,6 +145,22 @@
       flags: flags,
       status: result.status
     };
+
+    // PASS only: dry-run handoff for manual WhatsApp paste. No webhook call.
+    if (result.status === 'pass') {
+      console.log({
+        firstName: firstName,
+        businessName: businessName,
+        mobile: mobile,
+        email: email,
+        applicationId: generateApplicationId(),
+        smallTicket: smallTicket,
+        flags: flags,
+        calendar: 'https://calendly.com/tayyib-azen/30min',
+        day: null,
+        time: null
+      });
+    }
 
     try {
       if (handoff.firstName) sessionStorage.setItem('azenFitFirstName', handoff.firstName);
