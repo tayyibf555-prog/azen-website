@@ -141,7 +141,7 @@ h2 {
 h1 {
   font-size: clamp(2.75rem, 7.5vw, 5.25rem);
   line-height: 0.98;
-  max-width: 14ch;
+  max-width: 18ch;
 }
 
 h1 em {
@@ -216,9 +216,33 @@ h3 {
   max-width: 34rem;
   font-size: 1.125rem;
   color: var(--muted);
-  margin: 1.75rem 0 1.75rem;
+  margin: 1.75rem 0 0;
   line-height: 1.6;
   font-weight: 400;
+}
+
+.hero-price {
+  max-width: 34rem;
+  margin: 1.1rem 0 0;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+.hero-proof {
+  max-width: 34rem;
+  margin: 0.65rem 0 1.75rem;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.cta-note {
+  margin: 1rem 0 0;
+  font-size: 0.875rem;
+  line-height: 1.45;
+  color: var(--muted);
 }
 
 .atf-trust {
@@ -385,6 +409,44 @@ h3 {
   line-height: 1.5;
 }
 
+.who-for .copy,
+.what-changes .check-list {
+  margin-top: 1.75rem;
+}
+
+.who-for h2,
+.what-changes h2 {
+  max-width: 22ch;
+}
+
+.check-list {
+  list-style: none;
+  padding: 0;
+  margin: 1.75rem 0 0;
+  max-width: 36rem;
+  display: grid;
+  gap: 0.85rem;
+}
+
+.check-list li {
+  font-size: 1.0625rem;
+  color: var(--muted);
+  padding-left: 1.25rem;
+  position: relative;
+  line-height: 1.55;
+}
+
+.check-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.65em;
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 999px;
+  background: var(--accent);
+}
+
 /* ── Process ────────────────────────────────────────────── */
 .process {
   display: grid;
@@ -508,7 +570,7 @@ summary::after {
 }
 
 .closing h2 {
-  max-width: 14ch;
+  max-width: 18ch;
 }
 
 form {
@@ -608,15 +670,12 @@ form .button {
 
 /* Legacy unused hooks kept harmless */
 .hero-art,
-.hero-price,
 .band,
 .two-col,
 .price-section,
-.check-list,
 .review-gate,
 .button-small,
 .header-cta,
-.cta-note,
 .art-label,
 .orb,
 .grid-lines {
@@ -696,5 +755,3 @@ form .button {
   }
 }
 
-.hero-aftersix{max-width:540px;font-size:18px;font-weight:600;color:var(--ink);margin:18px 0 0;line-height:1.45}
-.hero-sub{margin-top:14px}
