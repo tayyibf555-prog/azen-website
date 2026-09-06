@@ -24,19 +24,14 @@
   var first = resolveField(['firstname', 'name'], 'azenFitFirstName', true);
   var business = resolveField(['business', 'company'], 'azenFitBusiness', false);
 
-  // Thank-you H1 fallbacks (Copywriter lock):
-  // both → Wait, {{firstname}} — for {{business}} you’re not done yet.
-  // name only → Wait, {{firstname}} — you’re not done yet.
-  // business only → For {{business}} you’re not done yet.
-  // neither → You’re not done yet.
+  // Command (via Reed): both → full line; no business → name-only; no name → plain fallback.
+  // Company field = {{business}}. No invented fit-page H1.
   var h1 = document.getElementById('confirm-h1');
   if (h1) {
     if (first && business) {
       h1.textContent = 'Wait, ' + first + ' — for ' + business + ' you’re not done yet.';
     } else if (first) {
       h1.textContent = 'Wait, ' + first + ' — you’re not done yet.';
-    } else if (business) {
-      h1.textContent = 'For ' + business + ' you’re not done yet.';
     } else {
       h1.textContent = 'You’re not done yet.';
     }
