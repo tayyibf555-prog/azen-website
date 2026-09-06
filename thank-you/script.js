@@ -24,14 +24,16 @@
   var first = resolveField(['firstname', 'name'], 'azenFitFirstName', true);
   var business = resolveField(['business', 'company'], 'azenFitBusiness', false);
 
-  // Command (via Reed): both → full line; no business → name-only; no name → plain fallback.
-  // Company field = {{business}}. No invented fit-page H1.
+  // Copywriter lock (no em dashes): period after {{firstname}}, then For {{business}}…
+  // Both / name only / business only / neither.
   var h1 = document.getElementById('confirm-h1');
   if (h1) {
     if (first && business) {
-      h1.textContent = 'Wait, ' + first + ', for ' + business + ' you’re not done yet.';
+      h1.textContent = 'Wait, ' + first + '. For ' + business + ' you’re not done yet.';
     } else if (first) {
-      h1.textContent = 'Wait, ' + first + ', you’re not done yet.';
+      h1.textContent = 'Wait, ' + first + '. You’re not done yet.';
+    } else if (business) {
+      h1.textContent = 'For ' + business + ' you’re not done yet.';
     } else {
       h1.textContent = 'You’re not done yet.';
     }
